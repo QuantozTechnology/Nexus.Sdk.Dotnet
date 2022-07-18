@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.SDK.Shared", "Nexus.SDK.Shared\Nexus.SDK.Shared.csproj", "{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.Token.Examples.SDK", "Nexus.Token.Examples.SDK\Nexus.Token.Examples.SDK.csproj", "{90085120-8647-4F67-A3B4-83DC3A44BB30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.Token.SDK", "Nexus.Token.SDK\Nexus.Token.SDK.csproj", "{2D3D6C96-EDD9-446D-96EB-7E0006902775}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.Token.SDK.Tests", "Nexus.Token.SDK.Tests\Nexus.Token.SDK.Tests.csproj", "{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Debug|x86.Build.0 = Debug|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B33D9FCD-3122-40CF-B455-2D15CA55CE2F}.Release|x86.Build.0 = Release|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Debug|x86.Build.0 = Debug|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Release|x86.ActiveCfg = Release|Any CPU
+		{90085120-8647-4F67-A3B4-83DC3A44BB30}.Release|x86.Build.0 = Release|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Debug|x86.Build.0 = Debug|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Release|x86.ActiveCfg = Release|Any CPU
+		{2D3D6C96-EDD9-446D-96EB-7E0006902775}.Release|x86.Build.0 = Release|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39452F03-058E-4501-97AF-5365881A8679}
+	EndGlobalSection
+EndGlobal
