@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageProjectUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet/Nexus.Token.SDK</PackageProjectUrl>
+		<RepositoryUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet</RepositoryUrl>
+		<RepositoryType>gitlab</RepositoryType>
+		<Description>SDK for interacting with the Nexus token environment.</Description>
+		<Version>0.0.1</Version>
+		<Authors>Maximilian Stoll</Authors>
+		<Company>Quantoz Blockchain Technology</Company>
+		<Title>Nexus Token SDK</Title>
+		<PackageId>Nexus.Token.SDK</PackageId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Algorand" Version="0.2.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="stellar-dotnet-sdk" Version="8.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Nexus.SDK.Shared\Nexus.SDK.Shared.csproj" />
+	</ItemGroup>
+</Project>
