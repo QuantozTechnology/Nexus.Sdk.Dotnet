@@ -125,7 +125,9 @@ public class MyClass
 
 ---
 
-## *Token Types*
+## *Tokens*
+
+### *Types*
 Nexus supports two types of tokens: 
 
 1: `StableCoin` - A token that is pegged to `currency` at a certain `rate`.
@@ -146,6 +148,9 @@ Algorand Settings:
 
 **Note**: That once a token has been created these settings cannot be changed.
 
+### *Taxonomy*
+
+The idea of token taxonomy is to provide a token on a blockchain with more meaning than just a code. The first step is to specify a set of properties that your tokens must comply with, this is called a `schema`. When creating a new token, you specify the `schema` along with a set of `properties`. These `properties` are validated against the schema and hashed. This `hash` is stored encoded as a token property on the blockchain. The second step is to add an `asset URL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. Using the `hash`, any person can verify that the the `properties` of a created token have not been altered. 
 ---
 
 ## *Payment Methods*

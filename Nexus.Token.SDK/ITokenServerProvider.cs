@@ -147,5 +147,39 @@ namespace Nexus.Token.SDK
         /// <param name="request"></param>
         /// <returns></returns>
         Task SubmitOnAlgorandAsync(AlgorandSubmitRequest request);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="code"></param>
+        /// <param name="schema"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <returns></returns>
+        Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="taxonomySchemaCode"></param>
+        /// <returns></returns>
+        Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="taxonomySchemaCode"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null, string? description = null, string? schema = null);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
+        Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode);
     }
 }

@@ -211,6 +211,28 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
+        /// <param name="code"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null)
+        {
+            SetSegments("taxonomy", "schema");
+
+            var request = new CreateTaxonomySchemaRequest(code, schema)
+            {
+                Description = description,
+                Name = name
+            };
+
+            return await ExecutePost<CreateTaxonomySchemaRequest, GetTaxonomySchemaResponse>(request);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="definition"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
@@ -296,6 +318,29 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="tokenCode"></param>
         /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode)
+        {
+            SetSegments("taxonomy", "token", tokenCode);
+            return await ExecuteGet<GetTaxonomyResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="taxonomySchemaCode"></param>
+        /// <returns></returns>
+        public async Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode)
+        {
+            SetSegments("taxonomy", "schema", taxonomySchemaCode);
+            return await ExecuteGet<GetTaxonomySchemaResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
         public async Task<TokenResponse> GetToken(string tokenCode)
         {
             SetSegments("token", "tokens", tokenCode);
@@ -322,6 +367,29 @@ namespace Nexus.Token.SDK
         {
             SetSegments("token", "envelope", "submit");
             await ExecutePost(request);
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="taxonomySchemaCode"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="schema"></param>
+        /// <returns></returns>
+        public async Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null,
+            string? description = null, string? schema = null)
+        {
+            SetSegments("taxonomy", "schema", taxonomySchemaCode);
+
+            var request = new UpdateTaxonomySchemaRequest
+            {
+                Name = name,
+                Description = description,
+                Schema = schema
+            };
+
+            return await ExecutePut<UpdateTaxonomySchemaRequest, GetTaxonomySchemaResponse>(request);
         }
     }
 }

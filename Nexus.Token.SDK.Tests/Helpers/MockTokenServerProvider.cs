@@ -56,6 +56,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string name, string description, string schema)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null)
         {
             throw new NotImplementedException();
@@ -86,6 +91,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string code)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TokenResponse> GetToken(string tokenCode)
         {
             throw new NotImplementedException();
@@ -97,6 +107,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
         }
 
         public Task SubmitOnStellarAsync(StellarSubmitRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string code, string? name = null, string? description = null, string? schema = null)
         {
             throw new NotImplementedException();
         }

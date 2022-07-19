@@ -76,6 +76,9 @@ public record TokenDefinition
     [JsonPropertyName("peggedBy")]
     public string? PeggedBy { get; set; }
 
+    [JsonPropertyName("taxonomy")]
+    public TaxonomyRequest? Taxonomy { get; } = null
+
     protected TokenDefinition(string code, string name)
     {
         Code = code;
@@ -91,6 +94,11 @@ public record TokenDefinition
         TokenType = "PeggedByCurrency";
         Rate = rate;
         PeggedBy = peggedBy;
+    }
+
+    public void SetTaxonomy(TaxonomyRequest taxonomy)
+    {
+        Taxonomy = taxonomy;
     }
 }
 
@@ -175,5 +183,36 @@ public record AlgorandTokenDefinitionSettings
     {
         TotalSupply = totalSupply;
         Decimals = decimals;
+    }
+}
+
+public record TaxonomyRequest
+{
+    [JsonPropertyName("taxonomySchemaCode")]
+    public string SchemaCode { get; set; }
+
+    [JsonPropertyName("assetUrl")]
+    public string AssetUrl { get; set; }
+
+    [JsonPropertyName("properties")]
+    public IDictionary<string, string> Properties { get; set; }
+
+    public TaxonomyRequest(string schemaCode, string assetUrl)
+    {
+        SchemaCode = schemaCode;
+        AssetUrl = assetUrl;
+        Properties = new Dictionary<string, string>();
+    }
+
+    public TaxonomyRequest(string schemaCode, string assetUrl, IDictionary<string, string> properties)
+    {
+        SchemaCode = schemaCode;
+        AssetUrl = assetUrl;
+        Properties = properties;
+    }
+
+    public void AddProperty(string key, string value)
+    {
+        Properties.Add(key, value);
     }
 }
