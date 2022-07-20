@@ -55,6 +55,15 @@ public class AlgorandKeyPair
         return $"ALGO-{GetPublicKey()}";
     }
 
+    public string Sign(string encodedUnsignedTransaction)
+    {
+        var transaction = Encoder.DecodeFromMsgPack<Transaction>(Convert.FromBase64String(encodedUnsignedTransaction));
+        var signedTransaction = _account.SignTransaction(transaction);
+        var encodedSignedTransaction = Convert.ToBase64String(Encoder.EncodeToMsgPack(signedTransaction));
+
+        return encodedSignedTransaction;
+    }
+
     public AlgorandSubmitRequest Sign(SignableResponse response)
     {
         if (response.BlockchainResponse == null)
@@ -71,9 +80,7 @@ public class AlgorandKeyPair
         var encodedUnsignedTransaction = unsignedTransaction.EncodedTransaction;
         var hash = unsignedTransaction.Hash;
 
-        var transaction = Encoder.DecodeFromMsgPack<Transaction>(Convert.FromBase64String(encodedUnsignedTransaction));
-        var signedTransaction = _account.SignTransaction(transaction);
-        var encodedSignedTransaction = Convert.ToBase64String(Algorand.Encoder.EncodeToMsgPack(signedTransaction));
+        var encodedSignedTransaction = Sign(encodedUnsignedTransaction);
 
         return new AlgorandSubmitRequest(hash, GetPublicKey(), encodedSignedTransaction);
     }

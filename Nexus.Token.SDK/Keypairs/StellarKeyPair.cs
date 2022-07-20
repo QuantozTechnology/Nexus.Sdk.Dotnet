@@ -57,6 +57,16 @@ public class StellarKeyPair
         return $"XLM-{GetPublicKey()}";
     }
 
+    public string Sign(string unsignedEnvelope, string networkPassphrase)
+    {
+        Network network = new(networkPassphrase);
+        var transaction = Transaction.FromEnvelopeXdr(unsignedEnvelope);
+        transaction.Sign(_keyPair, network);
+        var signedEnvelope = transaction.ToEnvelopeXdrBase64();
+
+        return signedEnvelope;
+    }
+
     public StellarSubmitRequest Sign(SignableResponse response, string networkPassphrase = PRODUCTION_NETWORK)
     {
         if (response.BlockchainResponse == null)
@@ -69,14 +79,10 @@ public class StellarKeyPair
             throw new InvalidOperationException("Invalid blockchain response, are you using the correct key pair?");
         }
 
-        Network network = new(networkPassphrase);
         var unsignedEnvelope = response.BlockchainResponse.EncodedStellarEnvelope;
         var hash = response.BlockchainResponse.StellarHash;
 
-        var transaction = Transaction.FromEnvelopeXdr(unsignedEnvelope);
-        transaction.Sign(_keyPair, network);
-        var signedEnvelope = transaction.ToEnvelopeXdrBase64();
-
+        var signedEnvelope = Sign(unsignedEnvelope, networkPassphrase);
         return new StellarSubmitRequest(signedEnvelope, hash);
     }
 }
