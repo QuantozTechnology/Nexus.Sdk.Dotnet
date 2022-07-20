@@ -77,7 +77,7 @@ public record TokenDefinition
     public string? PeggedBy { get; set; }
 
     [JsonPropertyName("taxonomy")]
-    public TaxonomyRequest? Taxonomy { get; } = null
+    public TaxonomyRequest? Taxonomy { get; set; } = null;
 
     protected TokenDefinition(string code, string name)
     {

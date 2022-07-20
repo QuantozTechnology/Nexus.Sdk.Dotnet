@@ -13,7 +13,7 @@
 		<Title>Nexus Token SDK</Title>
 		<PackageId>Nexus.Token.SDK</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes>Extracted the Sign function from the KeyPairs</PackageReleaseNotes>
+		<PackageReleaseNotes>Add taxonomy support for tokens</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

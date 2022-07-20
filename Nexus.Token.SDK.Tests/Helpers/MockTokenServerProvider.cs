@@ -91,6 +91,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string code)
         {
             throw new NotImplementedException();
