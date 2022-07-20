@@ -16,16 +16,22 @@ namespace Nexus.Token.SDK.Responses
             Hash = hash;
         }
 
+        [JsonPropertyName("taxonomySchemaCode")]
         public string TaxonomySchemaCode { get; }
 
+        [JsonPropertyName("taxonomySchemaName")]
         public string TaxonomySchemaName { get; }
 
+        [JsonPropertyName("taxonomySchemaDescription")]
         public string TaxonomySchemaDescription { get; }
 
+        [JsonPropertyName("tokenCode")]
         public string TokenCode { get; }
 
+        [JsonPropertyName("validatedTaxonomy")]
         public string ValidatedTaxonomy { get; }
 
+        [JsonPropertyName("hash")]
         public string Hash { get; }
     }
 

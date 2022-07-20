@@ -9,6 +9,9 @@ public record StellarTokenRequest
 
     [JsonPropertyName("stellar")]
     public StellarTokens? StellarTokens { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data = new Dictionary<string, string>();
 }
 
 public record AlgorandTokenRequest
@@ -18,6 +21,9 @@ public record AlgorandTokenRequest
 
     [JsonPropertyName("algorand")]
     public AlgorandTokens? AlgorandTokens { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data = new Dictionary<string, string>();
 }
 
 public record AlgorandTokens
@@ -195,23 +201,23 @@ public record TaxonomyRequest
     public string AssetUrl { get; set; }
 
     [JsonPropertyName("properties")]
-    public IDictionary<string, string> Properties { get; set; }
+    public IDictionary<string, object> Properties { get; set; }
 
     public TaxonomyRequest(string schemaCode, string assetUrl)
     {
         SchemaCode = schemaCode;
         AssetUrl = assetUrl;
-        Properties = new Dictionary<string, string>();
+        Properties = new Dictionary<string, object>();
     }
 
-    public TaxonomyRequest(string schemaCode, string assetUrl, IDictionary<string, string> properties)
+    public TaxonomyRequest(string schemaCode, string assetUrl, IDictionary<string, object> properties)
     {
         SchemaCode = schemaCode;
         AssetUrl = assetUrl;
         Properties = properties;
     }
 
-    public void AddProperty(string key, string value)
+    public void AddProperty(string key, object value)
     {
         Properties.Add(key, value);
     }

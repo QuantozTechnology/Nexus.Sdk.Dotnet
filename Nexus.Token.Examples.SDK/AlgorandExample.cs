@@ -58,7 +58,7 @@ namespace Nexus.Token.Examples.SDK
             var taxonomy = new TaxonomyRequest("PersonSchema", "https://hanspeter.com");
             taxonomy.AddProperty("FirstName", "Hans");
             taxonomy.AddProperty("LastName", "Peter");
-            taxonomy.AddProperty("Gender", Gender.Male.ToString());
+            taxonomy.AddProperty("Gender", (int)Gender.Male);
 
             var definition = AlgorandTokenDefinition.TokenizedAsset("HP", "Hans Peter", 1000, 0);
             definition.SetTaxonomy(taxonomy);
