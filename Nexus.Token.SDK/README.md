@@ -115,7 +115,7 @@ public class MyClass
 {
     public MyClass(ITokenServer tokenServer, IDecrypter encrypter) 
     {
-        var encryptedPrivateKey = "" // get from db or mobile phone storage
+        var encryptedPrivateKey = ""; // get from db or mobile phone storage
         var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
     }
 }
@@ -125,7 +125,9 @@ public class MyClass
 
 ---
 
-## *Token Types*
+## *Tokens*
+
+### *Types*
 Nexus supports two types of tokens: 
 
 1: `StableCoin` - A token that is pegged to `currency` at a certain `rate`.
@@ -146,6 +148,9 @@ Algorand Settings:
 
 **Note**: That once a token has been created these settings cannot be changed.
 
+### *Taxonomy*
+
+The idea of token taxonomy is to provide a token on a blockchain with more meaning than just a code. The first step is to specify a set of properties that your tokens must comply with, this is called a `schema` ([NJsonSchema](https://github.com/RicoSuter/NJsonSchema) is a library that can be used to easily generate a schema from an C# object). When creating a new token, you specify the `schema` along with a set of `properties` the token has. These `properties` are validated against the schema and hashed using the MD5 algorithm. This `hash` is stored base64 encoded as a token property on the blockchain. It is also possible to add an `assetURL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. Any person can verify that the `properties` of a created token have not been altered by encoding the JSON using MD5 hashing algorithm and comparing it to the decoded `hash` on the blockchain. 
 ---
 
 ## *Payment Methods*

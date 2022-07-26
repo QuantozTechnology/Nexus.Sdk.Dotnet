@@ -7,13 +7,13 @@
 		<RepositoryUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet</RepositoryUrl>
 		<RepositoryType>gitlab</RepositoryType>
 		<Description>SDK for interacting with the Nexus token environment.</Description>
-		<Version>0.0.2</Version>
+		<Version>0.0.3</Version>
 		<Authors>Maximilian Stoll</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
 		<Title>Nexus Token SDK</Title>
 		<PackageId>Nexus.Token.SDK</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageReleaseNotes>Extracted the Sign function from the KeyPairs</PackageReleaseNotes>
+		<PackageReleaseNotes>Add taxonomy support for tokens</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

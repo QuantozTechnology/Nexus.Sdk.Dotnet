@@ -9,6 +9,9 @@ public record StellarTokenRequest
 
     [JsonPropertyName("stellar")]
     public StellarTokens? StellarTokens { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data = new Dictionary<string, string>();
 }
 
 public record AlgorandTokenRequest
@@ -18,6 +21,9 @@ public record AlgorandTokenRequest
 
     [JsonPropertyName("algorand")]
     public AlgorandTokens? AlgorandTokens { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data = new Dictionary<string, string>();
 }
 
 public record AlgorandTokens
@@ -76,6 +82,9 @@ public record TokenDefinition
     [JsonPropertyName("peggedBy")]
     public string? PeggedBy { get; set; }
 
+    [JsonPropertyName("taxonomy")]
+    public TaxonomyRequest? Taxonomy { get; set; } = null;
+
     protected TokenDefinition(string code, string name)
     {
         Code = code;
@@ -91,6 +100,11 @@ public record TokenDefinition
         TokenType = "PeggedByCurrency";
         Rate = rate;
         PeggedBy = peggedBy;
+    }
+
+    public void SetTaxonomy(TaxonomyRequest taxonomy)
+    {
+        Taxonomy = taxonomy;
     }
 }
 
@@ -175,5 +189,36 @@ public record AlgorandTokenDefinitionSettings
     {
         TotalSupply = totalSupply;
         Decimals = decimals;
+    }
+}
+
+public record TaxonomyRequest
+{
+    [JsonPropertyName("taxonomySchemaCode")]
+    public string SchemaCode { get; set; }
+
+    [JsonPropertyName("assetUrl")]
+    public string AssetUrl { get; set; }
+
+    [JsonPropertyName("properties")]
+    public IDictionary<string, object> Properties { get; set; }
+
+    public TaxonomyRequest(string schemaCode, string assetUrl)
+    {
+        SchemaCode = schemaCode;
+        AssetUrl = assetUrl;
+        Properties = new Dictionary<string, object>();
+    }
+
+    public TaxonomyRequest(string schemaCode, string assetUrl, IDictionary<string, object> properties)
+    {
+        SchemaCode = schemaCode;
+        AssetUrl = assetUrl;
+        Properties = properties;
+    }
+
+    public void AddProperty(string key, object value)
+    {
+        Properties.Add(key, value);
     }
 }

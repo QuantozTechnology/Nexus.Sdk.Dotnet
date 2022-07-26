@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
 using Nexus.Token.SDK.Requests;
 using Nexus.Token.SDK.Security;
+using NJsonSchema;
 
 namespace Nexus.Token.Examples.SDK
 {
@@ -46,6 +48,29 @@ namespace Nexus.Token.Examples.SDK
             var token = response.Tokens.First();
 
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
+        }
+
+        public async Task CreateAssetTokenWithTaxonomyFlowAsync()
+        {
+            var schema = JsonSchema.FromType<Person>();
+            await _tokenServer.Taxonomy.CreateSchema("PersonSchema", schema.ToJson(), "Person", "Schema of a Person");
+
+            var taxonomy = new TaxonomyRequest("PersonSchema", "https://hanspeter.com");
+            taxonomy.AddProperty("FirstName", "Hans");
+            taxonomy.AddProperty("LastName", "Peter");
+            taxonomy.AddProperty("Gender", (int)Gender.Male);
+
+            var definition = AlgorandTokenDefinition.TokenizedAsset("HP", "Hans Peter", 1000, 0);
+            definition.SetTaxonomy(taxonomy);
+
+            var tokenResponse = await _tokenServer.Tokens.CreateOnAlgorand(definition);
+            var token = tokenResponse.Tokens.First();
+
+            _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
+
+            var taxonomyResponse = await _tokenServer.Taxonomy.Get("HP");
+            _logger.LogWarning("The hash of the Hans Peter token is: {issuerAddress}", taxonomyResponse.Hash);
+            _logger.LogWarning("The properties of the Hans Peter token is: {validatedTaxonomy}", taxonomyResponse.ValidatedTaxonomy);
         }
 
         public async Task FundAccountFlowAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
