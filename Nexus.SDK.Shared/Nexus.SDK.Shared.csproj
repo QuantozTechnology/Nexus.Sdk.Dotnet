@@ -9,7 +9,7 @@
 		<RepositoryUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet</RepositoryUrl>
 		<RepositoryType>gitlab</RepositoryType>
 		<Description>Shared files used by SDK's for interacting with the Nexus environment.</Description>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<Authors>Maximilian Stoll</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
 		<Title>Nexus Shared SDK</Title>

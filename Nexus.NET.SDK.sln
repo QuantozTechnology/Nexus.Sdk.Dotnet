@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.Token.SDK", "Nexus.To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nexus.Token.SDK.Tests", "Nexus.Token.SDK.Tests\Nexus.Token.SDK.Tests.csproj", "{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nexus.SDK.Shared.Tests", "Nexus.SDK.Shared.Tests\Nexus.SDK.Shared.Tests.csproj", "{6B820026-C0A7-4D04-98A4-FE2A076555AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,14 @@ Global
 		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|x86.ActiveCfg = Release|Any CPU
 		{74FA5F23-DC3D-43E1-AA7A-2DAD0041AE1D}.Release|x86.Build.0 = Release|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B820026-C0A7-4D04-98A4-FE2A076555AE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

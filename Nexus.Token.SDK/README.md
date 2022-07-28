@@ -53,6 +53,47 @@ public class Startup
 
 ---
 
+## *Exceptions*
+
+This SDK uses throws two types of custom exceptions: `NexusApiException` and `AuthProviderException`.
+
+`NexusApiException` is thrown when Nexus API returns an error.
+`AuthProviderException` is thrown when Nexus Identity returns an error.
+
+Here is an example:
+
+```csharp
+try
+{
+    ...
+}
+catch (NexusApiException ex)
+{
+    // Handle api exception
+    if (ex.StatusCode == 400 || ex.StatusCode == 404) 
+    {
+        // Handle user input error here
+    } 
+    else 
+    {
+        Console.WriteLine($"{ex.StatusCode}");
+        Console.WriteLine($"{ex.Message}");
+        Console.WriteLine($"{ex.ErrorCodes}");
+    }  
+}
+catch (AuthProviderException ex)
+{
+    // Handle authorized exception
+    Console.WriteLine($"{ex.Message}");
+}
+catch (Exception ex)
+{
+    // Handle unexpected exception
+    Console.WriteLine($"{ex.Message}");
+}
+```
+---
+
 ## *Logging*
 
 The SDK supports the `ILogger` interface. Here is a basic example of how to add debug logging to the console using Serilog:
