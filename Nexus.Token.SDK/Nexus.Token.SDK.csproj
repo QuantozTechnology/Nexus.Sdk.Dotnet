@@ -7,7 +7,7 @@
 		<RepositoryUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet</RepositoryUrl>
 		<RepositoryType>gitlab</RepositoryType>
 		<Description>SDK for interacting with the Nexus token environment.</Description>
-		<Version>0.0.3</Version>
+		<Version>0.0.4</Version>
 		<Authors>Maximilian Stoll</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
 		<Title>Nexus Token SDK</Title>
