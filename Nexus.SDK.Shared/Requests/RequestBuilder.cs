@@ -109,7 +109,19 @@ public class RequestBuilder<T> where T : class
 
     private async Task AuthenticateAsync()
     {
-        await _authProvider.AuthenticateAsync(_httpClient);
+        try
+        {
+            await _authProvider.AuthenticateAsync(_httpClient);
+        }
+        catch (AuthProviderException ex)
+        {
+            // Clear segments so it can be used again in the next request
+            _segments.Clear();
+            _segmentsAdded = false;
+
+            throw ex;
+        }
+
     }
 
     private Uri BuildUri()

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Nexus.SDK.Shared.Authentication;
 using Nexus.SDK.Shared.Responses;
 using Nexus.Token.Examples.SDK;
 using Nexus.Token.SDK.Extensions;
@@ -15,7 +16,7 @@ services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, dispose:
 
 services.AddTokenServer(o =>
     o.ConnectToTest("clientId", "clientSecret")
-     .UseSymetricEncryption("b14ca5898a4e4133bbce2ea2315a1916")
+     .UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916")
      .AddDefaultFundingPaymentMethod("FUNDING_EXAMPLE")
      .AddDefaultPayoutPaymentMethod("PAYOUT_EXAMPLE"));
 
@@ -50,8 +51,13 @@ try
 }
 catch (NexusApiException ex)
 {
+    Console.WriteLine($"{ex.StatusCode}");
     Console.WriteLine($"{ex.Message}");
     Console.WriteLine($"{ex.ErrorCodes}");
+}
+catch (AuthProviderException ex)
+{
+    Console.WriteLine($"{ex.Message}");
 }
 catch (Exception ex)
 {

@@ -6,11 +6,11 @@ namespace Nexus.Token.SDK.Security
     // https://www.c-sharpcorner.com/article/encryption-and-decryption-using-a-symmetric-key-in-c-sharp/
     public class AesOperation : IEncrypter, IDecrypter
     {
-        private readonly string _symetricKey;
+        private readonly string _symmetricKey;
 
-        public AesOperation(string symetricKey)
+        public AesOperation(string symmetricKey)
         {
-            _symetricKey = symetricKey;
+            _symmetricKey = symmetricKey;
         }
 
         public string EncryptString(string plainText)
@@ -20,7 +20,7 @@ namespace Nexus.Token.SDK.Security
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(_symetricKey);
+                aes.Key = Encoding.UTF8.GetBytes(_symmetricKey);
                 aes.IV = iv;
 
                 ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
@@ -49,7 +49,7 @@ namespace Nexus.Token.SDK.Security
 
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Encoding.UTF8.GetBytes(_symetricKey);
+                aes.Key = Encoding.UTF8.GetBytes(_symmetricKey);
                 aes.IV = iv;
                 ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 

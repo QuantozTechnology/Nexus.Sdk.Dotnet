@@ -27,9 +27,9 @@ namespace Nexus.Token.SDK
             return this;
         }
 
-        public TokenServerProviderOptionsBuilder UseSymetricEncryption(string symetricKey)
+        public TokenServerProviderOptionsBuilder UseSymmetricEncryption(string symmetricKey)
         {
-            var aes = new AesOperation(symetricKey);
+            var aes = new AesOperation(symmetricKey);
             serviceCollection.AddSingleton<IEncrypter>(aes);
             serviceCollection.AddSingleton<IDecrypter>(aes);
             return this;
