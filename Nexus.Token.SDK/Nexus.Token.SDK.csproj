@@ -34,4 +34,8 @@
 	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="dotnet pack -c $(Configuration) --no-build -o &quot;$(SolutionDir)/nupkgs/$(Configuration)&quot;" />
+	</Target>
 </Project>

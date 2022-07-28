@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="dotnet pack -c $(Configuration) --no-build -o &quot;$(SolutionDir)/nupkgs/$(Configuration)&quot;" />
+  </Target>
+
 </Project>
