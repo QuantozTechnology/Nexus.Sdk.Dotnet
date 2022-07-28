@@ -33,7 +33,7 @@ namespace Nexus.Token.Examples.SDK
                 _logger.LogWarning("This is its private key encrypted private key: {privateKey}. It can be stored in the database for example or on the users mobile phone",
                                     senderKeyPair.GetPrivateKey(_encrypter));
 
-                await _tokenServer.Accounts.CreateOnAlgorandAsync("TEST_CUSTOMER_5", senderKeyPair.GetPublicKey());
+                await _tokenServer.Accounts.CreateOnAlgorandAsync(customerCode, senderKeyPair.GetPublicKey());
 
                 _logger.LogInformation("Customer and account successfully created");
 
