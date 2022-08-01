@@ -136,7 +136,7 @@ To use AES encryption:
 services.AddTokenServer(o => o.UseSymetricEncryption("KEY"));
 ```
 
-The length of the `KEY` can be 16 Bytes (32 characters), 24 bytes (48 characters) or 32 bytes (64 characters) long. You can read up more on AES encryption [here:](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).
+The length of the `KEY` can be 16 Bytes (~16 characters), 24 bytes (~24 characters) or 32 bytes (~32 characters) long. You can read up more on AES encryption [here:](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).
 
 Encrypt example:
 ```csharp
