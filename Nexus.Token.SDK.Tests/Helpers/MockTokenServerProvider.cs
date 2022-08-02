@@ -56,7 +56,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string name, string description, string schema)
+        public Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name, string? description)
         {
             throw new NotImplementedException();
         }
@@ -106,9 +106,9 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task SubmitOnAlgorandAsync(AlgorandSubmitRequest request)
+        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public Task SubmitOnStellarAsync(StellarSubmitRequest request)

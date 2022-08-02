@@ -39,14 +39,18 @@ public record BlockchainResponse
 public record AlgorandTransactionResponse
 {
     [JsonConstructor]
-    public AlgorandTransactionResponse(string hash, string encodedTransaction)
+    public AlgorandTransactionResponse(string hash, string encodedTransaction, string publicKey)
     {
         Hash = hash;
         EncodedTransaction = encodedTransaction;
+        PublicKey = publicKey;
     }
 
     [JsonPropertyName("hash")]
     public string Hash { get; }
+
+    [JsonPropertyName("publicKey")]
+    public string PublicKey { get; }
 
     [JsonPropertyName("transaction")]
     public string EncodedTransaction { get; }
