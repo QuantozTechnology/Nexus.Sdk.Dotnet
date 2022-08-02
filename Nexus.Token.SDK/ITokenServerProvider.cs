@@ -146,7 +146,7 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task SubmitOnAlgorandAsync(AlgorandSubmitRequest request);
+        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests);
 
         /// <summary>
         ///

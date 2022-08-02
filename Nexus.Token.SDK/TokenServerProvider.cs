@@ -352,10 +352,13 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task SubmitOnAlgorandAsync(AlgorandSubmitRequest request)
+        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
         {
-            SetSegments("token", "envelope", "signature", "submit");
-            await ExecutePost(request);
+            foreach (var request in requests)
+            {
+                SetSegments("token", "envelope", "signature", "submit");
+                await ExecutePost(request);
+            }
         }
 
         /// <summary>

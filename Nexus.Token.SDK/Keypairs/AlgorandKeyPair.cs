@@ -64,24 +64,33 @@ public class AlgorandKeyPair
         return encodedSignedTransaction;
     }
 
-    public AlgorandSubmitRequest Sign(SignableResponse response)
+    /// <summary>
+    /// Sign Algorand transactions using this keypair
+    /// </summary>
+    /// <param name="response">The response containing the Algorand transactions to sign</param>
+    /// <returns>A list of Algorand transactions signed by this keypair</returns>
+    /// <exception cref="InvalidOperationException">Thrown when there are no Algorand transactions to sign</exception>
+    public IEnumerable<AlgorandSubmitRequest> Sign(SignableResponse response)
     {
-        if (response.BlockchainResponse == null)
-        {
-            throw new ArgumentNullException("No blockchain response to sign");
-        }
-
         if (response.BlockchainResponse.AlgorandTransactions == null)
         {
             throw new InvalidOperationException("Invalid blockchain response, are you using the correct key pair?");
         }
 
-        var unsignedTransaction = response.BlockchainResponse.AlgorandTransactions.First();
-        var encodedUnsignedTransaction = unsignedTransaction.EncodedTransaction;
-        var hash = unsignedTransaction.Hash;
+        var unsignedTransactions = response.BlockchainResponse.AlgorandTransactions.Where(r => r.PublicKey == GetPublicKey());
+        var submitRequests = new List<AlgorandSubmitRequest>();
 
-        var encodedSignedTransaction = Sign(encodedUnsignedTransaction);
+        foreach (var unsignedTransaction in unsignedTransactions)
+        {
+            var encodedUnsignedTransaction = unsignedTransaction.EncodedTransaction;
+            var hash = unsignedTransaction.Hash;
 
-        return new AlgorandSubmitRequest(hash, GetPublicKey(), encodedSignedTransaction);
+            var encodedSignedTransaction = Sign(encodedUnsignedTransaction);
+
+            var submitRequest = new AlgorandSubmitRequest(hash, GetPublicKey(), encodedSignedTransaction);
+            submitRequests.Add(submitRequest);
+        }
+
+        return submitRequests;
     }
 }

@@ -5,12 +5,12 @@ This project provides the following functionalities to interact with your Nexus 
 | Functionality                    	| Algorand 	| Stellar 	|
 |----------------------------------	|----------	|---------	|
 | Create a Customer                	| ✔️        	| ✔️       	|
-| Create an Account for a Customer 	| ✔️        	| ✔️       	|
+| Create Accounts for a Customer 	| ✔️        	| ✔️       	|
 | Create a Token                   	| ✔️        	| ✔️       	|
-| Connect an Account to a Token    	| ✔️        	| ✔️       	|
+| Connect an Account to a Tokens    	| ✔️        	| ✔️       	|
 | Check an Account's Token Balances | ✔️        	| ✔️       	|
-| Fund an Account with Token       	| ✔️        	| ✔️       	|
-| Pay another Account with Token   	| ✔️        	| ✔️       	|
+| Fund an Account with Tokens      	| ✔️        	| ✔️       	|
+| Pay other Accounts with Tokens   	| ✔️        	| ✔️       	|
 | Payout a Token from an Account   	| ✔️        	| ✔️       	|
 
 ---
@@ -109,6 +109,8 @@ var logger = new LoggerConfiguration()
 services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, dispose: true));
 ```
 
+---
+
 ## *Environments*
 The SDK supports two environments for Nexus:
 
@@ -189,9 +191,15 @@ Algorand Settings:
 
 **Note**: That once a token has been created these settings cannot be changed.
 
+
 ### *Taxonomy*
 
-The idea of token taxonomy is to provide a token on a blockchain with more meaning than just a code. The first step is to specify a set of properties that your tokens must comply with, this is called a `schema` ([NJsonSchema](https://github.com/RicoSuter/NJsonSchema) is a library that can be used to easily generate a schema from an C# object). When creating a new token, you specify the `schema` along with a set of `properties` the token has. These `properties` are validated against the schema and hashed using the MD5 algorithm. This `hash` is stored base64 encoded as a token property on the blockchain. It is also possible to add an `assetURL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. Any person can verify that the `properties` of a created token have not been altered by encoding the JSON using MD5 hashing algorithm and comparing it to the decoded `hash` on the blockchain. 
+The idea of token taxonomy is to provide a token on a blockchain with more meaning than just a code. The first step is to specify a set of properties that your tokens must comply with, this is called a `schema` ([NJsonSchema](https://github.com/RicoSuter/NJsonSchema) is a library that can be used to easily generate a schema from an C# object). 
+
+When creating a new token, you specify the `schema` along with a set of `properties` the token has. These `properties` are validated against the schema and hashed using the MD5 algorithm. This `hash` is stored base64 encoded as a token property on the blockchain. It is also possible to add an `assetURL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. 
+
+Any person can verify that the `properties` of a created token have not been altered by encoding the JSON using MD5 hashing algorithm and comparing it to the decoded `hash` on the blockchain. 
+
 ---
 
 ## *Payment Methods*
