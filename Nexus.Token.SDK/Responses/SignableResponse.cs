@@ -49,7 +49,7 @@ public record AlgorandTransactionResponse
     [JsonPropertyName("hash")]
     public string Hash { get; }
 
-    [JsonPropertyName("publicKey")]
+    [JsonPropertyName("address")]
     public string PublicKey { get; }
 
     [JsonPropertyName("transaction")]
