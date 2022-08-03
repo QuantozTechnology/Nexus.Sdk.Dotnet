@@ -61,10 +61,10 @@ namespace Nexus.Token.SDK.Responses
         [JsonPropertyName("schema")]
         public string Schema { get; }
 
-        [JsonPropertyName("createdOn")]
+        [JsonPropertyName("createdDate")]
         public string CreatedOn { get; }
 
-        [JsonPropertyName("updatedOn")]
+        [JsonPropertyName("updatedDate")]
         public string UpdatedOn { get; }
     }
 }
