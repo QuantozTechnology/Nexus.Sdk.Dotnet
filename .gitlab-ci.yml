@@ -11,5 +11,5 @@ deploy:
     - dotnet nuget add source "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/nuget/index.json" --name gitlab --username gitlab-ci-token --password $CI_JOB_TOKEN --store-password-in-clear-text
     - dotnet nuget push "./Nexus.Token.SDK/bin/Release/*.nupkg" --source gitlab
     - dotnet nuget push "./Nexus.SDK.Shared/bin/Release/*.nupkg" --source gitlab
-    only:
-      - main
+  only:
+    - main
