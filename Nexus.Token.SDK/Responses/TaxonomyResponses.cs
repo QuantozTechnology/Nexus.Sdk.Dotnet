@@ -2,10 +2,10 @@
 
 namespace Nexus.Token.SDK.Responses
 {
-    public record GetTaxonomyResponse
+    public record TaxonomyResponse
     {
         [JsonConstructor]
-        public GetTaxonomyResponse(string taxonomySchemaCode, string taxonomySchemaName,
+        public TaxonomyResponse(string taxonomySchemaCode, string taxonomySchemaName,
             string taxonomySchemaDescription, string tokenCode, string validatedTaxonomy, string hash)
         {
             TaxonomySchemaCode = taxonomySchemaCode;
@@ -35,10 +35,10 @@ namespace Nexus.Token.SDK.Responses
         public string Hash { get; }
     }
 
-    public record GetTaxonomySchemaResponse
+    public record TaxonomySchemaResponse
     {
         [JsonConstructor]
-        public GetTaxonomySchemaResponse(string code, string name, string description,
+        public TaxonomySchemaResponse(string code, string name, string description,
             string schema, string createdOn, string updatedOn)
         {
             Code = code;

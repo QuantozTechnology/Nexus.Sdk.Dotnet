@@ -6,6 +6,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
 {
     public class MockTokenServerProvider : ITokenServerProvider
     {
+        public Task<SignableResponse> CancelOrder(string orderCode)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode)
         {
             throw new NotImplementedException();
@@ -16,12 +21,12 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CreateAccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
+        public Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CreateAccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
+        public Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
         {
             throw new NotImplementedException();
         }
@@ -41,12 +46,17 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignableResponse> CreateOrder(OrderRequest orderRequest)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> CreatePaymentAsync(PaymentDefinition[] definitions, string? memo = null)
+        public Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null)
         {
             throw new NotImplementedException();
         }
@@ -56,7 +66,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name, string? description)
+        public Task<TaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name, string? description)
         {
             throw new NotImplementedException();
         }
@@ -76,6 +86,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<bool> Exists(string customerCode)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<AccountResponse> GetAccount(string accountCode)
         {
             throw new NotImplementedException();
@@ -91,17 +106,32 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode)
+        public Task<OrderResponse> GetOrder(string orderCode)
         {
             throw new NotImplementedException();
         }
 
-        public Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string code)
+        public Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TaxonomyResponse> GetTaxonomy(string tokenCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TaxonomySchemaResponse> GetTaxonomySchema(string code)
         {
             throw new NotImplementedException();
         }
 
         public Task<TokenResponse> GetToken(string tokenCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
         }
@@ -116,7 +146,17 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string code, string? name = null, string? description = null, string? schema = null)
+        public Task<TaxonomySchemaResponse> UpdateTaxonomySchema(string code, string? name = null, string? description = null, string? schema = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] tokenCodes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] tokenCodes)
         {
             throw new NotImplementedException();
         }

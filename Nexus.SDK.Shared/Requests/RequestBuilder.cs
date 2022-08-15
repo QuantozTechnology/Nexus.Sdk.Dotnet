@@ -2,6 +2,7 @@
 using Nexus.SDK.Shared.Authentication;
 using Nexus.SDK.Shared.Responses;
 using System.Text.Json;
+using System.Web;
 
 namespace Nexus.SDK.Shared.Requests;
 
@@ -14,6 +15,8 @@ public class RequestBuilder<T> where T : class
     private readonly HttpClient _httpClient;
 
     private bool _segmentsAdded;
+    private bool _queryParametersAdded;
+    private IDictionary<string, string>? _queryParameters;
     protected ILogger<RequestBuilder<T>>? _logger;
 
     public RequestBuilder(Uri? serverUri, HttpClient httpClient, IAuthProvider authProvider,
@@ -98,11 +101,19 @@ public class RequestBuilder<T> where T : class
 
         _segmentsAdded = true;
 
-        //Remove default segments
-        _segments.Clear();
-
         foreach (var segment in segments)
             _segments.Add(segment);
+
+        return this;
+    }
+
+    protected RequestBuilder<T> SetQueryParameters(IDictionary<string, string> queryParameters)
+    {
+        if (_queryParametersAdded)
+            throw new Exception("Query parameters have already been added.");
+
+        _queryParametersAdded = true;
+        _queryParameters = queryParameters;
 
         return this;
     }
@@ -115,18 +126,33 @@ public class RequestBuilder<T> where T : class
         }
         catch (AuthProviderException ex)
         {
-            // Clear segments so it can be used again in the next request
-            _segments.Clear();
-            _segmentsAdded = false;
-
+            ResetSegments();
+            ResetQueryParameters();
             throw ex;
         }
+    }
 
+    private void ResetSegments()
+    {
+        if (_segmentsAdded)
+        {
+            _segments.Clear();
+            _segmentsAdded = false;
+        }
+    }
+
+    private void ResetQueryParameters()
+    {
+        if (_queryParametersAdded)
+        {
+            _queryParameters?.Clear();
+            _queryParametersAdded = false;
+        }
     }
 
     private Uri BuildUri()
     {
-        if (_segments.Count > 0)
+        if (_segments.Any())
         {
             var path = "";
 
@@ -135,11 +161,17 @@ public class RequestBuilder<T> where T : class
 
             _uriBuilder.Path = path;
 
+            if (_queryParameters != null && _queryParameters.Any())
+            {
+                string getQueryString = BuildQuerystring(_queryParameters);
+                _uriBuilder.Query = getQueryString;
+            }
+
             try
             {
                 // After building the url we reset the segments for the next request.
-                _segments.Clear();
-                _segmentsAdded = false;
+                ResetSegments();
+                ResetQueryParameters();
                 return _uriBuilder.Uri;
             }
             catch (UriFormatException)
@@ -149,5 +181,22 @@ public class RequestBuilder<T> where T : class
         }
 
         throw new NotSupportedException("No segments defined.");
+    }
+
+    private string BuildQuerystring(IDictionary<string, string> querystringParams)
+    {
+        List<string> paramList = new List<string>();
+
+        foreach (var parameter in querystringParams)
+        {
+            paramList.Add(parameter.Key + "=" + parameter.Value);
+        }
+
+        return string.Join("&", paramList);
+    }
+
+    protected void AddDefaultRequestHeader(string key, string value)
+    {
+        _httpClient.DefaultRequestHeaders.Add(key, value);
     }
 }

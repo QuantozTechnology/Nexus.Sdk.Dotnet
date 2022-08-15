@@ -18,14 +18,24 @@ public class AccountsFacade : TokenServerFacade
         return await _provider.GetAccountBalanceAsync(accountCode);
     }
 
-    public async Task<CreateAccountResponse> CreateOnStellarAsync(string customerCode, string address)
+    public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string address)
     {
         return await _provider.CreateAccountOnStellarAsync(customerCode, address);
     }
 
-    public async Task<CreateAccountResponse> CreateOnAlgorandAsync(string customerCode, string address)
+    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string address, string[] allowedTokens)
+    {
+        return await _provider.CreateAccountOnStellarAsync(customerCode, address, allowedTokens);
+    }
+
+    public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string address)
     {
         return await _provider.CreateAccountOnAlgorandAsync(customerCode, address);
+    }
+
+    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string address, string[] allowedTokens)
+    {
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, address, allowedTokens);
     }
 
     public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode)

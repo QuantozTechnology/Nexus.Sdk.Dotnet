@@ -4,7 +4,7 @@ using Serilog;
 
 namespace Nexus.Token.Examples.SDK
 {
-    public class Startup
+    public class StartupExample
     {
         public void ConfigureServices(IServiceCollection services)
         {
@@ -18,9 +18,10 @@ namespace Nexus.Token.Examples.SDK
 
             services.AddTokenServer(o =>
                o.ConnectToTest("clientId", "clientSecret")
-                .UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916")
                 .AddDefaultFundingPaymentMethod("FUNDING_EXAMPLE")
                 .AddDefaultPayoutPaymentMethod("PAYOUT_EXAMPLE"));
+
+            services.UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916");
         }
     }
-}
+} 

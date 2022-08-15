@@ -171,6 +171,9 @@ public record StellarTokenDefinitionSettings
     [JsonPropertyName("accountLimit")]
     public decimal? AccountLimit { get; set; }
 
+    [JsonPropertyName("decimals")]
+    public int Decimals { get; } = 7;
+
     public StellarTokenDefinitionSettings(decimal? accountLimit)
     {
         AccountLimit = accountLimit;

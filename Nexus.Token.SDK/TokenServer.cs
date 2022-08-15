@@ -18,5 +18,5 @@ public class TokenServer : ITokenServer
     public OperationsFacade Operations => new(_provider);
     public SubmitFacade Submit => new(_provider);
     public TaxonomyFacade Taxonomy => new(_provider);
-
+    public OrdersFacade Orders => new(_provider);
 }

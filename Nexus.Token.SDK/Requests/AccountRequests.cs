@@ -9,6 +9,9 @@ public record CreateTokenAccountRequest
 
     [JsonPropertyName("customerCryptoAddress")]
     public string? Address { get; set; }
+
+    [JsonPropertyName("tokenSettings")]
+    public CreateTokenAccountSettings TokenSettings { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest
@@ -48,4 +51,10 @@ public class AllowedTokens
 
     [JsonPropertyName("disableTokens")]
     public string[]? DisableTokens { get; set; }
+}
+
+public class CreateTokenAccountSettings
+{
+    [JsonPropertyName("allowedTokens")]
+    public string[] AllowedTokens { get; set; }
 }
