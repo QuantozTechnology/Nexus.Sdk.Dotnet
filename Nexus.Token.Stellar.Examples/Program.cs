@@ -194,7 +194,7 @@ namespace Nexus.Token.Stellar.Examples
             WriteToConsole("Now we Fund the Asset Holders new account with a large amount of shares");
             await stellarExamples.FundAccountAsync(assetHoldersPrivateKey, assetTokenCode, 100000);
 
-            WriteToConsole("Finally we create a two way atomic payment where 100 shares are exchanges for 200 euro.");
+            WriteToConsole("Finally we create a two way atomic payment where 100 shares are exchanges for 100 euro.");
             var payments = new ExamplePayment[]
             {
                 new ExamplePayment(bobsPrivateKey, assetHoldersPrivateKey, stablecoinTokenCode, 100),
