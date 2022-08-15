@@ -20,20 +20,6 @@ public record AccountResponse
         AccountCode = accountCode;
         CryptoCode = cryptoCode;
     }
-
-
-}
-
-public record CreateAccountResponse
-{
-    [JsonPropertyName("accountCode")]
-    public string AccountCode { get; }
-
-    [JsonConstructor]
-    public CreateAccountResponse(string accountCode)
-    {
-        AccountCode = accountCode;
-    }
 }
 
 public record UpdateTokenAccountResponse
@@ -55,7 +41,7 @@ public record UpdateTokenAccountResponse
 public class AccountBalancesResponse
 {
     [JsonPropertyName("balances")]
-    public AccountBalance[] Balances { get; }
+    public IEnumerable<AccountBalance> Balances { get; }
 
     public bool IsConnectedToToken(string tokenCode)
     {
@@ -63,7 +49,10 @@ public class AccountBalancesResponse
     }
 
     [JsonConstructor]
-    public AccountBalancesResponse(AccountBalance[] balances)  => (Balances) = (balances);
+    public AccountBalancesResponse(IEnumerable<AccountBalance> balances)
+    {
+        Balances = balances;
+    }
 }
 
 public record AccountBalance

@@ -6,16 +6,21 @@ namespace Nexus.SDK.Shared.Tests.Helpers
 {
     public class MockRequestBuilder : RequestBuilder<MockRequestBuilder>
     {
-        public MockRequestBuilder(IAuthProvider authProvider,
-            ILogger<RequestBuilder<MockRequestBuilder>>? logger = null)
-            : base(new Uri("https://mockrequestbuilder.com"), new HttpClient(), authProvider, logger)
+        public MockRequestBuilder(IAuthProvider authProvider, HttpMessageHandler messageHandler)
+            : base(new Uri("https://mockrequestbuilder.com"), new HttpClient(messageHandler), authProvider, null)
         {
         }
 
-        public async Task<TResponse> Get<TResponse>(params string[] segments) where TResponse : class
+        public async Task<TResponse> Get<TResponse>(string[] segments, IDictionary<string, string>? queryParameters = null) where TResponse : class
         {
             SetSegments(segments);
-            return await base.ExecuteGet<TResponse>();
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<TResponse>();
         }
     }
 }

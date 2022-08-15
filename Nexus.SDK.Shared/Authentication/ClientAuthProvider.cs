@@ -10,12 +10,12 @@ public class ClientAuthProvider : IAuthProvider
     private readonly string _clientId;
     private readonly string _clientSecret;
 
-    private ILogger<ClientAuthProvider> _logger;
+    private ILogger<ClientAuthProvider>? _logger;
 
     private DateTime? _expiresOn;
     private string? _accessToken;
 
-    public ClientAuthProvider(ClientAuthProviderOptions options, ILogger<ClientAuthProvider> logger)
+    public ClientAuthProvider(ClientAuthProviderOptions options, ILogger<ClientAuthProvider>? logger = null)
     {
         _tokenEndpoint = new Uri(options.IdentityUrl + "/connect/token").OriginalString;
         _clientId = options.ClientId;
@@ -38,7 +38,6 @@ public class ClientAuthProvider : IAuthProvider
             var response = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
             {
                 Address = _tokenEndpoint,
-
                 ClientId = _clientId,
                 ClientSecret = _clientSecret,
                 Scope = "api1"

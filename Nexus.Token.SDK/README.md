@@ -12,6 +12,7 @@ This project provides the following functionalities to interact with your Nexus 
 | Fund an Account with Tokens      	| ✔️        	| ✔️       	|
 | Pay other Accounts with Tokens   	| ✔️        	| ✔️       	|
 | Payout a Token from an Account   	| ✔️        	| ✔️       	|
+| Orderbook                        	| ✔️        	| -     	|
 
 ---
 ## *Dependency Injection*
@@ -58,6 +59,7 @@ public class Startup
 This SDK uses throws two types of custom exceptions: `NexusApiException` and `AuthProviderException`.
 
 `NexusApiException` is thrown when Nexus API returns an error.
+
 `AuthProviderException` is thrown when Nexus Identity returns an error.
 
 Here is an example:
@@ -135,7 +137,7 @@ The private key of an Account should be treated like a password. The SDK support
 To use AES encryption:
 
 ```csharp
-services.AddTokenServer(o => o.UseSymetricEncryption("KEY"));
+services.UseSymmetricEncryption("KEY");
 ```
 
 The length of the `KEY` can be 16 Bytes (~16 characters), 24 bytes (~24 characters) or 32 bytes (~32 characters) long. You can read up more on AES encryption [here:](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard).
@@ -250,4 +252,5 @@ _services.AddTokenServer(mock);
 ```
 ---
 ## Examples
-Click [here](../Nexus.Token.Examples.SDK) to see examples of this SDK in action.
+- [Stellar](../Nexus.Token.Stellar.Examples) examples of this SDK in action on the Stellar blockchain.
+- [Algorand](../Nexus.Token.Algorand.Examples) examples of this SDK in action on the Algorand blockchain.

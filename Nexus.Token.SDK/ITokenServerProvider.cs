@@ -1,4 +1,5 @@
 ﻿using Nexus.SDK.Shared;
+using Nexus.SDK.Shared.Responses;
 using Nexus.Token.SDK.Requests;
 using Nexus.Token.SDK.Responses;
 
@@ -19,7 +20,9 @@ namespace Nexus.Token.SDK
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
         /// <returns></returns>
-        Task<CreateAccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey);
+        Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey);
+
+        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] tokenCodes);
 
         /// <summary>
         ///
@@ -27,7 +30,9 @@ namespace Nexus.Token.SDK
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
         /// <returns></returns>
-        Task<CreateAccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey);
+        Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey);
+
+        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] tokenCodes);
 
         /// <summary>
         ///
@@ -58,6 +63,9 @@ namespace Nexus.Token.SDK
         /// <param name="tokenCode"></param>
         /// <returns></returns>
         Task<TokenResponse> GetToken(string tokenCode);
+
+
+        Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query);
 
         /// <summary>
         ///
@@ -121,7 +129,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task<SignableResponse> CreatePaymentAsync(PaymentDefinition[] definitions, string? memo = null);
+        Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null);
 
         /// <summary>
         ///
@@ -156,14 +164,14 @@ namespace Nexus.Token.SDK
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <returns></returns>
-        Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null);
+        Task<TaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="taxonomySchemaCode"></param>
         /// <returns></returns>
-        Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode);
+        Task<TaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode);
 
         /// <summary>
         ///
@@ -173,13 +181,41 @@ namespace Nexus.Token.SDK
         /// <param name="description"></param>
         /// <param name="schema"></param>
         /// <returns></returns>
-        Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null, string? description = null, string? schema = null);
+        Task<TaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null, string? description = null, string? schema = null);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="tokenCode"></param>
         /// <returns></returns>
-        Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode);
+        Task<TaxonomyResponse> GetTaxonomy(string tokenCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="orderCode"></param>
+        /// <returns></returns>
+        Task<OrderResponse> GetOrder(string orderCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? query);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="orderRequest"></param>
+        /// <returns></returns>
+        Task<SignableResponse> CreateOrder(OrderRequest orderRequest);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="orderCode"></param>
+        /// <returns></returns>
+        Task<SignableResponse> CancelOrder(string orderCode);
     }
 }

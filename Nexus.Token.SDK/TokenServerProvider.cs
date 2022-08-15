@@ -11,12 +11,20 @@ namespace Nexus.Token.SDK
     {
         private readonly IDictionary<PaymentMethodType, string> _paymentMethods;
 
-        public TokenServerProvider(HttpClient httpClient, IAuthProvider authProvider,
-            TokenServerProviderOptions options, ILogger<RequestBuilder<TokenServerProvider>>? logger = null)
-            : base(options.ServerUri, httpClient, authProvider, logger)
+        public TokenServerProvider(HttpClient httpClient, TokenServerProviderOptions options,
+            ILogger<RequestBuilder<TokenServerProvider>>? logger = null)
+            : base(options.ServerUri, httpClient, options.AuthProvider, logger)
         {
+            AddDefaultRequestHeader("api_version", "1.2");
             _paymentMethods = options.PaymentMethods ?? new Dictionary<PaymentMethodType, string>();
-            httpClient.DefaultRequestHeaders.Add("api_version", "1.2");
+        }
+
+        public async Task<SignableResponse> CancelOrder(string orderCode)
+        {
+            SetSegments("token", "orders", "cancel");
+
+            var request = new CancelOrderRequest(orderCode);
+            return await ExecutePut<CancelOrderRequest, SignableResponse>(request);
         }
 
         /// <summary>
@@ -60,7 +68,7 @@ namespace Nexus.Token.SDK
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
         /// <returns></returns>
-        public async Task<CreateAccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
+        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
         {
             SetSegments("customer", customerCode, "accounts");
 
@@ -69,7 +77,23 @@ namespace Nexus.Token.SDK
                 Address = publicKey
             };
 
-            return await ExecutePost<CreateAlgorandAccountRequest, CreateAccountResponse>(request);
+            return await ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] allowedTokens)
+        {
+            SetSegments("customer", customerCode, "accounts");
+
+            var request = new CreateAlgorandAccountRequest
+            {
+                Address = publicKey,
+                TokenSettings = new CreateTokenAccountSettings
+                {
+                    AllowedTokens = allowedTokens
+                }
+            };
+
+            return await ExecutePost<CreateAlgorandAccountRequest, SignableResponse>(request);
         }
 
         /// <summary>
@@ -78,7 +102,7 @@ namespace Nexus.Token.SDK
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
         /// <returns></returns>
-        public async Task<CreateAccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
+        public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
         {
             SetSegments("customer", customerCode, "accounts");
 
@@ -87,7 +111,23 @@ namespace Nexus.Token.SDK
                 Address = publicKey
             };
 
-            return await ExecutePost<CreateStellarAccountRequest, CreateAccountResponse>(request);
+            return await ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] allowedTokens)
+        {
+            SetSegments("customer", customerCode, "accounts");
+
+            var request = new CreateStellarAccountRequest
+            {
+                Address = publicKey,
+                TokenSettings = new CreateTokenAccountSettings
+                {
+                    AllowedTokens = allowedTokens
+                }
+            };
+
+            return await ExecutePost<CreateStellarAccountRequest, SignableResponse>(request);
         }
 
         /// <summary>
@@ -148,6 +188,12 @@ namespace Nexus.Token.SDK
             await ExecutePost(request);
         }
 
+        public async Task<SignableResponse> CreateOrder(OrderRequest orderRequest)
+        {
+            SetSegments("token", "orders");
+            return await ExecutePost<OrderRequest, SignableResponse>(orderRequest);
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -160,7 +206,7 @@ namespace Nexus.Token.SDK
         public async Task<SignableResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
         {
             var definition = new PaymentDefinition(senderPublicKey, receiverPublicKey, tokenCode, amount);
-            return await CreatePaymentAsync(new PaymentDefinition[] { definition }, memo);
+            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo);
         }
 
         /// <summary>
@@ -169,7 +215,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CreatePaymentAsync(PaymentDefinition[] definitions, string? memo = null)
+        public async Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null)
         {
             SetSegments("token", "payments");
 
@@ -217,7 +263,7 @@ namespace Nexus.Token.SDK
         /// <param name="schema"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<GetTaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null)
+        public async Task<TaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null)
         {
             SetSegments("taxonomy", "schema");
 
@@ -227,7 +273,7 @@ namespace Nexus.Token.SDK
                 Name = name
             };
 
-            return await ExecutePost<CreateTaxonomySchemaRequest, GetTaxonomySchemaResponse>(request);
+            return await ExecutePost<CreateTaxonomySchemaRequest, TaxonomySchemaResponse>(request);
         }
 
         /// <summary>
@@ -288,6 +334,29 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
+        /// <param name="customerCode"></param>
+        /// <returns>True if the customer already exists in Nexus and false otherwise</returns>
+        public async Task<bool> Exists(string customerCode)
+        {
+            try
+            {
+                await GetCustomer(customerCode);
+                return true;
+            }
+            catch (NexusApiException ex)
+            {
+                if (ex.StatusCode == 404)
+                {
+                    return false;
+                }
+
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="accountCode"></param>
         /// <returns></returns>
         public async Task<AccountResponse> GetAccount(string accountCode)
@@ -296,6 +365,11 @@ namespace Nexus.Token.SDK
             return await ExecuteGet<AccountResponse>();
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="accountCode"></param>
+        /// <returns></returns>
         public async Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode)
         {
             SetSegments("accounts", accountCode, "tokenBalance");
@@ -316,13 +390,41 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
+        /// <param name="orderCode"></param>
+        /// <returns></returns>
+        public async Task<OrderResponse> GetOrder(string orderCode)
+        {
+            SetSegments("token", "orders", orderCode);
+            return await ExecuteGet<OrderResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="queryParameters"></param>
+        /// <returns></returns>
+        public async Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? queryParameters)
+        {
+            SetSegments("token", "orders");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<PagedResponse<OrderResponse>>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="tokenCode"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<GetTaxonomyResponse> GetTaxonomy(string tokenCode)
+        public async Task<TaxonomyResponse> GetTaxonomy(string tokenCode)
         {
             SetSegments("taxonomy", "token", tokenCode);
-            return await ExecuteGet<GetTaxonomyResponse>();
+            return await ExecuteGet<TaxonomyResponse>();
         }
 
         /// <summary>
@@ -330,10 +432,10 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="taxonomySchemaCode"></param>
         /// <returns></returns>
-        public async Task<GetTaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode)
+        public async Task<TaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode)
         {
             SetSegments("taxonomy", "schema", taxonomySchemaCode);
-            return await ExecuteGet<GetTaxonomySchemaResponse>();
+            return await ExecuteGet<TaxonomySchemaResponse>();
         }
 
         /// <summary>
@@ -345,6 +447,23 @@ namespace Nexus.Token.SDK
         {
             SetSegments("token", "tokens", tokenCode);
             return await ExecuteGet<TokenResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="queryParameters"></param>
+        /// <returns></returns>
+        public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)
+        {
+            SetSegments("token", "tokens");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<PagedResponse<TokenResponse>>();
         }
 
         /// <summary>
@@ -380,7 +499,7 @@ namespace Nexus.Token.SDK
         /// <param name="description"></param>
         /// <param name="schema"></param>
         /// <returns></returns>
-        public async Task<GetTaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null,
+        public async Task<TaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null,
             string? description = null, string? schema = null)
         {
             SetSegments("taxonomy", "schema", taxonomySchemaCode);
@@ -392,7 +511,7 @@ namespace Nexus.Token.SDK
                 Schema = schema
             };
 
-            return await ExecutePut<UpdateTaxonomySchemaRequest, GetTaxonomySchemaResponse>(request);
+            return await ExecutePut<UpdateTaxonomySchemaRequest, TaxonomySchemaResponse>(request);
         }
     }
 }

@@ -27,9 +27,9 @@ public class OperationsFacade : TokenServerFacade
         return await _provider.CreatePaymentAsync(senderPublicKey, receiverPublicKey, tokenCode, amount, memo);
     }
 
-    public async Task<SignableResponse> CreatePaymentAsync(PaymentDefinition[] definitions, string? memo = null)
+    public async Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null)
     {
-        return await _provider.CreatePaymentAsync(definitions, memo);
+        return await _provider.CreatePaymentsAsync(definitions, memo);
     }
 
     public async Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount,

@@ -7,7 +7,9 @@ Welcome to the Nexus SDK repository. In here you will find all the tools require
 This repository consists of the following projects:
 
 1. [Nexus Token SDK](./Nexus.Token.SDK) - This project contains functionalities required to interact with your Nexus Token environments.
-2. [Nexus Token SDK Examples](./Nexus.Token.Examples.SDK) - This project contains some useful examples on how to get started with the Token SDK. 
+2. Examples
+    - [Stellar](../Nexus.Token.Stellar.Examples) examples of this SDK in action on the Stellar blockchain.
+    - [Algorand](../Nexus.Token.Algorand.Examples) examples of this SDK in action on the Algorand blockchain.
 
 ## Installation using Nuget
 
