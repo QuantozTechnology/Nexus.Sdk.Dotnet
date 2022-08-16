@@ -19,12 +19,12 @@ namespace Nexus.Token.SDK
             _paymentMethods = options.PaymentMethods ?? new Dictionary<PaymentMethodType, string>();
         }
 
-        public async Task<SignableResponse> CancelOrder(string orderCode)
+        public async Task<CancelOrderResponse> CancelOrder(string orderCode)
         {
             SetSegments("token", "orders", "cancel");
 
             var request = new CancelOrderRequest(orderCode);
-            return await ExecutePut<CancelOrderRequest, SignableResponse>(request);
+            return await ExecutePut<CancelOrderRequest, CancelOrderResponse>(request);
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace Nexus.Token.SDK
             await ExecutePost(request);
         }
 
-        public async Task<SignableResponse> CreateOrder(OrderRequest orderRequest)
+        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
         {
             SetSegments("token", "orders");
-            return await ExecutePost<OrderRequest, SignableResponse>(orderRequest);
+            return await ExecutePost<OrderRequest, CreateOrderResponse>(orderRequest);
         }
 
         /// <summary>

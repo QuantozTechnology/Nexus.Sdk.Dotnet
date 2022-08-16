@@ -96,4 +96,30 @@ namespace Nexus.Token.SDK.Responses
         [JsonPropertyName("executedAmount")]
         public decimal? ExecutedAmount { get; set; }
     }
+
+    public record CreateOrderResponse : SignableResponse
+    {
+
+        [JsonPropertyName("tokenOrder")]
+        public OrderResponse CreatedOrder { get; }
+
+        public CreateOrderResponse(BlockchainResponse blockchainResponse, OrderResponse createdOrder)
+            : base(blockchainResponse)
+        {
+            CreatedOrder = createdOrder;
+        }
+    }
+
+    public record CancelOrderResponse : SignableResponse
+    {
+
+        [JsonPropertyName("tokenOrder")]
+        public OrderResponse CancelledOrder { get; }
+
+        public CancelOrderResponse(BlockchainResponse blockchainResponse, OrderResponse createdOrder)
+            : base(blockchainResponse)
+        {
+            CancelledOrder = createdOrder;
+        }
+    }
 }
