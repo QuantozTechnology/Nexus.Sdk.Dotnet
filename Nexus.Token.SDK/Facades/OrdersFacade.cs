@@ -15,7 +15,7 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="orderCode"></param>
         /// <returns></returns>
-        public async Task<OrderResponse> GetOrder(string orderCode)
+        public async Task<OrderResponse> Get(string orderCode)
         {
             return await _provider.GetOrder(orderCode);
         }
@@ -25,7 +25,7 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        public async Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? query)
+        public async Task<PagedResponse<OrderResponse>> Get(IDictionary<string, string>? query)
         {
             return await _provider.GetOrders(query);
         }
@@ -35,7 +35,7 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CreateOrder(OrderRequest orderRequest)
+        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
         {
             return await _provider.CreateOrder(orderRequest);
         }
@@ -45,7 +45,7 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="orderCode"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CancelOrder(string orderCode)
+        public async Task<CancelOrderResponse> CancelOrder(string orderCode)
         {
             return await _provider.CancelOrder(orderCode);
         }
