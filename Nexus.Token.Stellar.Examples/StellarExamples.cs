@@ -59,17 +59,30 @@ namespace Nexus.Token.Examples.SDK
         {
             var definition = StellarTokenDefinition.TokenizedAsset(tokenCode, tokenName);
 
-            var response = await _tokenServer.Tokens.CreateOnStellarAsync(definition);
+            var response = await _tokenServer.Tokens.CreateOnStellar(definition);
             var token = response.Tokens.First();
 
             _logger.LogWarning("A new asset token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
+        }
+
+        public async Task CreateAssetTokenMultipleAsync(IDictionary<string, string> tokens)
+        {
+            var definitions = tokens.Select(t => StellarTokenDefinition.TokenizedAsset(t.Key, t.Value));
+
+            var response = await _tokenServer.Tokens.CreateOnStellar(definitions);
+
+            foreach (var token in response.Tokens)
+            {
+                // Notices that all tokens are generated under the same issuer address
+                _logger.LogWarning("New tokens were generated under the following issuer address: {issuerAddress}", token.IssuerAddress);
+            }
         }
 
         public async Task CreateStableCoinTokenAsync(string tokenCode, string tokenName, string currencyCode, decimal rate)
         {
             var definition = StellarTokenDefinition.StableCoin(tokenCode, tokenName, currencyCode, rate);
 
-            var response = await _tokenServer.Tokens.CreateOnStellarAsync(definition);
+            var response = await _tokenServer.Tokens.CreateOnStellar(definition);
             var token = response.Tokens.First();
 
             _logger.LogWarning("A new stable coin was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
@@ -87,7 +100,7 @@ namespace Nexus.Token.Examples.SDK
             var definition = StellarTokenDefinition.TokenizedAsset("HP", "Hans Peter");
             definition.SetTaxonomy(taxonomy);
 
-            var tokenResponse = await _tokenServer.Tokens.CreateOnStellarAsync(definition);
+            var tokenResponse = await _tokenServer.Tokens.CreateOnStellar(definition);
             var token = tokenResponse.Tokens.First();
 
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
@@ -112,6 +125,21 @@ namespace Nexus.Token.Examples.SDK
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount);
 
             _logger.LogWarning("Funding successful!");
+        }
+
+        public async Task FundAccountMultipleAsync(string encryptedPrivateKey, IDictionary<string, decimal> fundings)
+        {
+            var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
+            var tokenCodes = fundings.Select(kv => kv.Key);
+            var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokenCodes);
+            var signedResponse = kp.Sign(signableResponse, _network);
+            await _tokenServer.Submit.OnStellarAsync(signedResponse);
+
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value));
+            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
+
+            _logger.LogWarning("Funding multiple successful!");
         }
 
         public async Task ConnectTokensAsync(string encryptedPrivateKey, string[] tokenCodes)
@@ -247,7 +275,7 @@ namespace Nexus.Token.Examples.SDK
             var definition = StellarTokenDefinition.TokenizedAsset(tokenCode, tokenName);
             definition.SetTaxonomy(taxonomy);
 
-            var tokenResponse = await _tokenServer.Tokens.CreateOnStellarAsync(definition);
+            var tokenResponse = await _tokenServer.Tokens.CreateOnStellar(definition);
             var token = tokenResponse.Tokens.First();
 
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);

@@ -16,7 +16,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, string[] tokenCodes)
+        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
         {
             throw new NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task CreateFundingAsync(string accountCode, FundingDefinition[] definitions, string? pm = null, string? memo = null)
+        public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null)
         {
             throw new NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null)
+        public Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
         {
             throw new NotImplementedException();
         }
@@ -81,7 +81,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition[] definitions, StellarTokenSettings? settings = null)
+        public Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null)
         {
             throw new NotImplementedException();
         }
@@ -151,12 +151,17 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] tokenCodes)
+        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] tokenCodes)
+        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null)
         {
             throw new NotImplementedException();
         }

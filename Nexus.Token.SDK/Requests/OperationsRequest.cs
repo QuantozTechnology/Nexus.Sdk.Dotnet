@@ -14,7 +14,7 @@ public record FundingOperationRequest
     public string? Memo { get; set; }
 
     [JsonPropertyName("tokenFundings")]
-    public FundingDefinition[]? Definitions { get; set; }
+    public IEnumerable<FundingDefinition>? Definitions { get; set; }
 }
 
 public record FundingDefinition
@@ -38,9 +38,9 @@ public record PaymentOperationRequest
     public string? Memo { get; set; }
 
     [JsonPropertyName("payments")]
-    public PaymentDefinition[] Definitions { get; set; }
+    public IEnumerable<PaymentDefinition> Definitions { get; set; }
 
-    public PaymentOperationRequest(PaymentDefinition[] definitions, string? memo)
+    public PaymentOperationRequest(IEnumerable<PaymentDefinition> definitions, string? memo)
     {
         Definitions = definitions;
         Memo = memo;

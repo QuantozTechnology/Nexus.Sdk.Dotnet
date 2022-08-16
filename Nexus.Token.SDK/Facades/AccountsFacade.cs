@@ -43,7 +43,7 @@ public class AccountsFacade : TokenServerFacade
         return await _provider.ConnectAccountToTokenAsync(accountCode, tokenCode);
     }
 
-    public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, string[] tokenCodes)
+    public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
     {
         return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodes);
     }

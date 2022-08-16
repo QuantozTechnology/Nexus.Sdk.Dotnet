@@ -50,6 +50,19 @@ namespace Nexus.Token.Examples.SDK
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
         }
 
+        public async Task CreateAssetTokenMultipleAsync(IDictionary<string, string> tokens)
+        {
+            var definitions = tokens.Select(t => AlgorandTokenDefinition.TokenizedAsset(t.Key, t.Value, 1000, 0));
+
+            var response = await _tokenServer.Tokens.CreateOnAlgorand(definitions);
+
+            foreach(var token in response.Tokens)
+            {
+                // Notices that all tokens are generated under the same issuer address
+                _logger.LogWarning("New tokens were generated under the following issuer address: {issuerAddress}", token.IssuerAddress);
+            }
+        }
+
         public async Task CreateAssetTokenWithTaxonomyAsync(string tokenCode, string tokenName)
         {
             var schema = JsonSchema.FromType<Person>();
@@ -91,6 +104,21 @@ namespace Nexus.Token.Examples.SDK
 
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount);
             _logger.LogWarning("Funding successful!");
+        }
+
+        public async Task FundAccountMultipleAsync(string encryptedPrivateKey, IDictionary<string, decimal> fundings)
+        {
+            var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
+            var tokenCodes = fundings.Select(kv => kv.Key);
+            var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokenCodes);
+            var signedResponse = kp.Sign(signableResponse);
+            await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value));
+            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
+
+            _logger.LogWarning("Funding multiple successful!");
         }
 
         public async Task ConnectTokensFlowAsync(string encryptedPrivateKey, string[] tokenCodes)
