@@ -11,9 +11,9 @@ public record StellarSubmitRequest
     public string SignedTransactionEnvelope { get; set; }
 
     [JsonPropertyName("hash")]
-    public string TransactionHash { get; set; }
+    public string? TransactionHash { get; set; }
 
-public StellarSubmitRequest(string signedTransactionEnvelope, string transactionHash)
+public StellarSubmitRequest(string signedTransactionEnvelope, string? transactionHash = null)
     {
         SignedTransactionEnvelope = signedTransactionEnvelope;
         TransactionHash = transactionHash;
