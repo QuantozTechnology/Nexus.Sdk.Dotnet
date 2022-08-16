@@ -22,7 +22,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey);
 
-        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] tokenCodes);
+        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes);
 
         /// <summary>
         ///
@@ -32,7 +32,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey);
 
-        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] tokenCodes);
+        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes);
 
         /// <summary>
         ///
@@ -55,7 +55,7 @@ namespace Nexus.Token.SDK
         /// <param name="accountCode"></param>
         /// <param name="tokenCodes"></param>
         /// <returns></returns>
-        Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, string[] tokenCodes);
+        Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes);
 
         /// <summary>
         ///
@@ -75,6 +75,8 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null);
 
+        Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null);
+
         /// <summary>
         ///
         /// </summary>
@@ -89,7 +91,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition[] definitions, StellarTokenSettings? settings = null);
+        Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null);
 
         /// <summary>
         ///
@@ -110,7 +112,7 @@ namespace Nexus.Token.SDK
         /// <param name="pm"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task CreateFundingAsync(string accountCode, FundingDefinition[] definitions, string? pm = null, string? memo = null);
+        Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null);
 
         /// <summary>
         ///
@@ -129,7 +131,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null);
+        Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null);
 
         /// <summary>
         ///

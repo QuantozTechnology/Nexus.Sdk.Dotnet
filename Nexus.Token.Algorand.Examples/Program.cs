@@ -26,6 +26,7 @@ namespace Nexus.Token.Algorand.Examples
                 WriteToConsole("0 = Algorand Payment Flow");
                 WriteToConsole("1 = Algorand Payout Flow");
                 WriteToConsole("2 = Algorand Token Taxonomy Flow");
+                WriteToConsole("3 = Algorand Multiple Operations Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -47,6 +48,9 @@ namespace Nexus.Token.Algorand.Examples
                             break;
                         case 2:
                             await AlgorandTaxonomyFlow(algorandExample);
+                            break;
+                        case 3:
+                            await AlgorandMultipleOperationsFlow(algorandExample);
                             break;
                         default:
                             WriteToConsole("Flow not supported");
@@ -111,55 +115,83 @@ namespace Nexus.Token.Algorand.Examples
 
         }
 
-        public static async Task AlgorandPaymentFlow(AlgorandExamples algorandExample)
+        public static async Task AlgorandPaymentFlow(AlgorandExamples algorandExamples)
         {
             WriteToConsole("Create a new account for Bob");
             var bob = Guid.NewGuid().ToString();
-            var bobsPrivateKey = await algorandExample.CreateAccountAsync(bob);
+            var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create a new account for Alice");
             var alice = Guid.NewGuid().ToString();
-            var alicesPrivateKey = await algorandExample.CreateAccountAsync(alice);
+            var alicesPrivateKey = await algorandExamples.CreateAccountAsync(alice);
 
             WriteToConsole("Create a new token representing the Mona Lisa");
             var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
-            await algorandExample.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+            await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
-            await algorandExample.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
 
             WriteToConsole("Then Bob sends 10 tokens to Alice.");
-            await algorandExample.PaymentAsync(bobsPrivateKey, alicesPrivateKey, tokenCode, 10);
+            await algorandExamples.PaymentAsync(bobsPrivateKey, alicesPrivateKey, tokenCode, 10);
         }
 
-        public static async Task AlgorandPayoutFlow(AlgorandExamples algorandExample)
+        public static async Task AlgorandPayoutFlow(AlgorandExamples algorandExamples)
         {
             WriteToConsole("Create a new account for Bob");
             var bob = Guid.NewGuid().ToString();
-            var bobsPrivateKey = await algorandExample.CreateAccountAsync(bob);
+            var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create a new token representing the Mona Lisa");
             var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
-            await algorandExample.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+            await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
-            await algorandExample.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
 
             WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
-            await algorandExample.PayoutAsync(bobsPrivateKey, tokenCode, 10);
+            await algorandExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
         }
 
-        public static async Task AlgorandTaxonomyFlow(AlgorandExamples algorandExample)
+        public static async Task AlgorandTaxonomyFlow(AlgorandExamples algorandExamples)
         {
             WriteToConsole("Create a new token that represents Bob and has the taxonomy to prove it");
             var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
-            await algorandExample.CreateAssetTokenWithTaxonomyAsync(tokenCode, "BOB");
+            await algorandExamples.CreateAssetTokenWithTaxonomyAsync(tokenCode, "BOB");
+        }
+
+        public static async Task AlgorandMultipleOperationsFlow(AlgorandExamples algorandExamples)
+        {
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
+
+            WriteToConsole("Create tokens that represent shares in the Mona Lisa and Nachtwacht paintings");
+            var mlCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var nwCode = Guid.NewGuid().ToString().Substring(0, 8);
+
+            var tokens = new Dictionary<string, string>
+            {
+                { mlCode, "MonaLisa" },
+                { nwCode, "Nachtwacht" },
+            };
+
+            await algorandExamples.CreateAssetTokenMultipleAsync(tokens);
+
+            WriteToConsole("Fund bobs account with Mona Lisa and Nachtwacht shares at the same time");
+            var fundings = new Dictionary<string, decimal>
+            {
+                { mlCode, 1000 },
+                { nwCode, 100 }
+            };
+
+            await algorandExamples.FundAccountMultipleAsync(bobsPrivateKey, fundings);
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)
         {
             Console.ForegroundColor = textColor;
-            WriteToConsole(message);
+            Console.WriteLine(message);
         }
     }
 }

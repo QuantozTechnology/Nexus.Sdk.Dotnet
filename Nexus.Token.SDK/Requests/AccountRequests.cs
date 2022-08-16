@@ -41,7 +41,7 @@ public class UpdateTokenAccountSettings
 public class AllowedTokens
 {
     [JsonPropertyName("addTokens")]
-    public string[]? AddTokens { get; set; }
+    public IEnumerable<string>? AddTokens { get; set; }
 
     [JsonPropertyName("removeTokens")]
     public string[]? RemoveTokens { get; set; }
@@ -56,5 +56,5 @@ public class AllowedTokens
 public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
-    public string[] AllowedTokens { get; set; }
+    public IEnumerable<string> AllowedTokens { get; set; }
 }

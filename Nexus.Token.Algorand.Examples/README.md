@@ -13,6 +13,7 @@ This project contains examples on how to use the Nexus Token SDK.
 | 0 	| Algorand Payment Flow        	| A payment flow between two customers. One token is created and funded to a customer in exchange for fiat. This customer sends the token to the other customer using a payment.            	|
 | 1 	| Algorand Payout Flow         	| A payout flow for one customer. One token is created and funded to a customer for fiat. This customer waits for the value of the token to increase and later pays out the token for fiat. 	|
 | 2 	| Algorand Token Taxonomy Flow 	| A flow to show how to add taxonomy to a token.                                                                                                                                            	|
+| 3 	| Algorand Multiple Operations Flow     	| Submitting to the blockchain on Algorand can take up to ~8 seconds. If a customer would like to be funded with multiple tokens this could take a while if funded individually. To speed this up, Nexus supports funding multiple tokens at the same time. This flow demonstrates this and some of the other functionalities that can be executed at the same time.             |
 
 ## *Signing Process*
 Some operations in Nexus require an account(s) to authorize them. This process is know as `signing`. The operations that require this authorization return a `SignableResponse`. This response needs to be signed using the key pairs `.Sign(...)` method. Upon successful signing, a `SubmitRequest` is returned that must be submitted to Nexus.

@@ -28,8 +28,8 @@ public record AlgorandTokenRequest
 
 public record AlgorandTokens
 {
-    [JsonPropertyName("token")]
-    public AlgorandTokenDefinition? Definition { get; set; }
+    [JsonPropertyName("tokens")]
+    public IEnumerable<AlgorandTokenDefinition>? Definitions { get; set; }
 
     [JsonPropertyName("algorandSettings")]
     public AlgorandTokenSettings? AlgorandSettings { get; set; }
@@ -59,7 +59,7 @@ public record AlgorandTokenSettings
 public record StellarTokens
 {
     [JsonPropertyName("tokens")]
-    public StellarTokenDefinition[]? Definitions { get; set; }
+    public IEnumerable<StellarTokenDefinition>? Definitions { get; set; }
 
     [JsonPropertyName("stellarSettings")]
     public StellarTokenSettings? StellarSettings { get; set; }

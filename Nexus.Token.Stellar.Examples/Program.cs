@@ -32,6 +32,7 @@ namespace Nexus.Token.Stellar.Examples
                 WriteToConsole("2 = Stellar Token Taxonomy Flow");
                 WriteToConsole("3 = Stellar Token Orderbook Flow");
                 WriteToConsole("4 = Stellar Stablecoin Flow");
+                WriteToConsole("5 = Stellar Multiple Operations Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -59,6 +60,9 @@ namespace Nexus.Token.Stellar.Examples
                             break;
                         case 4:
                             await StellarStablecoinFlow(stellarExamples);
+                            break;
+                        case 5:
+                            await StellarMultipleOperationsFlow(stellarExamples);
                             break;
                         default:
                             WriteToConsole("Flow not supported");
@@ -232,6 +236,34 @@ namespace Nexus.Token.Stellar.Examples
 
             WriteToConsole("Somewhere else in the world, Alice would like to purchase 50 asset tokens for 50 Euros.");
             await stellarExamples.CreateBuyOrder(alicesPrivateKey, (assetTokenCode, 50), (stablecoinTokenCode, 50));
+        }
+
+        public static async Task StellarMultipleOperationsFlow(StellarExamples stellarExamples)
+        {
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob);
+
+            WriteToConsole("Create tokens that represent shares in the Mona Lisa and Nachtwacht paintings");
+            var mlCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var nwCode = Guid.NewGuid().ToString().Substring(0, 8);
+
+            var tokens = new Dictionary<string, string>
+            {
+                { mlCode, "MonaLisa" },
+                { nwCode, "Nachtwacht" },
+            };
+
+            await stellarExamples.CreateAssetTokenMultipleAsync(tokens);
+
+            WriteToConsole("Fund bobs account with Mona Lisa and Nachtwacht shares at the same time");
+            var fundings = new Dictionary<string, decimal>
+            {
+                { mlCode, 10000 },
+                { nwCode, 100 }
+            };
+
+            await stellarExamples.FundAccountMultipleAsync(bobsPrivateKey, fundings);
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)

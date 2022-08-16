@@ -15,7 +15,7 @@ public class OperationsFacade : TokenServerFacade
         await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo);
     }
 
-    public async Task CreateFundingAsync(string accountCode, FundingDefinition[] definitions, string? pm = null,
+    public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
                                          string? memo = null)
     {
         await _provider.CreateFundingAsync(accountCode, definitions, pm, memo);

@@ -44,7 +44,7 @@ namespace Nexus.Token.SDK
         /// <param name="accountCode"></param>
         /// <param name="tokenCodes"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, string[] tokenCodes)
+        public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
         {
             SetSegments("accounts", accountCode);
 
@@ -80,7 +80,7 @@ namespace Nexus.Token.SDK
             return await ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string[] allowedTokens)
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
         {
             SetSegments("customer", customerCode, "accounts");
 
@@ -114,7 +114,7 @@ namespace Nexus.Token.SDK
             return await ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string[] allowedTokens)
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
         {
             SetSegments("customer", customerCode, "accounts");
 
@@ -168,7 +168,7 @@ namespace Nexus.Token.SDK
         /// <param name="memo"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task CreateFundingAsync(string accountCode, FundingDefinition[] definitions, string? pm = null, string? memo = null)
+        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && !_paymentMethods.ContainsKey(PaymentMethodType.Funding))
             {
@@ -215,7 +215,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null)
+        public async Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
         {
             SetSegments("token", "payments");
 
@@ -284,13 +284,18 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null)
         {
+            return await CreateTokensOnAlgorand(new AlgorandTokenDefinition[] { definition }, settings);
+        }
+
+        public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null)
+        {
             SetSegments("token", "tokens");
 
             var request = new AlgorandTokenRequest
             {
                 AlgorandTokens = new AlgorandTokens
                 {
-                    Definition = definition,
+                    Definitions = definitions,
                     AlgorandSettings = settings ?? new AlgorandTokenSettings()
                 }
             };
@@ -304,7 +309,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public async Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition[] definitions, StellarTokenSettings? settings = null)
+        public async Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null)
         {
             SetSegments("token", "tokens");
 
@@ -328,7 +333,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition definition, StellarTokenSettings? settings = null)
         {
-            return await CreateTokenOnStellarAsync(new StellarTokenDefinition[] { definition }, settings);
+            return await CreateTokensOnStellarAsync(new StellarTokenDefinition[] { definition }, settings);
         }
 
         /// <summary>
