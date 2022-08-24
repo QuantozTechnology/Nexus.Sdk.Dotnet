@@ -14,6 +14,11 @@ public class CustomersFacade : ServerFacade
         return await _provider.GetCustomer(customerCode);
     }
 
+    public async Task<bool> Exists(string customerCode)
+    {
+        return await _provider.Exists(customerCode);
+    }
+
     public async Task<CreateCustomerResponse> Create(string code, string trustLevel, string currency)
     {
         return await _provider.CreateCustomer(code, trustLevel, currency);
