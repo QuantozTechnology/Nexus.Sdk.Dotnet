@@ -27,3 +27,6 @@ This section contains information on how to install these SDKs in your projects.
 ```
 
 - The SDK packages are now available to be installed under `NexusSDKs`.
+
+## Release Notes
+An overview of changes to the SDK is found [here.](./RELEASE_NOTES.md)
