@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nexus.SDK.Shared.Requests;
 using Nexus.SDK.Shared.Responses;
 
 namespace Nexus.SDK.Shared.Facades;
@@ -19,8 +20,8 @@ public class CustomersFacade : ServerFacade
         return await _provider.Exists(customerCode);
     }
 
-    public async Task<CreateCustomerResponse> Create(string code, string trustLevel, string currency)
+    public async Task<CustomerResponse> Create(CustomerRequest request)
     {
-        return await _provider.CreateCustomer(code, trustLevel, currency);
+        return await _provider.CreateCustomer(request);
     }
 }

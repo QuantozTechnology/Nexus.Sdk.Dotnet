@@ -137,11 +137,10 @@ namespace Nexus.Token.SDK
         /// <param name="trustLevel"></param>
         /// <param name="currency"></param>
         /// <returns></returns>
-        public async Task<CreateCustomerResponse> CreateCustomer(string code, string trustLevel, string currency)
+        public async Task<CustomerResponse> CreateCustomer(CustomerRequest request)
         {
             SetSegments("customer");
-            var request = new CustomerRequest(code, trustLevel, currency);
-            return await ExecutePost<CustomerRequest, CreateCustomerResponse>(request);
+            return await ExecutePost<CustomerRequest, CustomerResponse>(request);
         }
 
         /// <summary>

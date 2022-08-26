@@ -85,6 +85,11 @@ namespace Nexus.Token.SDK.Requests
 
         public OrderRequestBuilder Buy(decimal amount, string tokenCode)
         {
+            if (!string.IsNullOrWhiteSpace(_orderRequest.Action))
+            {
+                throw new InvalidOperationException("You can only call Buy or Sell once");
+            }
+
             _orderRequest.Action = "Buy";
             _orderRequest.Buying = new BuyOrderAmountDefinition(tokenCode, amount);
 
@@ -93,6 +98,11 @@ namespace Nexus.Token.SDK.Requests
 
         public OrderRequestBuilder Sell(decimal amount, string tokenCode)
         {
+            if (!string.IsNullOrWhiteSpace(_orderRequest.Action))
+            {
+                throw new InvalidOperationException("You can only call Buy or Sell once");
+            }
+
             _orderRequest.Action = "Sell";
             _orderRequest.Selling = new SellOrderAmountDefinition(tokenCode, amount);
 

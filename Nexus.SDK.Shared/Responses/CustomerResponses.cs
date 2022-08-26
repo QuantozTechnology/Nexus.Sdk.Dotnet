@@ -4,41 +4,28 @@ namespace Nexus.SDK.Shared.Responses;
 
 public record CustomerResponse
 {
-    [JsonPropertyName("customerCode")]
-    public string CustomerCode { get; }
-
-    [JsonPropertyName("trustLevel")]
-    public string TrustLevel { get; }
-
-    [JsonPropertyName("status")]
-    public string Status { get; }
-
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string trustLevel, string status)
+    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string email, string status)
     {
         CustomerCode = customerCode;
         TrustLevel = trustLevel;
+        CurrencyCode = currencyCode;
+        Email = email;
         Status = status;
     }
-}
 
-public record CreateCustomerResponse
-{
     [JsonPropertyName("customerCode")]
-    public string CustomerCode { get; }
+    public string CustomerCode { get; set; }
 
     [JsonPropertyName("trustLevel")]
-    public string TrustLevel { get; }
+    public string TrustLevel { get; set; }
+
+    [JsonPropertyName("currencyCode")]
+    public string CurrencyCode { get; set; }
+
+    [JsonPropertyName("email")]
+    public string? Email { get; set; }
 
     [JsonPropertyName("status")]
-    public string Status { get; }
-
-    [JsonConstructor]
-    public CreateCustomerResponse(string customerCode, string trustLevel, string status)
-    {
-        CustomerCode = customerCode;
-        TrustLevel = trustLevel;
-        Status = status;
-    }
-
+    public string Status { get; set; }
 }
