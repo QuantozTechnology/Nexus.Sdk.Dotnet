@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nexus.SDK.Shared.Requests;
 using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
@@ -25,7 +26,8 @@ namespace Nexus.Token.Examples.SDK
 
         public async Task<string> CreateAccountAsync(string customerCode)
         {
-            var customer = await _tokenServer.Customers.Create(customerCode, "Trusted", "EUR");
+            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
+            var customer = await _tokenServer.Customers.Create(request);
 
             var senderKeyPair = AlgorandKeyPair.Generate();
 

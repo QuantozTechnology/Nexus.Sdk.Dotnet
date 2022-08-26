@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Nexus.SDK.Shared.Requests;
 using Nexus.Token.Algorand.Examples.Models;
 using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
@@ -31,7 +32,8 @@ namespace Nexus.Token.Examples.SDK
 
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
-            var customer = await _tokenServer.Customers.Create(customerCode, "Trusted", "EUR");
+            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
+            var customer = await _tokenServer.Customers.Create(request);
 
             var kp = StellarKeyPair.Generate();
 

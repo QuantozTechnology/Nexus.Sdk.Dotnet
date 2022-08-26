@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Nexus.SDK.Shared.Authentication;
+using Nexus.SDK.Shared.Requests;
 using Nexus.Token.SDK.Extensions;
 using Nexus.Token.SDK.Tests.Helpers;
 
@@ -118,7 +119,8 @@ namespace Nexus.Token.SDK.Tests
 
             // Assert that the services exist.
             var tokenServerProvider = provider.GetRequiredService<ITokenServerProvider>();
-            var response = await tokenServerProvider.CreateCustomer("MOCK_CUSTOMER", "Trusted", "Active");
+            var request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            var response = await tokenServerProvider.CreateCustomer(request);
 
             Assert.Multiple(() =>
             {
@@ -128,7 +130,8 @@ namespace Nexus.Token.SDK.Tests
             });
 
             var tokenServer = provider.GetRequiredService<ITokenServer>();
-            response = await tokenServer.Customers.Create("MOCK_CUSTOMER", "Trusted", "Active");
+            request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            response = await tokenServer.Customers.Create(request);
 
             Assert.Multiple(() =>
             {

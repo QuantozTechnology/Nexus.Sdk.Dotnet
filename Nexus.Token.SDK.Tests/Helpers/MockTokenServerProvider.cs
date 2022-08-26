@@ -1,4 +1,5 @@
-﻿using Nexus.SDK.Shared.Responses;
+﻿using Nexus.SDK.Shared.Requests;
+using Nexus.SDK.Shared.Responses;
 using Nexus.Token.SDK.Requests;
 using Nexus.Token.SDK.Responses;
 
@@ -31,9 +32,9 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CreateCustomerResponse> CreateCustomer(string code, string trustLevel, string currency)
+        public Task<CustomerResponse> CreateCustomer(CustomerRequest request)
         {
-            return Task.FromResult(new CreateCustomerResponse(code,  trustLevel, currency));
+            return Task.FromResult(new CustomerResponse(request.CustomerCode,  request.TrustLevel, request.CurrencyCode, request.Email, request.Status));
         }
 
         public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
