@@ -5,6 +5,7 @@ using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
 using Nexus.Token.SDK.Requests;
+using Nexus.Token.SDK.Responses;
 using Nexus.Token.SDK.Security;
 using Nexus.Token.Stellar.Examples.Models;
 using NJsonSchema;
@@ -221,7 +222,7 @@ namespace Nexus.Token.Examples.SDK
             _logger.LogWarning("Payout successful!");
         }
 
-        public async Task CreateBuyOrder(string encryptedPrivateKey, (string tokenCode, decimal amount) buying, (string tokenCode, decimal amount) selling)
+        public async Task<OrderResponse> CreateBuyOrder(string encryptedPrivateKey, (string tokenCode, decimal amount) buying, (string tokenCode, decimal amount) selling)
         {
             var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -229,14 +230,17 @@ namespace Nexus.Token.Examples.SDK
                 .Buy(buying.amount, buying.tokenCode)
                 .For(selling.amount, selling.tokenCode);
 
-            var signableResponse = await _tokenServer.Orders.CreateOrder(request);
-            var signedResponse = kp.Sign(signableResponse, _network);
+            var response = await _tokenServer.Orders.CreateOrder(request);
+            var signedResponse = kp.Sign(response, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
 
-            _logger.LogWarning("Buy order successfully placed!");
+            var order = await _tokenServer.Orders.Get(response.CreatedOrder.Code);
+            _logger.LogWarning($"Buy order successfully placed on the blockchain: {order.BlockchainCode ?? "Order was closed immidiatly so there is not blockchain code."}");
+
+            return order;
         }
 
-        public async Task CreateSellOrder(string encryptedPrivateKey, (string tokenCode, decimal amount) selling, (string tokenCode, decimal amount) buying)
+        public async Task<OrderResponse> CreateSellOrder(string encryptedPrivateKey, (string tokenCode, decimal amount) selling, (string tokenCode, decimal amount) buying)
         {
             var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -244,11 +248,14 @@ namespace Nexus.Token.Examples.SDK
                 .Sell(selling.amount, selling.tokenCode)
                 .For(buying.amount, buying.tokenCode);
 
-            var signableResponse = await _tokenServer.Orders.CreateOrder(request);
-            var signedResponse = kp.Sign(signableResponse, _network);
+            var response = await _tokenServer.Orders.CreateOrder(request);
+            var signedResponse = kp.Sign(response, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
 
-            _logger.LogWarning("Sell order successfully placed!");
+            var order = await _tokenServer.Orders.Get(response.CreatedOrder.Code);
+            _logger.LogWarning($"Sell order successfully placed on the blockchain: {order.BlockchainCode ?? "Order was closed immidiatly so there is not blockchain code."}");
+
+            return order;
         }
 
         public async Task CancelOrder(string encryptedPrivateKey, string orderCode)
@@ -285,6 +292,11 @@ namespace Nexus.Token.Examples.SDK
             var taxonomyResponse = await _tokenServer.Taxonomy.Get(tokenCode);
             _logger.LogWarning("The hash of the Hans Peter token is: {hash}", taxonomyResponse.Hash);
             _logger.LogWarning("The properties of the Hans Peter token is: {validatedTaxonomy}", taxonomyResponse.ValidatedTaxonomy);
+        }
+
+        public async Task<OrderResponse> GetOrderAsync(string orderCode)
+        {
+            return await _tokenServer.Orders.Get(orderCode);
         }
     }
 }

@@ -109,17 +109,4 @@ namespace Nexus.Token.SDK.Responses
             CreatedOrder = createdOrder;
         }
     }
-
-    public record CancelOrderResponse : SignableResponse
-    {
-
-        [JsonPropertyName("tokenOrder")]
-        public OrderResponse CancelledOrder { get; }
-
-        public CancelOrderResponse(BlockchainResponse blockchainResponse, OrderResponse createdOrder)
-            : base(blockchainResponse)
-        {
-            CancelledOrder = createdOrder;
-        }
-    }
 }
