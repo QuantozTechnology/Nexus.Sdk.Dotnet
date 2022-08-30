@@ -16,6 +16,9 @@ public class ResponseHandler
     {
         var statusCode = response.StatusCode;
         var content = await response.Content.ReadAsStringAsync();
+
+        _logger?.LogDebug("{statusCode} Response: {content}", statusCode, content);
+
         var responseObj = JsonSingleton.GetInstance<NexusResponse<T>>(content);
 
         if (responseObj == null)
@@ -34,8 +37,6 @@ public class ResponseHandler
 
             throw new NexusApiException((int)statusCode, responseObj.Message, responseObj.Errors);
         }
-
-        _logger?.LogDebug("{statusCode} Response: {content}", statusCode, content);
 
         return responseObj.Values;
     }

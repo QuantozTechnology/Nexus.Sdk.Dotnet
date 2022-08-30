@@ -231,7 +231,13 @@ namespace Nexus.Token.Stellar.Examples
             WriteToConsole("And then Fund Alice's new account with 100 stable coin tokens");
             await stellarExamples.FundAccountAsync(alicesPrivateKey, stablecoinTokenCode, 100);
 
-            WriteToConsole("Bob places a Sell order to sell 50 asset tokens for 50 Euro.");
+            WriteToConsole("Bob places an incorrect order to sell 50 asset tokens for 50 Euro.");
+            var incorrectOrder = await stellarExamples.CreateSellOrder(bobsPrivateKey, (assetTokenCode, 5), (stablecoinTokenCode, 50));
+
+            WriteToConsole("Bob cancels the order");
+            await stellarExamples.CancelOrder(bobsPrivateKey, incorrectOrder.Code);
+
+            WriteToConsole("Bob places an incorrect order to sell 50 asset tokens for 50 Euro.");
             await stellarExamples.CreateSellOrder(bobsPrivateKey, (assetTokenCode, 50), (stablecoinTokenCode, 50));
 
             WriteToConsole("Somewhere else in the world, Alice would like to purchase 50 asset tokens for 50 Euros.");

@@ -45,7 +45,7 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="orderCode"></param>
         /// <returns></returns>
-        public async Task<CancelOrderResponse> CancelOrder(string orderCode)
+        public async Task<SignableResponse> CancelOrder(string orderCode)
         {
             return await _provider.CancelOrder(orderCode);
         }

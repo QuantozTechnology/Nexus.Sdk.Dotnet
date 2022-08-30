@@ -218,6 +218,6 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="orderCode"></param>
         /// <returns></returns>
-        Task<CancelOrderResponse> CancelOrder(string orderCode);
+        Task<SignableResponse> CancelOrder(string orderCode);
     }
 }
