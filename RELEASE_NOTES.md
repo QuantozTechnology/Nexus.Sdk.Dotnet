@@ -1,3 +1,10 @@
+## [2022.9.25.16](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9474509)
+
+### New Features
+* Added functionality for TokenServer to be configured using IConfiguration. Check out the documentation for more
+information.
+
+
 ## [2022.8.30.11](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/8923295)
 
 ### Bug Fixes
