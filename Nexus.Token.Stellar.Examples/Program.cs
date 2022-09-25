@@ -75,7 +75,7 @@ namespace Nexus.Token.Stellar.Examples
                 }
                 catch (FormatException)
                 {
-                    WriteToConsole($"The {command.GetType().Name} value '{command}' is not in a recognizable format.", ConsoleColor.Red);
+                    WriteToConsole($"The {command?.GetType().Name} value '{command}' is not in a recognizable format.", ConsoleColor.Red);
                 }
                 catch (NexusApiException ex)
                 {
@@ -105,9 +105,9 @@ namespace Nexus.Token.Stellar.Examples
                 .AddEnvironmentVariables()
                 .Build();
 
-            Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
+            StellarSettings stellarSettings = config.GetRequiredSection("StellarSettings").Get<StellarSettings>();
 
-            services.AddSingleton(settings);
+            services.AddSingleton(stellarSettings);
 
             var logger = new LoggerConfiguration()
                  .MinimumLevel.Warning()
@@ -116,10 +116,7 @@ namespace Nexus.Token.Stellar.Examples
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, dispose: true));
 
-            services.AddTokenServer(o =>
-                o.ConnectToCustom(settings.NexusApiUrl, settings.NexusIdentityUrl, settings.ClientId, settings.ClientSecret)
-                 .AddDefaultFundingPaymentMethod(settings.FundingPaymentMethod)
-                 .AddDefaultPayoutPaymentMethod(settings.PayoutPaymentMethod));
+            services.AddTokenServer(config);
 
             services.UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916");
 

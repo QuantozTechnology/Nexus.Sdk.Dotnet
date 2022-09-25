@@ -5,7 +5,7 @@ namespace Nexus.SDK.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string email, string status)
+    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string? email, string status)
     {
         CustomerCode = customerCode;
         TrustLevel = trustLevel;

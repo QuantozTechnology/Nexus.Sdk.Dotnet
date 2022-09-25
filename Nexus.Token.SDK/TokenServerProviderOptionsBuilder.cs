@@ -15,51 +15,35 @@ namespace Nexus.Token.SDK
 
         public TokenServerProviderOptionsBuilder AddDefaultFundingPaymentMethod(string code)
         {
-            _options.AddPaymentMethod(PaymentMethodType.Funding, code);
+            _options.PaymentMethodOptions.Funding = code;
             return this;
         }
 
         public TokenServerProviderOptionsBuilder AddDefaultPayoutPaymentMethod(string code)
         {
-            _options.AddPaymentMethod(PaymentMethodType.Payout, code);
+            _options.PaymentMethodOptions.Payout = code;
             return this;
         }
 
         public TokenServerProviderOptionsBuilder ConnectToProduction(string clientId, string clientSecret,
-            ILogger<ClientAuthProvider>? logger = null)
+            ILogger<AuthProvider>? logger = null)
         {
-            _options.ServerUri = new Uri("https://api.quantoznexus.com");
-
-            var authOptions = new ClientAuthProviderOptions("https://identity.quantoznexus.com", clientId, clientSecret);
-            var authProvider = new ClientAuthProvider(authOptions, logger);
-
-            _options.AuthProvider = authProvider;
-
+            _options.ApiUrl = "https://api.quantoznexus.com";
+            _options.AuthProviderOptions = new AuthProviderOptions("https://identity.quantoznexus.com", clientId, clientSecret);
             return this;
         }
 
-        public TokenServerProviderOptionsBuilder ConnectToTest(string clientId, string clientSecret, ILogger<ClientAuthProvider>? logger = null)
+        public TokenServerProviderOptionsBuilder ConnectToTest(string clientId, string clientSecret)
         {
-            _options.ServerUri = new Uri("https://testapi.quantoznexus.com");
-
-            var authOptions = new ClientAuthProviderOptions("https://testidentity.quantoznexus.com", clientId, clientSecret);
-            var authProvider = new ClientAuthProvider(authOptions, logger);
-
-            _options.AuthProvider = authProvider;
-
+            _options.ApiUrl = "https://testapi.quantoznexus.com";
+            _options.AuthProviderOptions = new AuthProviderOptions("https://testidentity.quantoznexus.com", clientId, clientSecret);
             return this;
         }
 
-        public TokenServerProviderOptionsBuilder ConnectToCustom(string apiUrl, string identityUrl, string clientId, string clientSecret,
-            ILogger<ClientAuthProvider>? logger = null)
+        public TokenServerProviderOptionsBuilder ConnectToCustom(string apiUrl, string identityUrl, string clientId, string clientSecret)
         {
-            _options.ServerUri = new Uri(apiUrl);
-
-            var authOptions = new ClientAuthProviderOptions(identityUrl, clientId, clientSecret);
-            var authProvider = new ClientAuthProvider(authOptions, logger);
-
-            _options.AuthProvider = authProvider;
-
+            _options.ApiUrl = apiUrl;
+            _options.AuthProviderOptions = new AuthProviderOptions(identityUrl, clientId, clientSecret);
             return this;
         }
 
@@ -68,6 +52,4 @@ namespace Nexus.Token.SDK
             return _options;
         }
     }
-
-
 }

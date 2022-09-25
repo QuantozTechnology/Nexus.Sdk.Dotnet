@@ -21,14 +21,19 @@ namespace Nexus.Token.Examples.SDK
         private readonly string _network;
 
         public StellarExamples(ITokenServer tokenServer, IEncrypter encrypter, IDecrypter decrypter, ILogger<StellarExamples> logger,
-            Settings settings)
+            StellarSettings stellarSettings)
         {
             _tokenServer = tokenServer;
             _encrypter = encrypter;
             _decrypter = decrypter;
             _logger = logger;
 
-            _network = settings.NetworkPassphrase;
+            if (stellarSettings.NetworkPassphrase is null)
+            {
+                throw new ArgumentNullException(stellarSettings.NetworkPassphrase);
+            }
+
+            _network = stellarSettings.NetworkPassphrase;
         }
 
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
@@ -206,9 +211,13 @@ namespace Nexus.Token.Examples.SDK
                 }
             }
 
-            await _tokenServer.Submit.OnStellarAsync(signedResponse);
+            if (signedResponse != null)
+            {
+                await _tokenServer.Submit.OnStellarAsync(signedResponse);
+                _logger.LogWarning("Payments successful!");
+            }
 
-            _logger.LogWarning("Payments successful!");
+            _logger.LogError("Envelope was not signed!");
         }
 
         public async Task PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)

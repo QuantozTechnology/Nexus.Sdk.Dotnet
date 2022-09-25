@@ -9,14 +9,20 @@ namespace Nexus.Token.SDK
 {
     public class TokenServerProvider : RequestBuilder<TokenServerProvider>, ITokenServerProvider
     {
-        private readonly IDictionary<PaymentMethodType, string> _paymentMethods;
+        private readonly string? FundingPaymentMethod;
+        private readonly string? PayoutPaymentMethod;
+
 
         public TokenServerProvider(HttpClient httpClient, TokenServerProviderOptions options,
-            ILogger<RequestBuilder<TokenServerProvider>>? logger = null)
-            : base(options.ServerUri, httpClient, options.AuthProvider, logger)
+            ILogger<RequestBuilder<TokenServerProvider>>? logger = null, ILogger<AuthProvider>? authLogger = null)
+            : base(options.ApiUrl,
+                  httpClient,
+                  new AuthProvider(options.AuthProviderOptions, authLogger),
+                  logger)
         {
             AddDefaultRequestHeader("api_version", "1.2");
-            _paymentMethods = options.PaymentMethods ?? new Dictionary<PaymentMethodType, string>();
+            FundingPaymentMethod = options.PaymentMethodOptions.Funding;
+            PayoutPaymentMethod = options.PaymentMethodOptions.Payout;
         }
 
         public async Task<SignableResponse> CancelOrder(string orderCode)
@@ -169,7 +175,7 @@ namespace Nexus.Token.SDK
         /// <exception cref="InvalidOperationException"></exception>
         public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null)
         {
-            if (string.IsNullOrWhiteSpace(pm) && !_paymentMethods.ContainsKey(PaymentMethodType.Funding))
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(FundingPaymentMethod))
             {
                 throw new InvalidOperationException("Funding payment method is required to fund an account with tokens");
             }
@@ -181,7 +187,7 @@ namespace Nexus.Token.SDK
                 AccountCode = accountCode,
                 Definitions = definitions,
                 Memo = memo,
-                PaymentMethodCode = pm ?? _paymentMethods[PaymentMethodType.Funding]
+                PaymentMethodCode = pm ?? FundingPaymentMethod
             };
 
             await ExecutePost(request);
@@ -234,7 +240,7 @@ namespace Nexus.Token.SDK
         /// <exception cref="InvalidOperationException"></exception>
         public async Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
         {
-            if (string.IsNullOrWhiteSpace(pm) && !_paymentMethods.ContainsKey(PaymentMethodType.Payout))
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(PayoutPaymentMethod))
             {
                 throw new InvalidOperationException("Payout payment method is required for an account to payout a token");
             }
@@ -244,7 +250,7 @@ namespace Nexus.Token.SDK
             var request = new PayoutOperationRequest
             {
                 AccountCode = accountCode,
-                PaymentMethodCode = pm ?? _paymentMethods[PaymentMethodType.Payout],
+                PaymentMethodCode = pm ?? PayoutPaymentMethod,
                 Amount = amount,
                 TokenCode = tokenCode,
                 Memo = memo

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nexus.SDK.Shared.Authentication;
 using Nexus.SDK.Shared.Responses;
-using Nexus.Token.Algorand.Examples.Models;
 using Nexus.Token.Examples.SDK;
 using Nexus.Token.SDK.Extensions;
 using Serilog;
@@ -16,7 +12,7 @@ namespace Nexus.Token.Algorand.Examples
     {
         public static async Task Main(string[] args)
         {
-            WriteToConsole("Welcome to the Stellar Examples project!");
+            WriteToConsole("Welcome to the Algorand Examples project!");
             var provider = ConfigureServices();
             var algorandExample = provider.GetRequiredService<AlgorandExamples>();
 
@@ -63,7 +59,7 @@ namespace Nexus.Token.Algorand.Examples
                 }
                 catch (FormatException)
                 {
-                    WriteToConsole($"The {command.GetType().Name} value '{command}' is not in a recognizable format.", ConsoleColor.Red);
+                    WriteToConsole($"The {command?.GetType().Name} value '{command}' is not in a recognizable format.", ConsoleColor.Red);
                 }
                 catch (NexusApiException ex)
                 {
@@ -93,8 +89,6 @@ namespace Nexus.Token.Algorand.Examples
                 .AddEnvironmentVariables()
                 .Build();
 
-            Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
-
             var logger = new LoggerConfiguration()
                  .MinimumLevel.Warning()
                  .WriteTo.Console()
@@ -102,10 +96,7 @@ namespace Nexus.Token.Algorand.Examples
 
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger, dispose: true));
 
-            services.AddTokenServer(o =>
-                o.ConnectToCustom(settings.NexusApiUrl, settings.NexusIdentityUrl, settings.ClientId, settings.ClientSecret)
-                 .AddDefaultFundingPaymentMethod(settings.FundingPaymentMethod)
-                 .AddDefaultPayoutPaymentMethod(settings.PayoutPaymentMethod));
+            services.AddTokenServer(config);
 
             services.UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916");
 

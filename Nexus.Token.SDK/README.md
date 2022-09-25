@@ -45,9 +45,28 @@ Startup.cs example:
 ```csharp
 public class Startup
 {
+    // Configure using TokenServerOptionsBuilder
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddTokenServer(o => ...);
+    }
+}
+```
+
+```csharp
+public class Startup
+{
+    // Configure using IConfiguration
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {        
+        services.AddTokenServer(Configuration);
     }
 }
 ```
@@ -118,13 +137,52 @@ The SDK supports two environments for Nexus:
 
 1. Nexus Test
 
+Using options:
 ```csharp
 services.AddTokenServer(o => o.ConnectToTest("clientId", "clientSecret"));
 ```
 
+Using appsettings.json
+```json
+{
+  "TokenServerOptions": {
+    "ApiUrl": "https://testapi.quantoznexus.com",
+    "PaymentMethodOptions": {
+      "Funding": "your-test-funding-paymentMethod",
+      "Payout": "your-test-funding-paymentMethod"
+    },
+    "AuthProviderOptions": {
+      "IdentityUrl": "https://testidentity.quantoznexus.com",
+      "ClientId": "your-test-clientId",
+      "ClientSecret": "your-test-clientSecret"
+    }
+  }
+}
+```
+
 2. Nexus Production 
+
+Using options:
 ```csharp
 services.AddTokenServer(o => o.ConnectToProduction("clientId", "clientSecret"));
+```
+
+Using appsettings.json
+```json
+{
+  "TokenServerOptions": {
+    "ApiUrl": "https://api.quantoznexus.com",
+    "PaymentMethodOptions": {
+      "Funding": "your-prod-funding-paymentMethod",
+      "Payout": "your-prod-funding-paymentMethod"
+    },
+    "AuthProviderOptions": {
+      "IdentityUrl": "https://identity.quantoznexus.com",
+      "ClientId": "your-prod-clientId",
+      "ClientSecret": "your-prod-clientSecret"
+    }
+  }
+}
 ```
 
 Check our [Nexus Docs](https://devdocs.quantoznexus.com/articles/start-developing/sd_authentication.html) for more information on how to generate a `clientId` and `clientSecret` for your environment.

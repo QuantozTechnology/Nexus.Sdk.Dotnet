@@ -46,9 +46,15 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ServerUri?.ToString(), Is.EqualTo("https://api.quantoznexus.com/"));
-                Assert.That(serverOptions.PaymentMethods, Is.Empty);
-                Assert.That(serverOptions.AuthProvider, Is.Not.Null);
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://api.quantoznexus.com/"));
+                Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
+
+                Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
+                Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
+
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://identity.quantoznexus.com/"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
         }
 
@@ -63,9 +69,15 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ServerUri?.ToString(), Is.EqualTo("https://testapi.quantoznexus.com/"));
-                Assert.That(serverOptions.PaymentMethods, Is.Empty);
-                Assert.That(serverOptions.AuthProvider, Is.Not.Null);
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.quantoznexus.com/"));
+                Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
+
+                Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
+                Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
+
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.quantoznexus.com/"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
         }
 
@@ -81,9 +93,15 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ServerUri?.ToString(), Is.EqualTo("https://testapi.com/"));
-                Assert.That(serverOptions.PaymentMethods, Is.Empty);
-                Assert.That(serverOptions.AuthProvider, Is.Not.Null);
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.com"));
+                Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
+
+                Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
+                Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
+
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.com"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
+                Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
         }
 
@@ -100,9 +118,9 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.PaymentMethods, Is.Not.Empty);
-                Assert.That(serverOptions.PaymentMethods[PaymentMethodType.Funding], Is.EqualTo("test_funding_paymentmethod"));
-                Assert.That(serverOptions.PaymentMethods[PaymentMethodType.Payout], Is.EqualTo("test_payout_paymentmethod"));
+                Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
+                Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.EqualTo("test_funding_paymentmethod"));
+                Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.EqualTo("test_payout_paymentmethod"));
             });
         }
 

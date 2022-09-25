@@ -4,19 +4,34 @@ using System.Net.Http.Headers;
 
 namespace Nexus.SDK.Shared.Authentication;
 
-public class ClientAuthProvider : IAuthProvider
+public class AuthProvider : IAuthProvider
 {
     private readonly string _tokenEndpoint;
     private readonly string _clientId;
     private readonly string _clientSecret;
 
-    private ILogger<ClientAuthProvider>? _logger;
+    private ILogger<AuthProvider>? _logger;
 
     private DateTime? _expiresOn;
     private string? _accessToken;
 
-    public ClientAuthProvider(ClientAuthProviderOptions options, ILogger<ClientAuthProvider>? logger = null)
+    public AuthProvider(AuthProviderOptions options, ILogger<AuthProvider>? logger = null)
     {
+        if (options.IdentityUrl is null)
+        {
+            throw new ArgumentNullException(nameof(options.IdentityUrl));
+        }
+
+        if (options.ClientId is null)
+        {
+            throw new ArgumentNullException(nameof(options.ClientId));
+        }
+
+        if (options.ClientSecret is null)
+        {
+            throw new ArgumentNullException(nameof(options.ClientSecret));
+        }
+
         _tokenEndpoint = new Uri(options.IdentityUrl + "/connect/token").OriginalString;
         _clientId = options.ClientId;
         _clientSecret = options.ClientSecret;

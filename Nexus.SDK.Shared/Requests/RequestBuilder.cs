@@ -19,20 +19,20 @@ public class RequestBuilder<T> where T : class
     private IDictionary<string, string>? _queryParameters;
     protected ILogger<RequestBuilder<T>>? _logger;
 
-    public RequestBuilder(Uri? serverUri, HttpClient httpClient, IAuthProvider authProvider,
+    public RequestBuilder(string? serverUrl, HttpClient httpClient, IAuthProvider authProvider,
                           ILogger<RequestBuilder<T>>? logger = null)
     {
-        if (serverUri is null)
+        if (serverUrl is null)
         {
-            throw new ArgumentNullException(nameof(serverUri));
+            throw new ArgumentNullException(nameof(serverUrl));
         }
 
-        _uriBuilder = new UriBuilder(serverUri);
+        _uriBuilder = new UriBuilder(serverUrl);
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
 
         _segments = new List<string>();
         _segmentsAdded = false; //Allow overwriting segments
-        _authProvider = authProvider ?? throw new ArgumentNullException(nameof(authProvider));
+        _authProvider = authProvider;
         _responseHandler = new ResponseHandler(logger);
         _logger = logger;
     }
