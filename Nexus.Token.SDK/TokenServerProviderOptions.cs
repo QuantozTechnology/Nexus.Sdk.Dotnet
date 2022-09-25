@@ -4,13 +4,20 @@ namespace Nexus.Token.SDK
 {
     public class TokenServerProviderOptions
     {
-        public Uri? ServerUri { get; set; }
-        public IDictionary<PaymentMethodType, string> PaymentMethods { get; } = new Dictionary<PaymentMethodType, string>();
-        public IAuthProvider AuthProvider { get; set; }
+        public string? ApiUrl { get; set; }
+        public PaymentMethodOptions PaymentMethodOptions { get; set; }
+        public AuthProviderOptions AuthProviderOptions { get; set; }
 
-        public void AddPaymentMethod(PaymentMethodType key, string code)
+        public TokenServerProviderOptions()
         {
-            PaymentMethods.Add(key, code);
+            PaymentMethodOptions = new PaymentMethodOptions();
+            AuthProviderOptions = new AuthProviderOptions();
         }
+    }
+
+    public class PaymentMethodOptions
+    {
+        public string? Funding { get; set; }
+        public string? Payout { get; set; }
     }
 }

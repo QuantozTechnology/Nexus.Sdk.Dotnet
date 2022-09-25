@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Nexus.Token.SDK.Security;
 
 namespace Nexus.Token.SDK.Extensions
@@ -22,15 +23,38 @@ namespace Nexus.Token.SDK.Extensions
             return serviceCollection;
         }
 
+        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, TokenServerProviderOptions options)
+        {
+            serviceCollection.AddSingleton(options);
+            serviceCollection.AddHttpClient<ITokenServerProvider, TokenServerProvider>();
+            serviceCollection.AddSingleton<ITokenServer, TokenServer>();
+            return serviceCollection;
+        }
+
         public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, Action<TokenServerProviderOptionsBuilder> action)
         {
             var builder = new TokenServerProviderOptionsBuilder();
             action(builder);
 
-            serviceCollection.AddSingleton(builder.GetOptions());
-            serviceCollection.AddHttpClient<ITokenServerProvider, TokenServerProvider>();
-            serviceCollection.AddSingleton<ITokenServer, TokenServer>();
-            return serviceCollection;
+            return AddTokenServer(serviceCollection, builder.GetOptions());
+        }
+
+        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, IConfiguration configuration, string configSectionName = "TokenServerOptions")
+        {
+            if (configuration is null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
+
+            if (configSectionName is null)
+            {
+                throw new ArgumentNullException(nameof(configSectionName));
+            }
+
+            TokenServerProviderOptions options = new();
+            configuration.GetSection(configSectionName).Bind(options);
+
+            return AddTokenServer(serviceCollection, options);
         }
 
         public static IServiceCollection UseSymmetricEncryption(this IServiceCollection serviceCollection, string symmetricKey)

@@ -7,7 +7,7 @@ namespace Nexus.SDK.Shared.Tests.Helpers
     public class MockRequestBuilder : RequestBuilder<MockRequestBuilder>
     {
         public MockRequestBuilder(IAuthProvider authProvider, HttpMessageHandler messageHandler)
-            : base(new Uri("https://mockrequestbuilder.com"), new HttpClient(messageHandler), authProvider, null)
+            : base("https://mockrequestbuilder.com", new HttpClient(messageHandler), authProvider, null)
         {
         }
 

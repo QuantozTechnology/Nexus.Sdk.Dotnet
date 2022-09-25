@@ -11,7 +11,7 @@ public record CreateTokenAccountRequest
     public string? Address { get; set; }
 
     [JsonPropertyName("tokenSettings")]
-    public CreateTokenAccountSettings TokenSettings { get; set; }
+    public CreateTokenAccountSettings? TokenSettings { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest
@@ -56,5 +56,5 @@ public class AllowedTokens
 public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
-    public IEnumerable<string> AllowedTokens { get; set; }
+    public IEnumerable<string>? AllowedTokens { get; set; }
 }
