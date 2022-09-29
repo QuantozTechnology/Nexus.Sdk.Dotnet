@@ -26,7 +26,7 @@ namespace Nexus.Token.Examples.SDK
 
         public async Task<string> CreateAccountAsync(string customerCode)
         {
-            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR", "NL", "MOCK_EXTERNAL_CODE").Build();
+            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
             var customer = await _tokenServer.Customers.Create(request);
 
             var senderKeyPair = AlgorandKeyPair.Generate();

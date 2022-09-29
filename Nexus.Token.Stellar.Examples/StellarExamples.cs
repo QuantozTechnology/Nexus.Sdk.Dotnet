@@ -38,7 +38,21 @@ namespace Nexus.Token.Examples.SDK
 
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
-            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR", "NL", "MOCK_EXTERNAL_CODE").Build();
+            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR")
+                .SetBankAccounts(new CustomerBankAccountRequest[]
+                {
+                        new CustomerBankAccountRequest()
+                        {
+                            Bank = new CustomerBankRequest
+                            {
+                                BankName = "Test_BankName"
+                            },
+                            BankAccountName = "Test_BankAccountName"
+                        }
+                })
+                .SetCustomProperty("FirstName","Test_FirstName")
+                .Build();
+
             var customer = await _tokenServer.Customers.Create(request);
 
             var kp = StellarKeyPair.Generate();

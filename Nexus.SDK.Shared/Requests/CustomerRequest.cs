@@ -1,19 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Nexus.SDK.Shared.Requests;
 
 public record CustomerRequest
 {
-    public CustomerRequest(string customerCode, string trustLevel, string currencyCode, string status, string countryCode, string externalCustomerCode)
+    public CustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
     {
         CustomerCode = customerCode;
         TrustLevel = trustLevel;
         CurrencyCode = currencyCode;
         Status = status;
-        CountryCode = countryCode;
-        ExternalCustomerCode = externalCustomerCode;
     }
 
     [JsonPropertyName("customerCode")]
@@ -86,10 +83,9 @@ public class CustomerRequestBuilder
 {
     private readonly CustomerRequest _request;
 
-    public CustomerRequestBuilder(string customerCode, string trustLevel, string currencyCode, string countryCode, string externalCustomerCode)
+    public CustomerRequestBuilder(string customerCode, string trustLevel, string currencyCode)
     {
-        _request = new CustomerRequest(
-            customerCode, trustLevel, currencyCode, "ACTIVE", countryCode, externalCustomerCode);
+        _request = new CustomerRequest(customerCode, trustLevel, currencyCode, "ACTIVE");
     }
 
     public CustomerRequestBuilder SetEmail(string email)
@@ -110,9 +106,32 @@ public class CustomerRequestBuilder
         return this;
     }
 
-    public CustomerRequestBuilder SetOptionalData(IDictionary<string, string> data)
+    public CustomerRequestBuilder SetCustomData(IDictionary<string, string> data)
     {
         _request.Data = data;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetCustomProperty(string key, string value)
+    {
+        var data = new Dictionary<string, string>
+        {
+            [key] = value
+        };
+
+        _request.Data = data;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetCountry(string countryCode)
+    {
+        _request.CountryCode = countryCode;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetExternalReference(string externalReference)
+    {
+        _request.ExternalCustomerCode = externalReference;
         return this;
     }
 
