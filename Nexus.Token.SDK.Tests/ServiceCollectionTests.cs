@@ -1,5 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Nexus.SDK.Shared.Authentication;
 using Nexus.SDK.Shared.Requests;
 using Nexus.Token.SDK.Extensions;
 using Nexus.Token.SDK.Tests.Helpers;
@@ -46,13 +45,13 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://api.quantoznexus.com/"));
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://api.quantoznexus.com"));
                 Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
 
                 Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
                 Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
 
-                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://identity.quantoznexus.com/"));
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://identity.quantoznexus.com"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
@@ -69,13 +68,13 @@ namespace Nexus.Token.SDK.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.quantoznexus.com/"));
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.quantoznexus.com"));
                 Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
 
                 Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
                 Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
 
-                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.quantoznexus.com/"));
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.quantoznexus.com"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
@@ -137,25 +136,25 @@ namespace Nexus.Token.SDK.Tests
 
             // Assert that the services exist.
             var tokenServerProvider = provider.GetRequiredService<ITokenServerProvider>();
-            var request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            var request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR", "NL", "MOCK_EXTERNAL_CODE").Build();
             var response = await tokenServerProvider.CreateCustomer(request);
 
             Assert.Multiple(() =>
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(response.Status, Is.EqualTo("Active"));
+                Assert.That(response.Status, Is.EqualTo("ACTIVE"));
             });
 
             var tokenServer = provider.GetRequiredService<ITokenServer>();
-            request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            request = new CustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR", "NL", "MOCK_EXTERNAL_CODE").Build();
             response = await tokenServer.Customers.Create(request);
 
             Assert.Multiple(() =>
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(response.Status, Is.EqualTo("Active"));
+                Assert.That(response.Status, Is.EqualTo("ACTIVE"));
             });
         }
     }
