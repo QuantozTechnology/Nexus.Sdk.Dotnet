@@ -107,6 +107,30 @@ namespace Nexus.SDK.Shared.Tests
         }
 
         [Test]
+        public void CustomerRequestBuilderTests_Build_BankProperties()
+        {
+            var request = new CustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .AddBankProperties("bank_account_name", null, null, "ING", "Amsterdam", "NL")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.Null);
+                Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.BankAccounts, Is.Not.Null);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
         public void CustomerRequestBuilderTests_Build_CustomData()
         {
             var dataDict = new Dictionary<string, string>(2);

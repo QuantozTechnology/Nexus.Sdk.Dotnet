@@ -106,6 +106,28 @@ public class CustomerRequestBuilder
         return this;
     }
 
+    public CustomerRequestBuilder AddBankProperties(string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
+    {
+        var customerBankAccounts = new CustomerBankAccountRequest[]
+        {
+            new CustomerBankAccountRequest()
+            {
+                BankAccountName = accountName,
+                Bank = new CustomerBankRequest
+                {
+                    BankName = bankName,
+                    BankBicCode = bicCode,
+                    BankIBANCode = ibanCode,
+                    BankCity = city,
+                    BankCountryCode = countryCode
+                }
+            }
+        };
+
+        _request.BankAccounts = customerBankAccounts;
+        return this;
+    }
+
     public CustomerRequestBuilder SetCustomData(IDictionary<string, string> data)
     {
         _request.Data = data;

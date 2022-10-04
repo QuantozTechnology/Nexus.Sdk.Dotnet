@@ -39,18 +39,8 @@ namespace Nexus.Token.Examples.SDK
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
             var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR")
-                .AddBankAccount(new CustomerBankAccountRequest[]
-                {
-                        new CustomerBankAccountRequest()
-                        {
-                            Bank = new CustomerBankRequest
-                            {
-                                BankName = "Test_BankName"
-                            },
-                            BankAccountName = "Test_BankAccountName"
-                        }
-                })
-                .AddCustomProperty("FirstName","Test_FirstName")
+                .AddBankProperties("BankAccountName", "BankBicCode", "IbanCode", "BankName", "BankCity", "BankCountry")
+                .AddCustomProperty("FirstName", "Test_FirstName")
                 .Build();
 
             var customer = await _tokenServer.Customers.Create(request);
