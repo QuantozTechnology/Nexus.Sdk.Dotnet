@@ -100,7 +100,7 @@ public class CustomerRequestBuilder
         return this;
     }
 
-    public CustomerRequestBuilder SetBankAccounts(CustomerBankAccountRequest[] bankAccounts)
+    public CustomerRequestBuilder AddBankAccount(CustomerBankAccountRequest[] bankAccounts)
     {
         _request.BankAccounts = bankAccounts;
         return this;
@@ -112,7 +112,7 @@ public class CustomerRequestBuilder
         return this;
     }
 
-    public CustomerRequestBuilder SetCustomProperty(string key, string value)
+    public CustomerRequestBuilder AddCustomProperty(string key, string value)
     {
         var data = new Dictionary<string, string>
         {
