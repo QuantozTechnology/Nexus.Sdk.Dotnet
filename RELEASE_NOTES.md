@@ -23,3 +23,9 @@ information.
 
 ### Other Changes
 * Added checks to the `OrderRequestBuilder`.
+
+
+## [2022.10.5.7](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9699238)
+
+### New Features
+* Updated customer creation `CustomerRequest` to include some optional properties `CountryCode`, `ExternalCustomerCode`, `Bank` and CustomProperties. Check out the create account functionality in the example projects for more information.
