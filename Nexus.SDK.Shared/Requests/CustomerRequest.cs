@@ -1,9 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Nexus.SDK.Shared.Requests;
 
 public record CustomerRequest
 {
+    public CustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
+    {
+        CustomerCode = customerCode;
+        TrustLevel = trustLevel;
+        CurrencyCode = currencyCode;
+        Status = status;
+    }
+
     [JsonPropertyName("customerCode")]
     public string CustomerCode { get; set; }
 
@@ -19,13 +28,17 @@ public record CustomerRequest
     [JsonPropertyName("status")]
     public string Status { get; set; }
 
-    public CustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
-    {
-        CustomerCode = customerCode;
-        TrustLevel = trustLevel;
-        CurrencyCode = currencyCode;
-        Status = status;
-    }
+    [JsonPropertyName("countryCode")]
+    [StringLength(3, MinimumLength = 2)]
+    public string CountryCode { get; set; }
+
+    [JsonPropertyName("externalCustomerCode")]
+    [StringLength(40)]
+    public string ExternalCustomerCode { get; set; }
+
+    public IDictionary<string, string>? Data { get; set; }
+
+    public CustomerBankAccountRequest[] BankAccounts { get; set; }
 }
 
 public enum CustomerStatus
@@ -34,6 +47,36 @@ public enum CustomerStatus
     UNDERREVIEW = 1,
     NEW = 2,
     BLOCKED = 3
+}
+
+public class CustomerBankAccountRequest
+{
+    [JsonPropertyName("bankAccountName")]
+    public string? BankAccountName { get; set; }
+
+    public CustomerBankRequest? Bank { get; set; }
+}
+
+public class CustomerBankRequest
+{
+    [JsonPropertyName("bankBicCode")]
+    [StringLength(12)]
+    public string? BankBicCode { get; set; }
+
+    [JsonPropertyName("bankIBANCode")]
+    [StringLength(10)]
+    public string? BankIBANCode { get; set; }
+
+    [JsonPropertyName("bankName")]
+    [StringLength(100)]
+    public string? BankName { get; set; }
+
+    [JsonPropertyName("bankCity")]
+    [StringLength(40)]
+    public string? BankCity { get; set; }
+
+    [JsonPropertyName("bankCountryCode")]
+    public string? BankCountryCode { get; set; }
 }
 
 public class CustomerRequestBuilder
@@ -54,6 +97,63 @@ public class CustomerRequestBuilder
     public CustomerRequestBuilder SetStatus(CustomerStatus status)
     {
         _request.Status = status.ToString();
+        return this;
+    }
+
+    public CustomerRequestBuilder AddBankAccount(CustomerBankAccountRequest[] bankAccounts)
+    {
+        _request.BankAccounts = bankAccounts;
+        return this;
+    }
+
+    public CustomerRequestBuilder AddBankProperties(string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
+    {
+        var customerBankAccounts = new CustomerBankAccountRequest[]
+        {
+            new CustomerBankAccountRequest()
+            {
+                BankAccountName = accountName,
+                Bank = new CustomerBankRequest
+                {
+                    BankName = bankName,
+                    BankBicCode = bicCode,
+                    BankIBANCode = ibanCode,
+                    BankCity = city,
+                    BankCountryCode = countryCode
+                }
+            }
+        };
+
+        _request.BankAccounts = customerBankAccounts;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetCustomData(IDictionary<string, string> data)
+    {
+        _request.Data = data;
+        return this;
+    }
+
+    public CustomerRequestBuilder AddCustomProperty(string key, string value)
+    {
+        var data = new Dictionary<string, string>
+        {
+            [key] = value
+        };
+
+        _request.Data = data;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetCountry(string countryCode)
+    {
+        _request.CountryCode = countryCode;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetExternalReference(string externalReference)
+    {
+        _request.ExternalCustomerCode = externalReference;
         return this;
     }
 
