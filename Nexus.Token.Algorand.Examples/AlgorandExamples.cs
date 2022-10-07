@@ -89,6 +89,24 @@ namespace Nexus.Token.Examples.SDK
             _logger.LogWarning("The properties of the Hans Peter token is: {validatedTaxonomy}", taxonomyResponse.ValidatedTaxonomy);
         }
 
+        public async Task CreateAssetTokenWithSetHashForTaxonomy(string tokenCode, string tokenName)
+        {
+            var url = $"https://{tokenCode}.com";
+            var hash = "341ed582360e949617b9f2107d881e8fdd3c99f22a4d1a7489cbc70382e2c2f5";
+            var taxonomy = new TaxonomyRequest( url, hash);
+
+            var definition = AlgorandTokenDefinition.TokenizedAsset(tokenCode, tokenName, 1000, 0);
+            definition.SetTaxonomy(taxonomy);
+
+            var tokenResponse = await _tokenServer.Tokens.CreateOnAlgorand(definition);
+            var token = tokenResponse.Tokens.First();
+
+            _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
+
+            var taxonomyResponse = await _tokenServer.Taxonomy.Get(tokenCode);
+            _logger.LogWarning("The hash of the Hans Peter token is the value of the has that was provided: {hash}", taxonomyResponse.Hash);
+        }
+
         public async Task FundAccountAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
