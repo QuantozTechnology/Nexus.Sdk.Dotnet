@@ -35,6 +35,7 @@ namespace Nexus.SDK.Shared.Tests
             var request = new CustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetStatus(status)
+                .SetCountry("NL")
                 .Build();
 
             Assert.Multiple(() =>
@@ -58,6 +59,7 @@ namespace Nexus.SDK.Shared.Tests
             var request = new CustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetCountry("NL")
                 .Build();
 
             Assert.Multiple(() =>
@@ -99,7 +101,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
-                Assert.That(request.CountryCode, Is.EqualTo("NL"));
+                Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.BankAccounts, Is.Not.Null);
                 Assert.That(request.Data, Is.Null);
@@ -151,7 +153,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
-                Assert.That(request.CountryCode, Is.EqualTo("NL"));
+                Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
@@ -175,7 +177,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
-                Assert.That(request.CountryCode, Is.EqualTo("NL"));
+                Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
@@ -188,6 +190,7 @@ namespace Nexus.SDK.Shared.Tests
             var request = new CustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetCountry("NL")
                 .SetExternalReference("MOCK_REFERENCE")
                 .Build();
 
@@ -199,10 +202,10 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
-                Assert.That(request.CountryCode, Is.EqualTo("NL"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.ExternalCustomerCode, Is.EqualTo("MOCK_REFERENCE"));
                 Assert.That(request.BankAccounts, Is.Null);
-                Assert.That(request.Data, Is.Not.Null);
+                Assert.That(request.Data, Is.Null);
             });
         }
     }
