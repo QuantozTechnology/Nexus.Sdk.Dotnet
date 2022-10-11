@@ -256,9 +256,11 @@ Algorand Settings:
 
 The idea of token taxonomy is to provide a token on a blockchain with more meaning than just a code. The first step is to specify a set of properties that your tokens must comply with, this is called a `schema` ([NJsonSchema](https://github.com/RicoSuter/NJsonSchema) is a library that can be used to easily generate a schema from an C# object). 
 
-When creating a new token, you specify the `schema` along with a set of `properties` the token has. These `properties` are validated against the schema and hashed using the MD5 algorithm. This `hash` is stored base64 encoded as a token property on the blockchain. It is also possible to add an `assetURL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. 
+When creating a new token, you specify the `schema` along with a set of `properties` the token has. These `properties` are validated against the schema and hashed using the SHA256 algorithm. This `hash` is stored base64 encoded as a token property on the blockchain. It is also possible to add an `assetURL`, this url can be a reference to a webpage where the asset is described or can contain a JSON representation of the `properties`. 
 
-Any person can verify that the `properties` of a created token have not been altered by encoding the JSON using MD5 hashing algorithm and comparing it to the decoded `hash` on the blockchain. 
+Any person can verify that the `properties` of a created token have not been altered by encoding the JSON using SHA256 hashing algorithm and comparing it to the decoded `hash` on the blockchain. 
+
+Alternatively, you can provide a hash to store on the blockchain, instead of having to provide a taxonomy schema and properties to calculate one, but note a provided hash is not validated in any way.  
 
 ---
 

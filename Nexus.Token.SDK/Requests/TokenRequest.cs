@@ -198,30 +198,41 @@ public record AlgorandTokenDefinitionSettings
 public record TaxonomyRequest
 {
     [JsonPropertyName("taxonomySchemaCode")]
-    public string SchemaCode { get; set; }
+    public string? SchemaCode { get; set; }
 
     [JsonPropertyName("assetUrl")]
-    public string AssetUrl { get; set; }
+    public string? AssetUrl { get; set; }
 
     [JsonPropertyName("properties")]
-    public IDictionary<string, object> Properties { get; set; }
+    public IDictionary<string, object>? Properties { get; set; }
 
-    public TaxonomyRequest(string schemaCode, string assetUrl)
+    [JsonPropertyName("taxonomyHash")]
+    public string? TaxonomyHash { get; set; }
+
+    public TaxonomyRequest(string schemaCode, string? assetUrl)
     {
         SchemaCode = schemaCode;
         AssetUrl = assetUrl;
         Properties = new Dictionary<string, object>();
     }
 
-    public TaxonomyRequest(string schemaCode, string assetUrl, IDictionary<string, object> properties)
+    public TaxonomyRequest(string schemaCode, string? assetUrl, IDictionary<string, object> properties)
     {
         SchemaCode = schemaCode;
         AssetUrl = assetUrl;
         Properties = properties;
     }
 
+    public TaxonomyRequest(string? schemaCode, string? assetUrl, IDictionary<string, object>? properties, string taxonomyHash)
+    {
+        SchemaCode = schemaCode;
+        AssetUrl = assetUrl;
+        Properties = properties;
+        TaxonomyHash = taxonomyHash;
+    }
+
     public void AddProperty(string key, object value)
     {
-        Properties.Add(key, value);
+        Properties?.Add(key, value);
     }
 }

@@ -19,14 +19,18 @@ public class TokenResponse
     [JsonPropertyName("created")]
     public string Created { get; }
 
+    [JsonPropertyName("blockchainId")]
+    public string BlockchainId { get; }
+
     [JsonConstructor]
-    public TokenResponse(string code, string name, string issuerAddress, string status, string created)
+    public TokenResponse(string code, string name, string issuerAddress, string status, string created, string blockchainId)
     {
         Code = code;
         Name = name;
         IssuerAddress = issuerAddress;
         Status = status;
         Created = created;
+        BlockchainId = blockchainId;
     }
 }
 
