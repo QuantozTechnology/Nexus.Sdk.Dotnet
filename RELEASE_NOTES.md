@@ -1,3 +1,11 @@
+## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9847275)
+
+### New Features
+* It is now possible to provide your own hash during token creation. Check out the documentation for more information. 
+
+### Bug Fixes
+* Updated taxonomy creation to use the correct json properties.
+
 ## [2022.9.25.16](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9474509)
 
 ### New Features
