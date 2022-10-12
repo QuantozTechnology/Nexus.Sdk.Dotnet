@@ -2,6 +2,7 @@
 
 ### New Features
 * It is now possible to provide your own hash during token creation. Check out the examples and documentation for more information. 
+* The token details now returns its blockchain ID. This is the unique identifier of the token on the blockchain. For Algorand this is represented as an unsigned long: 312769. For Stellar its a combination of asset issuer and code: {issuerAddress}:{assetCode}.
 
 ### Bug Fixes
 * Updated taxonomy creation to use the correct json properties.
