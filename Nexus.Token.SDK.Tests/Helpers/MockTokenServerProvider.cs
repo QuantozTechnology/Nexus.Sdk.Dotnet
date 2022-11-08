@@ -166,5 +166,15 @@ namespace Nexus.Token.SDK.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<TransactionResponse> GetTransaction(string transactionCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse<TransactionResponse>> GetTransactions(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

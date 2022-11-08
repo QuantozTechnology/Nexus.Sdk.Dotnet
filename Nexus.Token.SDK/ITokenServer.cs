@@ -12,5 +12,6 @@ namespace Nexus.Token.SDK
         public SubmitFacade Submit { get; }
         public TaxonomyFacade Taxonomy { get; }
         public OrdersFacade Orders { get; }
+        public TransactionsFacade Transactions { get; }
     }
 }

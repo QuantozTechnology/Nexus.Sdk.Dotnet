@@ -479,6 +479,34 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
+        /// <param name="transactionCode"></param>
+        /// <returns></returns>
+        public async Task<TransactionResponse> GetTransaction(string code)
+        {
+            SetSegments("token", "payments", code);
+            return await ExecuteGet<TransactionResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="queryParameters"></param>
+        /// <returns></returns>
+        public async Task<PagedResponse<TransactionResponse>> GetTransactions(IDictionary<string, string>? queryParameters)
+        {
+            SetSegments("token", "payments");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<PagedResponse<TransactionResponse>>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)

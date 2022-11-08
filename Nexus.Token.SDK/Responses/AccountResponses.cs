@@ -13,12 +13,16 @@ public record AccountResponse
     [JsonPropertyName("dcCode")]
     public string CryptoCode { get; }
 
+    [JsonPropertyName("accountAddress")]
+    public string AccountAddress { get; set; }
+
     [JsonConstructor]
-    public AccountResponse(string customerCode, string accountCode, string cryptoCode)
+    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string accountAddress)
     {
         CustomerCode = customerCode;
         AccountCode = accountCode;
         CryptoCode = cryptoCode;
+        AccountAddress = accountAddress;
     }
 }
 

@@ -219,5 +219,19 @@ namespace Nexus.Token.SDK
         /// <param name="orderCode"></param>
         /// <returns></returns>
         Task<SignableResponse> CancelOrder(string orderCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="transactionCode"></param>
+        /// <returns></returns>
+        Task<TransactionResponse> GetTransaction(string transactionCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        Task<PagedResponse<TransactionResponse>> GetTransactions(IDictionary<string, string>? query);
     }
 }
