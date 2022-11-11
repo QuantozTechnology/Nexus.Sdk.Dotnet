@@ -166,5 +166,10 @@ namespace Nexus.Token.SDK.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<CustomerDataResponse> GetCustomerData(string customerCode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

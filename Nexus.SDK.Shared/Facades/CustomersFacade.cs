@@ -15,6 +15,11 @@ public class CustomersFacade : ServerFacade
         return await _provider.GetCustomer(customerCode);
     }
 
+    public async Task<CustomerDataResponse> GetData(string customerCode)
+    {
+        return await _provider.GetCustomerData(customerCode);
+    }
+
     public async Task<bool> Exists(string customerCode)
     {
         return await _provider.Exists(customerCode);

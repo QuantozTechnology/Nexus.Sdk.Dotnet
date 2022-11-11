@@ -400,6 +400,17 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
+        /// <param name="customerCode"></param>
+        /// <returns></returns>
+        public async Task<CustomerDataResponse> GetCustomerData(string customerCode)
+        {
+            SetSegments("customer", customerCode, "personalData");
+            return await ExecuteGet<CustomerDataResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="orderCode"></param>
         /// <returns></returns>
         public async Task<OrderResponse> GetOrder(string orderCode)
