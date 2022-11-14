@@ -225,13 +225,13 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="transactionCode"></param>
         /// <returns></returns>
-        Task<TransactionResponse> GetTransaction(string transactionCode);
+        Task<TransactionResponse> GetTokenPayment(string transactionCode);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<PagedResponse<TransactionResponse>> GetTransactions(IDictionary<string, string>? query);
+        Task<PagedResponse<TransactionResponse>> GetTokenPayments(IDictionary<string, string>? query);
     }
 }

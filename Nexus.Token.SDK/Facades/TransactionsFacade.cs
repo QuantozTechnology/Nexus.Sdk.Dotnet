@@ -16,7 +16,7 @@ namespace Nexus.Token.SDK.Facades
         /// <returns></returns>
         public async Task<TransactionResponse> Get(string transactionCode)
         {
-            return await _provider.GetTransaction(transactionCode);
+            return await _provider.GetTokenPayment(transactionCode);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace Nexus.Token.SDK.Facades
         /// <returns></returns>
         public async Task<PagedResponse<TransactionResponse>> Get(IDictionary<string, string> query)
         {
-            return await _provider.GetTransactions(query);
+            return await _provider.GetTokenPayments(query);
         }
     }
 }
