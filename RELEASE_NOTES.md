@@ -47,4 +47,4 @@ information.
 ## [2022.11.15.12](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/10637406)
 
 ### New Features
-* Added functionality to retrieve customer personal information based on the provided code.
+* Added functionality to retrieve customer personal information using a customer code.
