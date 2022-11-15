@@ -2,7 +2,6 @@
 using Nexus.SDK.Shared.Authentication;
 using Nexus.SDK.Shared.Responses;
 using System.Text.Json;
-using System.Web;
 
 namespace Nexus.SDK.Shared.Requests;
 
