@@ -1,7 +1,6 @@
 ﻿using Nexus.SDK.Shared.Responses;
 using Nexus.Token.SDK.Requests;
 using Nexus.Token.SDK.Responses;
-using stellar_dotnet_sdk.responses;
 
 namespace Nexus.Token.SDK.Facades;
 
