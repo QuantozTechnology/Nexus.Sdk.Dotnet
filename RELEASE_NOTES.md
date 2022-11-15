@@ -38,3 +38,8 @@ information.
 
 ### New Features
 * Extended customer creation `CustomerRequest` to support optional properties. Check out the create account functionality in the examples projects for more information.
+
+## [2022.11.15.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/10632663)
+
+### New Features
+* Added functionality to list token operation details according to code and query parameters.
