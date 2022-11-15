@@ -477,6 +477,38 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
+        /// Get token operation details based on the code
+        /// </summary>
+        /// <param name="code">Unique Nexus identifier of the operation.</param>
+        /// <returns>
+        /// Return token operation details
+        /// </returns>
+        public async Task<TokenOperationResponse> GetTokenPayment(string code)
+        {
+            SetSegments("token", "payments", code);
+            return await ExecuteGet<TokenOperationResponse>();
+        }
+
+        /// <summary>
+        /// Lists token operations based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of token payments, fundings, payouts and clawbacks
+        /// </returns>
+        public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
+        {
+            SetSegments("token", "payments");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<PagedResponse<TokenOperationResponse>>();
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="request"></param>
