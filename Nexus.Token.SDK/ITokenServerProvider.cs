@@ -221,17 +221,23 @@ namespace Nexus.Token.SDK
         Task<SignableResponse> CancelOrder(string orderCode);
 
         /// <summary>
-        /// Get token payment details
+        /// Get token payment details based on the code
         /// </summary>
-        /// <param name="tokenPaymentCode"></param>
+        /// <param name="tokenPaymentCode">Unique identifier of the payment</param>
         /// <returns></returns>
-        Task<TokenPaymentResponse> GetTokenPayment(string tokenPaymentCode);
+        Task<TokenOperationResponse> GetTokenPayment(string tokenPaymentCode);
 
         /// <summary>
         /// Get token payments based on query parameters
         /// </summary>
+        /// Possible Payment Types:
+        /// - `Funding`
+        /// - `Payment`
+        /// - `FundingPath`
+        /// - `Payout`
+        /// - `Clawback`
         /// <param name="query"></param>
         /// <returns></returns>
-        Task<PagedResponse<TokenPaymentResponse>> GetTokenPayments(IDictionary<string, string>? query);
+        Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? query);
     }
 }

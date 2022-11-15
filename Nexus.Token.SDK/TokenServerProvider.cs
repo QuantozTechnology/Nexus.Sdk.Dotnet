@@ -477,22 +477,28 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
-        /// Get the token payment details
+        /// Get token payment details based on the code
         /// </summary>
-        /// <param name="code"></param>
+        /// <param name="code">Unique identifier of the payment</param>
         /// <returns></returns>
-        public async Task<TokenPaymentResponse> GetTokenPayment(string code)
+        public async Task<TokenOperationResponse> GetTokenPayment(string code)
         {
             SetSegments("token", "payments", code);
-            return await ExecuteGet<TokenPaymentResponse>();
+            return await ExecuteGet<TokenOperationResponse>();
         }
 
         /// <summary>
         /// Get token payments based on query parameters
         /// </summary>
+        /// Possible Payment Types:
+        /// - `Funding`
+        /// - `Payment`
+        /// - `FundingPath`
+        /// - `Payout`
+        /// - `Clawback`
         /// <param name="queryParameters"></param>
         /// <returns></returns>
-        public async Task<PagedResponse<TokenPaymentResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
+        public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
         {
             SetSegments("token", "payments");
 
@@ -501,7 +507,7 @@ namespace Nexus.Token.SDK
                 SetQueryParameters(queryParameters);
             }
 
-            return await ExecuteGet<PagedResponse<TokenPaymentResponse>>();
+            return await ExecuteGet<PagedResponse<TokenOperationResponse>>();
         }
 
         /// <summary>

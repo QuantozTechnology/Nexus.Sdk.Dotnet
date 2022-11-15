@@ -11,11 +11,11 @@ public class OperationsFacade : TokenServerFacade
     }
 
     /// <summary>
-    /// Get token payment details
+    /// Get token payment details based on the code
     /// </summary>
-    /// <param name="tokenPaymentCode"></param>
+    /// <param name="tokenPaymentCode">Unique identifier of the payment</param>
     /// <returns></returns>
-    public async Task<TokenPaymentResponse> Get(string tokenPaymentCode)
+    public async Task<TokenOperationResponse> Get(string tokenPaymentCode)
     {
         return await _provider.GetTokenPayment(tokenPaymentCode);
     }
@@ -23,9 +23,15 @@ public class OperationsFacade : TokenServerFacade
     /// <summary>
     /// Get token payments based on query parameters
     /// </summary>
+    /// Possible Payment Types:
+    /// - `Funding`
+    /// - `Payment`
+    /// - `FundingPath`
+    /// - `Payout`
+    /// - `Clawback`
     /// <param name="query"></param>
     /// <returns></returns>
-    public async Task<PagedResponse<TokenPaymentResponse>> Get(IDictionary<string, string> query)
+    public async Task<PagedResponse<TokenOperationResponse>> Get(IDictionary<string, string> query)
     {
         return await _provider.GetTokenPayments(query);
     }

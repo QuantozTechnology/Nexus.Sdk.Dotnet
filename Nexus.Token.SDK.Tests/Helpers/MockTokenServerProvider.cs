@@ -167,12 +167,12 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<TokenPaymentResponse> GetTokenPayment(string tokenPaymentCode)
+        public Task<TokenOperationResponse> GetTokenPayment(string tokenPaymentCode)
         {
             throw new NotImplementedException();
         }
 
-        public Task<PagedResponse<TokenPaymentResponse>> GetTokenPayments(IDictionary<string, string>? query)
+        public Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
         }
