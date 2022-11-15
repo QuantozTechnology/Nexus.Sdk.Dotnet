@@ -43,3 +43,8 @@ information.
 
 ### New Features
 * Added functionality to list token operation details according to code and query parameters.
+
+## [2022.11.15.12](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/10637406)
+
+### New Features
+* Added functionality to retrieve customer personal information using a customer code.
