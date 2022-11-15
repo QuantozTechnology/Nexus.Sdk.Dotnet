@@ -398,11 +398,11 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
-        /// Get customer data based on the code
+        /// Get customer personal data based on the code
         /// </summary>
         /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
         /// <returns>
-        /// Return customer data
+        /// Customer personal data
         /// </returns>
         public async Task<CustomerDataResponse> GetCustomerData(string customerCode)
         {
