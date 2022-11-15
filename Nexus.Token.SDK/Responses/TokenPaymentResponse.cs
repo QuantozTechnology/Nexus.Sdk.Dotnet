@@ -2,9 +2,9 @@
 
 namespace Nexus.Token.SDK.Responses
 {
-    public record TransactionResponse
+    public record TokenPaymentResponse
     {
-        public TransactionResponse(string code, string hash, AccountResponse senderAccount, AccountResponse receiverAccount, decimal amount, string created, string finished, string status, string type, string memo, string cryptoCode)
+        public TokenPaymentResponse(string code, string hash, AccountResponse senderAccount, AccountResponse receiverAccount, decimal amount, string created, string finished, string status, string type, string memo, string cryptoCode)
         {
             Code = code;
             Hash = hash;
