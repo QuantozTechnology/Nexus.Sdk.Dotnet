@@ -14,6 +14,13 @@ public class CustomersFacade : ServerFacade
         return await _provider.GetCustomer(customerCode);
     }
 
+    /// <summary>
+    /// Get customer data based on the code
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <returns>
+    /// Return customer data
+    /// </returns>
     public async Task<CustomerDataResponse> GetData(string customerCode)
     {
         return await _provider.GetCustomerData(customerCode);
