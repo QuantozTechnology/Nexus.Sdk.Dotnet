@@ -11,26 +11,24 @@ public class OperationsFacade : TokenServerFacade
     }
 
     /// <summary>
-    /// Get token payment details based on the code
+    /// Get token operation details based on the code
     /// </summary>
-    /// <param name="tokenPaymentCode">Unique identifier of the payment</param>
-    /// <returns></returns>
-    public async Task<TokenOperationResponse> Get(string tokenPaymentCode)
+    /// <param name="code">Unique Nexus identifier of the operation.</param>
+    /// <returns>
+    /// Return token operation details
+    /// </returns>
+    public async Task<TokenOperationResponse> Get(string code)
     {
-        return await _provider.GetTokenPayment(tokenPaymentCode);
+        return await _provider.GetTokenPayment(code);
     }
 
     /// <summary>
-    /// Get token payments based on query parameters
+    /// Lists token operations based on the query parameters
     /// </summary>
-    /// Possible Payment Types:
-    /// - `Funding`
-    /// - `Payment`
-    /// - `FundingPath`
-    /// - `Payout`
-    /// - `Clawback`
-    /// <param name="query"></param>
-    /// <returns></returns>
+    /// <param name="query">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+    /// <returns>
+    /// Return a paged list of token payments, fundings, payouts and clawbacks
+    /// </returns>
     public async Task<PagedResponse<TokenOperationResponse>> Get(IDictionary<string, string> query)
     {
         return await _provider.GetTokenPayments(query);
