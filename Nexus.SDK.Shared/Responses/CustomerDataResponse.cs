@@ -20,33 +20,33 @@ namespace Nexus.SDK.Shared.Responses
         }
 
         [JsonPropertyName("customerCode")]
-        public string CustomerCode { get; set; }
+        public string CustomerCode { get; private set; }
 
         [JsonPropertyName("firstName")]
-        public string FirstName { get; set; }
+        public string? FirstName { get; private set; }
 
         [JsonPropertyName("lastName")]
-        public string LastName { get; set; }
+        public string? LastName { get; private set; }
 
         [JsonPropertyName("dateOfBirth")]
-        public string DateOfBirth { get; set; }
+        public string? DateOfBirth { get; private set; }
 
         [JsonPropertyName("countryName")]
-        public string CountryName { get; set; }
+        public string? CountryName { get; private set; }
 
         [JsonPropertyName("address")]
-        public string Address { get; set; }
+        public string? Address { get; private set; }
 
         [JsonPropertyName("city")]
-        public string City { get; set; }
+        public string? City { get; private set; }
 
         [JsonPropertyName("state")]
-        public string State { get; set; }
+        public string? State { get; private set; }
 
         [JsonPropertyName("phone")]
-        public string Phone { get; set; }
+        public string? Phone { get; private set; }
 
         [JsonPropertyName("companyName")]
-        public string CompanyName { get; set; }
+        public string? CompanyName { get; private set; }
     }
 }

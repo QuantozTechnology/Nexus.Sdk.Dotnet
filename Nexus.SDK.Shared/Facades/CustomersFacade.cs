@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.Requests;
+﻿using Nexus.SDK.Shared.Requests;
 using Nexus.SDK.Shared.Responses;
 
 namespace Nexus.SDK.Shared.Facades;

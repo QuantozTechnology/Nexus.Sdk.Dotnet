@@ -398,7 +398,7 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
-        ///
+        /// Get data based on the customer code
         /// </summary>
         /// <param name="customerCode"></param>
         /// <returns></returns>
