@@ -568,5 +568,33 @@ namespace Nexus.Token.SDK
 
             return await ExecutePut<UpdateTaxonomySchemaRequest, TaxonomySchemaResponse>(request);
         }
+
+        /// <summary>
+        /// Get token funding limits of customer
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
+        /// <returns>
+        /// The current spending limits expressed in token value.
+        /// </returns>
+        public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        {
+            SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode);
+            return await ExecuteGet<TokenLimitsResponse>();
+        }
+
+        /// <summary>
+        /// Get token payout limits of customer
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
+        /// <returns>
+        /// The current fiat spending limits expressed in token value.
+        /// </returns>
+        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        {
+            SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
+            return await ExecuteGet<TokenLimitsResponse>();
+        }
     }
 }

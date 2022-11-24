@@ -237,5 +237,25 @@ namespace Nexus.Token.SDK
         /// Return a paged list of token payments, fundings, payouts and clawbacks
         /// </returns>
         Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? query);
+
+        /// <summary>
+        /// Get token funding limits of customer
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
+        /// <returns>
+        /// The current spending limits expressed in token value.
+        /// </returns>
+        Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode);
+
+        /// <summary>
+        /// Get token payout limits of customer
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
+        /// <returns>
+        /// The current fiat spending limits expressed in token value.
+        /// </returns>
+        Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode);
     }
 }
