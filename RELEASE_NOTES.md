@@ -33,7 +33,6 @@ information.
 ### Other Changes
 * Added checks to the `OrderRequestBuilder`.
 
-
 ## [2022.10.5.7](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9699238)
 
 ### New Features
@@ -55,4 +54,4 @@ information.
 * Added functionality to retrieve information about a customer's token funding and payout limits using a customer code and tokenCode. Check out the limits functionality in the Stellar and Algorand example projects for more information.
 
 ### Bug Fixes
-* Fixed a bug in the creation of a new account, which also accepted bankaccountNumber as a property.
+* Update customer creation to also use the bank account number.
