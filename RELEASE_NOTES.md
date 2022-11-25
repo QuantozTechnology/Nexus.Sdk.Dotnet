@@ -48,3 +48,8 @@ information.
 
 ### New Features
 * Added functionality to retrieve customer personal information using a customer code.
+
+## [2022.11.25.11](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/10994394)
+
+### New Features
+* Added functionality to retrieve information about a customer's token funding and payout limits using a customer code and tokenCode. Check out the limits functionality in the Stellar and Algorand example projects for more information.
