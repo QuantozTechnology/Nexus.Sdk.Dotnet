@@ -15,23 +15,24 @@ public record TokenLimitsResponse
     }
 
     [JsonPropertyName("tokenCode")]
-    public string TokenCode { get; private set; }
+    public string TokenCode { get;  set; }
 
     [JsonPropertyName("limit")]
-    public decimal Limit { get; private set; }
+    public decimal Limit { get;  set; }
 
     [JsonPropertyName("limitReasons")]
-    public string[] LimitReasons { get; private set; }
+    public string[] LimitReasons { get;  set; }
 
-    [JsonPropertyName("remainingLimits")]
-    public TrustlevelLimit Remaining { get; private set; }
+    [JsonPropertyName("remaining")]
+    public TrustlevelLimit Remaining { get;  set; }
 
-    [JsonPropertyName("totalLimits")]
-    public TrustlevelLimit Total { get; private set; }
+    [JsonPropertyName("total")]
+    public TrustlevelLimit Total { get;  set; }
 }
 
 public record TrustlevelLimit
 {
+    [JsonConstructor]
     public TrustlevelLimit(decimal dailyLimit, decimal monthlyLimit, decimal? yearlyLimit, decimal? lifetimeLimit)
     {
         DailyLimit = dailyLimit;
@@ -41,14 +42,14 @@ public record TrustlevelLimit
     }
 
     [JsonPropertyName("dailyLimit")]
-    public decimal DailyLimit { get; private set; }
+    public decimal DailyLimit { get;  set; }
 
     [JsonPropertyName("monthlyLimit")]
-    public decimal MonthlyLimit { get; private set; }
+    public decimal MonthlyLimit { get;  set; }
 
     [JsonPropertyName("yearlyLimit")]
-    public decimal? YearlyLimit { get; private set; }
+    public decimal? YearlyLimit { get;  set; }
 
     [JsonPropertyName("lifetimeLimit")]
-    public decimal? LifetimeLimit { get; private set; }
+    public decimal? LifetimeLimit { get;  set; }
 }

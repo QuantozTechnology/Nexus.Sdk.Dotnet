@@ -39,7 +39,7 @@ namespace Nexus.Token.Examples.SDK
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
             var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR")
-                .AddBankProperties("BankAccountName", "BankBicCode", "IbanCode", "BankName", "BankCity", "BankCountry")
+                .AddBankProperties("BankAccountNumber", "BankAccountName", "BankBicCode", "IbanCode", "BankName", "BankCity", "BankCountry")
                 .AddCustomProperty("FirstName", "Test_FirstName")
                 .Build();
 
@@ -310,6 +310,21 @@ namespace Nexus.Token.Examples.SDK
         public async Task<OrderResponse> GetOrderAsync(string orderCode)
         {
             return await _tokenServer.Orders.Get(orderCode);
+        }
+
+        public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        {
+            var fundingLimitsResponse = await _tokenServer.TokenLimits.GetFundingLimits(customerCode, tokenCode);
+
+            _logger.LogWarning("Returned token funding limits of the customer");
+            return fundingLimitsResponse;
+        }
+        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        {
+            var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode);
+
+            _logger.LogWarning("Returned token payout limits of the customer");
+            return payoutLimitsResponse;
         }
     }
 }
