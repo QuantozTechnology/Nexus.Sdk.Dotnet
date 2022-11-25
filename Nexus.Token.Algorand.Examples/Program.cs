@@ -23,6 +23,7 @@ namespace Nexus.Token.Algorand.Examples
                 WriteToConsole("1 = Algorand Payout Flow");
                 WriteToConsole("2 = Algorand Token Taxonomy Flow");
                 WriteToConsole("3 = Algorand Multiple Operations Flow");
+                WriteToConsole("4 = Algorand Token Limits Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -47,6 +48,9 @@ namespace Nexus.Token.Algorand.Examples
                             break;
                         case 3:
                             await AlgorandMultipleOperationsFlow(algorandExample);
+                            break;
+                        case 4:
+                            await AlgorandTokenLimitsFlow(algorandExample);
                             break;
                         default:
                             WriteToConsole("Flow not supported");
@@ -177,6 +181,46 @@ namespace Nexus.Token.Algorand.Examples
             };
 
             await algorandExamples.FundAccountMultipleAsync(bobsPrivateKey, fundings);
+        }
+
+        public static async Task AlgorandTokenLimitsFlow(AlgorandExamples algorandExamples)
+        {
+            WriteToConsole("Create a new token representing the Mona Lisa");
+            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
+
+            WriteToConsole("Create a new account for Alice");
+            var alice = Guid.NewGuid().ToString();
+            var alicesPrivateKey = await algorandExamples.CreateAccountAsync(alice);
+
+            WriteToConsole("Now we Fund Bobs new account with 100 tokens");
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
+
+            WriteToConsole("Then Bob sends 10 tokens to Alice.");
+            await algorandExamples.PaymentAsync(bobsPrivateKey, alicesPrivateKey, tokenCode, 10);
+
+            WriteToConsole("Getting funding limits for Bob");
+            var tokenFundingLimitsResponse = await algorandExamples.GetTokenFundingLimits(bob, tokenCode);
+
+            WriteToConsole("Total daily funding limits = " + tokenFundingLimitsResponse.Total.DailyLimit.ToString());
+            WriteToConsole("Total monthly funding limits =" + tokenFundingLimitsResponse.Total.MonthlyLimit.ToString());
+            WriteToConsole("Remaining daily funding limits = " + tokenFundingLimitsResponse.Remaining.DailyLimit.ToString());
+            WriteToConsole("Remaining monthly funding limits = " + tokenFundingLimitsResponse.Remaining.DailyLimit.ToString());
+
+            WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
+            await algorandExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
+
+            WriteToConsole("Getting payout limits for Bob");
+            var tokenPayoutLimitsResponse = await algorandExamples.GetTokenPayoutLimits(bob, tokenCode);
+
+            WriteToConsole("Total daily payout limits = " + tokenPayoutLimitsResponse.Total.DailyLimit.ToString());
+            WriteToConsole("Total monthly payout limits =" + tokenPayoutLimitsResponse.Total.MonthlyLimit.ToString());
+            WriteToConsole("Remaining daily payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
+            WriteToConsole("Remaining monthly payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)

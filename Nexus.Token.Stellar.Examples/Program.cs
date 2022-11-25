@@ -33,6 +33,7 @@ namespace Nexus.Token.Stellar.Examples
                 WriteToConsole("3 = Stellar Token Orderbook Flow");
                 WriteToConsole("4 = Stellar Stablecoin Flow");
                 WriteToConsole("5 = Stellar Multiple Operations Flow");
+                WriteToConsole("6 = Stellar Token Limits Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -63,6 +64,9 @@ namespace Nexus.Token.Stellar.Examples
                             break;
                         case 5:
                             await StellarMultipleOperationsFlow(stellarExamples);
+                            break;
+                        case 6:
+                            await StellarTokenLimitsFlow(stellarExamples);
                             break;
                         default:
                             WriteToConsole("Flow not supported");
@@ -267,6 +271,46 @@ namespace Nexus.Token.Stellar.Examples
             };
 
             await stellarExamples.FundAccountMultipleAsync(bobsPrivateKey, fundings);
+        }
+
+        public static async Task StellarTokenLimitsFlow(StellarExamples stellarExamples)
+        {
+            WriteToConsole("Create a new token pegged to the Euro (Stablecoin)");
+            var stablecoinTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            await stellarExamples.CreateStableCoinTokenAsync(stablecoinTokenCode, "EURO", "EUR", 1);
+
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob, new string[] { stablecoinTokenCode });
+
+            WriteToConsole("Create a new account for Alice");
+            var alice = Guid.NewGuid().ToString();
+            var alicesPrivateKey = await stellarExamples.CreateAccountAsync(alice);
+
+            WriteToConsole("Now we Fund Bobs new account with 100 tokens");
+            await stellarExamples.FundAccountAsync(bobsPrivateKey, stablecoinTokenCode, 100);
+
+            WriteToConsole("Then Bob sends 10 tokens to Alice.");
+            await stellarExamples.PaymentAsync(bobsPrivateKey, alicesPrivateKey, stablecoinTokenCode, 10);
+
+            WriteToConsole("Getting funding limits for Bob");
+            var tokenFundingLimitsResponse = await stellarExamples.GetTokenFundingLimits(bob, stablecoinTokenCode);
+
+            WriteToConsole("Total daily funding limits = " + tokenFundingLimitsResponse.Total.DailyLimit.ToString());
+            WriteToConsole("Total monthly funding limits =" + tokenFundingLimitsResponse.Total.MonthlyLimit.ToString());
+            WriteToConsole("Remaining daily funding limits = " + tokenFundingLimitsResponse.Remaining.DailyLimit.ToString());
+            WriteToConsole("Remaining monthly funding limits = " + tokenFundingLimitsResponse.Remaining.DailyLimit.ToString());
+
+            WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
+            await stellarExamples.PayoutAsync(bobsPrivateKey, stablecoinTokenCode, 10);
+
+            WriteToConsole("Getting payout limits for Bob");
+            var tokenPayoutLimitsResponse = await stellarExamples.GetTokenPayoutLimits(bob, stablecoinTokenCode);
+
+            WriteToConsole("Total daily payout limits = " + tokenPayoutLimitsResponse.Total.DailyLimit.ToString());
+            WriteToConsole("Total monthly payout limits =" + tokenPayoutLimitsResponse.Total.MonthlyLimit.ToString());
+            WriteToConsole("Remaining daily payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
+            WriteToConsole("Remaining monthly payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)

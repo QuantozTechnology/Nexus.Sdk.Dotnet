@@ -114,7 +114,7 @@ namespace Nexus.SDK.Shared.Tests
             var request = new CustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
-                .AddBankProperties("bank_account_name", null, null, "ING", "Amsterdam", "NL")
+                .AddBankProperties("bank_account_no", "bank_account_name", null, null, "ING", "Amsterdam", "NL")
                 .Build();
 
             Assert.Multiple(() =>

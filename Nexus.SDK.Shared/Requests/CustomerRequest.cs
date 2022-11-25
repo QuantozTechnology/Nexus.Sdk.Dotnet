@@ -51,6 +51,9 @@ public enum CustomerStatus
 
 public class CustomerBankAccountRequest
 {
+    [JsonPropertyName("bankAccountNumber")]
+    public string? BankAccountNumber { get; set; }
+
     [JsonPropertyName("bankAccountName")]
     public string? BankAccountName { get; set; }
 
@@ -106,12 +109,13 @@ public class CustomerRequestBuilder
         return this;
     }
 
-    public CustomerRequestBuilder AddBankProperties(string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
+    public CustomerRequestBuilder AddBankProperties(string? bankAccountNumber,string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
     {
         var customerBankAccounts = new CustomerBankAccountRequest[]
         {
             new CustomerBankAccountRequest()
             {
+                BankAccountNumber = bankAccountNumber,
                 BankAccountName = accountName,
                 Bank = new CustomerBankRequest
                 {

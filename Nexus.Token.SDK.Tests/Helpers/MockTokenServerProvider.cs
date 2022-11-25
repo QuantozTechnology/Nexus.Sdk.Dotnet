@@ -34,7 +34,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
 
         public Task<CustomerResponse> CreateCustomer(CustomerRequest request)
         {
-            return Task.FromResult(new CustomerResponse(request.CustomerCode,  request.TrustLevel, request.CurrencyCode, request.Email, request.Status));
+            return Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel, request.CurrencyCode, request.Email, request.Status));
         }
 
         public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
@@ -178,6 +178,16 @@ namespace Nexus.Token.SDK.Tests.Helpers
         }
 
         public Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
             throw new NotImplementedException();
         }

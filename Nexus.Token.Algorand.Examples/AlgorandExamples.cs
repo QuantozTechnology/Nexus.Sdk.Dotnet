@@ -4,6 +4,7 @@ using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
 using Nexus.Token.SDK.Requests;
+using Nexus.Token.SDK.Responses;
 using Nexus.Token.SDK.Security;
 using NJsonSchema;
 
@@ -185,6 +186,22 @@ namespace Nexus.Token.Examples.SDK
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
             _logger.LogWarning("Payout successful!");
+        }
+
+        public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        {
+            var fundingLimitsResponse = await _tokenServer.TokenLimits.GetFundingLimits(customerCode, tokenCode);
+
+            _logger.LogWarning("Returned token funding limits of the customer");
+            return fundingLimitsResponse;
+        }
+
+        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        {
+            var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode);
+
+            _logger.LogWarning("Returned token payout limits of the customer");
+            return payoutLimitsResponse;
         }
     }
 }
