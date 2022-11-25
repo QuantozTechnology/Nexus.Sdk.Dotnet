@@ -53,3 +53,6 @@ information.
 
 ### New Features
 * Added functionality to retrieve information about a customer's token funding and payout limits using a customer code and tokenCode. Check out the limits functionality in the Stellar and Algorand example projects for more information.
+
+### Bug Fixes
+* Fixed a bug in the creation of a new account, which also accepted bankaccountNumber as a property.
