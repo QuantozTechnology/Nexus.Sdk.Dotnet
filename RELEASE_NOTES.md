@@ -48,3 +48,8 @@ information.
 
 ### New Features
 * Added functionality to retrieve customer personal information using a customer code.
+
+## [2022.11.28.8](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11015559)
+
+### New Features
+* Updated customer response to include bank account number and optional properties. Check out the create account functionality in the examples projects for more information.
