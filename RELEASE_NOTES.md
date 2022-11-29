@@ -1,8 +1,3 @@
-## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
-
-### Bug Fixes
-* Fixed a json parsing bug on the public key property of an account.
-
 ## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
 
 ### New Features
@@ -58,3 +53,9 @@ information.
 
 ### New Features
 * Updated customer response to include bank account number and optional properties. Check out the create account functionality in the examples projects for more information.
+
+## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
+
+### Bug Fixes
+* Fixed a json parsing bug on the public key property of an account.
+
