@@ -1,4 +1,9 @@
-## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9847275)
+## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
+
+### Bug Fixes
+* Fixed a json parsing bug on the public key property of an account.
+
+## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
 
 ### New Features
 * It is now possible to provide your own hash during token creation. Check out the examples and documentation for more information. 
