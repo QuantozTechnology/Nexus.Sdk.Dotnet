@@ -17,12 +17,12 @@ public record AccountResponse
     public string PublicKey { get; set; }
 
     [JsonConstructor]
-    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string accountAddress)
+    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey)
     {
         CustomerCode = customerCode;
         AccountCode = accountCode;
         CryptoCode = cryptoCode;
-        AccountAddress = accountAddress;
+        PublicKey = publicKey;
     }
 }
 
