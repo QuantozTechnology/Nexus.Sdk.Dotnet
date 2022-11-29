@@ -1,4 +1,4 @@
-## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
+## [2022.10.11.21](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9847275)
 
 ### New Features
 * It is now possible to provide your own hash during token creation. Check out the examples and documentation for more information. 
