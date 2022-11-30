@@ -59,7 +59,7 @@ information.
 * Added functionality to retrieve information about a customer's token funding and payout limits using a customer code and tokenCode. Check out the limits functionality in the Stellar and Algorand example projects for more information.
 
 ### Bug Fixes
-* Update customer creation to also use the required bank account number.
+* Update customer creation to also accept a bank account number.
 
 ## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
 
