@@ -38,7 +38,7 @@ public record CustomerRequest
 
     public IDictionary<string, string>? Data { get; set; }
 
-    public CustomerBankAccountRequest[] BankAccounts { get; set; }
+    public CustomerBankAccountRequest[]? BankAccounts { get; set; }
 }
 
 public enum CustomerStatus

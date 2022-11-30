@@ -48,10 +48,26 @@ information.
 ### New Features
 * Added functionality to retrieve customer personal information using a customer code.
 
+## [2022.11.28.8](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11015559)
+
+### New Features
+* Updated customer response to include bank account number and optional properties. Check out the create account functionality in the examples projects for more information.
+
 ## [2022.11.25.11](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/10994394)
 
 ### New Features
 * Added functionality to retrieve information about a customer's token funding and payout limits using a customer code and tokenCode. Check out the limits functionality in the Stellar and Algorand example projects for more information.
 
 ### Bug Fixes
-* Update customer creation to also use the bank account number.
+* Update customer creation to also use the required bank account number.
+
+## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
+
+### Bug Fixes
+* Fixed a json parsing bug on the public key property of an account.
+
+## [2022.11.30.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11076658)
+
+### New Features
+* Extended token operation details to also return the token code.
+

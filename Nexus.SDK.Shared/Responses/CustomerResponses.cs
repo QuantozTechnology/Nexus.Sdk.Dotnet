@@ -5,13 +5,15 @@ namespace Nexus.SDK.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string? email, string status)
+    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string? email, string status, string bankAccount, IDictionary<string, string> data)
     {
         CustomerCode = customerCode;
         TrustLevel = trustLevel;
         CurrencyCode = currencyCode;
         Email = email;
         Status = status;
+        BankAccount = bankAccount;
+        Data = data;
     }
 
     [JsonPropertyName("customerCode")]
@@ -28,4 +30,10 @@ public record CustomerResponse
 
     [JsonPropertyName("status")]
     public string Status { get; set; }
+
+    [JsonPropertyName("bankAccount")]
+    public string BankAccount { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data { get; set; }
 }
