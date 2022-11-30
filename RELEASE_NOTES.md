@@ -59,3 +59,8 @@ information.
 ### Bug Fixes
 * Fixed a json parsing bug on the public key property of an account.
 
+## [2022.11.30.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11076658)
+
+### New Features
+* Extended token operation details to also return the token code.
+
