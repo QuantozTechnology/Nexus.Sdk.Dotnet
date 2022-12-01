@@ -71,3 +71,8 @@ information.
 ### New Features
 * Extended token operation details to also return the token code.
 
+## [2022.12.1.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11104395)
+
+### New Features
+* Added new account response model for TokenOperationResponse.
+
