@@ -600,12 +600,18 @@ namespace Nexus.Token.SDK
         /// <summary>
         /// List Trust Levels and their limits
         /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
         /// <returns>
         /// Paged list of Partner's trust levels
         /// </returns>
-        public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels()
+        public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? queryParameters)
         {
             SetSegments("labelpartner", "trustlevels");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
 
             return await ExecuteGet<PagedResponse<TrustLevelsResponse>>();
         }
