@@ -20,4 +20,5 @@ public class TokenServer : ITokenServer
     public TaxonomyFacade Taxonomy => new(_provider);
     public OrdersFacade Orders => new(_provider);
     public TokenLimitsFacade TokenLimits => new(_provider);
+    public TrustLevelsFacade TrustLevels => new(_provider);
 }

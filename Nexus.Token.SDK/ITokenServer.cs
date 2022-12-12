@@ -13,5 +13,6 @@ namespace Nexus.Token.SDK
         public TaxonomyFacade Taxonomy { get; }
         public OrdersFacade Orders { get; }
         public TokenLimitsFacade TokenLimits { get; }
+        public TrustLevelsFacade TrustLevels { get; }
     }
 }
