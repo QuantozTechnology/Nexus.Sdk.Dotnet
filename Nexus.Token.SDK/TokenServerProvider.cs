@@ -596,5 +596,18 @@ namespace Nexus.Token.SDK
             SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
             return await ExecuteGet<TokenLimitsResponse>();
         }
+
+        /// <summary>
+        /// List Trust Levels and their limits
+        /// </summary>
+        /// <returns>
+        /// Paged list of Partner's trust levels
+        /// </returns>
+        public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels()
+        {
+            SetSegments("labelpartner", "trustlevels");
+
+            return await ExecuteGet<PagedResponse<TrustLevelsResponse>>();
+        }
     }
 }
