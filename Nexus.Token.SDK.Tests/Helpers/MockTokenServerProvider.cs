@@ -194,5 +194,10 @@ namespace Nexus.Token.SDK.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
