@@ -76,3 +76,7 @@ information.
 ### New Features
 * Added new account response model for TokenOperationResponse.
 
+## [2022.12.13.11](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11322442)
+
+### New Features
+* Added functionality to retrieve information about the partner's trust levels and their buy and sell limits.
