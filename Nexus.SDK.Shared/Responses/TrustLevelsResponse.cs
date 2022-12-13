@@ -5,43 +5,39 @@ namespace Nexus.SDK.Shared.Responses
     public record TrustLevelsResponse
     {
         [JsonConstructor]
-        public TrustLevelsResponse(string? name, string? description, bool? isActive, bool? requireExecutedSellDoesNotExceedLifetimeBuy, DetailedLimits? buyLimits, DetailedLimits? sellLimits, OverallLimits? overallLimits)
+        public TrustLevelsResponse(string name, string? description, bool isActive, Limits? buyLimits, Limits? sellLimits, OverallLimits? overallLimits)
         {
             Name = name;
             Description = description;
             IsActive = isActive;
-            RequireExecutedSellDoesNotExceedLifetimeBuy = requireExecutedSellDoesNotExceedLifetimeBuy;
             BuyLimits = buyLimits;
             SellLimits = sellLimits;
             OverallLimits = overallLimits;
         }
 
         [JsonPropertyName("name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [JsonPropertyName("description")]
         public string? Description { get; set; }
 
         [JsonPropertyName("isActive")]
-        public bool? IsActive { get; set; }
-
-        [JsonPropertyName("requireExecutedSellDoesNotExceedLifetimeBuy")]
-        public bool? RequireExecutedSellDoesNotExceedLifetimeBuy { get; set; }
+        public bool IsActive { get; set; }
 
         [JsonPropertyName("buyLimits")]
-        public DetailedLimits? BuyLimits { get; set; }
+        public Limits? BuyLimits { get; set; }
 
         [JsonPropertyName("sellLimits")]
-        public DetailedLimits? SellLimits { get; set; }
+        public Limits? SellLimits { get; set; }
 
         [JsonPropertyName("overallLimits")]
         public OverallLimits? OverallLimits { get; set; }
     }
 
-    public class DetailedLimits
+    public class Limits
     {
         [JsonConstructor]
-        public DetailedLimits(decimal? dailyLimit, decimal? monthlyLimit, decimal? yearLimit, decimal? lifetimeLimit)
+        public Limits(decimal? dailyLimit, decimal? monthlyLimit, decimal? yearLimit, decimal? lifetimeLimit)
         {
             DailyLimit = dailyLimit;
             MonthlyLimit = monthlyLimit;
@@ -64,11 +60,14 @@ namespace Nexus.SDK.Shared.Responses
 
     public class OverallLimits
     {
-        [JsonConstructor]
-        public OverallLimits(decimal? tokenBalanceLimit)
+        public OverallLimits(double? custodianLimit, decimal? tokenBalanceLimit)
         {
+            CustodianLimit = custodianLimit;
             TokenBalanceLimit = tokenBalanceLimit;
         }
+
+        [JsonPropertyName("custodianLimit")]
+        public double? CustodianLimit { get; set; }
 
         [JsonPropertyName("tokenBalanceLimit")]
         public decimal? TokenBalanceLimit { get; set; }
