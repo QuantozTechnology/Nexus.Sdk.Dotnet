@@ -25,11 +25,10 @@ namespace Nexus.Token.SDK
             return this;
         }
 
-        public TokenServerProviderOptionsBuilder ConnectToProduction(string clientId, string clientSecret,
-            ILogger<AuthProvider>? logger = null)
+        public TokenServerProviderOptionsBuilder ConnectToProduction(string clientId, string clientSecret)
         {
-            _options.ApiUrl = "https://api.quantoznexus.com";
-            _options.AuthProviderOptions = new AuthProviderOptions("https://identity.quantoznexus.com", clientId, clientSecret);
+            _options.ApiUrl = "https://api.quantoz.com";
+            _options.AuthProviderOptions = new AuthProviderOptions("https://identity.quantoz.com", clientId, clientSecret);
             return this;
         }
 
