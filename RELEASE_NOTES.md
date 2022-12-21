@@ -80,3 +80,9 @@ information.
 
 ### New Features
 * Added functionality to retrieve information about the partner's trust levels and their buy and sell limits.
+
+## [2022.12.21.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11489069)
+
+### Other Changes
+* Updated token production urls for ConnectToProduction(clientId, clientSecret)
+
