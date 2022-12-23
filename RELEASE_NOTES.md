@@ -86,3 +86,7 @@ information.
 ### Other Changes
 * Updated token production urls for ConnectToProduction(clientId, clientSecret)
 
+## [2022.12.23.10](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11530311)
+
+### Bug Fixes
+* Fixed a json parsing bug on the trust level property of a customer response.
