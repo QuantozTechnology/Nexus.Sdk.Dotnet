@@ -19,7 +19,7 @@ public record CustomerResponse
     [JsonPropertyName("customerCode")]
     public string CustomerCode { get; set; }
 
-    [JsonPropertyName("trustLevel")]
+    [JsonPropertyName("trustlevel")]
     public string TrustLevel { get; set; }
 
     [JsonPropertyName("currencyCode")]
