@@ -20,6 +20,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
@@ -48,6 +49,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
@@ -72,6 +74,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
@@ -103,6 +106,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Not.Null);
                 Assert.That(request.Data, Is.Null);
             });
@@ -127,6 +131,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Not.Null);
                 Assert.That(request.Data, Is.Null);
             });
@@ -155,6 +160,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
             });
@@ -179,6 +185,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
             });
@@ -204,6 +211,7 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.ExternalCustomerCode, Is.EqualTo("MOCK_REFERENCE"));
+                Assert.That(request.IsBusiness, Is.False);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
