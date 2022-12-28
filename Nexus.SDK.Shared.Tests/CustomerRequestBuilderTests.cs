@@ -216,5 +216,31 @@ namespace Nexus.SDK.Shared.Tests
                 Assert.That(request.Data, Is.Null);
             });
         }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_IsBusiness()
+        {
+            var request = new CustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .AddCustomProperty("FirstName", "Bob")
+                .SetBusiness(true)
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.Null);
+                Assert.That(request.ExternalCustomerCode, Is.Null);
+                Assert.That(request.IsBusiness, Is.True);
+                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.Data, Is.Not.Null);
+            });
+        }
     }
 }

@@ -164,6 +164,12 @@ public class CustomerRequestBuilder
         return this;
     }
 
+    public CustomerRequestBuilder SetBusiness(bool isBusiness)
+    {
+        _request.IsBusiness = isBusiness;
+        return this;
+    }
+
     public CustomerRequest Build()
     {
         return _request;
