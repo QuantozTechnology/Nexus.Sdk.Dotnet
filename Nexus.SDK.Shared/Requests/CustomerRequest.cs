@@ -36,6 +36,9 @@ public record CustomerRequest
     [StringLength(40)]
     public string ExternalCustomerCode { get; set; }
 
+    [JsonPropertyName("isBusiness")]
+    public bool IsBusiness { get; set; } = false;
+
     public IDictionary<string, string>? Data { get; set; }
 
     public CustomerBankAccountRequest[]? BankAccounts { get; set; }
@@ -158,6 +161,12 @@ public class CustomerRequestBuilder
     public CustomerRequestBuilder SetExternalReference(string externalReference)
     {
         _request.ExternalCustomerCode = externalReference;
+        return this;
+    }
+
+    public CustomerRequestBuilder SetBusiness(bool isBusiness)
+    {
+        _request.IsBusiness = isBusiness;
         return this;
     }
 
