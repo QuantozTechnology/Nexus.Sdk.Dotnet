@@ -14,6 +14,8 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         Task<AccountResponse> GetAccount(string accountCode);
 
+        Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? query);
+
         /// <summary>
         ///
         /// </summary>

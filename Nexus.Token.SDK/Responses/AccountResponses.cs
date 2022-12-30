@@ -5,12 +5,13 @@ namespace Nexus.Token.SDK.Responses;
 public record AccountResponse
 {
     [JsonConstructor]
-    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey)
+    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey, string status)
     {
         CustomerCode = customerCode;
         AccountCode = accountCode;
         CryptoCode = cryptoCode;
         PublicKey = publicKey;
+        Status = status;
     }
 
     [JsonPropertyName("customerCode")]
@@ -24,6 +25,9 @@ public record AccountResponse
 
     [JsonPropertyName("customerCryptoAddress")]
     public string PublicKey { get; set; }
+
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
 }
 
 public record UpdateTokenAccountResponse
