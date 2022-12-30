@@ -204,5 +204,10 @@ namespace Nexus.Token.SDK.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,5 +10,6 @@ namespace Nexus.SDK.Shared
         public Task<CustomerResponse> CreateCustomer(CustomerRequest request);
         public Task<bool> Exists(string customerCode);
         public Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? query);
+        public Task<CustomerResponse> UpdateCustomer(CustomerRequest request);
     }
 }
