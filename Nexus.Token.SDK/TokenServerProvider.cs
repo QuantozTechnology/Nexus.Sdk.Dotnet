@@ -376,6 +376,25 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
+        /// Lists token accounts based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of token accounts
+        /// </returns>
+        public async Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? queryParameters)
+        {
+            SetSegments("accounts");
+
+            if (queryParameters != null)
+            {
+                SetQueryParameters(queryParameters);
+            }
+
+            return await ExecuteGet<PagedResponse<AccountResponse>>();
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>

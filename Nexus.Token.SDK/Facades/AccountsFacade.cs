@@ -1,4 +1,5 @@
-﻿using Nexus.Token.SDK.Responses;
+﻿using Nexus.SDK.Shared.Responses;
+using Nexus.Token.SDK.Responses;
 
 namespace Nexus.Token.SDK.Facades;
 
@@ -11,6 +12,11 @@ public class AccountsFacade : TokenServerFacade
     public async Task<AccountResponse> Get(string accountCode)
     {
         return await _provider.GetAccount(accountCode);
+    }
+
+    public async Task<PagedResponse<AccountResponse>> Get(IDictionary<string, string> query)
+    {
+        return await _provider.GetAccounts(query);
     }
 
     public async Task<AccountBalancesResponse> GetBalances(string accountCode)
