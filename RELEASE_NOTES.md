@@ -90,3 +90,8 @@ information.
 
 ### Bug Fixes
 * Fixed a json parsing bug on the trust level property of a customer response.
+
+## [2022.12.30.11](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11596598)
+
+### New Features
+* Added functionality to get and filter on accounts
