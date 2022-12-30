@@ -5,14 +5,6 @@ namespace Nexus.SDK.Shared.Requests;
 
 public record CustomerRequest
 {
-    public CustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
-    {
-        CustomerCode = customerCode;
-        TrustLevel = trustLevel;
-        CurrencyCode = currencyCode;
-        Status = status;
-    }
-
     [JsonPropertyName("customerCode")]
     public string CustomerCode { get; set; }
 
@@ -42,6 +34,27 @@ public record CustomerRequest
     public IDictionary<string, string>? Data { get; set; }
 
     public CustomerBankAccountRequest[]? BankAccounts { get; set; }
+}
+
+public record CreateCustomerRequest : CustomerRequest
+{
+    public CreateCustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
+        : base()
+    {
+        CustomerCode = customerCode;
+        TrustLevel = trustLevel;
+        CurrencyCode = currencyCode;
+        Status = status;
+    }
+}
+
+public record UpdateCustomerRequest : CustomerRequest
+{
+    public UpdateCustomerRequest(string customerCode)
+        : base()
+    {
+        CustomerCode = customerCode;
+    }
 }
 
 public enum CustomerStatus
@@ -91,7 +104,12 @@ public class CustomerRequestBuilder
 
     public CustomerRequestBuilder(string customerCode, string trustLevel, string currencyCode)
     {
-        _request = new CustomerRequest(customerCode, trustLevel, currencyCode, "ACTIVE");
+        _request = new CreateCustomerRequest(customerCode, trustLevel, currencyCode, "ACTIVE");
+    }
+
+    public CustomerRequestBuilder(string customerCode)
+    {
+        _request = new UpdateCustomerRequest(customerCode);
     }
 
     public CustomerRequestBuilder SetEmail(string email)
@@ -112,7 +130,7 @@ public class CustomerRequestBuilder
         return this;
     }
 
-    public CustomerRequestBuilder AddBankProperties(string? bankAccountNumber,string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
+    public CustomerRequestBuilder AddBankProperties(string? bankAccountNumber, string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
     {
         var customerBankAccounts = new CustomerBankAccountRequest[]
         {

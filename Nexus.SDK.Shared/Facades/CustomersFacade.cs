@@ -35,4 +35,15 @@ public class CustomersFacade : ServerFacade
     {
         return await _provider.CreateCustomer(request);
     }
+
+    /// <summary>
+    /// Update customer properties based on the code
+    /// </summary>
+    /// <returns>
+    /// Updated Customer properties
+    /// </returns>
+    public async Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+    {
+        return await _provider.UpdateCustomer(request);
+    }
 }

@@ -150,6 +150,18 @@ namespace Nexus.Token.SDK
         }
 
         /// <summary>
+        /// Update customer properties based on the code
+        /// </summary>
+        /// <returns>
+        /// Updated Customer properties
+        /// </returns>
+        public async Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+        {
+            SetSegments("customer", request.CustomerCode);
+            return await ExecutePut<CustomerRequest, CustomerResponse>(request);
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>
