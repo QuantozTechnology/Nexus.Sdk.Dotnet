@@ -35,8 +35,8 @@ namespace Nexus.Token.SDK.Tests.Helpers
         public Task<CustomerResponse> CreateCustomer(CustomerRequest request)
         {
             return request.BankAccounts != null && request.Data != null
-                ? Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel, request.CurrencyCode, request.Email, request.Status, request.BankAccounts[0].BankAccountNumber, request.Data))
-                : Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel, request.CurrencyCode, request.Email, request.Status, null, null));
+                ? Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel, request.CurrencyCode, request.Email, request.Status, request.BankAccounts[0].BankAccountNumber, request.IsBusiness, request.Data))
+                : Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel, request.CurrencyCode, request.Email, request.Status, null, request.IsBusiness, null));
         }
 
 
