@@ -7,12 +7,12 @@ This project provides the following functionalities to interact with your Nexus 
 | Create a Customer                	| ✔️        	| ✔️       	|
 | Create Accounts for a Customer 	| ✔️        	| ✔️       	|
 | Create a Token                   	| ✔️        	| ✔️       	|
-| Connect an Account to a Tokens    	| ✔️        	| ✔️       	|
+| Connect an Account to a Tokens    | ✔️        	| ✔️       	|
 | Check an Account's Token Balances | ✔️        	| ✔️       	|
 | Fund an Account with Tokens      	| ✔️        	| ✔️       	|
 | Pay other Accounts with Tokens   	| ✔️        	| ✔️       	|
 | Payout a Token from an Account   	| ✔️        	| ✔️       	|
-| Orderbook                        	| ✔️        	| -     	|
+| Orderbook                        	| -        	| ✔     	|
 
 ---
 ## *Dependency Injection*
@@ -34,7 +34,7 @@ Program.cs example:
 var services = new ServiceCollection();
 
 services.AddTokenServer(o => ...);
-services.AddSingleton<MyClass>();
+services.AddScoped<MyClass>();
 
 var provider = services.BuildServiceProvider();
 var instance = provider.GetRequiredService<MyClass>();
@@ -137,7 +137,7 @@ The SDK supports two environments for Nexus:
 
 1. Nexus Test
 
-Using options:
+Using options builder:
 ```csharp
 services.AddTokenServer(o => o.ConnectToTest("clientId", "clientSecret"));
 ```
@@ -145,7 +145,7 @@ services.AddTokenServer(o => o.ConnectToTest("clientId", "clientSecret"));
 Using appsettings.json
 ```json
 {
-  "TokenServerOptions": {
+  "NexusOptions": {
     "ApiUrl": "https://testapi.quantoznexus.com",
     "PaymentMethodOptions": {
       "Funding": "your-test-funding-paymentMethod",
@@ -162,7 +162,7 @@ Using appsettings.json
 
 2. Nexus Production 
 
-Using options:
+Using options builder:
 ```csharp
 services.AddTokenServer(o => o.ConnectToProduction("clientId", "clientSecret"));
 ```
@@ -170,7 +170,7 @@ services.AddTokenServer(o => o.ConnectToProduction("clientId", "clientSecret"));
 Using appsettings.json
 ```json
 {
-  "TokenServerOptions": {
+  "NexusOptions": {
     "ApiUrl": "https://api.quantoznexus.com",
     "PaymentMethodOptions": {
       "Funding": "your-prod-funding-paymentMethod",
