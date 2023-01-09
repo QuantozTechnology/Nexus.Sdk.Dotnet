@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Nexus.Token.Examples.SDK.Models
+namespace Nexus.Token.Algorand.Examples.Models
 {
 
     public class Person

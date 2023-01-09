@@ -1,4 +1,4 @@
-﻿namespace Nexus.SDK.Shared.Responses;
+﻿namespace Nexus.SDK.Shared.ErrorHandling;
 
 public class NexusApiException : Exception
 {

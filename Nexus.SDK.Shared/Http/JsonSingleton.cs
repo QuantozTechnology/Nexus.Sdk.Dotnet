@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Nexus.SDK.Shared.Responses;
+namespace Nexus.SDK.Shared.Http;
 
 public static class JsonSingleton
 {

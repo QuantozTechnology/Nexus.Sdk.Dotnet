@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Nexus.SDK.Shared.Options;
 using Nexus.SDK.Shared.Requests;
 using Nexus.Token.SDK.Extensions;
 using Nexus.Token.SDK.Tests.Helpers;
@@ -41,7 +42,7 @@ namespace Nexus.Token.SDK.Tests
             _services.AddTokenServer(o => o.ConnectToProduction("test_client_id", "test_client_secret"));
 
             var provider = _services.BuildServiceProvider();
-            var serverOptions = provider.GetRequiredService<TokenServerProviderOptions>();
+            var serverOptions = provider.GetRequiredService<NexusOptions>();
 
             Assert.Multiple(() =>
             {
@@ -64,7 +65,7 @@ namespace Nexus.Token.SDK.Tests
             _services.AddTokenServer(o => o.ConnectToTest("test_client_id", "test_client_secret"));
 
             var provider = _services.BuildServiceProvider();
-            var serverOptions = provider.GetRequiredService<TokenServerProviderOptions>();
+            var serverOptions = provider.GetRequiredService<NexusOptions>();
 
             Assert.Multiple(() =>
             {
@@ -88,7 +89,7 @@ namespace Nexus.Token.SDK.Tests
                 o.ConnectToCustom("https://testapi.com", "https://testidentity.com", "test_client_id", "test_client_secret"));
 
             var provider = _services.BuildServiceProvider();
-            var serverOptions = provider.GetRequiredService<TokenServerProviderOptions>();
+            var serverOptions = provider.GetRequiredService<NexusOptions>();
 
             Assert.Multiple(() =>
             {
@@ -113,7 +114,7 @@ namespace Nexus.Token.SDK.Tests
                 .AddDefaultFundingPaymentMethod("test_funding_paymentmethod"));
 
             var provider = _services.BuildServiceProvider();
-            var serverOptions = provider.GetRequiredService<TokenServerProviderOptions>();
+            var serverOptions = provider.GetRequiredService<NexusOptions>();
 
             Assert.Multiple(() =>
             {

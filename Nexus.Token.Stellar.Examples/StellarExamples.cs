@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nexus.SDK.Shared.Requests;
-using Nexus.Token.Algorand.Examples.Models;
-using Nexus.Token.Examples.SDK.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
 using Nexus.Token.SDK.Requests;
@@ -10,7 +8,7 @@ using Nexus.Token.SDK.Security;
 using Nexus.Token.Stellar.Examples.Models;
 using NJsonSchema;
 
-namespace Nexus.Token.Examples.SDK
+namespace Nexus.Token.Stellar.Examples
 {
     public class StellarExamples
     {

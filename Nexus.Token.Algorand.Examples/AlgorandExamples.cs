@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nexus.SDK.Shared.Requests;
-using Nexus.Token.Examples.SDK.Models;
+using Nexus.Token.Algorand.Examples.Models;
 using Nexus.Token.SDK;
 using Nexus.Token.SDK.KeyPairs;
 using Nexus.Token.SDK.Requests;
@@ -8,7 +8,7 @@ using Nexus.Token.SDK.Responses;
 using Nexus.Token.SDK.Security;
 using NJsonSchema;
 
-namespace Nexus.Token.Examples.SDK
+namespace Nexus.Token.Algorand.Examples
 {
     public class AlgorandExamples
     {
@@ -59,7 +59,7 @@ namespace Nexus.Token.Examples.SDK
 
             var response = await _tokenServer.Tokens.CreateOnAlgorand(definitions);
 
-            foreach(var token in response.Tokens)
+            foreach (var token in response.Tokens)
             {
                 // Notices that all tokens are generated under the same issuer address
                 _logger.LogWarning("New tokens were generated under the following issuer address: {issuerAddress}", token.IssuerAddress);
@@ -94,7 +94,7 @@ namespace Nexus.Token.Examples.SDK
         {
             var url = $"https://{tokenCode}.com";
             var hash = "341ed582360e949617b9f2107d881e8fdd3c99f22a4d1a7489cbc70382e2c2f5";
-            var taxonomy = new TaxonomyRequest( url, hash);
+            var taxonomy = new TaxonomyRequest(url, hash);
 
             var definition = AlgorandTokenDefinition.TokenizedAsset(tokenCode, tokenName, 1000, 0);
             definition.SetTaxonomy(taxonomy);

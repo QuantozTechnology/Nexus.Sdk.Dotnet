@@ -2,7 +2,7 @@
 using Nexus.Token.SDK.Extensions;
 using Serilog;
 
-namespace Nexus.Token.Examples.SDK
+namespace Nexus.Token.Algorand.Examples
 {
     public class StartupExample
     {
@@ -24,4 +24,4 @@ namespace Nexus.Token.Examples.SDK
             services.UseSymmetricEncryption("b14ca5898a4e4133bbce2ea2315a1916");
         }
     }
-} 
+}

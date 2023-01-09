@@ -8,28 +8,33 @@ public record CustomerRequest
     [JsonPropertyName("customerCode")]
     public string CustomerCode { get; set; }
 
+    public CustomerRequest(string customerCode)
+    {
+        CustomerCode = customerCode;
+    }
+
     [JsonPropertyName("trustLevel")]
-    public string TrustLevel { get; set; }
+    public string? TrustLevel { get; set; }
 
     [JsonPropertyName("currencyCode")]
-    public string CurrencyCode { get; set; }
+    public string? CurrencyCode { get; set; }
 
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string? Status { get; set; }
 
     [JsonPropertyName("countryCode")]
     [StringLength(3, MinimumLength = 2)]
-    public string CountryCode { get; set; }
+    public string? CountryCode { get; set; }
 
     [JsonPropertyName("externalCustomerCode")]
     [StringLength(40)]
-    public string ExternalCustomerCode { get; set; }
+    public string? ExternalCustomerCode { get; set; }
 
     [JsonPropertyName("isBusiness")]
-    public bool IsBusiness { get; set; } = false;
+    public bool? IsBusiness { get; set; } = false;
 
     public IDictionary<string, string>? Data { get; set; }
 
@@ -38,10 +43,8 @@ public record CustomerRequest
 
 public record CreateCustomerRequest : CustomerRequest
 {
-    public CreateCustomerRequest(string customerCode, string trustLevel, string currencyCode, string status)
-        : base()
+    public CreateCustomerRequest(string customerCode, string trustLevel, string currencyCode, string status) : base(customerCode)
     {
-        CustomerCode = customerCode;
         TrustLevel = trustLevel;
         CurrencyCode = currencyCode;
         Status = status;
@@ -50,11 +53,7 @@ public record CreateCustomerRequest : CustomerRequest
 
 public record UpdateCustomerRequest : CustomerRequest
 {
-    public UpdateCustomerRequest(string customerCode)
-        : base()
-    {
-        CustomerCode = customerCode;
-    }
+    public UpdateCustomerRequest(string customerCode) : base(customerCode) { }
 }
 
 public enum CustomerStatus

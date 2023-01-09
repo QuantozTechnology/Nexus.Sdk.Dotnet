@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.Responses;
-using Nexus.Token.Algorand.Examples.Models;
-using Nexus.Token.Examples.SDK;
+using Nexus.SDK.Shared.ErrorHandling;
 using Nexus.Token.SDK.Extensions;
 using Nexus.Token.SDK.Requests;
 using Nexus.Token.Stellar.Examples.Models;
@@ -16,7 +13,7 @@ namespace Nexus.Token.Stellar.Examples
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async Task Main()
         {
 
             WriteToConsole("Welcome to the Stellar Examples project!");
@@ -109,9 +106,9 @@ namespace Nexus.Token.Stellar.Examples
                 .AddEnvironmentVariables()
                 .Build();
 
-            StellarSettings stellarSettings = config.GetRequiredSection("StellarSettings").Get<StellarSettings>();
+            var stellarSettings = config.GetRequiredSection("StellarSettings").Get<StellarSettings>();
 
-            services.AddSingleton(stellarSettings);
+            services.AddSingleton(stellarSettings!);
 
             var logger = new LoggerConfiguration()
                  .MinimumLevel.Warning()
@@ -158,7 +155,7 @@ namespace Nexus.Token.Stellar.Examples
             var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create a new token representing the Mona Lisa");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
@@ -171,18 +168,18 @@ namespace Nexus.Token.Stellar.Examples
         public static async Task StellarTaxonomyFlow(StellarExamples stellarExamples)
         {
             WriteToConsole("Create a new token that represents Bob and has the taxonomy to prove it");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateAssetTokenWithTaxonomyAsync(tokenCode, "BOB");
         }
 
         public static async Task StellarStablecoinFlow(StellarExamples stellarExamples)
         {
             WriteToConsole("Create a new token pegged to the Euro (Stablecoin)");
-            var stablecoinTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var stablecoinTokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateStableCoinTokenAsync(stablecoinTokenCode, "EURO", "EUR", 1);
 
             WriteToConsole("Create a new token representing a share in the Mona Lisa");
-            var assetTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var assetTokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateAssetTokenAsync(assetTokenCode, "Mona Lisa");
 
             WriteToConsole("Create a new account for Bob");
@@ -219,11 +216,11 @@ namespace Nexus.Token.Stellar.Examples
             var alicesPrivateKey = await stellarExamples.CreateAccountAsync(alice);
 
             WriteToConsole("Create a new token representing the Mona Lisa (Asset)");
-            var assetTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var assetTokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateAssetTokenAsync(assetTokenCode, "Mona Lisa");
 
             WriteToConsole("Create a new token pegged to the Euro (Stablecoin)");
-            var stablecoinTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var stablecoinTokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateStableCoinTokenAsync(stablecoinTokenCode, "EURO", "EUR", 1);
 
             WriteToConsole("Now we Fund Bob's new account with 100 asset tokens");
@@ -252,8 +249,8 @@ namespace Nexus.Token.Stellar.Examples
             var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create tokens that represent shares in the Mona Lisa and Nachtwacht paintings");
-            var mlCode = Guid.NewGuid().ToString().Substring(0, 8);
-            var nwCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var mlCode = Guid.NewGuid().ToString()[..8];
+            var nwCode = Guid.NewGuid().ToString()[..8];
 
             var tokens = new Dictionary<string, string>
             {
@@ -276,7 +273,7 @@ namespace Nexus.Token.Stellar.Examples
         public static async Task StellarTokenLimitsFlow(StellarExamples stellarExamples)
         {
             WriteToConsole("Create a new token pegged to the Euro (Stablecoin)");
-            var stablecoinTokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var stablecoinTokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateStableCoinTokenAsync(stablecoinTokenCode, "EURO", "EUR", 1);
 
             WriteToConsole("Create a new account for Bob");

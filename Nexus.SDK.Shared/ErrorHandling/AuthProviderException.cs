@@ -1,4 +1,4 @@
-﻿namespace Nexus.SDK.Shared.Authentication;
+﻿namespace Nexus.SDK.Shared.ErrorHandling;
 
 public class AuthProviderException : Exception
 {
