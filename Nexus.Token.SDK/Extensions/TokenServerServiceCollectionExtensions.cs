@@ -1,68 +1,58 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Nexus.SDK.Shared.Authentication;
+using Nexus.SDK.Shared.Http;
+using Nexus.SDK.Shared.Options;
 using Nexus.Token.SDK.Security;
+using static IdentityModel.ClaimComparer;
 
 namespace Nexus.Token.SDK.Extensions
 {
     public static class TokenServerServiceCollectionExtensions
     {
-        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, ITokenServerProvider provider)
+        public static IServiceCollection AddTokenServer(this IServiceCollection services, ITokenServerProvider provider)
         {
-            if (serviceCollection is null)
-            {
-                throw new ArgumentNullException(nameof(serviceCollection));
-            }
+            services.AddScoped(_ => provider);
+            services.AddScoped<ITokenServer, TokenServer>();
 
-            if (provider is null)
-            {
-                throw new ArgumentNullException(nameof(provider));
-            }
-
-            serviceCollection.AddSingleton(provider);
-            serviceCollection.AddSingleton<ITokenServer, TokenServer>();
-            return serviceCollection;
+            return services;
         }
 
-        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, TokenServerProviderOptions options)
+        public static IServiceCollection AddTokenServer(this IServiceCollection services, NexusOptions options)
         {
-            serviceCollection.AddSingleton(options);
-            serviceCollection.AddHttpClient<ITokenServerProvider, TokenServerProvider>();
-            serviceCollection.AddSingleton<ITokenServer, TokenServer>();
-            return serviceCollection;
+            services.AddNexusApi(options);
+            return services.AddTokenServer();
         }
 
-        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, Action<TokenServerProviderOptionsBuilder> action)
+        public static IServiceCollection AddTokenServer(this IServiceCollection services, Action<NexusOptionsBuilder> action)
         {
-            var builder = new TokenServerProviderOptionsBuilder();
-            action(builder);
-
-            return AddTokenServer(serviceCollection, builder.GetOptions());
+            services.AddNexusApi(action);
+            return services.AddTokenServer();
         }
 
-        public static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection, IConfiguration configuration, string configSectionName = "TokenServerOptions")
+        public static IServiceCollection AddTokenServer(this IServiceCollection services, IConfiguration configuration, string sectionName = "NexusOptions")
         {
-            if (configuration is null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
-
-            if (configSectionName is null)
-            {
-                throw new ArgumentNullException(nameof(configSectionName));
-            }
-
-            TokenServerProviderOptions options = new();
-            configuration.GetSection(configSectionName).Bind(options);
-
-            return AddTokenServer(serviceCollection, options);
+            services.AddNexusApi(configuration, sectionName);
+            return services.AddTokenServer();
         }
 
         public static IServiceCollection UseSymmetricEncryption(this IServiceCollection serviceCollection, string symmetricKey)
         {
             var aes = new AesOperation(symmetricKey);
-            serviceCollection.AddSingleton<IEncrypter>(aes);
-            serviceCollection.AddSingleton<IDecrypter>(aes);
+
+            serviceCollection.AddScoped<IEncrypter>(_ => aes);
+            serviceCollection.AddScoped<IDecrypter>(_ => aes);
+
             return serviceCollection;
         }
+
+        private static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddScoped<ITokenServer, TokenServer>();
+            serviceCollection.AddScoped<ITokenServerProvider, TokenServerProvider>();
+            return serviceCollection;
+        }
+
     }
 }

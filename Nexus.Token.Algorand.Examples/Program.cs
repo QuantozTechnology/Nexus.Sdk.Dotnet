@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.Responses;
-using Nexus.Token.Examples.SDK;
+using Nexus.SDK.Shared.ErrorHandling;
 using Nexus.Token.SDK.Extensions;
 using Serilog;
 
@@ -10,7 +8,7 @@ namespace Nexus.Token.Algorand.Examples
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static async Task Main()
         {
             WriteToConsole("Welcome to the Algorand Examples project!");
             var provider = ConfigureServices();
@@ -121,7 +119,7 @@ namespace Nexus.Token.Algorand.Examples
             var alicesPrivateKey = await algorandExamples.CreateAccountAsync(alice);
 
             WriteToConsole("Create a new token representing the Mona Lisa");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
@@ -138,7 +136,7 @@ namespace Nexus.Token.Algorand.Examples
             var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create a new token representing the Mona Lisa");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
@@ -151,7 +149,7 @@ namespace Nexus.Token.Algorand.Examples
         public static async Task AlgorandTaxonomyFlow(AlgorandExamples algorandExamples)
         {
             WriteToConsole("Create a new token that represents Bob and has the taxonomy to prove it");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await algorandExamples.CreateAssetTokenWithTaxonomyAsync(tokenCode, "BOB");
         }
 
@@ -162,8 +160,8 @@ namespace Nexus.Token.Algorand.Examples
             var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
 
             WriteToConsole("Create tokens that represent shares in the Mona Lisa and Nachtwacht paintings");
-            var mlCode = Guid.NewGuid().ToString().Substring(0, 8);
-            var nwCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var mlCode = Guid.NewGuid().ToString()[..8];
+            var nwCode = Guid.NewGuid().ToString()[..8];
 
             var tokens = new Dictionary<string, string>
             {
@@ -186,7 +184,7 @@ namespace Nexus.Token.Algorand.Examples
         public static async Task AlgorandTokenLimitsFlow(AlgorandExamples algorandExamples)
         {
             WriteToConsole("Create a new token representing the Mona Lisa");
-            var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
+            var tokenCode = Guid.NewGuid().ToString()[..8];
             await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Create a new account for Bob");

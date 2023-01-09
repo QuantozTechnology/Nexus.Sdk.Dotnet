@@ -1,26 +1,27 @@
-﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.Requests;
+﻿using Nexus.SDK.Shared.Http;
 
 namespace Nexus.SDK.Shared.Tests.Helpers
 {
-    public class MockRequestBuilder : RequestBuilder<MockRequestBuilder>
+    public class MockRequestBuilder
     {
-        public MockRequestBuilder(IAuthProvider authProvider, HttpMessageHandler messageHandler)
-            : base("https://mockrequestbuilder.com", new HttpClient(messageHandler), authProvider, null)
+        private HttpClient _client;
+
+        public MockRequestBuilder(HttpMessageHandler messageHandler)
         {
+            _client = new HttpClient(messageHandler);
+            _client.BaseAddress = new Uri("https://mockrequestbuilder.com");
         }
 
         public async Task<TResponse> Get<TResponse>(string[] segments, IDictionary<string, string>? queryParameters = null) where TResponse : class
         {
-            SetSegments(segments);
+            var builder = new RequestBuilder(_client, null).SetSegments(segments);
 
             if (queryParameters != null)
             {
-                SetQueryParameters(queryParameters);
+                builder.SetQueryParameters(queryParameters);
             }
 
-            return await ExecuteGet<TResponse>();
+            return await builder.ExecuteGet<TResponse>();
         }
     }
 }

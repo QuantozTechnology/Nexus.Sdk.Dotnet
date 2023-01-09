@@ -35,24 +35,10 @@ namespace Nexus.SDK.Shared.Tests
         }
 
         [Test]
-        public void RequestBuilderTests_Segments_Reset_After_AuthException_Is_Thrown()
-        {
-            var authProvider = new MockAuthProviderWithException();
-            var requestBuilder = new MockRequestBuilder(authProvider, _mockHandler.Object);
-
-            // Verify that the first GET throws an authentication exceptions
-            Assert.ThrowsAsync<AuthProviderException>(() => requestBuilder.Get<string>(new string[] { "birds" }));
-
-            // Verify that the second GET also throws an authentication exception and not new Exception("URL segments have already been added.");
-            Assert.ThrowsAsync<AuthProviderException>(() => requestBuilder.Get<string>(new string[] { "birds" }));
-        }
-
-        [Test]
         [TestCaseSource(typeof(QueryCases))]
         public async Task RequestBuilderTests_Build_QueryAsync(IDictionary<string, string> query, string expectedUrl)
         {
-            var authProvider = new MockAuthProviderWithSuccess();
-            var requestBuilder = new MockRequestBuilder(authProvider, _mockHandler.Object);
+            var requestBuilder = new MockRequestBuilder(_mockHandler.Object);
 
             await requestBuilder.Get<string>(new string[] { "birds" }, query);
 

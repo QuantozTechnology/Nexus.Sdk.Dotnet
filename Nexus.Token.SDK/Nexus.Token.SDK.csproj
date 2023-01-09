@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<PackageProjectUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet/Nexus.Token.SDK</PackageProjectUrl>
@@ -17,16 +17,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Algorand" Version="0.2.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+		<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="7.0.0" />
 		<PackageReference Include="stellar-dotnet-sdk" Version="8.0.6" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Nexus.SDK.Shared\Nexus.SDK.Shared.csproj" />
+	  <ProjectReference Include="..\Nexus.SDK.Shared\Nexus.SDK.Shared.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
