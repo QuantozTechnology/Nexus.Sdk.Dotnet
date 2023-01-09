@@ -82,9 +82,6 @@
 * It is now possible to provide your own hash during token creation. Check out the examples and documentation for more information. 
 * The token details now returns its blockchain ID. This is the unique identifier of the token on the blockchain. For Algorand this is represented as an unsigned long: 312769. For Stellar its a combination of asset issuer and code: {issuerAddress}:{assetCode}.
 
-### New Features
-* Extended customer creation `CustomerRequest` to support optional properties. Check out the create account functionality in the examples projects for more information.
-
 ## [2022.9.25.16](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9474509)
 
 ### New Features
@@ -114,3 +111,6 @@ information.
 * Updated taxonomy creation to use the correct json properties.
 
 ## [2022.10.5.7](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/9699238)
+
+### New Features
+* Extended customer creation `CustomerRequest` to support optional properties. Check out the create account functionality in the examples projects for more information.
