@@ -1,4 +1,5 @@
-﻿using Nexus.Token.SDK.Responses;
+﻿using Nexus.SDK.Shared.Responses;
+using Nexus.Token.SDK.Responses;
 
 namespace Nexus.Token.SDK.Facades;
 
@@ -10,6 +11,8 @@ public interface IAccountsFacade
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     /// <returns>Nexus account matching the provided code</returns>
     public Task<AccountResponse> Get(string accountCode);
+
+    public Task<PagedResponse<AccountResponse>> Get(IDictionary<string, string> query);
 
     /// <summary>
     /// Get all token balances of an account
