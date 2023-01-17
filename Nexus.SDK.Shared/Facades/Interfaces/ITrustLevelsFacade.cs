@@ -3,12 +3,8 @@ using Nexus.SDK.Shared.Responses;
 
 namespace Nexus.SDK.Shared.Facades;
 
-public class TrustLevelsFacade : ServerFacade, ITrustLevelsFacade
+public interface ITrustLevelsFacade
 {
-    public TrustLevelsFacade(IServerProvider provider) : base(provider)
-    {
-    }
-
     /// <summary>
     /// List Trust Levels and their limits based on query paramaters
     /// </summary>
@@ -16,8 +12,5 @@ public class TrustLevelsFacade : ServerFacade, ITrustLevelsFacade
     /// <returns>
     /// Paged list of Partner's trust levels
     /// </returns>
-    public async Task<PagedResponse<TrustLevelsResponse>> Get(IDictionary<string, string>? query)
-    {
-        return await _provider.GetTrustLevels(query);
-    }
+    public Task<PagedResponse<TrustLevelsResponse>> Get(IDictionary<string, string>? query);
 }

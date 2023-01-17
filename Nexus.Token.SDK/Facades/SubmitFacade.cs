@@ -2,7 +2,7 @@
 
 namespace Nexus.Token.SDK.Facades;
 
-public class SubmitFacade : TokenServerFacade
+public class SubmitFacade : TokenServerFacade, ISubmitFacade
 {
     public SubmitFacade(ITokenServerProvider provider) : base(provider)
     {

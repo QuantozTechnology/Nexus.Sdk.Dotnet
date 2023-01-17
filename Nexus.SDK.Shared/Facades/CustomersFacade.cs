@@ -3,7 +3,7 @@ using Nexus.SDK.Shared.Responses;
 
 namespace Nexus.SDK.Shared.Facades;
 
-public class CustomersFacade : ServerFacade
+public class CustomersFacade : ServerFacade, ICustomersFacade
 {
     public CustomersFacade(IServerProvider provider) : base(provider)
     {

@@ -4,7 +4,7 @@ using Nexus.Token.SDK.Responses;
 
 namespace Nexus.Token.SDK.Facades;
 
-public class OperationsFacade : TokenServerFacade
+public class OperationsFacade : TokenServerFacade, IOperationsFacade
 {
     public OperationsFacade(ITokenServerProvider provider) : base(provider)
     {
