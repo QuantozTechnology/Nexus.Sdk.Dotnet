@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Nexus.Token.SDK.Facades;
 
-public class TokensFacade : TokenServerFacade
+public class TokensFacade : TokenServerFacade, ITokensFacade
 {
     public TokensFacade(ITokenServerProvider provider) : base(provider)
     {

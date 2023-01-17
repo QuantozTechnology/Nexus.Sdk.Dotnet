@@ -2,7 +2,7 @@
 
 namespace Nexus.Token.SDK.Facades
 {
-    public class TaxonomyFacade : TokenServerFacade
+    public class TaxonomyFacade : TokenServerFacade, ITaxonomyFacade
     {
         public TaxonomyFacade(ITokenServerProvider provider) : base(provider) { }
 

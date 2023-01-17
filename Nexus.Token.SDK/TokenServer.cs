@@ -12,13 +12,13 @@ public class TokenServer : ITokenServer
         _provider = provider;
     }
 
-    public CustomersFacade Customers => new(_provider);
-    public AccountsFacade Accounts => new(_provider);
-    public TokensFacade Tokens => new(_provider);
-    public OperationsFacade Operations => new(_provider);
-    public SubmitFacade Submit => new(_provider);
-    public TaxonomyFacade Taxonomy => new(_provider);
-    public OrdersFacade Orders => new(_provider);
-    public TokenLimitsFacade TokenLimits => new(_provider);
-    public TrustLevelsFacade TrustLevels => new(_provider);
+    public ICustomersFacade Customers => new CustomersFacade(_provider);
+    public IAccountsFacade Accounts => new AccountsFacade(_provider);
+    public ITokensFacade Tokens => new TokensFacade(_provider);
+    public IOperationsFacade Operations => new OperationsFacade(_provider);
+    public ISubmitFacade Submit => new SubmitFacade(_provider);
+    public ITaxonomyFacade Taxonomy => new TaxonomyFacade(_provider);
+    public IOrdersFacade Orders => new OrdersFacade(_provider);
+    public ITokenLimitsFacade TokenLimits => new TokenLimitsFacade(_provider);
+    public ITrustLevelsFacade TrustLevels => new TrustLevelsFacade(_provider);
 }
