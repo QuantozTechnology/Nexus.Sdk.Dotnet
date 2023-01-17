@@ -26,4 +26,21 @@ public interface ICustomersFacade
     /// <param name="request">Properties the customer is created with</param>
     /// <returns>The Nexus customer that is created</returns>
     public Task<CustomerResponse> Create(CustomerRequest request);
+
+    /// <summary>
+    /// Update customer properties based on the code
+    /// </summary>
+    /// <returns>
+    /// Updated Customer properties
+    /// </returns>
+    public Task<CustomerResponse> UpdateCustomer(CustomerRequest request);
+
+    /// <summary>
+    /// Get customer personal data based on the code
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <returns>
+    /// Customer personal data
+    /// </returns>
+    public Task<CustomerDataResponse> GetData(string customerCode);
 }
