@@ -72,4 +72,15 @@ public interface IOperationsFacade
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
     public Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+
+    /// <summary>
+    /// Simulate the withdrawal of token from an account.
+    /// </summary>
+    /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
+    /// <param name="tokenCode">Unique Nexus identifier of the token that should be withdrawn from this account</param>
+    /// <param name="amount">The amount of tokens that should be withdrawn from this account</param>
+    /// <param name="pm">An optional payment method that is used to calculate fees</param>
+    /// <param name="memo">An optional message that is added to the transaction and would be visible on the blockchain</param>
+    /// <returns>A simulated withdrawal that includes fees.</returns>
+    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
 }

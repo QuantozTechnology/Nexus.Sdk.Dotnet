@@ -209,5 +209,10 @@ namespace Nexus.Token.SDK.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

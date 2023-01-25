@@ -1,14 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nexus.SDK.Shared.ErrorHandling;
+using Nexus.SDK.Shared.Responses;
 using System.Net;
 
 namespace Nexus.SDK.Shared.Http;
 
-public class ResponseHandler : IResponseHandler
+public class NexusResponseHandler : IResponseHandler
 {
     private readonly ILogger? _logger;
 
-    public ResponseHandler(ILogger? logger = null)
+    public NexusResponseHandler(ILogger? logger = null)
     {
         _logger = logger;
     }
@@ -20,6 +21,13 @@ public class ResponseHandler : IResponseHandler
 
         _logger?.LogDebug("{statusCode} Response: {content}", statusCode, content);
 
+        var responseObj = JsonSingleton.GetInstance<NexusResponse<T>>(content);
+
+        if (responseObj == null)
+        {
+            throw new NexusApiException((int)statusCode, "Unable to parse Nexus response to JSON", null);
+        }
+;
         if ((int)statusCode >= 300)
         {
             _logger?.LogError("{statusCode} Response: {content}", statusCode, content);
@@ -29,22 +37,10 @@ public class ResponseHandler : IResponseHandler
                 _logger?.LogWarning("Did you configure your authentication provider using ConnectTo");
             }
 
-            throw new ApiException((int)statusCode, "An error response was returned, please check the logs for details");
+            throw new NexusApiException((int)statusCode, responseObj.Message, responseObj.Errors);
         }
 
-        if (string.IsNullOrWhiteSpace(content))
-        {
-            throw new ApiException((int)statusCode, "No content to parse");
-        }
-
-        var responseObj = JsonSingleton.GetInstance<T>(content);
-
-        if (responseObj == null)
-        {
-            throw new ApiException((int)statusCode, "Unable to parse response to JSON");
-        }
-
-        return responseObj;
+        return responseObj.Values;
     }
 
     public async Task HandleResponse(HttpResponseMessage response)
@@ -61,7 +57,14 @@ public class ResponseHandler : IResponseHandler
             var content = await response.Content.ReadAsStringAsync();
             _logger?.LogError("Response: {content}", content);
 
-            throw new ApiException((int)statusCode, "An error response was returned, please check the logs for details");
+            var responseObj = JsonSingleton.GetInstance<NexusResponse>(content);
+
+            if (responseObj == null)
+            {
+                throw new NexusApiException((int)statusCode, "Unable to parse Nexus response to JSON", null);
+            }
+;
+            throw new NexusApiException((int)statusCode, responseObj.Message, responseObj.Errors);
         }
 
         _logger?.LogDebug("{statusCode} Response", statusCode);

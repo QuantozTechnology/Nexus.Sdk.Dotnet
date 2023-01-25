@@ -46,7 +46,6 @@ namespace Nexus.Token.SDK.Extensions
             serviceCollection.AddHttpClient("NexusApi", (provider, client) =>
             {
                 var options = provider.GetRequiredService<NexusOptions>();
-                Console.WriteLine(options.ApiUrl);
                 client.BaseAddress = new Uri(options.ApiUrl);
                 client.DefaultRequestHeaders.Add("api_version", "1.2");
             })

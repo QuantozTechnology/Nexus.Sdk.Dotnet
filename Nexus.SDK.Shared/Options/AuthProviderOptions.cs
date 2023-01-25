@@ -12,5 +12,7 @@ namespace Nexus.SDK.Shared.Options
 
         [Required]
         public required string ClientSecret { get; set; }
+
+        public string? Scopes { get; set; }
     }
 }

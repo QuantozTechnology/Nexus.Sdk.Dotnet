@@ -181,6 +181,10 @@ namespace Nexus.Token.Algorand.Examples
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
+            var payoutResponse = await _tokenServer.Operations.SimulatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
+
+            _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
+
             var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
             var signedResponse = kp.Sign(signableResponse);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);

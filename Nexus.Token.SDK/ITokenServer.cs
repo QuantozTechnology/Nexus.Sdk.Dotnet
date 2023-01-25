@@ -1,4 +1,5 @@
 ﻿using Nexus.SDK.Shared.Facades;
+using Nexus.SDK.Shared.Facades.Interfaces;
 using Nexus.Token.SDK.Facades;
 
 namespace Nexus.Token.SDK
@@ -13,6 +14,6 @@ namespace Nexus.Token.SDK
         public ITaxonomyFacade Taxonomy { get; }
         public IOrdersFacade Orders { get; }
         public ITokenLimitsFacade TokenLimits { get; }
-        public ITrustLevelsFacade TrustLevels { get; }
+        public IComplianceFacade Compliance { get; }
     }
 }

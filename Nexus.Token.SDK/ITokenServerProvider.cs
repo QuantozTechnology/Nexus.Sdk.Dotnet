@@ -146,6 +146,8 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
 
+        Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+
         /// <summary>
         ///
         /// </summary>

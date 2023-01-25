@@ -13,18 +13,20 @@ namespace Nexus.Token.SDK
     {
         private readonly NexusOptions _options;
         private readonly HttpClient _client;
+        private readonly NexusResponseHandler _handler;
         private readonly ILogger? _logger;
 
         public TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger? logger = null)
         {
             _client = factory.CreateClient("NexusApi");
+            _handler = new NexusResponseHandler(logger);
             _options = options;
             _logger = logger;
         }
 
         public async Task<SignableResponse> CancelOrder(string orderCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "orders", "cancel");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders", "cancel");
             var request = new CancelOrderRequest(orderCode);
             return await builder.ExecutePut<CancelOrderRequest, SignableResponse>(request);
         }
@@ -48,7 +50,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("accounts", accountCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
 
             var request = new UpdateTokenAccountRequest
             {
@@ -72,7 +74,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "accounts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -84,7 +86,7 @@ namespace Nexus.Token.SDK
 
         public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "accounts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -106,7 +108,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "accounts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
             var request = new CreateStellarAccountRequest
             {
@@ -118,7 +120,7 @@ namespace Nexus.Token.SDK
 
         public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "accounts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
             var request = new CreateStellarAccountRequest
             {
@@ -141,7 +143,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<CustomerResponse> CreateCustomer(CustomerRequest request)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
             return await builder.ExecutePost<CustomerRequest, CustomerResponse>(request);
         }
 
@@ -153,7 +155,7 @@ namespace Nexus.Token.SDK
         /// </returns>
         public async Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", request.CustomerCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode);
             return await builder.ExecutePut<CustomerRequest, CustomerResponse>(request);
         }
 
@@ -188,7 +190,7 @@ namespace Nexus.Token.SDK
                 throw new InvalidOperationException("Funding payment method is required to fund an account with tokens");
             }
 
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "fund");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "fund");
 
             var request = new FundingOperationRequest
             {
@@ -203,7 +205,7 @@ namespace Nexus.Token.SDK
 
         public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "orders");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders");
             return await builder.ExecutePost<OrderRequest, CreateOrderResponse>(orderRequest);
         }
 
@@ -230,7 +232,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "payments");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
 
             var request = new PaymentOperationRequest(definitions, memo);
             return await builder.ExecutePost<PaymentOperationRequest, SignableResponse>(request);
@@ -253,7 +255,7 @@ namespace Nexus.Token.SDK
                 throw new InvalidOperationException("Payout payment method is required for an account to payout a token");
             }
 
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "payouts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payouts");
 
             var request = new PayoutOperationRequest
             {
@@ -267,6 +269,27 @@ namespace Nexus.Token.SDK
             return await builder.ExecutePost<PayoutOperationRequest, SignableResponse>(request);
         }
 
+        public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        {
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
+            {
+                throw new InvalidOperationException("Payout payment method is required for an account to payout a token");
+            }
+
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payouts", "simulate");
+
+            var request = new PayoutOperationRequest
+            {
+                AccountCode = accountCode,
+                PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Payout,
+                Amount = amount,
+                TokenCode = tokenCode,
+                Memo = memo
+            };
+
+            return await builder.ExecutePost<PayoutOperationRequest, PayoutOperationResponse>(request);
+        }
+
         /// <summary>
         ///
         /// </summary>
@@ -278,7 +301,7 @@ namespace Nexus.Token.SDK
         /// <exception cref="NotImplementedException"></exception>
         public async Task<TaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("taxonomy", "schema");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema");
 
             var request = new CreateTaxonomySchemaRequest(code, schema)
             {
@@ -302,7 +325,7 @@ namespace Nexus.Token.SDK
 
         public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "tokens");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
 
             var request = new AlgorandTokenRequest
             {
@@ -324,7 +347,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "tokens");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
 
             var request = new StellarTokenRequest
             {
@@ -379,7 +402,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<AccountResponse> GetAccount(string accountCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("accounts", accountCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
             return await builder.ExecuteGet<AccountResponse>();
         }
 
@@ -392,7 +415,7 @@ namespace Nexus.Token.SDK
         /// </returns>
         public async Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("accounts");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts");
 
             if (queryParameters != null)
             {
@@ -409,7 +432,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("accounts", accountCode, "tokenBalance");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode, "tokenBalance");
             return await builder.ExecuteGet<AccountBalancesResponse>();
         }
 
@@ -420,7 +443,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<CustomerResponse> GetCustomer(string customerCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode);
             return await builder.ExecuteGet<CustomerResponse>();
         }
 
@@ -433,7 +456,7 @@ namespace Nexus.Token.SDK
         /// </returns>
         public async Task<CustomerDataResponse> GetCustomerData(string customerCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "personalData");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "personalData");
             return await builder.ExecuteGet<CustomerDataResponse>();
         }
 
@@ -444,7 +467,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<OrderResponse> GetOrder(string orderCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "orders", orderCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders", orderCode);
             return await builder.ExecuteGet<OrderResponse>();
         }
 
@@ -455,7 +478,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "orders");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders");
 
             if (queryParameters != null)
             {
@@ -473,7 +496,7 @@ namespace Nexus.Token.SDK
         /// <exception cref="NotImplementedException"></exception>
         public async Task<TaxonomyResponse> GetTaxonomy(string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("taxonomy", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "token", tokenCode);
             return await builder.ExecuteGet<TaxonomyResponse>();
         }
 
@@ -484,7 +507,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<TaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
             return await builder.ExecuteGet<TaxonomySchemaResponse>();
         }
 
@@ -495,7 +518,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<TokenResponse> GetToken(string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "tokens", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode);
             return await builder.ExecuteGet<TokenResponse>();
         }
 
@@ -506,7 +529,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "tokens");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
 
             if (queryParameters != null)
             {
@@ -525,7 +548,7 @@ namespace Nexus.Token.SDK
         /// </returns>
         public async Task<TokenOperationResponse> GetTokenPayment(string code)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "payments", code);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments", code);
             return await builder.ExecuteGet<TokenOperationResponse>();
         }
 
@@ -538,7 +561,7 @@ namespace Nexus.Token.SDK
         /// </returns>
         public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "payments");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
 
             if (queryParameters != null)
             {
@@ -555,7 +578,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "envelope", "signature", "submit");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
 
             foreach (var request in requests)
             {
@@ -570,7 +593,7 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task SubmitOnStellarAsync(StellarSubmitRequest request)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("token", "envelope", "submit");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "submit");
             await builder.ExecutePost(request);
         }
 
@@ -585,7 +608,7 @@ namespace Nexus.Token.SDK
         public async Task<TaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null,
             string? description = null, string? schema = null)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
 
             var request = new UpdateTaxonomySchemaRequest
             {
@@ -597,44 +620,21 @@ namespace Nexus.Token.SDK
             return await builder.ExecutePut<UpdateTaxonomySchemaRequest, TaxonomySchemaResponse>(request);
         }
 
-        /// <summary>
-        /// Get token funding limits of customer
-        /// </summary>
-        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
-        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
-        /// <returns>
-        /// The current spending limits expressed in token value.
-        /// </returns>
         public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode);
             return await builder.ExecuteGet<TokenLimitsResponse>();
         }
 
-        /// <summary>
-        /// Get token payout limits of customer
-        /// </summary>
-        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
-        /// <param name="tokenCode">Unique Nexus identifier of the token.</param>
-        /// <returns>
-        /// The current fiat spending limits expressed in token value.
-        /// </returns>
         public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
             return await builder.ExecuteGet<TokenLimitsResponse>();
         }
 
-        /// <summary>
-        /// List Trust Levels and their limits
-        /// </summary>
-        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
-        /// <returns>
-        /// Paged list of Partner's trust levels
-        /// </returns>
         public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _logger).SetSegments("labelpartner", "trustlevels");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("labelpartner", "trustlevels");
 
             if (queryParameters != null)
             {

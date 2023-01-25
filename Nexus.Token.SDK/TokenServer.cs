@@ -1,24 +1,25 @@
 ﻿using Nexus.SDK.Shared.Facades;
+using Nexus.SDK.Shared.Facades.Interfaces;
 using Nexus.Token.SDK.Facades;
 
 namespace Nexus.Token.SDK;
 
 public class TokenServer : ITokenServer
 {
-    private ITokenServerProvider _provider;
+    private ITokenServerProvider _serverProvider;
 
     public TokenServer(ITokenServerProvider provider)
     {
-        _provider = provider;
+        _serverProvider = provider;
     }
 
-    public ICustomersFacade Customers => new CustomersFacade(_provider);
-    public IAccountsFacade Accounts => new AccountsFacade(_provider);
-    public ITokensFacade Tokens => new TokensFacade(_provider);
-    public IOperationsFacade Operations => new OperationsFacade(_provider);
-    public ISubmitFacade Submit => new SubmitFacade(_provider);
-    public ITaxonomyFacade Taxonomy => new TaxonomyFacade(_provider);
-    public IOrdersFacade Orders => new OrdersFacade(_provider);
-    public ITokenLimitsFacade TokenLimits => new TokenLimitsFacade(_provider);
-    public ITrustLevelsFacade TrustLevels => new TrustLevelsFacade(_provider);
+    public ICustomersFacade Customers => new CustomersFacade(_serverProvider);
+    public IAccountsFacade Accounts => new AccountsFacade(_serverProvider);
+    public ITokensFacade Tokens => new TokensFacade(_serverProvider);
+    public IOperationsFacade Operations => new OperationsFacade(_serverProvider);
+    public ISubmitFacade Submit => new SubmitFacade(_serverProvider);
+    public ITaxonomyFacade Taxonomy => new TaxonomyFacade(_serverProvider);
+    public IOrdersFacade Orders => new OrdersFacade(_serverProvider);
+    public ITokenLimitsFacade TokenLimits => new TokenLimitsFacade(_serverProvider);
+    public IComplianceFacade Compliance => new ComplianceFacade(_serverProvider);
 }

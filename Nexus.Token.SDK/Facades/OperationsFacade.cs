@@ -10,25 +10,11 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     {
     }
 
-    /// <summary>
-    /// Get token operation details based on the code
-    /// </summary>
-    /// <param name="code">Unique Nexus identifier of the operation.</param>
-    /// <returns>
-    /// Return token operation details
-    /// </returns>
     public async Task<TokenOperationResponse> Get(string code)
     {
         return await _provider.GetTokenPayment(code);
     }
 
-    /// <summary>
-    /// Lists token operations based on the query parameters
-    /// </summary>
-    /// <param name="query">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
-    /// <returns>
-    /// Return a paged list of token payments, fundings, payouts and clawbacks
-    /// </returns>
     public async Task<PagedResponse<TokenOperationResponse>> Get(IDictionary<string, string> query)
     {
         return await _provider.GetTokenPayments(query);
@@ -63,4 +49,8 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
         return await _provider.CreatePayoutAsync(accountCode, tokenCode, amount, pm, memo);
     }
 
+    public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+    {
+        return await _provider.SimulatePayoutAsync(accountCode, tokenCode, amount, pm, memo);
+    }
 }
