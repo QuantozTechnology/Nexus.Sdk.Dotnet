@@ -9,7 +9,8 @@
             {
                 ClientId = string.Empty,
                 ClientSecret = string.Empty,
-                IdentityUrl = string.Empty
+                IdentityUrl = string.Empty,
+                Scopes = string.Empty
             },
             PaymentMethodOptions = new PaymentMethodOptions()
         };
@@ -37,7 +38,8 @@
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
-                IdentityUrl = "https://identity.quantoz.com"
+                IdentityUrl = "https://identity.quantoz.com",
+                Scopes = "api1"
             };
             return this;
         }
@@ -49,7 +51,8 @@
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
-                IdentityUrl = "https://testidentity.quantoznexus.com"
+                IdentityUrl = "https://testidentity.quantoznexus.com",
+                Scopes = "api1"
             };
 
             return this;
@@ -62,7 +65,8 @@
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
-                IdentityUrl = identityUrl
+                IdentityUrl = identityUrl,
+                Scopes = "api1"
             };
 
             return this;

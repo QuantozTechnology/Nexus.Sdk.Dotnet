@@ -85,8 +85,7 @@ namespace Nexus.Token.SDK.Tests
         public void ServiceCollectionTests_Create_Custom_Options()
         {
             _services = new ServiceCollection();
-            _services.AddTokenServer(o =>
-                o.ConnectToCustom("https://testapi.com", "https://testidentity.com", "test_client_id", "test_client_secret"));
+            _services.AddTokenServer(o => o.ConnectToCustom("https://testapi.com", "https://testidentity.com", "test_client_id", "test_client_secret"));
 
             var provider = _services.BuildServiceProvider();
             var serverOptions = provider.GetRequiredService<NexusOptions>();

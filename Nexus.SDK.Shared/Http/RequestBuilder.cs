@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.Responses;
 using System.Text;
 using System.Text.Json;
 
@@ -8,7 +7,7 @@ namespace Nexus.SDK.Shared.Http;
 public class RequestBuilder
 {
     private readonly HttpClient _httpClient;
-    private readonly ResponseHandler _responseHandler;
+    private readonly IResponseHandler _responseHandler;
     private readonly ILogger? _logger;
 
     private bool _segmentsAdded;
@@ -17,10 +16,10 @@ public class RequestBuilder
     private readonly List<string> _segments;
     private IDictionary<string, string> _queryParameters;
 
-    public RequestBuilder(HttpClient httpClient, ILogger? logger)
+    public RequestBuilder(HttpClient httpClient, IResponseHandler responseHandler, ILogger? logger)
     {
         _httpClient = httpClient;
-        _responseHandler = new ResponseHandler(logger);
+        _responseHandler = responseHandler;
         _logger = logger;
 
         _segments = new List<string>();

@@ -12,6 +12,7 @@ public class AuthProvider : IAuthProvider
     private readonly string _tokenEndpoint;
     private readonly string _clientId;
     private readonly string _clientSecret;
+    private readonly string _scopes;
 
     private readonly HttpClient _client;
     private readonly ILogger? _logger;
@@ -24,6 +25,7 @@ public class AuthProvider : IAuthProvider
         _tokenEndpoint = new Uri(options.AuthProviderOptions.IdentityUrl + "/connect/token").OriginalString;
         _clientId = options.AuthProviderOptions.ClientId;
         _clientSecret = options.AuthProviderOptions.ClientSecret;
+        _scopes = options.AuthProviderOptions.Scopes;
 
         _logger = logger;
         _client = client;
@@ -65,7 +67,7 @@ public class AuthProvider : IAuthProvider
                 Address = _tokenEndpoint,
                 ClientId = _clientId,
                 ClientSecret = _clientSecret,
-                Scope = "api1"
+                Scope = _scopes ?? "api1"
             });
 
             if (response.IsError)

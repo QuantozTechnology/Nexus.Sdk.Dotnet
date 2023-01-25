@@ -18,8 +18,7 @@ namespace Nexus.Token.Stellar.Examples
         private readonly ILogger<StellarExamples> _logger;
         private readonly string _network;
 
-        public StellarExamples(ITokenServer tokenServer, IEncrypter encrypter, IDecrypter decrypter, ILogger<StellarExamples> logger,
-            StellarSettings stellarSettings)
+        public StellarExamples(ITokenServer tokenServer, IEncrypter encrypter, IDecrypter decrypter, ILogger<StellarExamples> logger, StellarSettings stellarSettings)
         {
             _tokenServer = tokenServer;
             _encrypter = encrypter;
@@ -226,6 +225,9 @@ namespace Nexus.Token.Stellar.Examples
         {
             var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
+            var payoutResponse = await _tokenServer.Operations.SimulatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
+            _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
+
             var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
             var signedResponse = kp.Sign(signableResponse, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
@@ -317,6 +319,7 @@ namespace Nexus.Token.Stellar.Examples
             _logger.LogWarning("Returned token funding limits of the customer");
             return fundingLimitsResponse;
         }
+
         public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
             var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode);
