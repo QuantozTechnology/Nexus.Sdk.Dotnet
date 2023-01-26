@@ -53,7 +53,13 @@ public record CreateCustomerRequest : CustomerRequest
 
 public record UpdateCustomerRequest : CustomerRequest
 {
-    public UpdateCustomerRequest(string customerCode) : base(customerCode) { }
+    [JsonPropertyName("reason")]
+    public string? Reason { get; set; }
+
+    public UpdateCustomerRequest(string customerCode, string? reason = null) : base(customerCode)
+    {
+        Reason = reason;
+    }
 }
 
 public enum CustomerStatus
