@@ -112,9 +112,9 @@ public class CustomerRequestBuilder
         _request = new CreateCustomerRequest(customerCode, trustLevel, currencyCode, "ACTIVE");
     }
 
-    public CustomerRequestBuilder(string customerCode)
+    public CustomerRequestBuilder(string customerCode, string? reason = null)
     {
-        _request = new UpdateCustomerRequest(customerCode);
+        _request = new UpdateCustomerRequest(customerCode, reason);
     }
 
     public CustomerRequestBuilder SetEmail(string email)
