@@ -3,15 +3,10 @@ using System.Text.Json.Serialization;
 
 namespace Nexus.SDK.Shared.Requests;
 
-public record CustomerRequest
+public class CustomerRequest
 {
     [JsonPropertyName("customerCode")]
-    public string CustomerCode { get; set; }
-
-    public CustomerRequest(string customerCode)
-    {
-        CustomerCode = customerCode;
-    }
+    public string? CustomerCode { get; set; }
 
     [JsonPropertyName("trustLevel")]
     public string? TrustLevel { get; set; }
@@ -41,25 +36,14 @@ public record CustomerRequest
     public CustomerBankAccountRequest[]? BankAccounts { get; set; }
 }
 
-public record CreateCustomerRequest : CustomerRequest
+public class CreateCustomerRequest : CustomerRequest
 {
-    public CreateCustomerRequest(string customerCode, string trustLevel, string currencyCode, string status) : base(customerCode)
-    {
-        TrustLevel = trustLevel;
-        CurrencyCode = currencyCode;
-        Status = status;
-    }
 }
 
-public record UpdateCustomerRequest : CustomerRequest
+public class UpdateCustomerRequest : CustomerRequest
 {
     [JsonPropertyName("reason")]
     public string? Reason { get; set; }
-
-    public UpdateCustomerRequest(string customerCode, string? reason = null) : base(customerCode)
-    {
-        Reason = reason;
-    }
 }
 
 public enum CustomerStatus
@@ -103,98 +87,4 @@ public class CustomerBankRequest
     public string? BankCountryCode { get; set; }
 }
 
-public class CustomerRequestBuilder
-{
-    private readonly CustomerRequest _request;
 
-    public CustomerRequestBuilder(string customerCode, string trustLevel, string currencyCode)
-    {
-        _request = new CreateCustomerRequest(customerCode, trustLevel, currencyCode, "ACTIVE");
-    }
-
-    public CustomerRequestBuilder(string customerCode, string? reason = null)
-    {
-        _request = new UpdateCustomerRequest(customerCode, reason);
-    }
-
-    public CustomerRequestBuilder SetEmail(string email)
-    {
-        _request.Email = email;
-        return this;
-    }
-
-    public CustomerRequestBuilder SetStatus(CustomerStatus status)
-    {
-        _request.Status = status.ToString();
-        return this;
-    }
-
-    public CustomerRequestBuilder AddBankAccount(CustomerBankAccountRequest[] bankAccounts)
-    {
-        _request.BankAccounts = bankAccounts;
-        return this;
-    }
-
-    public CustomerRequestBuilder AddBankProperties(string? bankAccountNumber, string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
-    {
-        var customerBankAccounts = new CustomerBankAccountRequest[]
-        {
-            new CustomerBankAccountRequest()
-            {
-                BankAccountNumber = bankAccountNumber,
-                BankAccountName = accountName,
-                Bank = new CustomerBankRequest
-                {
-                    BankName = bankName,
-                    BankBicCode = bicCode,
-                    BankIBANCode = ibanCode,
-                    BankCity = city,
-                    BankCountryCode = countryCode
-                }
-            }
-        };
-
-        _request.BankAccounts = customerBankAccounts;
-        return this;
-    }
-
-    public CustomerRequestBuilder SetCustomData(IDictionary<string, string> data)
-    {
-        _request.Data = data;
-        return this;
-    }
-
-    public CustomerRequestBuilder AddCustomProperty(string key, string value)
-    {
-        var data = new Dictionary<string, string>
-        {
-            [key] = value
-        };
-
-        _request.Data = data;
-        return this;
-    }
-
-    public CustomerRequestBuilder SetCountry(string countryCode)
-    {
-        _request.CountryCode = countryCode;
-        return this;
-    }
-
-    public CustomerRequestBuilder SetExternalReference(string externalReference)
-    {
-        _request.ExternalCustomerCode = externalReference;
-        return this;
-    }
-
-    public CustomerRequestBuilder SetBusiness(bool isBusiness)
-    {
-        _request.IsBusiness = isBusiness;
-        return this;
-    }
-
-    public CustomerRequest Build()
-    {
-        return _request;
-    }
-}

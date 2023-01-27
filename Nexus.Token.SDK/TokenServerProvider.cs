@@ -141,7 +141,7 @@ namespace Nexus.Token.SDK
         /// <param name="trustLevel"></param>
         /// <param name="currency"></param>
         /// <returns></returns>
-        public async Task<CustomerResponse> CreateCustomer(CustomerRequest request)
+        public async Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
             return await builder.ExecutePost<CustomerRequest, CustomerResponse>(request);
@@ -153,9 +153,9 @@ namespace Nexus.Token.SDK
         /// <returns>
         /// Updated Customer properties
         /// </returns>
-        public async Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+        public async Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode!);
             return await builder.ExecutePut<CustomerRequest, CustomerResponse>(request);
         }
 

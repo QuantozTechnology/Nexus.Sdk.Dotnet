@@ -35,7 +35,7 @@ namespace Nexus.Token.Stellar.Examples
 
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
-            var request = new CustomerRequestBuilder(customerCode, "Trusted", "EUR")
+            var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR")
                 .AddBankProperties("BankAccountNumber", "BankAccountName", "BankBicCode", "IbanCode", "BankName", "BankCity", "BankCountry")
                 .AddCustomProperty("FirstName", "Test_FirstName")
                 .Build();

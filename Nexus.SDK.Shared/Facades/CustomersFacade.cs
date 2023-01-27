@@ -31,7 +31,7 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
         return await _provider.Exists(customerCode);
     }
 
-    public async Task<CustomerResponse> Create(CustomerRequest request)
+    public async Task<CustomerResponse> Create(CreateCustomerRequest request)
     {
         return await _provider.CreateCustomer(request);
     }
@@ -42,7 +42,7 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     /// <returns>
     /// Updated Customer properties
     /// </returns>
-    public async Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+    public async Task<CustomerResponse> Update(UpdateCustomerRequest request)
     {
         return await _provider.UpdateCustomer(request);
     }

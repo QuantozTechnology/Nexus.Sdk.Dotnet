@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.Requests;
+﻿using Nexus.SDK.Shared.Requests;
 using Nexus.SDK.Shared.Responses;
 
 namespace Nexus.SDK.Shared.Facades;
@@ -25,7 +24,7 @@ public interface ICustomersFacade
     /// </summary>
     /// <param name="request">Properties the customer is created with</param>
     /// <returns>The Nexus customer that is created</returns>
-    public Task<CustomerResponse> Create(CustomerRequest request);
+    public Task<CustomerResponse> Create(CreateCustomerRequest request);
 
     /// <summary>
     /// Update customer properties based on the code
@@ -33,7 +32,7 @@ public interface ICustomersFacade
     /// <returns>
     /// Updated Customer properties
     /// </returns>
-    public Task<CustomerResponse> UpdateCustomer(CustomerRequest request);
+    public Task<CustomerResponse> Update(UpdateCustomerRequest request);
 
     /// <summary>
     /// Get customer personal data based on the code
