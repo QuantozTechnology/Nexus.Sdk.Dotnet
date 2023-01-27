@@ -16,7 +16,7 @@ namespace Nexus.Token.SDK.Responses
         [JsonPropertyName("paymentMethodName")]
         public required string PaymentMethodName { get; set; }
 
-        [JsonPropertyName("requestAmount")]
+        [JsonPropertyName("requestedAmount")]
         public required decimal RequestedAmount { get; set; }
 
         [JsonPropertyName("executedAmounts")]
