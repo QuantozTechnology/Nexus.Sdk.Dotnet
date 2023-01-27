@@ -85,7 +85,7 @@ namespace Nexus.SDK.Shared.Tests
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
-                .AddBankAccount(new CustomerBankAccountRequest[]
+                .SetBankAccounts(new CustomerBankAccountRequest[]
                 {
                         new CustomerBankAccountRequest()
                         {
@@ -114,10 +114,22 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_BankProperties()
         {
+            var bankAccount = new CustomerBankAccountRequest
+            {
+                BankAccountName = "bank_account_name",
+                BankAccountNumber = "bank_account_no",
+                Bank = new BankRequest
+                {
+                    BankName = "ING",
+                    BankCountryCode = "NL",
+                    BankCity = "Amsterdam"
+                }
+            };
+
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
-                .AddBankProperties("bank_account_no", "bank_account_name", null, null, "ING", "Amsterdam", "NL")
+                .AddBankAccount(bankAccount)
                 .Build();
 
             Assert.Multiple(() =>

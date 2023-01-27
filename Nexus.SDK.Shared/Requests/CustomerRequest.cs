@@ -33,7 +33,7 @@ public class CustomerRequest
 
     public IDictionary<string, string>? Data { get; set; }
 
-    public CustomerBankAccountRequest[]? BankAccounts { get; set; }
+    public List<CustomerBankAccountRequest> BankAccounts { get; set; } = new List<CustomerBankAccountRequest>();
 }
 
 public class CreateCustomerRequest : CustomerRequest
@@ -62,10 +62,10 @@ public class CustomerBankAccountRequest
     [JsonPropertyName("bankAccountName")]
     public string? BankAccountName { get; set; }
 
-    public CustomerBankRequest? Bank { get; set; }
+    public BankRequest? Bank { get; set; }
 }
 
-public class CustomerBankRequest
+public class BankRequest
 {
     [JsonPropertyName("bankBicCode")]
     [StringLength(12)]

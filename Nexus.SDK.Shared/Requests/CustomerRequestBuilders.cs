@@ -42,32 +42,15 @@ namespace Nexus.SDK.Shared.Requests
             return this;
         }
 
-        public CustomerRequestBuilder<T> AddBankAccount(CustomerBankAccountRequest[] bankAccounts)
+        public CustomerRequestBuilder<T> SetBankAccounts(CustomerBankAccountRequest[] bankAccounts)
         {
-            _request.BankAccounts = bankAccounts;
+            _request.BankAccounts = bankAccounts.ToList();
             return this;
         }
 
-        public CustomerRequestBuilder<T> AddBankProperties(string? bankAccountNumber, string? accountName, string? bicCode, string? ibanCode, string? bankName, string? city, string? countryCode)
+        public CustomerRequestBuilder<T> AddBankAccount(CustomerBankAccountRequest request)
         {
-            var customerBankAccounts = new CustomerBankAccountRequest[]
-            {
-            new CustomerBankAccountRequest()
-            {
-                BankAccountNumber = bankAccountNumber,
-                BankAccountName = accountName,
-                Bank = new CustomerBankRequest
-                {
-                    BankName = bankName,
-                    BankBicCode = bicCode,
-                    BankIBANCode = ibanCode,
-                    BankCity = city,
-                    BankCountryCode = countryCode
-                }
-            }
-            };
-
-            _request.BankAccounts = customerBankAccounts;
+            _request.BankAccounts.Add(request);
             return this;
         }
 
