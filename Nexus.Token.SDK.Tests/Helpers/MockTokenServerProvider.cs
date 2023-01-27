@@ -32,11 +32,11 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CustomerResponse> CreateCustomer(CustomerRequest request)
+        public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request)
         {
             return request.BankAccounts != null && request.Data != null
-                ? Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, request.BankAccounts[0].BankAccountNumber!, request.IsBusiness!.Value, request.Data))
-                : Task.FromResult(new CustomerResponse(request.CustomerCode, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, null!, request.IsBusiness!.Value, null!));
+                ? Task.FromResult(new CustomerResponse(request.CustomerCode!, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, request.BankAccounts[0].BankAccountNumber!, request.IsBusiness!.Value, request.Data))
+                : Task.FromResult(new CustomerResponse(request.CustomerCode!, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, null!, request.IsBusiness!.Value, null!));
         }
 
 
@@ -205,7 +205,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CustomerResponse> UpdateCustomer(CustomerRequest request)
+        public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
         {
             throw new NotImplementedException();
         }

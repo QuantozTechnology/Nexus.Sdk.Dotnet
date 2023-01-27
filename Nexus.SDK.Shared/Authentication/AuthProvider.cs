@@ -12,7 +12,7 @@ public class AuthProvider : IAuthProvider
     private readonly string _tokenEndpoint;
     private readonly string _clientId;
     private readonly string _clientSecret;
-    private readonly string _scopes;
+    private readonly string? _scopes;
 
     private readonly HttpClient _client;
     private readonly ILogger? _logger;

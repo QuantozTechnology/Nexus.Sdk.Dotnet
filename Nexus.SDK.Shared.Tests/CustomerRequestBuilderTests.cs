@@ -7,8 +7,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_Default()
         {
-            var request = new CustomerRequestBuilder(
-                "MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
 
             Assert.Multiple(() =>
             {
@@ -33,7 +32,7 @@ namespace Nexus.SDK.Shared.Tests
         [TestCase(CustomerStatus.ACTIVE, "ACTIVE")]
         public void CustomerRequestBuilderTests_Build_Status_Status(CustomerStatus status, string expected)
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetStatus(status)
                 .SetCountry("NL")
@@ -58,7 +57,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_Email()
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
@@ -83,7 +82,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_BankAccount()
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .AddBankAccount(new CustomerBankAccountRequest[]
@@ -115,7 +114,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_BankProperties()
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .AddBankProperties("bank_account_no", "bank_account_name", null, null, "ING", "Amsterdam", "NL")
@@ -144,7 +143,7 @@ namespace Nexus.SDK.Shared.Tests
             dataDict.Add("FirstName", "Bob");
             dataDict.Add("LastName", "Saget");
 
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetCustomData(dataDict)
@@ -169,7 +168,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_CustomProperty()
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .AddCustomProperty("FirstName", "Bob")
@@ -194,7 +193,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_ExternalCustomerReference()
         {
-            var request = new CustomerRequestBuilder(
+            var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
@@ -220,8 +219,7 @@ namespace Nexus.SDK.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_IsBusiness()
         {
-            var request = new CustomerRequestBuilder(
-                "MOCK_CUSTOMER", "Trusted", "EUR")
+            var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .AddCustomProperty("FirstName", "Bob")
                 .SetBusiness(true)
