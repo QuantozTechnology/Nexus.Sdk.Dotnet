@@ -6,9 +6,12 @@
 
 ### New Features
 * Added `UpdateCustomerBuilder` for updating an existing customer.
+* Added support for parallelization.
+* Added support for simulating a payout to estimate fees. See the `Operations.SimulatePayoutAsync` for more information.
 
 ### Bug Fixes
 * Fixed a bug where the `RequestedAmount` property is `null` for `PayoutResponse`.
+* Fixed a bug where funding an account returned `CustomerNotFoundError`.
 
 ## [2023.1.3](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11619445)
 
