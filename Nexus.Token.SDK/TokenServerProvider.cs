@@ -192,12 +192,15 @@ namespace Nexus.Token.SDK
 
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "fund");
 
+            var account = await GetAccount(accountCode);
+
             var request = new FundingOperationRequest
             {
+                CustomerCode = account.CustomerCode,
                 AccountCode = accountCode,
                 Definitions = definitions,
                 Memo = memo,
-                PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Funding
+                PaymentMethodCode = (pm ?? _options.PaymentMethodOptions.Funding)!
             };
 
             await builder.ExecutePost(request);
