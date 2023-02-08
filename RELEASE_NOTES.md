@@ -1,3 +1,15 @@
+## [2023.2.8.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12370921)
+
+### Breaking Changes
+* Changed `BankAccountBuilder` structure. See the examples for more information.
+* Changed `CustomerBuilder` to `CreateCustomerBuilder`. See the examples for more information.
+
+### New Features
+* Added `UpdateCustomerBuilder` for updating an existing customer.
+
+### Bug Fixes
+* Fixed a bug where the `RequestedAmount` property is `null` for `PayoutResponse`.
+
 ## [2023.1.3](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11619445)
 
 ### New Features
@@ -9,9 +21,6 @@
 ### Breaking Changes
 * The namespaces of AuthProviderException and NexusApiException has been updated to: Nexus.SDK.Shared.ErrorHandling
 * The default section name for injecting the token server via the configuration has been renamed from 'TokenServerOptions' to 'NexusOptions' 
-
-### New Features
-* Added isBusiness property to customer creation and fetching
 
 ## [2023.1.3](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11619445)
 
@@ -42,8 +51,6 @@
 
 ### New Features
 * Added new account response model for TokenOperationResponse.
-
-## [2022.11.30.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11076658)
 
 ## [2022.11.29.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11055409)
 
