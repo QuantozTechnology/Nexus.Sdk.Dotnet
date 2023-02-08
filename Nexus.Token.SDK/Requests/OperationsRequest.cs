@@ -4,17 +4,20 @@ namespace Nexus.Token.SDK.Requests;
 
 public record FundingOperationRequest
 {
+    [JsonPropertyName("customerCode")]
+    public required string CustomerCode { get; set; }
+
     [JsonPropertyName("accountCode")]
-    public string? AccountCode { get; set; }
+    public required string AccountCode { get; set; }
 
     [JsonPropertyName("paymentMethodCode")]
-    public string? PaymentMethodCode { get; set; }
+    public required string PaymentMethodCode { get; set; }
 
     [JsonPropertyName("memo")]
     public string? Memo { get; set; }
 
     [JsonPropertyName("tokenFundings")]
-    public IEnumerable<FundingDefinition>? Definitions { get; set; }
+    public required IEnumerable<FundingDefinition> Definitions { get; set; }
 }
 
 public record FundingDefinition
