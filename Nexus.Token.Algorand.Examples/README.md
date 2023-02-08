@@ -60,17 +60,21 @@ await _tokenServer.Submit.OnAlgorandAsync(receiverSignedResponse);
 
 ## Setup
 
-To run this sample code you need to connect it to your test environment using the `ClientId`, `ClientSecret` and `xPaymentMethod` configured in the `appsettings.json`
+To run this sample code you need to connect it to your test environment using the `ClientId`, `ClientSecret` and `PaymentMethod` configured in the `appsettings.json`
 
 ```json
 {
-  "Settings": {
-    "NexusApiUrl": "https://testapi.quantoznexus.com",
-    "NexusIdentityUrl": "https://testidentity.quantoznexus.com",
-    "ClientId": "",
-    "ClientSecret": "",
-    "FundingPaymentMethod": "",
-    "PayoutPaymentMethod": "",
+  "NexusOptions": {
+    "ApiUrl": "https://testapi.quantoznexus.com",
+    "PaymentMethodOptions": {
+      "Funding": "",
+      "Payout": ""
+    },
+    "AuthProviderOptions": {
+      "IdentityUrl": "https://testidentity.quantoznexus.com",
+      "ClientId": "",
+      "ClientSecret": ""
+    }
   }
 }
 ```
