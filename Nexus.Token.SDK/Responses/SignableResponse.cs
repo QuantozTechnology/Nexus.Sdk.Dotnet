@@ -12,7 +12,32 @@ public record SignableResponse
     {
         BlockchainResponse = blockchainResponse;
     }
+}
 
+public record SignablePaymentResponse : SignableResponse
+{
+    [JsonConstructor]
+    protected SignablePaymentResponse(BlockchainResponse blockchainResponse, TokenOperationResponse tokenOperationResponse) 
+        : base(blockchainResponse)
+    {
+        TokenOperationResponse = tokenOperationResponse;
+    }
+
+    [JsonPropertyName("payments")]
+    public TokenOperationResponse? TokenOperationResponse { get; }
+}
+
+public record SignablePayoutResponse : SignableResponse
+{
+    [JsonPropertyName("payout")]
+    public PayoutResponse PayoutOperationResponse { get; }
+
+    [JsonConstructor]
+    public SignablePayoutResponse(BlockchainResponse blockchainResponse, PayoutResponse payoutOperationResponse)
+        : base(blockchainResponse)
+    {
+        PayoutOperationResponse = payoutOperationResponse;
+    }
 }
 
 public record BlockchainResponse
