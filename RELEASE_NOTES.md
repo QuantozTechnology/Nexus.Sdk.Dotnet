@@ -11,7 +11,7 @@
 
 ### Bug Fixes
 * Fixed a bug where the `RequestedAmount` property is `null` for `PayoutResponse`.
-* Fixed a bug where funding an account returned `CustomerNotFoundError`.
+* Fixed a bug where funding an account returned `CustomerCodeRequired` error.
 
 ## [2023.1.3](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/11619445)
 
