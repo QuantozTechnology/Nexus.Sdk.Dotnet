@@ -99,14 +99,7 @@ namespace Nexus.Token.SDK.Responses
 
     public record CreateOrderResponse : SignableResponse
     {
-
         [JsonPropertyName("tokenOrder")]
-        public OrderResponse CreatedOrder { get; }
-
-        public CreateOrderResponse(BlockchainResponse blockchainResponse, OrderResponse createdOrder)
-            : base(blockchainResponse)
-        {
-            CreatedOrder = createdOrder;
-        }
+        public required OrderResponse CreatedOrder { get; set; }
     }
 }

@@ -5,39 +5,19 @@ namespace Nexus.Token.SDK.Responses;
 public record SignableResponse
 {
     [JsonPropertyName("transactionEnvelope")]
-    public BlockchainResponse BlockchainResponse { get; }
-
-    [JsonConstructor]
-    public SignableResponse(BlockchainResponse blockchainResponse)
-    {
-        BlockchainResponse = blockchainResponse;
-    }
+    public required BlockchainResponse BlockchainResponse { get; set; }
 }
 
 public record SignablePaymentResponse : SignableResponse
 {
-    [JsonConstructor]
-    protected SignablePaymentResponse(BlockchainResponse blockchainResponse, TokenOperationResponse tokenOperationResponse) 
-        : base(blockchainResponse)
-    {
-        TokenOperationResponse = tokenOperationResponse;
-    }
-
     [JsonPropertyName("payments")]
-    public TokenOperationResponse? TokenOperationResponse { get; }
+    public required TokenOperationResponse? TokenOperationResponse { get; set; }
 }
 
 public record SignablePayoutResponse : SignableResponse
 {
     [JsonPropertyName("payout")]
-    public PayoutResponse PayoutOperationResponse { get; }
-
-    [JsonConstructor]
-    public SignablePayoutResponse(BlockchainResponse blockchainResponse, PayoutResponse payoutOperationResponse)
-        : base(blockchainResponse)
-    {
-        PayoutOperationResponse = payoutOperationResponse;
-    }
+    public required PayoutResponse PayoutOperationResponse { get; set; }
 }
 
 public record BlockchainResponse
@@ -58,7 +38,6 @@ public record BlockchainResponse
         EncodedStellarEnvelope = encodedStellarEnvelope;
         AlgorandTransactions = algorandTransactions;
     }
-
 }
 
 public record AlgorandTransactionResponse
