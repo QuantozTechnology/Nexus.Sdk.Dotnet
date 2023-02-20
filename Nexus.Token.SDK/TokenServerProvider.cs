@@ -221,7 +221,7 @@ namespace Nexus.Token.SDK
         /// <param name="amount"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
+        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
         {
             var definition = new PaymentDefinition(senderPublicKey, receiverPublicKey, tokenCode, amount);
             return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo);
@@ -233,12 +233,12 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        public async Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
+        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
 
             var request = new PaymentOperationRequest(definitions, memo);
-            return await builder.ExecutePost<PaymentOperationRequest, SignableResponse>(request);
+            return await builder.ExecutePost<PaymentOperationRequest, SignablePaymentResponse>(request);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Nexus.Token.SDK
         /// <param name="memo"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -269,7 +269,7 @@ namespace Nexus.Token.SDK
                 Memo = memo
             };
 
-            return await builder.ExecutePost<PayoutOperationRequest, SignableResponse>(request);
+            return await builder.ExecutePost<PayoutOperationRequest, SignablePayoutResponse>(request);
         }
 
         public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)

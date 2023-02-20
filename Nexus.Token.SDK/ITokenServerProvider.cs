@@ -125,7 +125,7 @@ namespace Nexus.Token.SDK
         /// <param name="amount"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task<SignableResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null);
+        Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null);
 
         /// <summary>
         ///
@@ -133,7 +133,7 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task<SignableResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null);
+        Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null);
 
         /// <summary>
         ///
@@ -144,7 +144,7 @@ namespace Nexus.Token.SDK
         /// <param name="pm"></param>
         /// <param name="memo"></param>
         /// <returns></returns>
-        Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
 
         Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
 

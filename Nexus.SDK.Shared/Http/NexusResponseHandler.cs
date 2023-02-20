@@ -27,7 +27,7 @@ public class NexusResponseHandler : IResponseHandler
         {
             throw new NexusApiException((int)statusCode, "Unable to parse Nexus response to JSON", null);
         }
-;
+
         if ((int)statusCode >= 300)
         {
             _logger?.LogError("{statusCode} Response: {content}", statusCode, content);

@@ -52,7 +52,7 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens that is payed</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignableResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts
@@ -60,7 +60,7 @@ public interface IOperationsFacade
     /// <param name="definitions">A list of payments that will be created</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private keys of all matching provided senderPublicKeys</returns>
-    public Task<SignableResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null);
+    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null);
 
     /// <summary>
     /// Withdraw token from an account
@@ -71,7 +71,7 @@ public interface IOperationsFacade
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignableResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
