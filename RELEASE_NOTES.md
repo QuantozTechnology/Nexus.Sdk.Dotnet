@@ -1,3 +1,16 @@
+## [2023.2.21.8]
+(https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12697359)
+(https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12697357)
+
+### New Features
+* Added support for providing customerIPAddress in the requests. Check out the transaction flows in the Stellar and Algorand example projects for more information.
+
+## [2023.2.20.18](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12683469)
+
+### New Features
+* Updated Payments and Payout to also return transaction details.
+* `CreatePaymentAsync` and `CreatePayoutAsync` now returns `SignablePaymentResponse` and `SignablePayoutResponse` respectively.
+
 ## [2023.2.8.9](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12370921)
 
 ### Breaking Changes
