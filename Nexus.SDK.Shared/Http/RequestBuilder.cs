@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Net.Http;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
 
@@ -12,9 +14,11 @@ public class RequestBuilder
 
     private bool _segmentsAdded;
     private bool _queryParametersAdded;
+    private bool _headersAdded;
 
     private readonly List<string> _segments;
     private IDictionary<string, string> _queryParameters;
+    private IDictionary<string, string> _headers;
 
     public RequestBuilder(HttpClient httpClient, IResponseHandler responseHandler, ILogger? logger)
     {
@@ -24,16 +28,25 @@ public class RequestBuilder
 
         _segments = new List<string>();
         _queryParameters = new Dictionary<string, string>();
+        _headers = new Dictionary<string, string>();
         _segmentsAdded = false; //Allow overwriting segments
+        _queryParametersAdded = false;
+        _headersAdded = false;
     }
 
     public async Task<TResponse> ExecuteGet<TResponse>() where TResponse : class
     {
         var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
 
         _logger?.LogDebug("GET {uri}", path);
 
-        var response = await _httpClient.GetAsync(path);
+        var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
+
+        var response = await _httpClient.SendAsync(getRequest);
+
+        ResetHeaders(); // reset headers
+
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
@@ -41,11 +54,16 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
 
         _logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync(path, content);
+
+        var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
+        var response = await _httpClient.SendAsync(postRequest);
+
+        ResetHeaders(); // reset headers
 
         await _responseHandler.HandleResponse(response);
     }
@@ -54,11 +72,16 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
 
         _logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PostAsync(path, content);
+        
+        var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
+        var response = await _httpClient.SendAsync(postRequest);
+
+        ResetHeaders(); // reset headers
 
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
@@ -67,11 +90,16 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
 
         _logger?.LogDebug("PUT to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        var response = await _httpClient.PutAsync(path, content);
+        
+        var postRequest = HttpRequestBuilder.BuildPutRequest(requestUri, content, _headers);
+        var response = await _httpClient.SendAsync(postRequest);
+
+        ResetHeaders(); // reset headers
 
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
@@ -108,6 +136,25 @@ public class RequestBuilder
         return this;
     }
 
+    public RequestBuilder SetHeaders(IDictionary<string, string> headers)
+    {
+        if (_headersAdded)
+            throw new Exception("Headers have already been set.");
+
+        _headersAdded = true;
+        _headers = headers;
+
+        return this;
+    }
+
+    public RequestBuilder AddHeader(string key, string value)
+    {
+        _headersAdded = true;
+        _headers.Add(key, value);
+
+        return this;
+    }
+
     private void ResetSegments()
     {
         if (_segmentsAdded)
@@ -123,6 +170,15 @@ public class RequestBuilder
         {
             _queryParameters?.Clear();
             _queryParametersAdded = false;
+        }
+    }
+
+    private void ResetHeaders()
+    {
+        if (_headersAdded)
+        {
+            _headers?.Clear();
+            _headersAdded = false;
         }
     }
 
@@ -147,7 +203,10 @@ public class RequestBuilder
 
             // After building the url we reset the segments for the next request.
             ResetSegments();
+
+            // After building the url we reset the query parameters for the next request.
             ResetQueryParameters();
+
             return builder.ToString();
         }
 
@@ -164,10 +223,5 @@ public class RequestBuilder
         }
 
         return string.Join("&", paramList);
-    }
-
-    protected void AddDefaultRequestHeader(string key, string value)
-    {
-        _httpClient.DefaultRequestHeaders.Add(key, value);
     }
 }

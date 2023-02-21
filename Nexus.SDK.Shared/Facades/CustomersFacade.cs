@@ -31,9 +31,9 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
         return await _provider.Exists(customerCode);
     }
 
-    public async Task<CustomerResponse> Create(CreateCustomerRequest request)
+    public async Task<CustomerResponse> Create(CreateCustomerRequest request, string? customerIPAddress = null)
     {
-        return await _provider.CreateCustomer(request);
+        return await _provider.CreateCustomer(request, customerIPAddress);
     }
 
     /// <summary>
@@ -42,8 +42,8 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     /// <returns>
     /// Updated Customer properties
     /// </returns>
-    public async Task<CustomerResponse> Update(UpdateCustomerRequest request)
+    public async Task<CustomerResponse> Update(UpdateCustomerRequest request, string? customerIPAddress = null)
     {
-        return await _provider.UpdateCustomer(request);
+        return await _provider.UpdateCustomer(request, customerIPAddress);
     }
 }

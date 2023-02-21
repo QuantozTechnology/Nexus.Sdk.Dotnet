@@ -28,7 +28,10 @@ namespace Nexus.Token.Algorand.Examples
         public async Task<string> CreateAccountAsync(string customerCode)
         {
             var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
-            var customer = await _tokenServer.Customers.Create(request);
+
+            string customerIPAddress = "127.1.0.0";
+
+            var customer = await _tokenServer.Customers.Create(request, customerIPAddress);
 
             var senderKeyPair = AlgorandKeyPair.Generate();
 
@@ -145,6 +148,7 @@ namespace Nexus.Token.Algorand.Examples
         public async Task ConnectTokensFlowAsync(string encryptedPrivateKey, string[] tokenCodes)
         {
             var keypair = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
             var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(keypair.GetAccountCode(), tokenCodes);
             var signedResponse = keypair.Sign(signableResponse);
 

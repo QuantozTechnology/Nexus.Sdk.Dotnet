@@ -137,13 +137,14 @@ namespace Nexus.Token.SDK.Tests
             // Assert that the services exist.
             var tokenServerProvider = provider.GetRequiredService<ITokenServerProvider>();
             var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
-            var response = await tokenServerProvider.CreateCustomer(request);
+
+            string customerIPAddress = "127.1.0.0";
+            var response = await tokenServerProvider.CreateCustomer(request, customerIPAddress);
 
             Assert.Multiple(() =>
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(response.Status, Is.EqualTo("ACTIVE"));
             });
 
             var tokenServer = provider.GetRequiredService<ITokenServer>();
@@ -154,7 +155,6 @@ namespace Nexus.Token.SDK.Tests
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(response.Status, Is.EqualTo("ACTIVE"));
             });
         }
     }

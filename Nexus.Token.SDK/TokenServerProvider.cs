@@ -36,10 +36,11 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="accountCode"></param>
         /// <param name="tokenCode"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode)
+        public async Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
         {
-            return await ConnectAccountToTokensAsync(accountCode, new string[] { tokenCode });
+            return await ConnectAccountToTokensAsync(accountCode, new string[] { tokenCode }, customerIPAddress);
         }
 
         /// <summary>
@@ -47,10 +48,16 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="accountCode"></param>
         /// <param name="tokenCodes"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
+        public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new UpdateTokenAccountRequest
             {
@@ -71,10 +78,16 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
+        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -84,9 +97,14 @@ namespace Nexus.Token.SDK
             return await builder.ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -105,10 +123,16 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
+        public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new CreateStellarAccountRequest
             {
@@ -118,9 +142,14 @@ namespace Nexus.Token.SDK
             return await builder.ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new CreateStellarAccountRequest
             {
@@ -140,10 +169,17 @@ namespace Nexus.Token.SDK
         /// <param name="code"></param>
         /// <param name="trustLevel"></param>
         /// <param name="currency"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request)
+        public async Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
             return await builder.ExecutePost<CustomerRequest, CustomerResponse>(request);
         }
 
@@ -153,9 +189,15 @@ namespace Nexus.Token.SDK
         /// <returns>
         /// Updated Customer properties
         /// </returns>
-        public async Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
+        public async Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode!);
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
             return await builder.ExecutePut<CustomerRequest, CustomerResponse>(request);
         }
 
@@ -167,11 +209,12 @@ namespace Nexus.Token.SDK
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             var definition = new FundingDefinition(tokenCode, amount);
-            await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo);
+            await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, customerIPAddress);
         }
 
         /// <summary>
@@ -181,9 +224,10 @@ namespace Nexus.Token.SDK
         /// <param name="definitions"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null)
+        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Funding))
             {
@@ -191,6 +235,11 @@ namespace Nexus.Token.SDK
             }
 
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "fund");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var account = await GetAccount(accountCode);
 
@@ -206,9 +255,15 @@ namespace Nexus.Token.SDK
             await builder.ExecutePost(request);
         }
 
-        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
+        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
             return await builder.ExecutePost<OrderRequest, CreateOrderResponse>(orderRequest);
         }
 
@@ -220,11 +275,12 @@ namespace Nexus.Token.SDK
         /// <param name="tokenCode"></param>
         /// <param name="amount"></param>
         /// <param name="memo"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
+        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null)
         {
             var definition = new PaymentDefinition(senderPublicKey, receiverPublicKey, tokenCode, amount);
-            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo);
+            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo, customerIPAddress);
         }
 
         /// <summary>
@@ -232,10 +288,16 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
+        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new PaymentOperationRequest(definitions, memo);
             return await builder.ExecutePost<PaymentOperationRequest, SignablePaymentResponse>(request);
@@ -249,9 +311,10 @@ namespace Nexus.Token.SDK
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -259,6 +322,11 @@ namespace Nexus.Token.SDK
             }
 
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payouts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new PayoutOperationRequest
             {
@@ -320,15 +388,21 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="definition"></param>
         /// <param name="settings"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null)
+        public async Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
-            return await CreateTokensOnAlgorand(new AlgorandTokenDefinition[] { definition }, settings);
+            return await CreateTokensOnAlgorand(new AlgorandTokenDefinition[] { definition }, settings, customerIPAddress);
         }
 
-        public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null)
+        public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new AlgorandTokenRequest
             {
@@ -347,10 +421,16 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="definitions"></param>
         /// <param name="settings"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null)
+        public async Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
 
             var request = new StellarTokenRequest
             {
@@ -369,8 +449,9 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="definition"></param>
         /// <param name="settings"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition definition, StellarTokenSettings? settings = null)
+        public async Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition definition, StellarTokenSettings? settings = null, string? customerIPAddress = null)
         {
             return await CreateTokensOnStellarAsync(new StellarTokenDefinition[] { definition }, settings);
         }

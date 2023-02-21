@@ -24,33 +24,33 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.GetAccountBalanceAsync(accountCode);
     }
 
-    public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey)
+    public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null)
     {
-        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey);
+        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, customerIPAddress);
     }
 
-    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
+    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
     {
-        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, allowedTokens);
+        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, allowedTokens, customerIPAddress);
     }
 
-    public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string publicKey)
+    public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null)
     {
-        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey);
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, customerIPAddress);
     }
 
-    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens)
+    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
     {
-        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, allowedTokens);
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, allowedTokens, customerIPAddress);
     }
 
-    public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode)
+    public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
     {
-        return await _provider.ConnectAccountToTokenAsync(accountCode, tokenCode);
+        return await _provider.ConnectAccountToTokenAsync(accountCode, tokenCode, customerIPAddress);
     }
 
-    public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
+    public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
     {
-        return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodes);
+        return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodes, customerIPAddress);
     }
 }
