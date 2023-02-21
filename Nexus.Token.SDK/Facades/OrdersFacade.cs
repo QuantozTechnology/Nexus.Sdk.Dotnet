@@ -35,9 +35,9 @@ namespace Nexus.Token.SDK.Facades
         /// </summary>
         /// <param name="orderRequest"></param>
         /// <returns></returns>
-        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
+        public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
         {
-            return await _provider.CreateOrder(orderRequest);
+            return await _provider.CreateOrder(orderRequest, customerIPAddress);
         }
 
         /// <summary>

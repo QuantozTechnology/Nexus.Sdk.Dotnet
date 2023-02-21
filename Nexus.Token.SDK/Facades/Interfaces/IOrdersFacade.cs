@@ -10,7 +10,7 @@ namespace Nexus.Token.SDK.Facades
 
         public Task<OrderResponse> Get(string orderCode);
 
-        public Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest);
+        public Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null);
 
         public Task<SignableResponse> CancelOrder(string orderCode);
     }

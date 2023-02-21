@@ -32,7 +32,8 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens this account will be funded with</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
-    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -41,7 +42,8 @@ public interface IOperationsFacade
     /// <param name="definitions">A list of token codes and their respective amounts this account will be funded with</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
-    public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null);
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay a token from one account to another account
@@ -51,16 +53,18 @@ public interface IOperationsFacade
     /// <param name="tokenCode">Unique Nexus identifier of the token that is payed</param>
     /// <param name="amount">The amount of tokens that is payed</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts
     /// </summary>
     /// <param name="definitions">A list of payments that will be created</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private keys of all matching provided senderPublicKeys</returns>
-    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null);
+    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Withdraw token from an account
@@ -69,9 +73,10 @@ public interface IOperationsFacade
     /// <param name="tokenCode">Unique Nexus identifier of the token that will be withdrawn from this account</param>
     /// <param name="amount">The amount of tokens that will be withdrawn from this account</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.

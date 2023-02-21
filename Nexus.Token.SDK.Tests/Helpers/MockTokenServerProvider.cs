@@ -12,27 +12,37 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode)
+        public Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes)
+        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey)
+        public Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey)
+        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request)
+        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null)
         {
             return request.BankAccounts != null && request.Data != null
                 ? Task.FromResult(new CustomerResponse(request.CustomerCode!, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, request.BankAccounts[0].BankAccountNumber!, request.IsBusiness!.Value, request.Data))
@@ -40,32 +50,32 @@ namespace Nexus.Token.SDK.Tests.Helpers
         }
 
 
-        public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null)
+        public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest)
+        public Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null)
+        public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null)
+        public Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
@@ -75,17 +85,22 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null)
+        public Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition definition, StellarTokenSettings? settings = null)
+        public Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null)
+        public Task<CreateTokenResponse> CreateTokenOnStellarAsync(StellarTokenDefinition definition, StellarTokenSettings? settings = null, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
@@ -205,7 +220,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request)
+        public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }

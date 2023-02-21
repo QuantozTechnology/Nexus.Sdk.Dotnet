@@ -24,7 +24,7 @@ public interface ICustomersFacade
     /// </summary>
     /// <param name="request">Properties the customer is created with</param>
     /// <returns>The Nexus customer that is created</returns>
-    public Task<CustomerResponse> Create(CreateCustomerRequest request);
+    public Task<CustomerResponse> Create(CreateCustomerRequest request, string? customerIPAddress = null);
 
     /// <summary>
     /// Update customer properties based on the code
@@ -32,7 +32,7 @@ public interface ICustomersFacade
     /// <returns>
     /// Updated Customer properties
     /// </returns>
-    public Task<CustomerResponse> Update(UpdateCustomerRequest request);
+    public Task<CustomerResponse> Update(UpdateCustomerRequest request, string? customerIPAddress = null);
 
     /// <summary>
     /// Get customer personal data based on the code

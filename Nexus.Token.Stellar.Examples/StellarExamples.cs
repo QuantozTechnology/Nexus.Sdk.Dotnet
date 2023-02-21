@@ -49,13 +49,14 @@ namespace Nexus.Token.Stellar.Examples
                 }
             };
 
+            string customerIPAddress = "127.1.0.0";
 
             var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR")
                 .AddBankAccount(bankAccount)
                 .AddCustomProperty("FirstName", "Test_FirstName")
                 .Build();
 
-            var customer = await _tokenServer.Customers.Create(request);
+            var customer = await _tokenServer.Customers.Create(request, customerIPAddress);
 
             var kp = StellarKeyPair.Generate();
 
@@ -156,6 +157,7 @@ namespace Nexus.Token.Stellar.Examples
             var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
             var tokenCodes = fundings.Select(kv => kv.Key);
+
             var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokenCodes);
             var signedResponse = kp.Sign(signableResponse, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
@@ -169,6 +171,7 @@ namespace Nexus.Token.Stellar.Examples
         public async Task ConnectTokensAsync(string encryptedPrivateKey, string[] tokenCodes)
         {
             var keypair = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
             var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(keypair.GetAccountCode(), tokenCodes);
             var signedResponse = keypair.Sign(signableResponse, _network);
 
