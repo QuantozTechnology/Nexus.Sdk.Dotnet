@@ -1,3 +1,8 @@
+## [2023.2.23.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12771380)
+
+### Bug Fixes
+* Fixed a json parsing bug on the `TokenOperationResponse` property of a signable response.
+
 ## [2023.2.21.8]
 (https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12697359)
 (https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12697357)
