@@ -11,7 +11,7 @@ public record SignableResponse
 public record SignablePaymentResponse : SignableResponse
 {
     [JsonPropertyName("payments")]
-    public required TokenOperationResponse? TokenOperationResponse { get; set; }
+    public required IEnumerable<TokenOperationResponse> TokenOperationResponse { get; set; }
 }
 
 public record SignablePayoutResponse : SignableResponse
