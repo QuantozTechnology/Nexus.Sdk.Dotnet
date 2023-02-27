@@ -14,9 +14,9 @@ namespace Nexus.Token.SDK
         private readonly NexusOptions _options;
         private readonly HttpClient _client;
         private readonly NexusResponseHandler _handler;
-        private readonly ILogger? _logger;
+        private readonly ILogger<TokenServerProvider> _logger;
 
-        public TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger? logger = null)
+        public TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger<TokenServerProvider> logger)
         {
             _client = factory.CreateClient("NexusApi");
             _handler = new NexusResponseHandler(logger);
