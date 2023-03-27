@@ -23,27 +23,27 @@ public record SignablePayoutResponse : SignableResponse
 public record BlockchainResponse
 {
     [JsonPropertyName("hash")]
-    public string? StellarHash { get; }
+    public string? TransactionGroupHash { get; }
 
     [JsonPropertyName("signedTransactionEnvelope")]
-    public string? EncodedStellarEnvelope { get; }
+    public string? EncodedTransactionGroup { get; }
 
     [JsonPropertyName("requiredSignatures")]
-    public AlgorandTransactionResponse[]? AlgorandTransactions { get; }
+    public RequiredSignaturesResponse[]? RequiredSignatures { get; }
 
     [JsonConstructor]
-    public BlockchainResponse(string? stellarHash, string? encodedStellarEnvelope, AlgorandTransactionResponse[]? algorandTransactions)
+    public BlockchainResponse(string? transactionGroupHash, string? encodedTransactionGroup, RequiredSignaturesResponse[]? requiredSignatures)
     {
-        StellarHash = stellarHash;
-        EncodedStellarEnvelope = encodedStellarEnvelope;
-        AlgorandTransactions = algorandTransactions;
+        TransactionGroupHash = transactionGroupHash;
+        EncodedTransactionGroup = encodedTransactionGroup;
+        RequiredSignatures = requiredSignatures;
     }
 }
 
-public record AlgorandTransactionResponse
+public record RequiredSignaturesResponse
 {
     [JsonConstructor]
-    public AlgorandTransactionResponse(string hash, string encodedTransaction, string publicKey)
+    public RequiredSignaturesResponse(string hash, string encodedTransaction, string publicKey)
     {
         Hash = hash;
         EncodedTransaction = encodedTransaction;

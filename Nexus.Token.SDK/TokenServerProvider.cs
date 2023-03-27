@@ -660,7 +660,7 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
+        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
 
@@ -675,10 +675,14 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public async Task SubmitOnStellarAsync(StellarSubmitRequest request)
+        public async Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "submit");
-            await builder.ExecutePost(request);
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
+
+            foreach (var request in requests)
+            {
+                await builder.ExecutePost(request);
+            }
         }
 
         /// <summary>

@@ -58,6 +58,30 @@ var receiverSignedResponse = receiver.Sign(signableResponse);
 await _tokenServer.Submit.OnAlgorandAsync(receiverSignedResponse);
 ```
 
+### Background Signing
+By providing a `callback` url during the Signing process, the resulting `SubmitRequest` will be processed through a background service. What this means is that the signed result will be validated. If found valid, it will be processed as soon as all the required signatures have been added. The eventual result will be sent to the `callbackUrl`.
+
+Algorand Example:
+```csharp
+var sender = AlgorandKeyPair.FromPrivateKey("private_key");
+var receiver = AlgorandKeyPair.FromPrivateKey("private_key");
+
+var payments = new List<PaymentDefinition>();
+
+payments.Add(new PaymentDefinition(sender.GetPublicKey(), receiver.GetPublicKey(), "Gold", 5));
+
+payments.Add(new PaymentDefinition(receiver.GetPublicKey(), sender.GetPublicKey(), "Silver", 10));
+
+var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(payments);
+
+// Sign using multiple accounts
+var senderSignedResponse = sender.Sign(signableResponse, callbackUrl: "your-callback-url");
+await _tokenServer.Submit.OnAlgorandAsync(senderSignedResponse);
+
+var receiverSignedResponse = receiver.Sign(signableResponse, callbackUrl: "your-callback-url");
+await _tokenServer.Submit.OnAlgorandAsync(receiverSignedResponse);
+```
+
 ## Setup
 
 To run this sample code you need to connect it to your test environment using the `ClientId`, `ClientSecret` and `PaymentMethod` configured in the `appsettings.json`

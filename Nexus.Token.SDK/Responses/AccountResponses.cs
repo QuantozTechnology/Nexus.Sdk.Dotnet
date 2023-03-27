@@ -36,10 +36,10 @@ public record UpdateTokenAccountResponse
     public string StellarTransactionEnvelope { get; }
 
     [JsonPropertyName("requiredSignatures")]
-    public AlgorandTransactionResponse[] AlgorandTransactions { get; }
+    public RequiredSignaturesResponse[] AlgorandTransactions { get; }
 
     [JsonConstructor]
-    public UpdateTokenAccountResponse(string stellarTransactionEnvelope, AlgorandTransactionResponse[] algorandTransactions)
+    public UpdateTokenAccountResponse(string stellarTransactionEnvelope, RequiredSignaturesResponse[] algorandTransactions)
     {
         StellarTransactionEnvelope = stellarTransactionEnvelope;
         AlgorandTransactions = algorandTransactions;

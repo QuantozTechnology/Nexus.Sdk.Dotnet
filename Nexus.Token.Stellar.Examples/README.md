@@ -53,9 +53,32 @@ var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(payments
 
 // Sign using multiple accounts
 var senderSignedResponse = sender.Sign(signableResponse);
-var receiverSignedResponse = receiver.Sign(senderSignedResponse);
+var receiverSignedResponse = receiver.Sign(signableResponse);
 
-await _tokenServer.Submit.OnStellarAsync(signedResponse);
+await _tokenServer.Submit.OnStellarAsync(senderSignedResponse.Concat(receiverSignedResponse));
+```
+
+### Background Signing
+By providing a `callback` url during the Signing process, the resulting `SubmitRequest` will be processed through a background service. What this means is that the signed result will be validated. If found valid, it will be processed as soon as all the required signatures have been added. The eventual result will be sent to the `callbackUrl`.
+
+Stellar Example:
+```csharp
+var sender = StellarKeyPair.FromPrivateKey("private_key");
+var receiver = StellarKeyPair.FromPrivateKey("private_key");
+
+var payments = new List<PaymentDefinition>();
+
+payments.Add(new PaymentDefinition(sender.GetPublicKey(), receiver.GetPublicKey(), "Gold", 5));
+
+payments.Add(new PaymentDefinition(receiver.GetPublicKey(), sender.GetPublicKey(), "Silver", 10));
+
+var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(payments);
+
+// Sign using multiple accounts
+var senderSignedResponse = sender.Sign(signableResponse, callbackUrl: "your-callback-url");
+var receiverSignedResponse = receiver.Sign(signableResponse, callbackUrl: "your-callback-url");
+
+await _tokenServer.Submit.OnStellarAsync(senderSignedResponse.Concat(receiverSignedResponse));
 ```
 
 ## Setup

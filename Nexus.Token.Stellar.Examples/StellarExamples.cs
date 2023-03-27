@@ -214,26 +214,18 @@ namespace Nexus.Token.Stellar.Examples
 
             var signableResponse = await _tokenServer.Operations.CreatePaymentsAsync(paymentDefinitions);
 
-            StellarSubmitRequest? signedResponse = null;
-
-            foreach (var senderPrivateKey in payments.Select(p => p.SenderPrivateKey))
-            {
-                var kp = StellarKeyPair.FromPrivateKey(senderPrivateKey, _decrypter);
-
-                if (signedResponse == null)
+            var signedResponses = payments.SelectMany(x =>
                 {
-                    signedResponse = kp.Sign(signableResponse, _network);
-                }
-                else
-                {
-                    signedResponse = kp.Sign(signedResponse, _network);
-                }
-            }
+                    var kp = StellarKeyPair.FromPrivateKey(x.SenderPrivateKey, _decrypter);
 
-            if (signedResponse != null)
+                    return kp.Sign(signableResponse, _network);
+                })
+                .ToList();
+
+            if (signedResponses.Any())
             {
-                await _tokenServer.Submit.OnStellarAsync(signedResponse);
-                _logger.LogWarning("Payments successful!");
+                await _tokenServer.Submit.OnStellarAsync(signedResponses);
+                _logger.LogInformation("Payments successful!");
             }
 
             _logger.LogError("Envelope was not signed!");

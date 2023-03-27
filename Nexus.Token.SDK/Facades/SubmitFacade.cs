@@ -8,12 +8,12 @@ public class SubmitFacade : TokenServerFacade, ISubmitFacade
     {
     }
 
-    public async Task OnStellarAsync(StellarSubmitRequest request)
+    public async Task OnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests)
     {
-        await _provider.SubmitOnStellarAsync(request);
+        await _provider.SubmitOnStellarAsync(requests);
     }
 
-    public async Task OnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
+    public async Task OnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
     {
         await _provider.SubmitOnAlgorandAsync(requests);
     }
