@@ -1,3 +1,13 @@
+## [2023.3.29.10](https://gitlab.com/quantoz/public/nexus-sdk-dotnet/-/packages/13585183)
+
+### Bug Fixes
+* Fixed a bug where submitting multiple requests caused a `No segments` error.
+
+## [2023.2.27.17](https://gitlab.com/quantoz/public/nexus-sdk-dotnet/-/packages/12848707)
+
+### Bug Fixes
+* Fixed a dependency injection bug on the logger.
+
 ## [2023.2.23.13](https://gitlab.com/quantoz-public/nexus-sdk-dotnet/-/packages/12771380)
 
 ### Bug Fixes
