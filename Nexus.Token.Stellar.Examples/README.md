@@ -59,7 +59,7 @@ await _tokenServer.Submit.OnStellarAsync(senderSignedResponse.Concat(receiverSig
 ```
 
 ### Background Signing
-By providing a `callback` url during the Signing process, the resulting `SubmitRequest` will be processed through a background service. What this means is that the signed result will be validated. If found valid, it will be processed as soon as all the required signatures have been added. The eventual result will be sent to the `callbackUrl`.
+By providing a `callback` url during the Signing process, the resulting `SubmitRequest` will be processed through a background service. What this means is that the signed result will be validated. If found valid, it will be processed as soon as all the required signatures have been added. The eventual result will be sent to the `callbackUrl`. This flow is recommended for payment and payout processes.
 
 Stellar Example:
 ```csharp
