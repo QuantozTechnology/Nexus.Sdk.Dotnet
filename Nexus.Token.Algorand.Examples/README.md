@@ -82,6 +82,15 @@ var receiverSignedResponse = receiver.Sign(signableResponse, callbackUrl: "your-
 await _tokenServer.Submit.OnAlgorandAsync(receiverSignedResponse);
 ```
 
+Callback Example:
+```json
+{
+  "Type": "TokenPayment",
+  "PaymentCode": "04D4B45F9EE742E8A5E0F6E7A9FBB9BB",
+  "PaymentStatus": "SubmissionCompleted"
+}
+```
+
 ## Setup
 
 To run this sample code you need to connect it to your test environment using the `ClientId`, `ClientSecret` and `PaymentMethod` configured in the `appsettings.json`
