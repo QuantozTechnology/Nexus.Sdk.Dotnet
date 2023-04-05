@@ -68,28 +68,28 @@ public class AlgorandKeyPair
     /// Sign Algorand transactions using this keypair
     /// </summary>
     /// <param name="response">The response containing the Algorand transactions to sign</param>
+    /// <param name="callbackUrl">The optional callbackUrl to be used for background submitting notifications</param>
     /// <returns>A list of Algorand transactions signed by this keypair</returns>
     /// <exception cref="InvalidOperationException">Thrown when there are no Algorand transactions to sign</exception>
-    public IEnumerable<AlgorandSubmitRequest> Sign(SignableResponse response)
+    public IEnumerable<AlgorandSubmitSignatureRequest> Sign(SignableResponse response, string? callbackUrl = null)
     {
-        if (response.BlockchainResponse.AlgorandTransactions == null)
+        if (response.BlockchainResponse.RequiredSignatures == null)
         {
             throw new InvalidOperationException("Invalid blockchain response, are you using the correct key pair?");
         }
 
-        var unsignedTransactions = response.BlockchainResponse.AlgorandTransactions.Where(r => r.PublicKey == GetPublicKey());
-        var submitRequests = new List<AlgorandSubmitRequest>();
+        var unsignedTransactions = response.BlockchainResponse.RequiredSignatures
+            .Where(r => r.PublicKey == GetPublicKey());
 
-        foreach (var unsignedTransaction in unsignedTransactions)
+        var submitRequests = unsignedTransactions.Select(unsignedTransaction =>
         {
             var encodedUnsignedTransaction = unsignedTransaction.EncodedTransaction;
             var hash = unsignedTransaction.Hash;
 
             var encodedSignedTransaction = Sign(encodedUnsignedTransaction);
 
-            var submitRequest = new AlgorandSubmitRequest(hash, GetPublicKey(), encodedSignedTransaction);
-            submitRequests.Add(submitRequest);
-        }
+            return new AlgorandSubmitSignatureRequest(hash, GetPublicKey(), encodedSignedTransaction, callbackUrl);
+        });
 
         return submitRequests;
     }

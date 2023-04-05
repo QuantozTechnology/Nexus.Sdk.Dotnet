@@ -155,12 +155,12 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests)
+        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
         {
             return Task.CompletedTask;
         }
 
-        public Task SubmitOnStellarAsync(StellarSubmitRequest request)
+        public Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests)
         {
             throw new NotImplementedException();
         }

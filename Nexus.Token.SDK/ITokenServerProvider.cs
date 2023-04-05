@@ -179,16 +179,16 @@ namespace Nexus.Token.SDK
         /// <summary>
         ///
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="transactionRequest"></param>
         /// <returns></returns>
-        Task SubmitOnStellarAsync(StellarSubmitRequest request);
+        Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitRequest> requests);
+        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests);
 
         /// <summary>
         ///

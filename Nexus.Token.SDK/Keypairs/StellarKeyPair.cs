@@ -72,40 +72,31 @@ public class StellarKeyPair
     /// </summary>
     /// <param name="response">The response containing the transaction envelope to sign</param>
     /// <param name="networkPassphrase">>Unique passphrase used when validating signatures on a given transaction</param>
-    /// <returns>A transaction envelope signed by this keypair</returns>
+    /// <param name="callbackUrl">The optional callbackUrl to be used for background submitting notifications</param>
+    /// <returns>A list of Stellar transactions signed by this keypair</returns>
     /// <exception cref="InvalidOperationException">Thrown when there is no Stellar transaction envelope to sign</exception>
-    public StellarSubmitRequest Sign(SignableResponse response, string networkPassphrase = PRODUCTION_NETWORK)
+    public IEnumerable<StellarSubmitSignatureRequest> Sign(SignableResponse response,
+        string networkPassphrase = PRODUCTION_NETWORK, string? callbackUrl = null)
     {
-        if (string.IsNullOrWhiteSpace(response.BlockchainResponse.EncodedStellarEnvelope) || string.IsNullOrWhiteSpace(response.BlockchainResponse.StellarHash))
+        if (response.BlockchainResponse.RequiredSignatures == null)
         {
             throw new InvalidOperationException("Invalid blockchain response, are you using the correct key pair?");
         }
 
-        var unsignedEnvelope = response.BlockchainResponse.EncodedStellarEnvelope;
-        var hash = response.BlockchainResponse.StellarHash;
+        var unsignedTransactions = response.BlockchainResponse.RequiredSignatures
+            .Where(r => r.PublicKey == GetPublicKey());
 
-        var signedEnvelope = Sign(unsignedEnvelope, networkPassphrase);
-        return new StellarSubmitRequest(signedEnvelope, hash);
-    }
-
-    /// <summary>
-    /// Sign a transaction envelope that has already been signed by another keypair
-    /// </summary>
-    /// <param name="request">The request containing the previously signed transaction envelope</param>
-    /// <param name="networkPassphrase">Unique passphrase used when validating signatures on a given transaction</param>
-    /// <returns>A transaction envelope signed by this keypair</returns>
-    /// <exception cref="InvalidOperationException">Thrown when there is no Stellar transaction envelope to sign</exception>
-    public StellarSubmitRequest Sign(StellarSubmitRequest request, string networkPassphrase = PRODUCTION_NETWORK)
-    {
-        if (string.IsNullOrWhiteSpace(request.SignedTransactionEnvelope) || string.IsNullOrWhiteSpace(request.TransactionHash))
+        // Bit overkill, realistically you'll only ever have one envelope to sign. That said, it doesn't make this wrong
+        var submitRequests = unsignedTransactions.Select(unsignedTransaction =>
         {
-            throw new InvalidOperationException("Invalid blockchain response, are you using the correct key pair?");
-        }
+            var encodedUnsignedTransaction = unsignedTransaction.EncodedTransaction;
+            var hash = unsignedTransaction.Hash;
 
-        var unsignedEnvelope = request.SignedTransactionEnvelope;
-        var hash = request.TransactionHash;
+            var encodedSignedTransaction = Sign(encodedUnsignedTransaction, networkPassphrase);
 
-        var signedEnvelope = Sign(unsignedEnvelope, networkPassphrase);
-        return new StellarSubmitRequest(signedEnvelope, hash);
+            return new StellarSubmitSignatureRequest(hash, GetPublicKey(), encodedSignedTransaction, callbackUrl);
+        });
+
+        return submitRequests;
     }
 }
