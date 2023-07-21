@@ -225,10 +225,12 @@ namespace Nexus.Token.Stellar.Examples
             if (signedResponses.Any())
             {
                 await _tokenServer.Submit.OnStellarAsync(signedResponses);
-                _logger.LogInformation("Payments successful!");
+                _logger.LogWarning("Payments successful!");
             }
-
-            _logger.LogError("Envelope was not signed!");
+            else
+            {
+                _logger.LogError("Envelope was not signed!");
+            }
         }
 
         public async Task PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)

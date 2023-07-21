@@ -676,10 +676,9 @@ namespace Nexus.Token.SDK
         /// <returns></returns>
         public async Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
-
             foreach (var request in requests)
             {
+                var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
                 await builder.ExecutePost(request);
             }
         }
