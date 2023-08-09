@@ -84,7 +84,7 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="tokenCode"></param>
         /// <returns></returns>
-        Task<TokenResponse> GetToken(string tokenCode);
+        Task<TokenDetailsResponse> GetToken(string tokenCode);
 
 
         Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query);
