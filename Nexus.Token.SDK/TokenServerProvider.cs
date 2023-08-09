@@ -600,10 +600,10 @@ namespace Nexus.Token.SDK
         /// </summary>
         /// <param name="tokenCode"></param>
         /// <returns></returns>
-        public async Task<TokenResponse> GetToken(string tokenCode)
+        public async Task<TokenDetailsResponse> GetToken(string tokenCode)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode);
-            return await builder.ExecuteGet<TokenResponse>();
+            return await builder.ExecuteGet<TokenDetailsResponse>();
         }
 
         /// <summary>

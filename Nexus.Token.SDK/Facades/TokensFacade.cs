@@ -10,7 +10,7 @@ public class TokensFacade : TokenServerFacade, ITokensFacade
     {
     }
 
-    public async Task<TokenResponse> Get(string tokenCode)
+    public async Task<TokenDetailsResponse> Get(string tokenCode)
     {
         return await _provider.GetToken(tokenCode);
     }

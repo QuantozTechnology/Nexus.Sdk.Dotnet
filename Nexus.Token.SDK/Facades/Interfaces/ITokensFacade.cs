@@ -6,7 +6,7 @@ namespace Nexus.Token.SDK.Facades;
 
 public interface ITokensFacade
 {
-    public Task<TokenResponse> Get(string tokenCode);
+    public Task<TokenDetailsResponse> Get(string tokenCode);
 
     public Task<PagedResponse<TokenResponse>> Get(IDictionary<string, string> query);
 
