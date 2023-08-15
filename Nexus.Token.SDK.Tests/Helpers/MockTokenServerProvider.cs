@@ -145,7 +145,7 @@ namespace Nexus.Token.SDK.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<TokenResponse> GetToken(string tokenCode)
+        public Task<TokenDetailsResponse> GetToken(string tokenCode)
         {
             throw new NotImplementedException();
         }
