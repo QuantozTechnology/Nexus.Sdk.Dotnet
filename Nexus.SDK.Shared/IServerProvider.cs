@@ -10,6 +10,7 @@ namespace Nexus.SDK.Shared
         public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null);
         public Task<bool> Exists(string customerCode);
         public Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? query);
+        public Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? query);
         public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null);
     }
 }

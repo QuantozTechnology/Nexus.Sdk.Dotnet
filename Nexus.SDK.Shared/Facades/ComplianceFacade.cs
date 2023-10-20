@@ -12,5 +12,7 @@ namespace Nexus.SDK.Shared.Facades
         }
 
         public ITrustLevelsFacade Trustlevels => new TrustLevelsFacade(_serverProvider);
+
+        public IMailsFacade Mails => new MailsFacade(_serverProvider);
     }
 }
