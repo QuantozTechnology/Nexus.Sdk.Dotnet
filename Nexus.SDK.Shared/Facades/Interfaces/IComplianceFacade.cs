@@ -3,5 +3,7 @@
     public interface IComplianceFacade
     {
         ITrustLevelsFacade Trustlevels { get; }
+
+        IMailsFacade Mails { get; }
     }
 }
