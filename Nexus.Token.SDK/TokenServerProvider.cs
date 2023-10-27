@@ -729,5 +729,17 @@ namespace Nexus.Token.SDK
 
             return await builder.ExecuteGet<PagedResponse<TrustLevelsResponse>>();
         }
+
+        public async Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<MailsResponse>>();
+        }
     }
 }
