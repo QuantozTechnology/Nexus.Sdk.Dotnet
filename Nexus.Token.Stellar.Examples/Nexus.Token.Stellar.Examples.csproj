@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nexus.Token.SDK\Nexus.Token.SDK.csproj" />
+    <ProjectReference Include="..\Nexus.Sdk.Token\Nexus.Sdk.Token.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.Http;
-using Nexus.SDK.Shared.Options;
+using Nexus.Sdk.Shared.Authentication;
+using Nexus.Sdk.Shared.Http;
+using Nexus.Sdk.Shared.Options;
 
-namespace Nexus.Token.SDK.Extensions
+namespace Nexus.Sdk.Token.Extensions
 {
     public static class NexusSharedServiceCollectionExtensions
     {

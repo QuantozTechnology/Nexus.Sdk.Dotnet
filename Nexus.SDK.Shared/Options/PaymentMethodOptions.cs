@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nexus.SDK.Shared.Options
+namespace Nexus.Sdk.Shared.Options
 {
     public class PaymentMethodOptions
     {

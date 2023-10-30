@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Nexus.SDK.Shared.Authentication;
+namespace Nexus.Sdk.Shared.Authentication;
 
 public interface IAuthProvider
 {

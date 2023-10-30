@@ -1,12 +1,12 @@
 
 using Moq;
 using Moq.Protected;
-using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.Tests.Helpers;
+using Nexus.Sdk.Shared.Authentication;
+using Nexus.Sdk.Shared.Tests.Helpers;
 using System.Collections;
 using System.Net;
 
-namespace Nexus.SDK.Shared.Tests
+namespace Nexus.Sdk.Shared.Tests
 {
     public class RequestBuilderTests
     {

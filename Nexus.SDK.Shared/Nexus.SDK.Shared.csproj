@@ -4,16 +4,16 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<PackageProjectUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet/Nexus.SDK.Shared</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Shared</PackageProjectUrl>
 		<PackageReadmeFile></PackageReadmeFile>
-		<RepositoryUrl>https://gitlab.com/quantoz/nexus-platform/nexus-sdk-dotnet</RepositoryUrl>
-		<RepositoryType>gitlab</RepositoryType>
-		<Description>Shared files used by SDK's for interacting with the Nexus environment.</Description>
+		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
+		<RepositoryType>github</RepositoryType>
+		<Description>Shared files used by sdk's for interacting with the Nexus environment.</Description>
 		<Version>$(PackageVersion)</Version>
-		<Authors>Maximilian Stoll</Authors>
+		<Authors>Quantoz</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
-		<Title>Nexus Shared SDK</Title>
-		<PackageId>Nexus.SDK.Shared</PackageId>
+		<Title>Nexus Shared Sdk</Title>
+		<PackageId>Nexus.Sdk.Shared</PackageId>
 	</PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +22,5 @@
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
     <PackageReference Include="ReHackt.Extensions.Options.Validation" Version="7.0.0" />
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="dotnet pack -c $(Configuration) --no-build -o &quot;$(SolutionDir)/nupkgs/$(Configuration)&quot;" />
-  </Target>
 
 </Project>

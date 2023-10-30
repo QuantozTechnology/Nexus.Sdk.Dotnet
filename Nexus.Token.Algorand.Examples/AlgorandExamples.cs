@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.Requests;
+using Nexus.Sdk.Shared.Requests;
 using Nexus.Token.Algorand.Examples.Models;
-using Nexus.Token.SDK;
-using Nexus.Token.SDK.KeyPairs;
-using Nexus.Token.SDK.Requests;
-using Nexus.Token.SDK.Responses;
-using Nexus.Token.SDK.Security;
+using Nexus.Sdk.Token;
+using Nexus.Sdk.Token.KeyPairs;
+using Nexus.Sdk.Token.Requests;
+using Nexus.Sdk.Token.Responses;
+using Nexus.Sdk.Token.Security;
 using NJsonSchema;
 
 namespace Nexus.Token.Algorand.Examples

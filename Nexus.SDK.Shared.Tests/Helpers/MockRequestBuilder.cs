@@ -1,6 +1,6 @@
-﻿using Nexus.SDK.Shared.Http;
+﻿using Nexus.Sdk.Shared.Http;
 
-namespace Nexus.SDK.Shared.Tests.Helpers
+namespace Nexus.Sdk.Shared.Tests.Helpers
 {
     public class MockRequestBuilder
     {

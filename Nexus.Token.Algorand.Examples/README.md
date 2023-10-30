@@ -1,10 +1,10 @@
-# Token SDK Examples
+# Token Sdk Examples
 
-This project contains examples on how to use the Nexus Token SDK.
+This project contains examples on how to use the Nexus Token Sdk.
 
 - [AlgorandFlow](./AlgorandExamples.cs): Examples of basic supported token flows that can be executed on Algorand blockchain. 
-- [Program](./Program.cs): Example on how to setup the SDK for an executable project.
-- [Startup](./Startup.cs): Example on how to setup the SDK for an MVC project.
+- [Program](./Program.cs): Example on how to setup the sdk for an executable project.
+- [Startup](./Startup.cs): Example on how to setup the sdk for an MVC project.
 
 ## Flows
 

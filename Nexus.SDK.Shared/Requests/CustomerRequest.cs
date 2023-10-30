@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Nexus.SDK.Shared.Requests;
+namespace Nexus.Sdk.Shared.Requests;
 
 public class CustomerRequest
 {

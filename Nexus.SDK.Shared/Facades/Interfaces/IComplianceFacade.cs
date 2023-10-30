@@ -1,4 +1,4 @@
-﻿namespace Nexus.SDK.Shared.Facades.Interfaces
+﻿namespace Nexus.Sdk.Shared.Facades.Interfaces
 {
     public interface IComplianceFacade
     {

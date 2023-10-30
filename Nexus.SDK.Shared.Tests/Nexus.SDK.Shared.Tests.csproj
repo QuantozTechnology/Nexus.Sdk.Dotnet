@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nexus.SDK.Shared\Nexus.SDK.Shared.csproj" />
+    <ProjectReference Include="..\Nexus.Sdk.Shared\Nexus.Sdk.Shared.csproj" />
   </ItemGroup>
 
 </Project>

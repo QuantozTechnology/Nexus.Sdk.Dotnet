@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Nexus.SDK.Shared.Options
+namespace Nexus.Sdk.Shared.Options
 {
     public class NexusOptions
     {

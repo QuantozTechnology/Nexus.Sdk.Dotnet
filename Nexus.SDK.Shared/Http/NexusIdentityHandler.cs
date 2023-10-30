@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Headers;
-using Nexus.SDK.Shared.Authentication;
+using Nexus.Sdk.Shared.Authentication;
 
-namespace Nexus.SDK.Shared.Http
+namespace Nexus.Sdk.Shared.Http
 {
     public class NexusIdentityHandler : DelegatingHandler
     {

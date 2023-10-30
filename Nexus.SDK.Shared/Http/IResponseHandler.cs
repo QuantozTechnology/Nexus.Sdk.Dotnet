@@ -1,4 +1,4 @@
-﻿namespace Nexus.SDK.Shared.Http
+﻿namespace Nexus.Sdk.Shared.Http
 {
     public interface IResponseHandler
     {

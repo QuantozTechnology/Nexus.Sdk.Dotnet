@@ -1,6 +1,6 @@
-﻿using Nexus.SDK.Shared.Facades.Interfaces;
+﻿using Nexus.Sdk.Shared.Facades.Interfaces;
 
-namespace Nexus.SDK.Shared.Facades
+namespace Nexus.Sdk.Shared.Facades
 {
     public class ComplianceFacade : IComplianceFacade
     {

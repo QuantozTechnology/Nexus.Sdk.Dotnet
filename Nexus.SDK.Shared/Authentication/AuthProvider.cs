@@ -1,11 +1,11 @@
 ﻿using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.ErrorHandling;
-using Nexus.SDK.Shared.Options;
+using Nexus.Sdk.Shared.ErrorHandling;
+using Nexus.Sdk.Shared.Options;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace Nexus.SDK.Shared.Authentication;
+namespace Nexus.Sdk.Shared.Authentication;
 
 public class AuthProvider : IAuthProvider
 {

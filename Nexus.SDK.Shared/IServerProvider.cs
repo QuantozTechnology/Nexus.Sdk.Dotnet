@@ -1,7 +1,7 @@
-﻿using Nexus.SDK.Shared.Requests;
-using Nexus.SDK.Shared.Responses;
+﻿using Nexus.Sdk.Shared.Requests;
+using Nexus.Sdk.Shared.Responses;
 
-namespace Nexus.SDK.Shared
+namespace Nexus.Sdk.Shared
 {
     public interface IServerProvider
     {

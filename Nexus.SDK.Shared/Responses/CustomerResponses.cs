@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Nexus.SDK.Shared.Responses;
+namespace Nexus.Sdk.Shared.Responses;
 
 public record CustomerResponse
 {

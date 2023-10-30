@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Nexus.Token.SDK.Extensions;
+using Nexus.Sdk.Token.Extensions;
 using Serilog;
 
 namespace Nexus.Token.Algorand.Examples

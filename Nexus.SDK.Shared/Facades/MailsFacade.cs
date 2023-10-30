@@ -1,6 +1,6 @@
-﻿using Nexus.SDK.Shared.Responses;
+﻿using Nexus.Sdk.Shared.Responses;
 
-namespace Nexus.SDK.Shared.Facades;
+namespace Nexus.Sdk.Shared.Facades;
 
 public class MailsFacade : ServerFacade, IMailsFacade
 {

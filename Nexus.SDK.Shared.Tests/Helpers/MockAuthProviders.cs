@@ -1,7 +1,7 @@
-﻿using Nexus.SDK.Shared.Authentication;
-using Nexus.SDK.Shared.ErrorHandling;
+﻿using Nexus.Sdk.Shared.Authentication;
+using Nexus.Sdk.Shared.ErrorHandling;
 
-namespace Nexus.SDK.Shared.Tests.Helpers
+namespace Nexus.Sdk.Shared.Tests.Helpers
 {
     public class MockAuthProviderWithSuccess : IAuthProvider
     {

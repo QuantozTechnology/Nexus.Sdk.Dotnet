@@ -1,6 +1,6 @@
-using Nexus.SDK.Shared.Requests;
+using Nexus.Sdk.Shared.Requests;
 
-namespace Nexus.SDK.Shared.Tests
+namespace Nexus.Sdk.Shared.Tests
 {
     public class CustomerRequestBuilderTests
     {

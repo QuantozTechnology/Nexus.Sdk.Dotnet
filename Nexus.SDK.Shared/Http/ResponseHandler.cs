@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
-using Nexus.SDK.Shared.ErrorHandling;
+using Nexus.Sdk.Shared.ErrorHandling;
 using System.Net;
 
-namespace Nexus.SDK.Shared.Http;
+namespace Nexus.Sdk.Shared.Http;
 
 public class ResponseHandler : IResponseHandler
 {

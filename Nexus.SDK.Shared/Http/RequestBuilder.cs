@@ -4,7 +4,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
 
-namespace Nexus.SDK.Shared.Http;
+namespace Nexus.Sdk.Shared.Http;
 
 public class RequestBuilder
 {
