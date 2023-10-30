@@ -98,13 +98,13 @@ To run this sample code you need to connect it to your test environment using th
 ```json
 {
   "NexusOptions": {
-    "ApiUrl": "https://testapi.quantoznexus.com",
+    "ApiUrl": "https://testapi.quantoz.com",
     "PaymentMethodOptions": {
       "Funding": "",
       "Payout": ""
     },
     "AuthProviderOptions": {
-      "IdentityUrl": "https://testidentity.quantoznexus.com",
+      "IdentityUrl": "https://testidentity.quantoz.com",
       "ClientId": "",
       "ClientSecret": ""
     }

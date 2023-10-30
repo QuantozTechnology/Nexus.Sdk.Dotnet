@@ -146,13 +146,13 @@ Using appsettings.json
 ```json
 {
   "NexusOptions": {
-    "ApiUrl": "https://testapi.quantoznexus.com",
+    "ApiUrl": "https://testapi.quantoz.com",
     "PaymentMethodOptions": {
       "Funding": "your-test-funding-paymentMethod",
       "Payout": "your-test-funding-paymentMethod"
     },
     "AuthProviderOptions": {
-      "IdentityUrl": "https://testidentity.quantoznexus.com",
+      "IdentityUrl": "https://testidentity.quantoz.com",
       "ClientId": "your-test-clientId",
       "ClientSecret": "your-test-clientSecret"
     }
@@ -171,13 +171,13 @@ Using appsettings.json
 ```json
 {
   "NexusOptions": {
-    "ApiUrl": "https://api.quantoznexus.com",
+    "ApiUrl": "https://api.quantoz.com",
     "PaymentMethodOptions": {
       "Funding": "your-prod-funding-paymentMethod",
       "Payout": "your-prod-funding-paymentMethod"
     },
     "AuthProviderOptions": {
-      "IdentityUrl": "https://identity.quantoznexus.com",
+      "IdentityUrl": "https://identity.quantoz.com",
       "ClientId": "your-prod-clientId",
       "ClientSecret": "your-prod-clientSecret"
     }
@@ -185,7 +185,7 @@ Using appsettings.json
 }
 ```
 
-Check our [Nexus Docs](https://devdocs.quantoznexus.com/articles/start-developing/sd_authentication.html) for more information on how to generate a `clientId` and `clientSecret` for your environment.
+Check our [Nexus Docs](https://devdocs.quantoz.com/articles/start-developing/sd_authentication.html) for more information on how to generate a `clientId` and `clientSecret` for your environment.
 
 ---
 
@@ -265,7 +265,7 @@ Alternatively, you can provide a hash to store on the blockchain, instead of hav
 ---
 
 ## *Payment Methods*
-Normally the `Funding` of a token and the `Payout` of a token involve an exchange of fiat currencies. You can find more information about Payment Methods [here.]("https://devdocs.quantoznexus.com/articles/configure-nexus/initial_setup.html?q=payment%20methods") To use a default Payment Method for all funding and payout requests you can configure the SDK to use a default ones instead:
+Normally the `Funding` of a token and the `Payout` of a token involve an exchange of fiat currencies. You can find more information about Payment Methods [here.]("https://devdocs.quantoz.com/articles/configure-nexus/initial_setup.html?q=payment%20methods") To use a default Payment Method for all funding and payout requests you can configure the SDK to use a default ones instead:
 
 Add default `funding` Payment Method:
 ```csharp

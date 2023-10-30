@@ -46,12 +46,12 @@
 
         public NexusOptionsBuilder ConnectToTest(string clientId, string clientSecret)
         {
-            _options.ApiUrl = "https://testapi.quantoznexus.com";
+            _options.ApiUrl = "https://testapi.quantoz.com";
             _options.AuthProviderOptions = new AuthProviderOptions
             {
                 ClientId = clientId,
                 ClientSecret = clientSecret,
-                IdentityUrl = "https://testidentity.quantoznexus.com",
+                IdentityUrl = "https://testidentity.quantoz.com",
                 Scopes = "api1"
             };
 
