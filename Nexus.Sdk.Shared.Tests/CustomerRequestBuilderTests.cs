@@ -12,15 +12,13 @@ namespace Nexus.Sdk.Shared.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(request, Is.Not.Null);
-                Assert.That(request.Email, Is.Null);
                 Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -49,7 +47,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -61,6 +59,7 @@ namespace Nexus.Sdk.Shared.Tests
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .Build();
 
             Assert.Multiple(() =>
@@ -74,7 +73,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -85,6 +84,7 @@ namespace Nexus.Sdk.Shared.Tests
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .SetBankAccounts(new CustomerBankAccountRequest[]
                 {
                         new CustomerBankAccountRequest()
@@ -106,7 +106,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Not.Null);
+                Assert.That(request.BankAccounts, Is.Not.Empty);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -129,6 +129,7 @@ namespace Nexus.Sdk.Shared.Tests
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .AddBankAccount(bankAccount)
                 .Build();
 
@@ -158,6 +159,7 @@ namespace Nexus.Sdk.Shared.Tests
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .SetCustomData(dataDict)
                 .Build();
 
@@ -172,7 +174,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
@@ -183,6 +185,7 @@ namespace Nexus.Sdk.Shared.Tests
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .AddCustomProperty("FirstName", "Bob")
                 .Build();
 
@@ -197,7 +200,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
@@ -209,6 +212,7 @@ namespace Nexus.Sdk.Shared.Tests
                 "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .SetExternalReference("MOCK_REFERENCE")
                 .Build();
 
@@ -223,7 +227,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.ExternalCustomerCode, Is.EqualTo("MOCK_REFERENCE"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -233,6 +237,7 @@ namespace Nexus.Sdk.Shared.Tests
         {
             var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .AddCustomProperty("FirstName", "Bob")
                 .SetBusiness(true)
                 .Build();
@@ -248,7 +253,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.True);
-                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.BankAccounts, Is.Empty);
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
