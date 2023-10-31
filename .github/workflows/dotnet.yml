@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore Nexus.Sdk.Dotnet/Nexus.Sdk.Dotnet.sln
     - name: Build
       run: dotnet build --no-restore Nexus.Sdk.Dotnet/Nexus.Sdk.Dotnet.sln
     - name: Test
