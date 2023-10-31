@@ -24,7 +24,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: run: dotnet build --no-restore Nexus.Sdk.Dotnet/Nexus.Sdk.Dotnet.sln
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Determine Version
