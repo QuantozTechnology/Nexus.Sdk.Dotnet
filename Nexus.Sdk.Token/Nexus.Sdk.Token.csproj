@@ -6,12 +6,12 @@
 		<PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Token</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
 		<RepositoryType>github</RepositoryType>
-		<Description>Sdk for interacting with the Nexus token environment.</Description>
+		<Description>Sdk for interacting with the Quantoz Nexus token environment.</Description>
 		<Version>$(PackageVersion)</Version>
 		<Authors>Quantoz</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
-		<Title>Nexus Token Sdk</Title>
-		<PackageId>Nexus.Sdk.Token</PackageId>
+		<Title>Quantoz Nexus Token Sdk</Title>
+		<PackageId>Quantoz.Nexus.Sdk.Token</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 

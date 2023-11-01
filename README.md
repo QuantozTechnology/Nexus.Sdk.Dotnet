@@ -1,6 +1,8 @@
-# Nexus SDK Repository
+# Quantoz Nexus SDK
 
-Welcome to the Nexus SDK repository. In here you will find all the tools required to make your connection with Nexus even easier!
+![Nuget](https://img.shields.io/nuget/v/Quantoz.Nexus.Sdk.Token)
+
+Welcome to the Quantoz Nexus SDK repository. In here you will find all the tools required to make your connection with Nexus even easier!
 
 ## Repository Overview
 
@@ -13,20 +15,13 @@ This repository consists of the following projects:
 
 ## Installation using Nuget
 
-This section contains information on how to install these SDKs in your projects.
+Install using your favorite editor by searching for `Quantoz.Nexus.Token.Sdk` in the nuget package management UI
+Or execute the following dotnet command:
 
-- Add a new file called `nuget.config` to the solution folder (same directory as your `.sln` file).
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<configuration>
-  <packageSources>
-    <add key="NexusSDKs" value="https://gitlab.com/api/v4/projects/37897064/packages/nuget/index.json" />
-  </packageSources>
-</configuration>
+```bash
+dotnet package install Quantoz.Nexus.Token.Sdk
 ```
 
-- The SDK packages are now available to be installed under `NexusSDKs`.
 
 ## Release Notes
-An overview of changes to the SDK is found [here.](./RELEASE_NOTES.md)
+An overview of changes to the SDK is found [here.](./releases)

@@ -8,12 +8,12 @@
 		<PackageReadmeFile></PackageReadmeFile>
 		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
 		<RepositoryType>github</RepositoryType>
-		<Description>Shared files used by sdk's for interacting with the Nexus environment.</Description>
+		<Description>Shared files used by sdk's for interacting with the Quantoz Nexus environment.</Description>
 		<Version>$(PackageVersion)</Version>
 		<Authors>Quantoz</Authors>
 		<Company>Quantoz Blockchain Technology</Company>
-		<Title>Nexus Shared Sdk</Title>
-		<PackageId>Nexus.Sdk.Shared</PackageId>
+		<Title>Quantoz Nexus Shared Sdk</Title>
+		<PackageId>Quantoz.Nexus.Sdk.Shared</PackageId>
 	</PropertyGroup>
 
   <ItemGroup>
