@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Shared</PackageProjectUrl>
+		<PackageReadmeFile></PackageReadmeFile>
+		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
+		<RepositoryType>github</RepositoryType>
+		<Description>Shared files used by sdk's for interacting with the Nexus environment.</Description>
+		<Version>$(PackageVersion)</Version>
+		<Authors>Quantoz</Authors>
+		<Company>Quantoz Blockchain Technology</Company>
+		<Title>Nexus Shared Sdk</Title>
+		<PackageId>Nexus.Sdk.Shared</PackageId>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
+    <PackageReference Include="ReHackt.Extensions.Options.Validation" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

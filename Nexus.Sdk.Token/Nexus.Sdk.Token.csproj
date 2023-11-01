@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Token</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
+		<RepositoryType>github</RepositoryType>
+		<Description>Sdk for interacting with the Nexus token environment.</Description>
+		<Version>$(PackageVersion)</Version>
+		<Authors>Quantoz</Authors>
+		<Company>Quantoz Blockchain Technology</Company>
+		<Title>Nexus Token Sdk</Title>
+		<PackageId>Nexus.Sdk.Token</PackageId>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Algorand" Version="0.2.1" />
+		<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="7.0.0" />
+		<PackageReference Include="stellar-dotnet-sdk" Version="8.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Nexus.Sdk.Shared\Nexus.Sdk.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+</Project>

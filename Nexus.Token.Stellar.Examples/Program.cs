@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Nexus.SDK.Shared.ErrorHandling;
-using Nexus.Token.SDK.Extensions;
-using Nexus.Token.SDK.Requests;
+using Nexus.Sdk.Shared.ErrorHandling;
+using Nexus.Sdk.Token.Extensions;
+using Nexus.Sdk.Token.Requests;
 using Nexus.Token.Stellar.Examples.Models;
 using Serilog;
 
