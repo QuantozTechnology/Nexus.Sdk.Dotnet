@@ -69,13 +69,13 @@ namespace Nexus.Sdk.Token.Tests
 
             Assert.Multiple(() =>
             {
-                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.quantoznexus.com"));
+                Assert.That(serverOptions.ApiUrl, Is.EqualTo("https://testapi.quantoz.com"));
                 Assert.That(serverOptions.PaymentMethodOptions, Is.Not.Null);
 
                 Assert.That(serverOptions.PaymentMethodOptions.Funding, Is.Null);
                 Assert.That(serverOptions.PaymentMethodOptions.Payout, Is.Null);
 
-                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.quantoznexus.com"));
+                Assert.That(serverOptions.AuthProviderOptions.IdentityUrl, Is.EqualTo("https://testidentity.quantoz.com"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientId, Is.EqualTo("test_client_id"));
                 Assert.That(serverOptions.AuthProviderOptions.ClientSecret, Is.EqualTo("test_client_secret"));
             });
