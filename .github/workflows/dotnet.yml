@@ -37,6 +37,7 @@ jobs:
       if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v')
       run: |
         VERSION="${{ steps.version.outputs.version }}"
+        VERSION=${VERSION#"v"}
         dotnet pack -p:PackageVersion=$VERSION -c Release
         dotnet nuget push "./Nexus.Sdk.Shared/bin/Release/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json    
         dotnet nuget push "./Nexus.Sdk.Token/bin/Release/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
