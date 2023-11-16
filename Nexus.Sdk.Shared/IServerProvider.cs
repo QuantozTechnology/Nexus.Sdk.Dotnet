@@ -12,5 +12,6 @@ namespace Nexus.Sdk.Shared
         public Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? query);
         public Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? query);
         public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null);
+        public Task<MailsResponse> UpdateMailSent(string code);
     }
 }

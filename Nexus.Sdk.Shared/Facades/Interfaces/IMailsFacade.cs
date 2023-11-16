@@ -12,4 +12,13 @@ public interface IMailsFacade
     /// Paged list of Partner's mails
     /// </returns>
     public Task<PagedResponse<MailsResponse>> Get(IDictionary<string, string>? query);
+
+    /// <summary>
+    /// Update Mail status to Sent
+    /// </summary>
+    /// <param name="code">Unique identifier of mail</param>
+    /// <returns>
+    /// Updated Mail Response
+    /// </returns>
+    public Task<MailsResponse> UpdateMailSent(string code);
 }

@@ -25,6 +25,12 @@
             .BuildRequest();
     }
 
+    public static HttpRequestMessage BuildPutRequest(Uri path, IDictionary<string, string> headers)
+    {
+        return new HttpRequestBuilder(path, null, headers, HttpMethod.Put)
+            .BuildRequest();
+    }
+
     public static HttpRequestMessage BuildGetRequest(Uri path, IDictionary<string, string> headers)
     {
         return new HttpRequestBuilder(path, null, headers, HttpMethod.Get)

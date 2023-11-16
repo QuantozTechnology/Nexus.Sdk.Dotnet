@@ -234,5 +234,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<MailsResponse> UpdateMailSent(string code)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
