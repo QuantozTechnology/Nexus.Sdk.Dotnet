@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Net.Http;
-using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.Json;
 
@@ -77,7 +75,7 @@ public class RequestBuilder
         _logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        
+
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
         var response = await _httpClient.SendAsync(postRequest);
 
@@ -95,9 +93,24 @@ public class RequestBuilder
         _logger?.LogDebug("PUT to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        
+
         var postRequest = HttpRequestBuilder.BuildPutRequest(requestUri, content, _headers);
         var response = await _httpClient.SendAsync(postRequest);
+
+        ResetHeaders(); // reset headers
+
+        return await _responseHandler.HandleResponse<TResponse>(response);
+    }
+
+    public async Task<TResponse> ExecutePut<TResponse>() where TResponse : class
+    {
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+
+        _logger?.LogDebug("PUT to {path}", path);
+
+        var putRequest = HttpRequestBuilder.BuildPutRequest(requestUri, _headers);
+        var response = await _httpClient.SendAsync(putRequest);
 
         ResetHeaders(); // reset headers
 

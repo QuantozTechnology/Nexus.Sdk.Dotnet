@@ -741,5 +741,12 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecuteGet<PagedResponse<MailsResponse>>();
         }
+
+        public async Task<MailsResponse> UpdateMailSent(string code)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail", code, "sent");
+
+            return await builder.ExecutePut<MailsResponse>();
+        }
     }
 }

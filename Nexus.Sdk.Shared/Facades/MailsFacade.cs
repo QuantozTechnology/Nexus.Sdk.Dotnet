@@ -19,4 +19,16 @@ public class MailsFacade : ServerFacade, IMailsFacade
     {
         return await _provider.GetMails(query);
     }
+
+    /// <summary>
+    /// Update Mail status to Sent based on the code
+    /// </summary>
+    /// <param name="code">Mail code</param>
+    /// <returns>
+    /// Updated Mail record
+    /// </returns>
+    public async Task<MailsResponse> UpdateMailSent(string code)
+    {
+        return await _provider.UpdateMailSent(code);
+    }
 }
