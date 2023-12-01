@@ -49,11 +49,11 @@ namespace Nexus.Sdk.Shared.Responses
     public class MailEntityCodes
     {
         [JsonConstructor]
-        public MailEntityCodes(string accountCode, string customerCode, string transactionCode)
+        public MailEntityCodes(string accountCode, string customerCode, string tokenPaymentCode)
         {
             AccountCode = accountCode;
             CustomerCode = customerCode;
-            TransactionCode = transactionCode;
+            TokenPaymentCode = tokenPaymentCode;
         }
 
         [JsonPropertyName("accountCode")]
@@ -62,8 +62,8 @@ namespace Nexus.Sdk.Shared.Responses
         [JsonPropertyName("customerCode")]
         public string CustomerCode { get; set; }
 
-        [JsonPropertyName("transactionCode")]
-        public string TransactionCode { get; set; }
+        [JsonPropertyName("tokenPaymentCode")]
+        public string TokenPaymentCode { get; set; }
     }
 
     public class MailContent
