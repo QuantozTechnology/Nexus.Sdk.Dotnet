@@ -13,7 +13,7 @@ public interface IOperationsFacade
     /// <returns>
     /// Return token operation details
     /// </returns>
-    public Task<TokenOperationResponse> Get(string code);
+    public Task<PagedResponse<TokenOperationResponse>> Get(string code);
 
     /// <summary>
     /// Lists token operations based on the query parameters

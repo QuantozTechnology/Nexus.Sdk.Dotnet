@@ -260,7 +260,7 @@ namespace Nexus.Sdk.Token
         /// <returns>
         /// Return token operation details
         /// </returns>
-        Task<TokenOperationResponse> GetTokenPayment(string code);
+        Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code);
 
         /// <summary>
         /// Lists token operations based on the query parameters
