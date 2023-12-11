@@ -10,7 +10,7 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     {
     }
 
-    public async Task<TokenOperationResponse> Get(string code)
+    public async Task<PagedResponse<TokenOperationResponse>> Get(string code)
     {
         return await _provider.GetTokenPayment(code);
     }

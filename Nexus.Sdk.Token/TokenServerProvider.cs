@@ -630,10 +630,10 @@ namespace Nexus.Sdk.Token
         /// <returns>
         /// Return token operation details
         /// </returns>
-        public async Task<TokenOperationResponse> GetTokenPayment(string code)
+        public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments", code);
-            return await builder.ExecuteGet<TokenOperationResponse>();
+            return await builder.ExecuteGet<PagedResponse<TokenOperationResponse>>();
         }
 
         /// <summary>
