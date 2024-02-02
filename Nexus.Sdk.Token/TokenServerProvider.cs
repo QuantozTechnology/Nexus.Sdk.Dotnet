@@ -210,10 +210,11 @@ namespace Nexus.Sdk.Token
         /// <param name="pm"></param>
         /// <param name="memo"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="paymentReference"></param>
         /// <returns></returns>
-        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
+        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
         {
-            var definition = new FundingDefinition(tokenCode, amount);
+            var definition = new FundingDefinition(tokenCode, amount, paymentReference);
             await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, customerIPAddress);
         }
 
@@ -311,10 +312,11 @@ namespace Nexus.Sdk.Token
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -334,13 +336,14 @@ namespace Nexus.Sdk.Token
                 PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Payout,
                 Amount = amount,
                 TokenCode = tokenCode,
+                PaymentReference = paymentReference,
                 Memo = memo
             };
 
             return await builder.ExecutePost<PayoutOperationRequest, SignablePayoutResponse>(request);
         }
 
-        public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+        public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -355,6 +358,7 @@ namespace Nexus.Sdk.Token
                 PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Payout,
                 Amount = amount,
                 TokenCode = tokenCode,
+                PaymentReference = paymentReference,
                 Memo = memo
             };
 

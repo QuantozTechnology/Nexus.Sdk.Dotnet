@@ -162,7 +162,7 @@ namespace Nexus.Token.Stellar.Examples
             var signedResponse = kp.Sign(signableResponse, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
 
-            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value));
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null));
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
 
             _logger.LogWarning("Funding multiple successful!");
