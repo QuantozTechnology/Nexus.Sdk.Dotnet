@@ -126,9 +126,10 @@ namespace Nexus.Sdk.Token
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
+        Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
 
         /// <summary>
         ///
@@ -170,11 +171,12 @@ namespace Nexus.Sdk.Token
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
+        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
 
-        Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+        Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null);
 
         /// <summary>
         ///

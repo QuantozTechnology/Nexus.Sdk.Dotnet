@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Token.Responses
     public record TokenOperationResponse
     {
         [JsonConstructor]
-        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string cryptoCode, string tokenCode)
+        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string cryptoCode, string tokenCode, string paymentReference)
         {
             Code = code;
             Hash = hash;
@@ -19,6 +19,7 @@ namespace Nexus.Sdk.Token.Responses
             Memo = memo;
             CryptoCode = cryptoCode;
             TokenCode = tokenCode;
+            PaymentReference = paymentReference;
         }
 
         [JsonPropertyName("code")]
@@ -56,5 +57,8 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("tokenCode")]
         public string TokenCode { get; private set; }
+
+        [JsonPropertyName("paymentReference")]
+        public string PaymentReference { get; set; }
     }
 }

@@ -24,6 +24,9 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("fees")]
         public Fees? Fees { get; set; }
+
+        [JsonPropertyName("paymentReference")]
+        public string? PaymentReference { get; set; }
     }
 
     public record ExecutedAmounts

@@ -139,7 +139,7 @@ namespace Nexus.Token.Algorand.Examples
             var signedResponse = kp.Sign(signableResponse);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
-            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value));
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null));
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
 
             _logger.LogWarning("Funding multiple successful!");

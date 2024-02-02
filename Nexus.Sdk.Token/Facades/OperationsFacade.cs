@@ -21,9 +21,9 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     }
 
     public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null,
-                                         string? memo = null, string? customerIPAddress = null)
+                                         string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
     {
-        await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, customerIPAddress);
+        await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, paymentReference, customerIPAddress); ;
     }
 
     public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
@@ -44,13 +44,13 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
         return await _provider.CreatePaymentsAsync(definitions, memo, customerIPAddress);
     }
 
-    public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null)
+    public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
     {
-        return await _provider.CreatePayoutAsync(accountCode, tokenCode, amount, pm, memo, customerIPAddress);
+        return await _provider.CreatePayoutAsync(accountCode, tokenCode, amount, pm, memo, paymentReference, customerIPAddress);
     }
 
-    public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null)
+    public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null)
     {
-        return await _provider.SimulatePayoutAsync(accountCode, tokenCode, amount, pm, memo);
+        return await _provider.SimulatePayoutAsync(accountCode, tokenCode, amount, pm, memo, paymentReference);
     }
 }

@@ -32,8 +32,9 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens this account will be funded with</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
+    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -75,8 +76,9 @@ public interface IOperationsFacade
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? customerIPAddress = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
@@ -86,6 +88,7 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens that should be withdrawn from this account</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and would be visible on the blockchain</param>
+    /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <returns>A simulated withdrawal that includes fees.</returns>
-    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null);
+    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null);
 }

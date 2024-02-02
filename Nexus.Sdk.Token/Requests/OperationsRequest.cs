@@ -28,10 +28,14 @@ public record FundingDefinition
     [JsonPropertyName("amount")]
     public decimal Amount { get; set; }
 
-    public FundingDefinition(string tokenCode, decimal amount)
+    [JsonPropertyName("paymentReference")]
+    public string? PaymentReference { get; set; }
+
+    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference)
     {
         TokenCode = tokenCode;
         Amount = amount;
+        PaymentReference = paymentReference;
     }
 }
 
@@ -89,4 +93,7 @@ public record PayoutOperationRequest
 
     [JsonPropertyName("amount")]
     public decimal Amount { get; set; }
+
+    [JsonPropertyName("paymentReference")]
+    public string? PaymentReference { get; set; }
 }
