@@ -16,6 +16,9 @@ public record FundingOperationRequest
     [JsonPropertyName("memo")]
     public string? Memo { get; set; }
 
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
     [JsonPropertyName("tokenFundings")]
     public required IEnumerable<FundingDefinition> Definitions { get; set; }
 }
@@ -44,13 +47,17 @@ public record PaymentOperationRequest
     [JsonPropertyName("memo")]
     public string? Memo { get; set; }
 
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
     [JsonPropertyName("payments")]
     public IEnumerable<PaymentDefinition> Definitions { get; set; }
 
-    public PaymentOperationRequest(IEnumerable<PaymentDefinition> definitions, string? memo)
+    public PaymentOperationRequest(IEnumerable<PaymentDefinition> definitions, string? memo, string? message)
     {
         Definitions = definitions;
         Memo = memo;
+        Message = message;
     }
 }
 
@@ -87,6 +94,9 @@ public record PayoutOperationRequest
 
     [JsonPropertyName("memo")]
     public string? Memo { get; set; }
+
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
 
     [JsonPropertyName("tokenCode")]
     public string? TokenCode { get; set; }

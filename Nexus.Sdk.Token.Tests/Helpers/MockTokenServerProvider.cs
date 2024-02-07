@@ -49,12 +49,12 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 : Task.FromResult(new CustomerResponse(request.CustomerCode!, request.TrustLevel!, request.CurrencyCode!, request.Email, request.Status!, null!, request.IsBusiness!.Value, null!));
         }
 
-        public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
+        public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null)
+        public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
@@ -64,17 +64,17 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null)
+        public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? customerIPAddress = null)
+        public Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
+        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }

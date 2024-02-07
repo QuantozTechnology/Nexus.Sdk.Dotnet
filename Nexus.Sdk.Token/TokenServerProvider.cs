@@ -210,12 +210,13 @@ namespace Nexus.Sdk.Token
         /// <param name="pm"></param>
         /// <param name="memo"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <returns></returns>
-        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
+        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             var definition = new FundingDefinition(tokenCode, amount, paymentReference);
-            await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, customerIPAddress);
+            await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, message, customerIPAddress);
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null)
+        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Funding))
             {
@@ -250,6 +251,7 @@ namespace Nexus.Sdk.Token
                 AccountCode = accountCode,
                 Definitions = definitions,
                 Memo = memo,
+                Message = message,
                 PaymentMethodCode = (pm ?? _options.PaymentMethodOptions.Funding)!
             };
 
@@ -276,12 +278,13 @@ namespace Nexus.Sdk.Token
         /// <param name="tokenCode"></param>
         /// <param name="amount"></param>
         /// <param name="memo"></param>
+        /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null)
+        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             var definition = new PaymentDefinition(senderPublicKey, receiverPublicKey, tokenCode, amount);
-            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo, customerIPAddress);
+            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo, message, customerIPAddress);
         }
 
         /// <summary>
@@ -289,9 +292,10 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
+        /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? customerIPAddress = null)
+        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
 
@@ -300,7 +304,7 @@ namespace Nexus.Sdk.Token
                 builder.AddHeader("customer_ip_address", customerIPAddress);
             }
 
-            var request = new PaymentOperationRequest(definitions, memo);
+            var request = new PaymentOperationRequest(definitions, memo, message);
             return await builder.ExecutePost<PaymentOperationRequest, SignablePaymentResponse>(request);
         }
 
@@ -312,11 +316,12 @@ namespace Nexus.Sdk.Token
         /// <param name="amount"></param>
         /// <param name="pm"></param>
         /// <param name="memo"></param>
+        /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -337,7 +342,8 @@ namespace Nexus.Sdk.Token
                 Amount = amount,
                 TokenCode = tokenCode,
                 PaymentReference = paymentReference,
-                Memo = memo
+                Memo = memo,
+                Message = message
             };
 
             return await builder.ExecutePost<PayoutOperationRequest, SignablePayoutResponse>(request);

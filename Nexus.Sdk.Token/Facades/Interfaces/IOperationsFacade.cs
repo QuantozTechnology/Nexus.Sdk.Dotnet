@@ -32,9 +32,10 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens this account will be funded with</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
+    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -42,9 +43,10 @@ public interface IOperationsFacade
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     /// <param name="definitions">A list of token codes and their respective amounts this account will be funded with</param>
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
-    /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="memo">An optional memo that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? customerIPAddress = null);
+    public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay a token from one account to another account
@@ -54,9 +56,10 @@ public interface IOperationsFacade
     /// <param name="tokenCode">Unique Nexus identifier of the token that is payed</param>
     /// <param name="amount">The amount of tokens that is payed</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? customerIPAddress = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts
@@ -64,8 +67,9 @@ public interface IOperationsFacade
     /// <param name="definitions">A list of payments that will be created</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <returns>A transaction that needs to be signed using the private keys of all matching provided senderPublicKeys</returns>
-    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? customerIPAddress = null);
+    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Withdraw token from an account
@@ -76,9 +80,10 @@ public interface IOperationsFacade
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? customerIPAddress = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
