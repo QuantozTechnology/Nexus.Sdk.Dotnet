@@ -26,7 +26,7 @@ public record AccountResponse
     [JsonPropertyName("customerCryptoAddress")]
     public string PublicKey { get; set; }
 
-    [JsonPropertyName("status")]
+    [JsonPropertyName("accountStatus")]
     public string Status { get; set; }
 }
 
