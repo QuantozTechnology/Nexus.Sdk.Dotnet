@@ -35,7 +35,7 @@ public interface IOperationsFacade
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
+    public Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -46,7 +46,7 @@ public interface IOperationsFacade
     /// <param name="memo">An optional memo that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
+    public Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay a token from one account to another account
