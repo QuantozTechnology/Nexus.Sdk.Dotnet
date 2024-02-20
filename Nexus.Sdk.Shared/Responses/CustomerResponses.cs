@@ -5,9 +5,15 @@ namespace Nexus.Sdk.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string trustLevel, string currencyCode, string countryCode, string? email, string status, string bankAccount, bool isBusiness, IDictionary<string, string> data)
+    public CustomerResponse(string customerCode, string firstName, string lastName, string dateOfBirth, string phone, string companyName, string trustLevel, 
+        string currencyCode, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string riskQualification, IDictionary<string, string> data)
     {
         CustomerCode = customerCode;
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        Phone = phone;
+        CompanyName = companyName;
         TrustLevel = trustLevel;
         CurrencyCode = currencyCode;
         CountryCode = countryCode;
@@ -15,11 +21,27 @@ public record CustomerResponse
         Status = status;
         BankAccount = bankAccount;
         IsBusiness = isBusiness;
+        RiskQualification = riskQualification;
         Data = data;
     }
 
     [JsonPropertyName("customerCode")]
     public string CustomerCode { get; set; }
+
+    [JsonPropertyName("firstName")]
+    public string? FirstName { get; set; }
+
+    [JsonPropertyName("lastName")]
+    public string? LastName { get; set; }
+
+    [JsonPropertyName("dateOfBirth")]
+    public string? DateOfBirth { get; set; }
+
+    [JsonPropertyName("phone")]
+    public string? Phone { get; set; }
+
+    [JsonPropertyName("companyName")]
+    public string? CompanyName { get; set; }
 
     [JsonPropertyName("trustlevel")]
     public string TrustLevel { get; set; }
@@ -41,6 +63,9 @@ public record CustomerResponse
 
     [JsonPropertyName("isBusiness")]
     public bool IsBusiness { get; set; }
+
+    [JsonPropertyName("riskQualification")]
+    public string? RiskQualification { get; set; }
 
     [JsonPropertyName("data")]
     public IDictionary<string, string> Data { get; set; }

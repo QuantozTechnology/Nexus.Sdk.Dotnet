@@ -8,6 +8,21 @@ public class CustomerRequest
     [JsonPropertyName("customerCode")]
     public string? CustomerCode { get; set; }
 
+    [JsonPropertyName("firstName")]
+    public string? FirstName { get; set; }
+
+    [JsonPropertyName("lastName")]
+    public string? LastName { get; set; }
+
+    [JsonPropertyName("dateOfBirth")]
+    public string? DateOfBirth { get; set; }
+
+    [JsonPropertyName("phone")]
+    public string? Phone { get; set; }
+
+    [JsonPropertyName("companyName")]
+    public string? CompanyName { get; set; }
+
     [JsonPropertyName("trustLevel")]
     public string? TrustLevel { get; set; }
 
@@ -27,6 +42,9 @@ public class CustomerRequest
     [JsonPropertyName("externalCustomerCode")]
     [StringLength(40)]
     public string? ExternalCustomerCode { get; set; }
+
+    [JsonPropertyName("riskQualification")]
+    public string? RiskQualification { get; set; }
 
     [JsonPropertyName("isBusiness")]
     public bool? IsBusiness { get; set; } = false;
