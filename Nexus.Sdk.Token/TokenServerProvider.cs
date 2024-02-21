@@ -634,19 +634,6 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
-        /// Get token operation details based on the code
-        /// </summary>
-        /// <param name="code">Unique Nexus identifier of the operation.</param>
-        /// <returns>
-        /// Return token operation details
-        /// </returns>
-        public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code)
-        {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments", code);
-            return await builder.ExecuteGet<PagedResponse<TokenOperationResponse>>();
-        }
-
-        /// <summary>
         /// Lists token operations based on the query parameters
         /// </summary>
         /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
@@ -655,7 +642,7 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations");
 
             if (queryParameters != null)
             {

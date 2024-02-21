@@ -261,15 +261,6 @@ namespace Nexus.Sdk.Token
         Task<SignableResponse> CancelOrder(string orderCode);
 
         /// <summary>
-        /// Get token operation details based on the code
-        /// </summary>
-        /// <param name="code">Unique Nexus identifier of the operation.</param>
-        /// <returns>
-        /// Return token operation details
-        /// </returns>
-        Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code);
-
-        /// <summary>
         /// Lists token operations based on the query parameters
         /// </summary>
         /// <param name="query">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
