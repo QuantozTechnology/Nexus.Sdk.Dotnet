@@ -1,7 +1,4 @@
-﻿using Nexus.Sdk.Shared.Requests;
-using Nexus.Sdk.Shared.Responses;
-
-namespace Nexus.Sdk.Shared.Requests
+﻿namespace Nexus.Sdk.Shared.Requests
 {
     public class CustomerRequestBuilder<T> where T : CustomerRequest, new()
     {
@@ -39,6 +36,42 @@ namespace Nexus.Sdk.Shared.Requests
         public CustomerRequestBuilder<T> SetStatus(CustomerStatus status)
         {
             _request.Status = status.ToString();
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetFirstName(string firstName)
+        {
+            _request.FirstName = firstName;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetLastName(string lastName)
+        {
+            _request.LastName = lastName;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetDateOfBirth(string dateOfBirth)
+        {
+            _request.DateOfBirth = dateOfBirth;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetPhone(string phone)
+        {
+            _request.Phone = phone;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetCompanyName(string companyName)
+        {
+            _request.CompanyName = companyName;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetRiskQualification(string riskQualification)
+        {
+            _request.RiskQualification = riskQualification;
             return this;
         }
 

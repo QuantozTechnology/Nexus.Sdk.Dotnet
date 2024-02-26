@@ -233,6 +233,144 @@ namespace Nexus.Sdk.Shared.Tests
         }
 
         [Test]
+        public void CustomerRequestBuilderTests_Build_FirstLastName()
+        {
+            var request = new CreateCustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .SetFirstName("First")
+                .SetLastName("Last")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.FirstName, Is.EqualTo("First"));
+                Assert.That(request.LastName, Is.EqualTo("Last"));
+                Assert.That(request.IsBusiness, Is.False);
+                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_DateOfBirth()
+        {
+            var request = new CreateCustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .SetDateOfBirth("2000-01-10")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.DateOfBirth, Is.EqualTo("2000-01-10"));
+                Assert.That(request.IsBusiness, Is.False);
+                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_Phone()
+        {
+            var request = new CreateCustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .SetPhone("123456789")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.Phone, Is.EqualTo("123456789"));
+                Assert.That(request.IsBusiness, Is.False);
+                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_RiskQualification()
+        {
+            var request = new CreateCustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .SetRiskQualification("Low")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.RiskQualification, Is.EqualTo("Low"));
+                Assert.That(request.IsBusiness, Is.False);
+                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_CompanyName()
+        {
+            var request = new CreateCustomerRequestBuilder(
+                "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetEmail("test@test.com")
+                .SetCountry("NL")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .SetBusiness(true)
+                .SetCompanyName("XYZ")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.CompanyName, Is.EqualTo("XYZ"));
+                Assert.That(request.IsBusiness, Is.True);
+                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.Data, Is.Null);
+            });
+        }
+
+        [Test]
         public void CustomerRequestBuilderTests_Build_IsBusiness()
         {
             var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR")
