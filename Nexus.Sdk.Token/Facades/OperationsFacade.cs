@@ -10,11 +10,6 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     {
     }
 
-    public async Task<PagedResponse<TokenOperationResponse>> Get(string code)
-    {
-        return await _provider.GetTokenPayment(code);
-    }
-
     public async Task<PagedResponse<TokenOperationResponse>> Get(IDictionary<string, string> query)
     {
         return await _provider.GetTokenPayments(query);
