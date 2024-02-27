@@ -6,7 +6,7 @@ namespace Nexus.Sdk.Shared.Requests;
 public class CustomerRequest
 {
     [JsonPropertyName("customerCode")]
-    public string? CustomerCode { get; set; }
+    public string CustomerCode { get; set; }
 
     [JsonPropertyName("firstName")]
     public string? FirstName { get; set; }
@@ -23,12 +23,6 @@ public class CustomerRequest
     [JsonPropertyName("companyName")]
     public string? CompanyName { get; set; }
 
-    [JsonPropertyName("trustLevel")]
-    public string? TrustLevel { get; set; }
-
-    [JsonPropertyName("currencyCode")]
-    public string? CurrencyCode { get; set; }
-
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
@@ -39,37 +33,45 @@ public class CustomerRequest
     [StringLength(3, MinimumLength = 2)]
     public string? CountryCode { get; set; }
 
-    [JsonPropertyName("externalCustomerCode")]
-    [StringLength(40)]
-    public string? ExternalCustomerCode { get; set; }
-
     [JsonPropertyName("riskQualification")]
     public string? RiskQualification { get; set; }
 
-    [JsonPropertyName("isBusiness")]
-    public bool? IsBusiness { get; set; } = false;
-
     public IDictionary<string, string>? Data { get; set; }
-
-    public List<CustomerBankAccountRequest> BankAccounts { get; set; } = new List<CustomerBankAccountRequest>();
 }
 
 public class CreateCustomerRequest : CustomerRequest
 {
+    public CreateCustomerRequest() { }
+
+    [JsonPropertyName("trustLevel")]
+    public string TrustLevel { get; set; }
+
+    [JsonPropertyName("currencyCode")]
+    public string CurrencyCode { get; set; }
+
+    [JsonPropertyName("externalCustomerCode")]
+    [StringLength(40)]
+    public string? ExternalCustomerCode { get; set; }
+
+    [JsonPropertyName("isBusiness")]
+    public bool IsBusiness { get; set; } = false;
+
+    [JsonPropertyName("bankAccounts")]
+    public CustomerBankAccountRequest[]? BankAccounts { get; set; }
 }
 
 public class UpdateCustomerRequest : CustomerRequest
 {
+    public UpdateCustomerRequest(){}
+
+    [JsonPropertyName("trustLevelCode")]
+    public string? TrustLevel { get; set; }
+
     [JsonPropertyName("reason")]
     public string? Reason { get; set; }
-}
 
-public enum CustomerStatus
-{
-    ACTIVE = 0,
-    UNDERREVIEW = 1,
-    NEW = 2,
-    BLOCKED = 3
+    [JsonPropertyName("bankAccounts")]
+    public UpdateCustomerBankAccountRequest[]? BankAccounts { get; set; }
 }
 
 public class CustomerBankAccountRequest
@@ -80,7 +82,23 @@ public class CustomerBankAccountRequest
     [JsonPropertyName("bankAccountName")]
     public string? BankAccountName { get; set; }
 
+    [JsonPropertyName("bank")]
     public BankRequest? Bank { get; set; }
+}
+
+public class UpdateCustomerBankAccountRequest
+{
+    [JsonPropertyName("bankAccountNumber")]
+    public string? BankAccountNumber { get; set; }
+
+    [JsonPropertyName("bankAccountName")]
+    public string? BankAccountName { get; set; }
+
+    [JsonPropertyName("bank")]
+    public BankRequest? Bank { get; set; }
+
+    [JsonPropertyName("status")]
+    public UpdateCustomerBankAccountRequestStatus UpdateBankAccountStatus { get; set; }
 }
 
 public class BankRequest
@@ -105,4 +123,16 @@ public class BankRequest
     public string? BankCountryCode { get; set; }
 }
 
+public enum CustomerStatus
+{
+    ACTIVE = 0,
+    UNDERREVIEW = 1,
+    NEW = 2,
+    BLOCKED = 3
+}
 
+public enum UpdateCustomerBankAccountRequestStatus
+{
+    Upsert,
+    Delete
+}

@@ -35,25 +35,28 @@ namespace Nexus.Token.Stellar.Examples
 
         public async Task<string> CreateAccountAsync(string customerCode, string[]? allowedTokens = null)
         {
-            var bankAccount = new CustomerBankAccountRequest
+            var bankAccount = new CustomerBankAccountRequest[]
             {
-                BankAccountName = "BankAccountName",
-                BankAccountNumber = "BankAccountNumber",
-                Bank = new BankRequest
+                new ()
                 {
-                    BankBicCode = "BankBicCode",
-                    BankName = "BankName",
-                    BankCountryCode = "BankCountry",
-                    BankCity = "BankCity",
-                    BankIBANCode = "IbanCode",
+                    BankAccountName = "BankAccountName",
+                    BankAccountNumber = "BankAccountNumber",
+                    Bank = new BankRequest
+                    {
+                        BankBicCode = "BankBicCode",
+                        BankName = "BankName",
+                        BankCountryCode = "BankCountry",
+                        BankCity = "BankCity",
+                        BankIBANCode = "IbanCode",
+                    }
                 }
             };
 
             string customerIPAddress = "127.1.0.0";
 
             var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR")
-                .AddBankAccount(bankAccount)
-                .AddCustomProperty("FirstName", "Test_FirstName")
+                .SetBankAccounts(bankAccount)
+                .AddCustomProperty("FirstName", "Test")
                 .Build();
 
             var customer = await _tokenServer.Customers.Create(request, customerIPAddress);

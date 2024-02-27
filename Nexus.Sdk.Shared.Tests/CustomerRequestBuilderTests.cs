@@ -7,18 +7,19 @@ namespace Nexus.Sdk.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_Default()
         {
-            var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR").Build();
+            var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR")
+                .Build();
 
             Assert.Multiple(() =>
             {
                 Assert.That(request, Is.Not.Null);
                 Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
+                Assert.That(request.CurrencyCode, Is.EqualTo(expected: "EUR"));
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -47,7 +48,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -73,7 +74,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo("NL"));
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -82,55 +83,21 @@ namespace Nexus.Sdk.Shared.Tests
         public void CustomerRequestBuilderTests_Build_BankAccount()
         {
             var request = new CreateCustomerRequestBuilder(
-                "MOCK_CUSTOMER", "Trusted", "EUR")
-                .SetEmail("test@test.com")
-                .SetStatus(CustomerStatus.ACTIVE)
+                "MOCK_CUSTOMER","Trusted","EUR")
                 .SetBankAccounts(new CustomerBankAccountRequest[]
                 {
-                        new CustomerBankAccountRequest()
+                    new()
+                    {
+                        BankAccountName = "Test_Name",
+                        BankAccountNumber = "NLABN12345",
+                        Bank = new BankRequest()
                         {
-                            Bank = null,
-                            BankAccountName = "Test_Name"
+                            BankIBANCode = "123",
                         }
+                    }
                 })
-                .Build();
-
-            Assert.Multiple(() =>
-            {
-                Assert.That(request, Is.Not.Null);
-                Assert.That(request.Email, Is.EqualTo("test@test.com"));
-                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
-                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
-                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
-                Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
-                Assert.That(request.CountryCode, Is.Null);
-                Assert.That(request.ExternalCustomerCode, Is.Null);
-                Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Not.Empty);
-                Assert.That(request.Data, Is.Null);
-            });
-        }
-
-        [Test]
-        public void CustomerRequestBuilderTests_Build_BankProperties()
-        {
-            var bankAccount = new CustomerBankAccountRequest
-            {
-                BankAccountName = "bank_account_name",
-                BankAccountNumber = "bank_account_no",
-                Bank = new BankRequest
-                {
-                    BankName = "ING",
-                    BankCountryCode = "NL",
-                    BankCity = "Amsterdam"
-                }
-            };
-
-            var request = new CreateCustomerRequestBuilder(
-                "MOCK_CUSTOMER", "Trusted", "EUR")
                 .SetEmail("test@test.com")
                 .SetStatus(CustomerStatus.ACTIVE)
-                .AddBankAccount(bankAccount)
                 .Build();
 
             Assert.Multiple(() =>
@@ -144,7 +111,12 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
+
                 Assert.That(request.BankAccounts, Is.Not.Null);
+                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name"));
+                Assert.That(request.BankAccounts, Has.One.Property("BankAccountNumber").EqualTo("NLABN12345"));
+                Assert.That(request.BankAccounts, Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
+
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -152,9 +124,11 @@ namespace Nexus.Sdk.Shared.Tests
         [Test]
         public void CustomerRequestBuilderTests_Build_CustomData()
         {
-            var dataDict = new Dictionary<string, string>(2);
-            dataDict.Add("FirstName", "Bob");
-            dataDict.Add("LastName", "Saget");
+            var dataDict = new Dictionary<string, string>(2)
+            {
+                { "FirstName", "Bob" },
+                { "LastName", "Saget" }
+            };
 
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
@@ -174,7 +148,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
@@ -200,7 +174,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
@@ -210,10 +184,10 @@ namespace Nexus.Sdk.Shared.Tests
         {
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetExternalCustomerCode("MOCK_REFERENCE")
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
                 .SetStatus(CustomerStatus.ACTIVE)
-                .SetExternalReference("MOCK_REFERENCE")
                 .Build();
 
             Assert.Multiple(() =>
@@ -227,7 +201,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.ExternalCustomerCode, Is.EqualTo("MOCK_REFERENCE"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -237,6 +211,7 @@ namespace Nexus.Sdk.Shared.Tests
         {
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetStatus(CustomerStatus.ACTIVE)
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
                 .SetStatus(CustomerStatus.ACTIVE)
@@ -256,7 +231,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.FirstName, Is.EqualTo("First"));
                 Assert.That(request.LastName, Is.EqualTo("Last"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -283,7 +258,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.DateOfBirth, Is.EqualTo("2000-01-10"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -310,7 +285,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.Phone, Is.EqualTo("123456789"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -337,7 +312,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.RiskQualification, Is.EqualTo("Low"));
                 Assert.That(request.IsBusiness, Is.False);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -347,10 +322,10 @@ namespace Nexus.Sdk.Shared.Tests
         {
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetIsBusiness(true)
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
                 .SetStatus(CustomerStatus.ACTIVE)
-                .SetBusiness(true)
                 .SetCompanyName("XYZ")
                 .Build();
 
@@ -365,7 +340,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
                 Assert.That(request.CompanyName, Is.EqualTo("XYZ"));
                 Assert.That(request.IsBusiness, Is.True);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
             });
         }
@@ -374,10 +349,10 @@ namespace Nexus.Sdk.Shared.Tests
         public void CustomerRequestBuilderTests_Build_IsBusiness()
         {
             var request = new CreateCustomerRequestBuilder("MOCK_CUSTOMER", "Trusted", "EUR")
+                .SetIsBusiness(true)
                 .SetEmail("test@test.com")
                 .SetStatus(CustomerStatus.ACTIVE)
                 .AddCustomProperty("FirstName", "Bob")
-                .SetBusiness(true)
                 .Build();
 
             Assert.Multiple(() =>
@@ -391,7 +366,70 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CountryCode, Is.Null);
                 Assert.That(request.ExternalCustomerCode, Is.Null);
                 Assert.That(request.IsBusiness, Is.True);
-                Assert.That(request.BankAccounts, Is.Empty);
+                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.Data, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_UpdateCustomerRequest()
+        {
+            var request = new UpdateCustomerRequestBuilder("MOCK_CUSTOMER")
+                .SetTrustLevel("Trusted")
+                .SetReason("Reason")
+                .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .AddCustomProperty("FirstName", "Bob")
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CountryCode, Is.Null);
+                Assert.That(request.BankAccounts, Is.Null);
+                Assert.That(request.Data, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public void CustomerRequestBuilderTests_Build_UpdateCustomerRequest_WithBankAccount()
+        {
+            var request = new UpdateCustomerRequestBuilder("MOCK_CUSTOMER")
+                .SetTrustLevel("Trusted")
+                .SetBankAccounts(new UpdateCustomerBankAccountRequest[]
+                    {
+                        new()
+                        {
+                            BankAccountName = "Test_Name",
+                            BankAccountNumber = "NLABN12345",
+                            Bank = new BankRequest()
+                            {
+                                BankIBANCode = "123",
+                            }
+                        }
+                })
+                .SetReason("Reason")
+                .SetEmail("test@test.com")
+                .SetStatus(CustomerStatus.ACTIVE)
+                .AddCustomProperty("FirstName", "Bob")
+
+                .Build();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(request, Is.Not.Null);
+                Assert.That(request.Email, Is.EqualTo("test@test.com"));
+                Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
+                Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.CountryCode, Is.Null);
+                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name") &
+                    Has.One.Property("BankAccountNumber").EqualTo("NLABN12345") &
+                    Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
                 Assert.That(request.Data, Is.Not.Null);
             });
         }
