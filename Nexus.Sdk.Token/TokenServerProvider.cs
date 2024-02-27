@@ -213,10 +213,10 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <returns></returns>
-        public async Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
+        public async Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             var definition = new FundingDefinition(tokenCode, amount, paymentReference);
-            await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, message, customerIPAddress);
+            return await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, message, customerIPAddress);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public async Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Funding))
             {
@@ -255,7 +255,7 @@ namespace Nexus.Sdk.Token
                 PaymentMethodCode = (pm ?? _options.PaymentMethodOptions.Funding)!
             };
 
-            await builder.ExecutePost(request);
+            return await builder.ExecutePost<FundingOperationRequest, FundingResponse>(request);
         }
 
         public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
@@ -634,19 +634,6 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
-        /// Get token operation details based on the code
-        /// </summary>
-        /// <param name="code">Unique Nexus identifier of the operation.</param>
-        /// <returns>
-        /// Return token operation details
-        /// </returns>
-        public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code)
-        {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments", code);
-            return await builder.ExecuteGet<PagedResponse<TokenOperationResponse>>();
-        }
-
-        /// <summary>
         /// Lists token operations based on the query parameters
         /// </summary>
         /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
@@ -655,7 +642,7 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations");
 
             if (queryParameters != null)
             {

@@ -130,7 +130,7 @@ namespace Nexus.Sdk.Token
         /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
+        Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
 
         /// <summary>
         ///
@@ -142,7 +142,7 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
+        Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
 
         /// <summary>
         ///
@@ -259,15 +259,6 @@ namespace Nexus.Sdk.Token
         /// <param name="orderCode"></param>
         /// <returns></returns>
         Task<SignableResponse> CancelOrder(string orderCode);
-
-        /// <summary>
-        /// Get token operation details based on the code
-        /// </summary>
-        /// <param name="code">Unique Nexus identifier of the operation.</param>
-        /// <returns>
-        /// Return token operation details
-        /// </returns>
-        Task<PagedResponse<TokenOperationResponse>> GetTokenPayment(string code);
 
         /// <summary>
         /// Lists token operations based on the query parameters
