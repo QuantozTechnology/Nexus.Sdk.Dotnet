@@ -124,6 +124,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<PagedResponse<CustomerResponse>> GetCustomers(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<OrderResponse> GetOrder(string orderCode)
         {
             throw new NotImplementedException();
