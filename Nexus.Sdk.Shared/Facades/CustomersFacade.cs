@@ -15,6 +15,18 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     }
 
     /// <summary>
+    /// List Customers based on query paramaters
+    /// </summary>
+    /// <param name="query">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+    /// <returns>
+    /// Paged list of customers
+    /// </returns>
+    public async Task<PagedResponse<CustomerResponse>> Get(IDictionary<string, string>? query)
+    {
+        return await _provider.GetCustomers(query);
+    }
+
+    /// <summary>
     /// Get customer personal data based on the code
     /// </summary>
     /// <param name="customerCode">Unique Nexus identifier of the customer.</param>

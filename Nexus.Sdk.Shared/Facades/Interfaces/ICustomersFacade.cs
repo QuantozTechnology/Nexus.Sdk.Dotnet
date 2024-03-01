@@ -13,6 +13,12 @@ public interface ICustomersFacade
     public Task<CustomerResponse> Get(string customerCode);
 
     /// <summary>
+    /// Gets a list of customers based on query parameters
+    /// </summary>
+    /// <returns>Nexus customers matching the provided query parameters</returns>
+    public Task<PagedResponse<CustomerResponse>> Get(IDictionary<string, string>? query);
+
+    /// <summary>
     /// Check if a customer exists
     /// </summary>
     /// <param name="customerCode">Code of the customer</param>

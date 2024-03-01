@@ -542,6 +542,25 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
+        /// List Customers based on query paramaters
+        /// </summary>
+        /// <param name="query">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Paged list of customers
+        /// </returns>
+        public async Task<PagedResponse<CustomerResponse>> GetCustomers(IDictionary<string, string>? queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<CustomerResponse>>();
+        }
+
+        /// <summary>
         /// Get customer personal data based on the code
         /// </summary>
         /// <param name="customerCode">Unique Nexus identifier of the customer.</param>

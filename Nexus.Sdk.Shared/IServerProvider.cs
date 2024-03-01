@@ -6,6 +6,7 @@ namespace Nexus.Sdk.Shared
     public interface IServerProvider
     {
         public Task<CustomerResponse> GetCustomer(string customerCode);
+        public Task<PagedResponse<CustomerResponse>> GetCustomers(IDictionary<string, string>? queryParameters);
         public Task<CustomerDataResponse> GetCustomerData(string customerCode);
         public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null);
         public Task<bool> Exists(string customerCode);
