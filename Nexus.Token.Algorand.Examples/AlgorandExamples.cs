@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nexus.Sdk.Shared.Requests;
-using Nexus.Token.Algorand.Examples.Models;
 using Nexus.Sdk.Token;
 using Nexus.Sdk.Token.KeyPairs;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
 using Nexus.Sdk.Token.Security;
+using Nexus.Token.Algorand.Examples.Models;
 using NJsonSchema;
 
 namespace Nexus.Token.Algorand.Examples
@@ -27,7 +27,8 @@ namespace Nexus.Token.Algorand.Examples
 
         public async Task<string> CreateAccountAsync(string customerCode)
         {
-            var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
+            var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR")
+                .Build();
 
             string customerIPAddress = "127.1.0.0";
 

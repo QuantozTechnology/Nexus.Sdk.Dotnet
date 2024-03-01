@@ -180,7 +180,7 @@ namespace Nexus.Sdk.Token
                 builder.AddHeader("customer_ip_address", customerIPAddress);
             }
 
-            return await builder.ExecutePost<CustomerRequest, CustomerResponse>(request);
+            return await builder.ExecutePost<CreateCustomerRequest, CustomerResponse>(request);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Nexus.Sdk.Token
                 builder.AddHeader("customer_ip_address", customerIPAddress);
             }
 
-            return await builder.ExecutePut<CustomerRequest, CustomerResponse>(request);
+            return await builder.ExecutePut<UpdateCustomerRequest, CustomerResponse>(request);
         }
 
         /// <summary>

@@ -44,9 +44,29 @@ namespace Nexus.Sdk.Token.Tests.Helpers
 
         public Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null)
         {
-            return request.BankAccounts != null && request.Data != null
-                ? Task.FromResult(new CustomerResponse(request.CustomerCode!, request.FirstName!, request.LastName!, request.DateOfBirth!, request.Phone!, request.CompanyName!, request.TrustLevel!, request.CurrencyCode!, request.CountryCode!, request.Email, request.Status!, request.BankAccounts[0].BankAccountNumber!, request.IsBusiness!.Value, request.RiskQualification!, request.Data))
-                : Task.FromResult(new CustomerResponse(request.CustomerCode!, request.FirstName!, request.LastName!, request.DateOfBirth!, request.Phone!, request.CompanyName!, request.TrustLevel!, request.CurrencyCode!, request.CountryCode!, request.Email, request.Status!, null!, request.IsBusiness!.Value, request.RiskQualification!, null!));
+            string bankAccountNumber = "";
+            if (request.BankAccounts != null && request.BankAccounts.Any())
+            {
+                bankAccountNumber = request.BankAccounts[0]?.BankAccountNumber ?? "";
+            }
+
+            return Task.FromResult(new CustomerResponse(
+                request.CustomerCode!,
+                request.FirstName!,
+                request.LastName!,
+                request.DateOfBirth!,
+                request.Phone!,
+                request.CompanyName!,
+                request.TrustLevel!,
+                request.CurrencyCode!,
+                request.CountryCode!,
+                request.Email,
+                request.Status!,
+                bankAccountNumber,
+                request.IsBusiness!,
+                request.RiskQualification!,
+                request.Data!
+            ));
         }
 
         public Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
