@@ -29,6 +29,7 @@ namespace Nexus.Sdk.Shared.Tests
         [TestCase(CustomerStatus.BLOCKED, "BLOCKED")]
         [TestCase(CustomerStatus.NEW, "NEW")]
         [TestCase(CustomerStatus.ACTIVE, "ACTIVE")]
+        [TestCase(CustomerStatus.DELETED, "DELETED")]
         public void CustomerRequestBuilderTests_Build_Status_Status(CustomerStatus status, string expected)
         {
             var request = new CreateCustomerRequestBuilder(

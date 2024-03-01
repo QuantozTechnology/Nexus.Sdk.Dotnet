@@ -128,7 +128,8 @@ public enum CustomerStatus
     ACTIVE = 0,
     UNDERREVIEW = 1,
     NEW = 2,
-    BLOCKED = 3
+    BLOCKED = 3,
+    DELETED = 4
 }
 
 public enum UpdateCustomerBankAccountRequestStatus
