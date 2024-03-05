@@ -15,13 +15,13 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
         return await _provider.GetTokenPayments(query);
     }
 
-    public async Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null,
+    public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null,
                                          string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
     {
         return await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, message, paymentReference, customerIPAddress); ;
     }
 
-    public async Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
+    public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
                                          string? memo = null, string? message = null, string? customerIPAddress = null)
     {
         return await _provider.CreateFundingAsync(accountCode,definitions, pm, memo, message, customerIPAddress);

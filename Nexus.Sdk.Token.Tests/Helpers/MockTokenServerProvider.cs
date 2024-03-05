@@ -69,14 +69,35 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             ));
         }
 
-        public Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
+        public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
-            throw new NotImplementedException();
+            var fundingResponses = new FundingResponses
+            {
+                PaymentMethod = new PaymentMethodInfo
+                {
+                    PaymentMethodName = "MockPaymentMethod"
+                },
+                Funding = new List<FundingResponse>
+                {
+                    new FundingResponse
+                    {
+                        TokenCode = "MockTokenCode",
+                        FundingPaymentCode = "MockFundingPaymentCode",
+                        RequestedAmount = 100,
+                        ExecutedAmount = 100,
+                        ServiceFee = 5,
+                        BankFee = 2,
+                        PaymentReference = "MockPaymentReference"
+                    }
+                }
+            };
+
+            return Task.FromResult(fundingResponses);
         }
 
         public Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)

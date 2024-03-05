@@ -213,7 +213,7 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <returns></returns>
-        public async Task<FundingResponse> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
+        public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
         {
             var definition = new FundingDefinition(tokenCode, amount, paymentReference);
             return await CreateFundingAsync(accountCode, new FundingDefinition[] { definition }, pm, memo, message, customerIPAddress);
@@ -229,7 +229,7 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<FundingResponse> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Funding))
             {
@@ -255,7 +255,7 @@ namespace Nexus.Sdk.Token
                 PaymentMethodCode = (pm ?? _options.PaymentMethodOptions.Funding)!
             };
 
-            return await builder.ExecutePost<FundingOperationRequest, FundingResponse>(request);
+            return await builder.ExecutePost<FundingOperationRequest, FundingResponses>(request);
         }
 
         public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
