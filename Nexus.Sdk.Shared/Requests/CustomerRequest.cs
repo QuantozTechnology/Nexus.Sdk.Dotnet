@@ -6,21 +6,28 @@ namespace Nexus.Sdk.Shared.Requests;
 public class CustomerRequest
 {
     [JsonPropertyName("customerCode")]
+    [StringLength(40)]
+    [Required]
     public string CustomerCode { get; set; }
 
     [JsonPropertyName("firstName")]
+    [StringLength(100)]
     public string? FirstName { get; set; }
 
     [JsonPropertyName("lastName")]
+    [StringLength(100)]
     public string? LastName { get; set; }
 
     [JsonPropertyName("dateOfBirth")]
+    [StringLength(10)]
     public string? DateOfBirth { get; set; }
 
     [JsonPropertyName("phone")]
+    [StringLength(40)]
     public string? Phone { get; set; }
 
     [JsonPropertyName("companyName")]
+    [StringLength(100)]
     public string? CompanyName { get; set; }
 
     [JsonPropertyName("email")]
@@ -36,6 +43,25 @@ public class CustomerRequest
     [JsonPropertyName("riskQualification")]
     public string? RiskQualification { get; set; }
 
+    [JsonPropertyName("address")]
+    [StringLength(100)]
+    public string? Address { get; set; }
+
+    [JsonPropertyName("city")]
+    [StringLength(100)]
+    public string? City { get; set; }
+
+    [JsonPropertyName("zipCode")]
+    [StringLength(100)]
+    public string? ZipCode { get; set; }
+
+    [JsonPropertyName("state")]
+    [StringLength(100)]
+    public string? State { get; set; }
+
+    [JsonPropertyName("isReviewRecommended")]
+    public bool IsReviewRecommended { get; set; } = false;
+
     public IDictionary<string, string>? Data { get; set; }
 }
 
@@ -44,9 +70,11 @@ public class CreateCustomerRequest : CustomerRequest
     public CreateCustomerRequest() { }
 
     [JsonPropertyName("trustLevel")]
+    [Required]
     public string TrustLevel { get; set; }
 
     [JsonPropertyName("currencyCode")]
+    [Required]
     public string CurrencyCode { get; set; }
 
     [JsonPropertyName("externalCustomerCode")]
@@ -62,12 +90,13 @@ public class CreateCustomerRequest : CustomerRequest
 
 public class UpdateCustomerRequest : CustomerRequest
 {
-    public UpdateCustomerRequest(){}
+    public UpdateCustomerRequest() { }
 
     [JsonPropertyName("trustLevelCode")]
     public string? TrustLevel { get; set; }
 
     [JsonPropertyName("reason")]
+    [StringLength(1024)]
     public string? Reason { get; set; }
 
     [JsonPropertyName("bankAccounts")]
