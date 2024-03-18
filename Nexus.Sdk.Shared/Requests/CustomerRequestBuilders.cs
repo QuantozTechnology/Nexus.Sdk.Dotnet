@@ -63,6 +63,36 @@
             return this;
         }
 
+        public CustomerRequestBuilder<T> SetAddress(string address)
+        {
+            _request.Address = address;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetCity(string city)
+        {
+            _request.City = city;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetZipCode(string zipCode)
+        {
+            _request.ZipCode = zipCode;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetState(string state)
+        {
+            _request.State = state;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetIsReviewRecommended(bool isReviewRecommended)
+        {
+            _request.IsReviewRecommended = isReviewRecommended;
+            return this;
+        }
+
         public CustomerRequestBuilder<T> SetCustomData(IDictionary<string, string> data)
         {
             _request.Data = data;
