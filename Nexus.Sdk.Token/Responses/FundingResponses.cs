@@ -9,6 +9,9 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("payments")]
         public required IEnumerable<FundingResponse> Funding { get; set; }
+
+        [JsonPropertyName("transactionEnvelope")]
+        public TxEnvelopeResponse? TransactionEnvelope { get; set; }
     }
 
     public class PaymentMethodInfo
@@ -39,5 +42,38 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("paymentReference")]
         public string? PaymentReference { get; set; }
+    }
+
+    public class TxEnvelopeResponse
+    {
+        [JsonPropertyName("code")]
+        public string? Code { get; set; }
+
+        [JsonPropertyName("hash")]
+        public string? Hash { get; set; }
+
+        [JsonPropertyName("signedTransactionEnvelope")]
+        public string? SignedTransactionEnvelope { get; set; }
+
+        [JsonPropertyName("signingNeeded")]
+        public bool SigningNeeded { get; set; }
+
+        [JsonPropertyName("transactionEnvelopeStatus")]
+        public string? Status { get; set; }
+
+        [JsonPropertyName("validUntil")]
+        public string? ValidUntil { get; set; }
+
+        [JsonPropertyName("type")]
+        public string? Type { get; set; }
+
+        [JsonPropertyName("created")]
+        public string? Created { get; set; }
+
+        [JsonPropertyName("memo")]
+        public string? Memo { get; set; }
+
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
     }
 }

@@ -84,8 +84,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 },
                 Funding = new List<FundingResponse>
                 {
-                    new FundingResponse
-                    {
+                    new() {
                         TokenCode = "MockTokenCode",
                         FundingPaymentCode = "MockFundingPaymentCode",
                         RequestedAmount = 100,
@@ -94,6 +93,14 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                         BankFee = 2,
                         PaymentReference = "MockPaymentReference"
                     }
+                },
+                TransactionEnvelope = new TxEnvelopeResponse
+                {
+                    Code = "MockEnvelopeCode",
+                    Hash = "MockEnvelopeHash",
+                    SignedTransactionEnvelope = "MockSignedTransactionEnvelope",
+                    SigningNeeded = false,
+                    Status = "Completed"
                 }
             };
 

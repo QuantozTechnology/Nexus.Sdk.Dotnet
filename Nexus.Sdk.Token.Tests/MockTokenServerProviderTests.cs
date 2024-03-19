@@ -37,12 +37,20 @@ namespace Nexus.Sdk.Token.Tests
                 Assert.That(fundingResponses.Funding, Is.Not.Null);
                 Assert.That(fundingResponses.PaymentMethod, Is.Not.Null);
                 Assert.That(fundingResponses.PaymentMethod?.PaymentMethodName, Is.Not.Null.Or.Empty);
-                
+
                 var firstFundingResponse = fundingResponses.Funding.FirstOrDefault();
                 Assert.That(firstFundingResponse?.TokenCode, Is.Not.Null.Or.Empty);
                 Assert.That(firstFundingResponse?.FundingPaymentCode, Is.Not.Null.Or.Empty);
                 Assert.That(firstFundingResponse?.RequestedAmount, Is.GreaterThan(0));
                 Assert.That(firstFundingResponse?.ExecutedAmount, Is.GreaterThan(0));
+
+                Assert.That(fundingResponses.TransactionEnvelope, Is.Not.Null);
+                Assert.That(fundingResponses.TransactionEnvelope?.Code, Is.Not.Null.Or.Empty);
+                Assert.That(fundingResponses.TransactionEnvelope?.Hash, Is.Not.Null.Or.Empty);
+                Assert.That(fundingResponses.TransactionEnvelope?.SignedTransactionEnvelope, Is.Not.Null.Or.Empty);
+                Assert.That(fundingResponses.TransactionEnvelope?.SigningNeeded, Is.False);
+                Assert.That(fundingResponses.TransactionEnvelope?.Memo, Is.Null.Or.Empty);
+                Assert.That(fundingResponses.TransactionEnvelope?.Status, Is.Not.Null.Or.Empty);
             });
         }
     }
