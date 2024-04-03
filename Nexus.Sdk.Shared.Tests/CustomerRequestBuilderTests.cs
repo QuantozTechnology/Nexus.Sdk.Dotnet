@@ -89,7 +89,7 @@ namespace Nexus.Sdk.Shared.Tests
                 {
                     new()
                     {
-                        BankAccountName = "Test_Name",
+                        IdentifiedBankAccountName = "Test_Name",
                         BankAccountNumber = "NLABN12345",
                         Bank = new BankRequest()
                         {
@@ -114,7 +114,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.IsBusiness, Is.False);
 
                 Assert.That(request.BankAccounts, Is.Not.Null);
-                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name"));
+                Assert.That(request.BankAccounts, Has.One.Property("IdentifiedBankAccountName").EqualTo("Test_Name"));
                 Assert.That(request.BankAccounts, Has.One.Property("BankAccountNumber").EqualTo("NLABN12345"));
                 Assert.That(request.BankAccounts, Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
 
@@ -469,7 +469,7 @@ namespace Nexus.Sdk.Shared.Tests
                     {
                         new()
                         {
-                            BankAccountName = "Test_Name",
+                            IdentifiedBankAccountName = "Test_Name",
                             BankAccountNumber = "NLABN12345",
                             Bank = new BankRequest()
                             {
@@ -492,7 +492,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CountryCode, Is.Null);
-                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name") &
+                Assert.That(request.BankAccounts, Has.One.Property("IdentifiedBankAccountName").EqualTo("Test_Name") &
                     Has.One.Property("BankAccountNumber").EqualTo("NLABN12345") &
                     Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
                 Assert.That(request.Data, Is.Not.Null);

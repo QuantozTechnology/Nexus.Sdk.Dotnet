@@ -39,7 +39,7 @@ namespace Nexus.Token.Stellar.Examples
             {
                 new ()
                 {
-                    BankAccountName = "BankAccountName",
+                    IdentifiedBankAccountName = "BankAccountName",
                     BankAccountNumber = "BankAccountNumber",
                     Bank = new BankRequest
                     {

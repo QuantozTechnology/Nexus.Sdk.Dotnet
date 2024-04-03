@@ -109,7 +109,12 @@ public class CustomerBankAccountRequest
     public string? BankAccountNumber { get; set; }
 
     [JsonPropertyName("bankAccountName")]
+    [Obsolete("Deprecated")]
     public string? BankAccountName { get; set; }
+
+    [JsonPropertyName("identifiedBankAccountName")]
+    [StringLength(80)]
+    public string? IdentifiedBankAccountName { get; set; }
 
     [JsonPropertyName("bank")]
     public BankRequest? Bank { get; set; }
@@ -121,7 +126,12 @@ public class UpdateCustomerBankAccountRequest
     public string? BankAccountNumber { get; set; }
 
     [JsonPropertyName("bankAccountName")]
+    [Obsolete("Deprecated")]
     public string? BankAccountName { get; set; }
+
+    [JsonPropertyName("identifiedBankAccountName")]
+    [StringLength(80)]
+    public string? IdentifiedBankAccountName { get; set; }
 
     [JsonPropertyName("bank")]
     public BankRequest? Bank { get; set; }
