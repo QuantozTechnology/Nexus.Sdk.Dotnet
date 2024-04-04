@@ -10,6 +10,10 @@ public class CustomerRequest
     [Required]
     public string CustomerCode { get; set; }
 
+    [JsonPropertyName("Name")]
+    [StringLength(80)]
+    public string? Name { get; set; }
+
     [JsonPropertyName("firstName")]
     [StringLength(100)]
     public string? FirstName { get; set; }
