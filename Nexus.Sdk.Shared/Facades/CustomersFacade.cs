@@ -58,4 +58,12 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     {
         return await _provider.UpdateCustomer(request, customerIPAddress);
     }
+
+    /// <summary>
+    /// Delete customer
+    /// </summary>
+    public async Task<DeleteCustomerResponse> Delete(DeleteCustomerRequest request, string? customerIPAddress = null)
+    {
+        return await _provider.DeleteCustomer(request, customerIPAddress);
+    }
 }

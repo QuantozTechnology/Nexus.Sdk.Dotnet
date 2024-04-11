@@ -41,6 +41,14 @@ public interface ICustomersFacade
     public Task<CustomerResponse> Update(UpdateCustomerRequest request, string? customerIPAddress = null);
 
     /// <summary>
+    /// Deletes a customer
+    /// </summary>
+    /// <returns>
+    /// Deleted customer
+    /// </returns>
+    public Task<DeleteCustomerResponse> Delete(DeleteCustomerRequest request, string? customerIPAddress = null);
+
+    /// <summary>
     /// Get customer personal data based on the code
     /// </summary>
     /// <param name="customerCode">Unique Nexus identifier of the customer.</param>

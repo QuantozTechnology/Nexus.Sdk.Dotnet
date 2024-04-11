@@ -202,6 +202,21 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
+        /// Delete a customer
+        /// </summary>
+        public async Task<DeleteCustomerResponse> DeleteCustomer(DeleteCustomerRequest request, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode!);
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            return await builder.ExecuteDelete<DeleteCustomerResponse>();
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>

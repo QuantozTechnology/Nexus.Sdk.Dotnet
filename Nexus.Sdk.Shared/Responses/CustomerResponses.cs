@@ -70,3 +70,39 @@ public record CustomerResponse
     [JsonPropertyName("data")]
     public IDictionary<string, string> Data { get; set; }
 }
+
+public class DeleteCustomerResponse
+{
+    [JsonConstructor]
+    public DeleteCustomerResponse(string customerCode, string customerStatus, IEnumerable<DeleteAccountResponse> accounts)
+    {
+        CustomerCode = customerCode;
+        CustomerStatus = customerStatus;
+        Accounts = accounts;
+    }
+
+    [JsonPropertyName("customerCode")]
+    public string CustomerCode { get; set; }
+
+    [JsonPropertyName("customerStatus")]
+    public string CustomerStatus { get; set; }
+
+    [JsonPropertyName("accounts")]
+    public IEnumerable<DeleteAccountResponse> Accounts { get; set; }
+}
+
+public class DeleteAccountResponse
+{
+    [JsonConstructor]
+    public DeleteAccountResponse(string accountCode, string accountStatus)
+    {
+        AccountCode = accountCode;
+        AccountStatus = accountStatus;
+    }
+
+    [JsonPropertyName("accountCode")]
+    public string AccountCode { get; set; }
+
+    [JsonPropertyName("accountStatus")]
+    public string AccountStatus { get; set; }
+}
