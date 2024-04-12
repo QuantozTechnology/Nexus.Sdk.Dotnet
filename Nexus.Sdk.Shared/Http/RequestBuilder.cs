@@ -117,6 +117,21 @@ public class RequestBuilder
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
+    public async Task<TResponse> ExecuteDelete<TResponse>() where TResponse : class
+    {
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+
+        _logger?.LogDebug("DELETE {uri}", path);
+
+        var deleteRequest = HttpRequestBuilder.BuildDeleteRequest(requestUri, _headers);
+        var response = await _httpClient.SendAsync(deleteRequest);
+
+        ResetHeaders(); // reset headers
+
+        return await _responseHandler.HandleResponse<TResponse>(response);
+    }
+
     public RequestBuilder SetSegments(params string[] segments)
     {
         if (_segmentsAdded)

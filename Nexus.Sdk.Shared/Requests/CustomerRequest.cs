@@ -166,3 +166,10 @@ public enum UpdateCustomerBankAccountRequestStatus
     Upsert,
     Delete
 }
+
+public class DeleteCustomerRequest
+{
+    [JsonPropertyName("customerCode")]
+    [Required]
+    public string CustomerCode { get; set; }
+}
