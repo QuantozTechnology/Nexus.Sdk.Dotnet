@@ -22,6 +22,9 @@ public record SignablePayoutResponse : SignableResponse
 
 public record BlockchainResponse
 {
+    [JsonPropertyName("code")]
+    public string? Code { get; }
+
     [JsonPropertyName("hash")]
     public string? TransactionGroupHash { get; }
 
@@ -32,8 +35,9 @@ public record BlockchainResponse
     public RequiredSignaturesResponse[]? RequiredSignatures { get; }
 
     [JsonConstructor]
-    public BlockchainResponse(string? transactionGroupHash, string? encodedTransactionGroup, RequiredSignaturesResponse[]? requiredSignatures)
+    public BlockchainResponse(string? code, string? transactionGroupHash, string? encodedTransactionGroup, RequiredSignaturesResponse[]? requiredSignatures)
     {
+        Code = code;
         TransactionGroupHash = transactionGroupHash;
         EncodedTransactionGroup = encodedTransactionGroup;
         RequiredSignatures = requiredSignatures;
