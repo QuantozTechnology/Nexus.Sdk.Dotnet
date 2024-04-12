@@ -1,4 +1,5 @@
 ﻿using Nexus.Sdk.Shared.Responses;
+using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
 
 namespace Nexus.Sdk.Token.Facades;
@@ -22,6 +23,11 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
     public async Task<AccountBalancesResponse> GetBalances(string accountCode)
     {
         return await _provider.GetAccountBalanceAsync(accountCode);
+    }
+
+    public async Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
+    {
+        return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);
     }
 
     public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null)

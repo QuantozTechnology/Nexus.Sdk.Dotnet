@@ -80,6 +80,16 @@ namespace Nexus.Sdk.Token
         Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null);
 
         /// <summary>
+        /// Updates account properties based on the code
+        /// </summary>
+        /// <param name="accountCode"></param>
+        /// <param name="customerCode"></param>
+        /// <param name="updateRequest"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null);
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="tokenCode"></param>
