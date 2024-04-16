@@ -27,6 +27,12 @@
             return this;
         }
 
+        public CustomerRequestBuilder<T> SetName(string name)
+        {
+            _request.Name = name;
+            return this;
+        }
+
         public CustomerRequestBuilder<T> SetFirstName(string firstName)
         {
             _request.FirstName = firstName;

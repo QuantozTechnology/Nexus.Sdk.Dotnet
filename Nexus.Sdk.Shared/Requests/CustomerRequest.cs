@@ -10,6 +10,10 @@ public class CustomerRequest
     [Required]
     public string CustomerCode { get; set; }
 
+    [JsonPropertyName("Name")]
+    [StringLength(80)]
+    public string? Name { get; set; }
+
     [JsonPropertyName("firstName")]
     [StringLength(100)]
     public string? FirstName { get; set; }
@@ -109,7 +113,12 @@ public class CustomerBankAccountRequest
     public string? BankAccountNumber { get; set; }
 
     [JsonPropertyName("bankAccountName")]
+    [Obsolete("Deprecated")]
     public string? BankAccountName { get; set; }
+
+    [JsonPropertyName("identifiedBankAccountName")]
+    [StringLength(80)]
+    public string? IdentifiedBankAccountName { get; set; }
 
     [JsonPropertyName("bank")]
     public BankRequest? Bank { get; set; }
@@ -121,7 +130,12 @@ public class UpdateCustomerBankAccountRequest
     public string? BankAccountNumber { get; set; }
 
     [JsonPropertyName("bankAccountName")]
+    [Obsolete("Deprecated")]
     public string? BankAccountName { get; set; }
+
+    [JsonPropertyName("identifiedBankAccountName")]
+    [StringLength(80)]
+    public string? IdentifiedBankAccountName { get; set; }
 
     [JsonPropertyName("bank")]
     public BankRequest? Bank { get; set; }

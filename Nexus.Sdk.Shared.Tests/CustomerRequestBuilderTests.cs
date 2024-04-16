@@ -89,7 +89,7 @@ namespace Nexus.Sdk.Shared.Tests
                 {
                     new()
                     {
-                        BankAccountName = "Test_Name",
+                        IdentifiedBankAccountName = "Test_Name",
                         BankAccountNumber = "NLABN12345",
                         Bank = new BankRequest()
                         {
@@ -114,7 +114,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.IsBusiness, Is.False);
 
                 Assert.That(request.BankAccounts, Is.Not.Null);
-                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name"));
+                Assert.That(request.BankAccounts, Has.One.Property("IdentifiedBankAccountName").EqualTo("Test_Name"));
                 Assert.That(request.BankAccounts, Has.One.Property("BankAccountNumber").EqualTo("NLABN12345"));
                 Assert.That(request.BankAccounts, Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
 
@@ -216,6 +216,7 @@ namespace Nexus.Sdk.Shared.Tests
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
                 .SetStatus(CustomerStatus.ACTIVE)
+                .SetName("First Middle Last")
                 .SetFirstName("First")
                 .SetLastName("Last")
                 .Build();
@@ -229,6 +230,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
+                Assert.That(request.Name, Is.EqualTo("First Middle Last"));
                 Assert.That(request.FirstName, Is.EqualTo("First"));
                 Assert.That(request.LastName, Is.EqualTo("Last"));
                 Assert.That(request.IsBusiness, Is.False);
@@ -469,7 +471,7 @@ namespace Nexus.Sdk.Shared.Tests
                     {
                         new()
                         {
-                            BankAccountName = "Test_Name",
+                            IdentifiedBankAccountName = "Test_Name",
                             BankAccountNumber = "NLABN12345",
                             Bank = new BankRequest()
                             {
@@ -480,6 +482,7 @@ namespace Nexus.Sdk.Shared.Tests
                 .SetReason("Reason")
                 .SetEmail("test@test.com")
                 .SetStatus(CustomerStatus.ACTIVE)
+                .SetName("Specific Name")
                 .AddCustomProperty("FirstName", "Bob")
 
                 .Build();
@@ -491,8 +494,9 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(request.TrustLevel, Is.EqualTo("Trusted"));
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
+                Assert.That(request.Name, Is.EqualTo("Specific Name"));
                 Assert.That(request.CountryCode, Is.Null);
-                Assert.That(request.BankAccounts, Has.One.Property("BankAccountName").EqualTo("Test_Name") &
+                Assert.That(request.BankAccounts, Has.One.Property("IdentifiedBankAccountName").EqualTo("Test_Name") &
                     Has.One.Property("BankAccountNumber").EqualTo("NLABN12345") &
                     Has.One.Property("Bank").Property("BankIBANCode").EqualTo("123"));
                 Assert.That(request.Data, Is.Not.Null);
