@@ -24,19 +24,19 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
                                          string? memo = null, string? message = null, string? customerIPAddress = null)
     {
-        return await _provider.CreateFundingAsync(accountCode,definitions, pm, memo, message, customerIPAddress);
+        return await _provider.CreateFundingAsync(accountCode, definitions, pm, memo, message, customerIPAddress);
     }
 
     public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey,
                                                            string tokenCode, decimal amount, string? memo = null,
-                                                           string? message = null, string? customerIPAddress = null)
+                                                           string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
     {
-        return await _provider.CreatePaymentAsync(senderPublicKey, receiverPublicKey, tokenCode, amount, memo, message, customerIPAddress);
+        return await _provider.CreatePaymentAsync(senderPublicKey, receiverPublicKey, tokenCode, amount, memo, message, cryptoCode, callbackUrl, customerIPAddress);
     }
 
-    public async Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? customerIPAddress = null)
+    public async Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
     {
-        return await _provider.CreatePaymentsAsync(definitions, memo, message, customerIPAddress);
+        return await _provider.CreatePaymentsAsync(definitions, memo, message, cryptoCode, callbackUrl, customerIPAddress);
     }
 
     public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)

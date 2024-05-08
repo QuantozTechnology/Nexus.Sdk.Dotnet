@@ -34,6 +34,27 @@ public record BlockchainResponse
     [JsonPropertyName("requiredSignatures")]
     public RequiredSignaturesResponse[]? RequiredSignatures { get; }
 
+    [JsonPropertyName("signingNeeded")]
+    public bool SigningNeeded { get; set; }
+
+    [JsonPropertyName("transactionEnvelopeStatus")]
+    public string? TransactionEnvelopeStatus { get; set; }
+
+    [JsonPropertyName("validUntil")]
+    public string? ValidUntil { get; set; }
+
+    [JsonPropertyName("type")]
+    public string? Type { get; set; }
+
+    [JsonPropertyName("created")]
+    public string? Created { get; set; }
+
+    [JsonPropertyName("memo")]
+    public string? Memo { get; set; }
+
+    [JsonPropertyName("message")]
+    public string? Message { get; set; }
+
     [JsonConstructor]
     public BlockchainResponse(string? code, string? transactionGroupHash, string? encodedTransactionGroup, RequiredSignaturesResponse[]? requiredSignatures)
     {
@@ -62,4 +83,7 @@ public record RequiredSignaturesResponse
 
     [JsonPropertyName("transaction")]
     public string EncodedTransaction { get; }
+
+    [JsonPropertyName("isSigned")]
+    public bool IsSigned { get; set; }
 }

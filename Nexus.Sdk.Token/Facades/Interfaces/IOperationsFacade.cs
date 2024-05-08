@@ -48,9 +48,11 @@ public interface IOperationsFacade
     /// <param name="amount">The amount of tokens that is payed</param>
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
+    /// <param name="cryptoCode">Optional code of the crypto currency that is used for the payment</param>
+    /// <param name="callbackUrl">Optional URL that will be called when the payment is confirmed</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts
@@ -59,8 +61,10 @@ public interface IOperationsFacade
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
+    /// <param name="cryptoCode">Optional code of the crypto currency that is used for the payment</param>
+    /// <param name="callbackUrl">Optional URL that will be called when the payment is confirmed</param>
     /// <returns>A transaction that needs to be signed using the private keys of all matching provided senderPublicKeys</returns>
-    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? customerIPAddress = null);
+    public Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null);
 
     /// <summary>
     /// Withdraw token from an account
