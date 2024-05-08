@@ -163,9 +163,11 @@ namespace Nexus.Sdk.Token
         /// <param name="amount"></param>
         /// <param name="memo"></param>
         /// <param name="message"></param>
+        /// <param name="cryptoCode"></param>
+        /// <param name="callbackUrl"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null);
+        Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null);
 
         /// <summary>
         ///
@@ -173,9 +175,11 @@ namespace Nexus.Sdk.Token
         /// <param name="definitions"></param>
         /// <param name="memo"></param>
         /// <param name="message"></param>
+        /// <param name="cryptoCode"></param>
+        /// <param name="callbackUrl"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? customerIPAddress = null);
+        Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null);
 
         /// <summary>
         ///

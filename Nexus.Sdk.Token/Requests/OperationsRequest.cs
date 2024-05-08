@@ -50,14 +50,22 @@ public record PaymentOperationRequest
     [JsonPropertyName("message")]
     public string? Message { get; set; }
 
+    [JsonPropertyName("cryptoCode")]
+    public string? CryptoCode { get; set; }
+
+    [JsonPropertyName("callbackUrl")]
+    public string? CallbackUrl { get; set; }
+
     [JsonPropertyName("payments")]
     public IEnumerable<PaymentDefinition> Definitions { get; set; }
 
-    public PaymentOperationRequest(IEnumerable<PaymentDefinition> definitions, string? memo, string? message)
+    public PaymentOperationRequest(IEnumerable<PaymentDefinition> definitions, string? memo, string? message, string? cryptoCode, string? callbackUrl)
     {
         Definitions = definitions;
         Memo = memo;
         Message = message;
+        CryptoCode = cryptoCode;
+        CallbackUrl = callbackUrl;
     }
 }
 

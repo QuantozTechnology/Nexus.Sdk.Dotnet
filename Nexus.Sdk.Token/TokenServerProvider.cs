@@ -316,10 +316,10 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
         {
             var definition = new PaymentDefinition(senderPublicKey, receiverPublicKey, tokenCode, amount);
-            return await CreatePaymentsAsync(new PaymentDefinition[] { definition }, memo, message, customerIPAddress);
+            return await CreatePaymentsAsync([definition], memo, message, cryptoCode, callbackUrl, customerIPAddress);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
 
@@ -339,7 +339,7 @@ namespace Nexus.Sdk.Token
                 builder.AddHeader("customer_ip_address", customerIPAddress);
             }
 
-            var request = new PaymentOperationRequest(definitions, memo, message);
+            var request = new PaymentOperationRequest(definitions, memo, message, cryptoCode, callbackUrl);
             return await builder.ExecutePost<PaymentOperationRequest, SignablePaymentResponse>(request);
         }
 
