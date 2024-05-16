@@ -68,6 +68,10 @@ public interface IOperationsFacade
 
     /// <summary>
     /// Withdraw token from an account
+    /// 
+    /// If tokens have already been withdrawn from an account outside of Nexus, you can still create a payout inside Nexus without creating another onchain transaction. 
+    /// To do this provide the existing blockchain transaction id in the request. 
+    /// Note that this can only be done for unmanaged accounts and that providing the memo, message and expireSeconds will no longer have any affect due to no onchain transaction having to be created.
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     /// <param name="tokenCode">Unique Nexus identifier of the token that will be withdrawn from this account</param>
@@ -77,11 +81,16 @@ public interface IOperationsFacade
     /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
+    /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
+    /// 
+    /// If tokens have already been withdrawn from an account outside of Nexus, you can still create a payout inside Nexus without creating another onchain transaction. 
+    /// To do this provide the existing blockchain transaction id in the request. 
+    /// Note that this can only be done for unmanaged accounts and that providing the memo, message and expireSeconds will no longer have any affect due to no onchain transaction having to be created. 
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     /// <param name="tokenCode">Unique Nexus identifier of the token that should be withdrawn from this account</param>
@@ -89,6 +98,7 @@ public interface IOperationsFacade
     /// <param name="pm">An optional payment method that is used to calculate fees</param>
     /// <param name="memo">An optional message that is added to the transaction and would be visible on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
+    /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
     /// <returns>A simulated withdrawal that includes fees.</returns>
-    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null);
+    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null);
 }
