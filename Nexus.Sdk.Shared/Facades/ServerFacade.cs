@@ -1,6 +1,4 @@
-﻿using Nexus.Sdk.Shared;
-
-namespace Nexus.Sdk.Shared.Facades
+﻿namespace Nexus.Sdk.Shared.Facades
 {
     public class ServerFacade
     {

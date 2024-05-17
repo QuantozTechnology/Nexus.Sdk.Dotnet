@@ -1,5 +1,4 @@
-﻿using System;
-namespace Nexus.Token.Stellar.Examples.Models
+﻿namespace Nexus.Token.Stellar.Examples.Models
 {
     public sealed class StellarSettings
     {
