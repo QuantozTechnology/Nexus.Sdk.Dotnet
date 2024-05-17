@@ -522,7 +522,7 @@ namespace Nexus.Sdk.Token
                     return false;
                 }
 
-                throw ex;
+                throw;
             }
         }
 
