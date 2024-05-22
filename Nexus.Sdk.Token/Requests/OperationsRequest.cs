@@ -114,4 +114,7 @@ public record PayoutOperationRequest
 
     [JsonPropertyName("paymentReference")]
     public string? PaymentReference { get; set; }
+
+    [JsonPropertyName("blockchainTransactionId")]
+    public string? BlockchainTransactionId { get; set; }
 }

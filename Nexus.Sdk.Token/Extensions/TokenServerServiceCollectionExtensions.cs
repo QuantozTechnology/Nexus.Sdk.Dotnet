@@ -1,11 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Nexus.Sdk.Shared.Authentication;
-using Nexus.Sdk.Shared.Http;
 using Nexus.Sdk.Shared.Options;
 using Nexus.Sdk.Token.Security;
-using static IdentityModel.ClaimComparer;
 
 namespace Nexus.Sdk.Token.Extensions
 {
