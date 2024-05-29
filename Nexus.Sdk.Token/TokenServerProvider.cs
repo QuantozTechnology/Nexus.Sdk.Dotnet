@@ -356,7 +356,7 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId=null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
             {
@@ -378,7 +378,8 @@ namespace Nexus.Sdk.Token
                 TokenCode = tokenCode,
                 PaymentReference = paymentReference,
                 Memo = memo,
-                Message = message
+                Message = message,
+                BlockchainTransactionId = blockchainTransactionId
             };
 
             return await builder.ExecutePost<PayoutOperationRequest, SignablePayoutResponse>(request);
