@@ -1,5 +1,4 @@
-﻿using Nexus.Sdk.Shared.Requests;
-using Nexus.Sdk.Shared.Responses;
+﻿using Nexus.Sdk.Shared.Responses;
 
 namespace Nexus.Sdk.Shared.Facades;
 

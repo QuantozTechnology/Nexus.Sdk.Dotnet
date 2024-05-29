@@ -35,7 +35,7 @@ public class RequestBuilder
     public async Task<TResponse> ExecuteGet<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("GET {uri}", path);
 
@@ -52,7 +52,7 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("POST to {path}: {json}", path, json);
 
@@ -70,7 +70,7 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("POST to {path}: {json}", path, json);
 
@@ -88,7 +88,7 @@ public class RequestBuilder
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("PUT to {path}: {json}", path, json);
 
@@ -105,7 +105,7 @@ public class RequestBuilder
     public async Task<TResponse> ExecutePut<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("PUT to {path}", path);
 
@@ -120,7 +120,7 @@ public class RequestBuilder
     public async Task<TResponse> ExecuteDelete<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress, path);
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
 
         _logger?.LogDebug("DELETE {uri}", path);
 

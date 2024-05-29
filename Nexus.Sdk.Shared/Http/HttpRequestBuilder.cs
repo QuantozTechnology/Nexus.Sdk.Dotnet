@@ -27,19 +27,19 @@
 
     public static HttpRequestMessage BuildPutRequest(Uri path, IDictionary<string, string> headers)
     {
-        return new HttpRequestBuilder(path, null, headers, HttpMethod.Put)
+        return new HttpRequestBuilder(path, null!, headers, HttpMethod.Put)
             .BuildRequest();
     }
 
     public static HttpRequestMessage BuildGetRequest(Uri path, IDictionary<string, string> headers)
     {
-        return new HttpRequestBuilder(path, null, headers, HttpMethod.Get)
+        return new HttpRequestBuilder(path, null!, headers, HttpMethod.Get)
             .BuildRequest();
     }
 
     public static HttpRequestMessage BuildDeleteRequest(Uri path, IDictionary<string, string> headers)
     {
-        return new HttpRequestBuilder(path, null, headers, HttpMethod.Delete)
+        return new HttpRequestBuilder(path, null!, headers, HttpMethod.Delete)
             .BuildRequest();
     }
 

@@ -1,7 +1,6 @@
 
 using Moq;
 using Moq.Protected;
-using Nexus.Sdk.Shared.Authentication;
 using Nexus.Sdk.Shared.Tests.Helpers;
 using System.Collections;
 using System.Net;

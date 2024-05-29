@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Nexus.Sdk.Shared.ErrorHandling;
 using Nexus.Sdk.Shared.Options;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace Nexus.Sdk.Shared.Authentication;
 
@@ -73,7 +71,7 @@ public class AuthProvider : IAuthProvider
             if (response.IsError)
             {
                 _logger?.LogError("{statusCode} Auth Response: {error}", response.HttpStatusCode, response.Error);
-                throw new AuthProviderException(response.Error);
+                throw new AuthProviderException(response.Error!);
             }
 
             _accessToken = response.AccessToken;
@@ -81,7 +79,7 @@ public class AuthProvider : IAuthProvider
 
             _logger?.LogDebug("{statusCode} Auth Response: Token expires on {_expiresOn}", response.HttpStatusCode, _expiresOn.Value.ToString("dd/MM/yyyy HH:mm:ss"));
 
-            return _accessToken;
+            return _accessToken!;
         }
     }
 }
