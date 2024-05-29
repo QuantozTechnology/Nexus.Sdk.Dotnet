@@ -12,7 +12,12 @@
                 IdentityUrl = string.Empty,
                 Scopes = string.Empty
             },
-            PaymentMethodOptions = new PaymentMethodOptions()
+            PaymentMethodOptions = new PaymentMethodOptions(),
+            FundingPaymentMethodOptions = new FundingPaymentMethodOptions
+            {
+                Consumer = "BANK_EUR_FUNDING_CONSUMER",
+                Business = "BANK_EUR_FUNDING_BUSINESS",
+            }
         };
 
         public NexusOptionsBuilder()
