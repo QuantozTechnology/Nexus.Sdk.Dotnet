@@ -112,7 +112,7 @@ namespace Nexus.Token.Algorand.Examples
             _logger.LogWarning("The hash of the Hans Peter token is the value of the has that was provided: {hash}", taxonomyResponse.Hash);
         }
 
-        public async Task FundAccountAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
+        public async Task FundAccountAsync(string encryptedPrivateKey, string tokenCode, decimal amount, string? paymentMethod)
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -120,6 +120,7 @@ namespace Nexus.Token.Algorand.Examples
 
             if (!accountBalances.IsConnectedToToken(tokenCode))
             {
+            
                 _logger.LogWarning("Account is not connected to the token, so we need to connect it first");
 
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(kp.GetAccountCode(), tokenCode);
@@ -127,7 +128,7 @@ namespace Nexus.Token.Algorand.Examples
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
             }
 
-            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount);
+            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(),  tokenCode, amount, pm: paymentMethod);
             _logger.LogWarning("Funding successful!");
         }
 
@@ -191,6 +192,7 @@ namespace Nexus.Token.Algorand.Examples
             _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
 
             var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
+         
             var signedResponse = kp.Sign(signableResponse);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
