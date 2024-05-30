@@ -18,9 +18,6 @@ public record SignablePayoutResponse : SignableResponse
 {
     [JsonPropertyName("payout")]
     public required PayoutResponse PayoutOperationResponse { get; set; }
-
-    [JsonPropertyName("transactionEnvelope")]
-    public required TxEnvelopeResponse TransactionEnvelopeResponse { get; set; }
 }
 
 public record BlockchainResponse
