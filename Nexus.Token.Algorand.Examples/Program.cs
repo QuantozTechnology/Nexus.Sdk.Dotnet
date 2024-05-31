@@ -123,7 +123,7 @@ namespace Nexus.Token.Algorand.Examples
             await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
-            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100, "BANK_EUR_FUNDING_CONSUMER");
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
             WriteToConsole("Then Bob sends 10 tokens to Alice.");
             await algorandExamples.PaymentAsync(bobsPrivateKey, alicesPrivateKey, tokenCode, 10);
         }
@@ -139,7 +139,7 @@ namespace Nexus.Token.Algorand.Examples
             await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
-            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100, "BANK_EUR_FUNDING_CONSUMER");
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
 
             WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
             await algorandExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
@@ -195,7 +195,7 @@ namespace Nexus.Token.Algorand.Examples
             var alicesPrivateKey = await algorandExamples.CreateAccountAsync(alice);
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
-            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100, "BANK_EUR_FUNDING_CONSUMER");
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
 
             WriteToConsole("Then Bob sends 10 tokens to Alice.");
             await algorandExamples.PaymentAsync(bobsPrivateKey, alicesPrivateKey, tokenCode, 10);
