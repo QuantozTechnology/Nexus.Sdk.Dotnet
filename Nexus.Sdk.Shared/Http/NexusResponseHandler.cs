@@ -37,8 +37,7 @@ public class NexusResponseHandler : IResponseHandler
                 _logger?.LogWarning("Did you configure your authentication provider using ConnectTo");
             }
 
-            string error = responseObj.Errors.Length > 0 ? responseObj.Errors[0] : "No errors found";
-            throw new CustomErrorsException(statusCode.ToString(), content, error);
+            throw new CustomErrorsException((int)statusCode, content, responseObj.Errors);
         }
 
         return responseObj.Values;

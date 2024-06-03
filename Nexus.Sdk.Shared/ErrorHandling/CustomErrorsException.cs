@@ -1,18 +1,19 @@
 ﻿
 namespace Nexus.Sdk.Shared.ErrorHandling
 {
-    public class CustomErrorsException : Exception
+    public class CustomErrorsException : NexusApiException
     {
         public CustomErrors CustomErrors = new();
 
-        public CustomErrorsException(string code, string target, string message)
+        public CustomErrorsException(int statusCode, string reasonPhrase, string[]? errorCodes) : base(statusCode, reasonPhrase, errorCodes)
         {
-            CustomErrors.AddError(new CustomError(code, message, target));
-        }
-
-        public CustomErrorsException(IEnumerable<CustomError> customErrors)
-        {
-            CustomErrors = new CustomErrors(customErrors);
+            if (errorCodes != null)
+            {
+                foreach (var errorCode in errorCodes)
+                {
+                    CustomErrors.AddError(new CustomError(statusCode.ToString(), errorCode, null));
+                }
+            }
         }
 
         public override string ToString()

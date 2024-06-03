@@ -2,19 +2,11 @@
 using System.Text.Json;
 using Nexus.Sdk.Shared.Responses;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.Extensions.Logging;
 
 namespace Nexus.Sdk.Shared.ErrorHandling;
 
-public class CustomExceptionHandler : IExceptionHandler
+public class CustomerHttpExceptionHandler : IExceptionHandler
 {
-    private readonly ILogger<CustomExceptionHandler> _logger;
-
-    public CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
-    {
-        _logger = logger;
-    }
-
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
         if (exception is CustomErrorsException customErrorsException)
@@ -51,7 +43,7 @@ public class CustomExceptionHandler : IExceptionHandler
         }
         else
         {
-            exception.CustomErrors.AddError(new CustomError("InternalServerError", "CustomerErrorException was thrown but not errors are present", "Errors"));
+            exception.CustomErrors.AddError(new CustomError("InternalServerError", "CustomerErrorException was thrown but no errors are present", "Errors"));
         }
 
         await WriteCustomErrors(context.Response, exception.CustomErrors, statusCode);
