@@ -5,9 +5,10 @@ namespace Nexus.Sdk.Shared.Responses
     public class CustomerDataResponse
     {
         [JsonConstructor]
-        public CustomerDataResponse(string customerCode, string firstName, string lastName, string dateOfBirth, string countryName, string address, string city, string state, string phone, string companyName)
+        public CustomerDataResponse(string customerCode, string name, string firstName, string lastName, string dateOfBirth, string countryName, string address, string city, string state, string phone, string companyName)
         {
             CustomerCode = customerCode;
+            Name = name;
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
@@ -21,6 +22,9 @@ namespace Nexus.Sdk.Shared.Responses
 
         [JsonPropertyName("customerCode")]
         public string CustomerCode { get; private set; }
+
+        [JsonPropertyName("name")]
+        public string? Name { get; private set; }
 
         [JsonPropertyName("firstName")]
         public string? FirstName { get; private set; }
