@@ -52,6 +52,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
 
             return Task.FromResult(new CustomerResponse(
                 request.CustomerCode!,
+                request.Name!,
                 request.FirstName!,
                 request.LastName!,
                 request.DateOfBirth!,
