@@ -321,7 +321,7 @@ namespace Nexus.Sdk.Shared.Tests
         }
 
         [Test]
-        public void CustomerRequestBuilderTests_Build_CompanyName()
+        public void CustomerRequestBuilderTests_Build_BusinessName()
         {
             var request = new CreateCustomerRequestBuilder(
                 "MOCK_CUSTOMER", "Trusted", "EUR")
@@ -329,7 +329,7 @@ namespace Nexus.Sdk.Shared.Tests
                 .SetEmail("test@test.com")
                 .SetCountry("NL")
                 .SetStatus(CustomerStatus.ACTIVE)
-                .SetCompanyName("XYZ")
+                .SetName("XYZ")
                 .Build();
 
             Assert.Multiple(() =>
@@ -341,7 +341,7 @@ namespace Nexus.Sdk.Shared.Tests
                 Assert.That(request.Status, Is.EqualTo("ACTIVE"));
                 Assert.That(request.CurrencyCode, Is.EqualTo("EUR"));
                 Assert.That(request.CountryCode, Is.EqualTo(expected: "NL"));
-                Assert.That(request.CompanyName, Is.EqualTo("XYZ"));
+                Assert.That(request.Name, Is.EqualTo("XYZ"));
                 Assert.That(request.IsBusiness, Is.True);
                 Assert.That(request.BankAccounts, Is.Null);
                 Assert.That(request.Data, Is.Null);
