@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace Nexus.Sdk.Shared.ErrorHandling;
 
-public class CustomerHttpExceptionHandler : IExceptionHandler
+public class CustomHttpExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
