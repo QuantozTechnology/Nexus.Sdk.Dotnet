@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Token.Responses;
 public record AccountResponse
 {
     [JsonConstructor]
-    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey, string status, string accountType)
+    public AccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey, string status, string accountType, string customName, string created, TokenSettingsResponse tokenSettings)
     {
         CustomerCode = customerCode;
         AccountCode = accountCode;
@@ -13,6 +13,9 @@ public record AccountResponse
         PublicKey = publicKey;
         Status = status;
         AccountType = accountType;
+        CustomName = customName;
+        Created = created;
+        TokenSettings = tokenSettings;
     }
 
     [JsonPropertyName("customerCode")]
@@ -32,6 +35,43 @@ public record AccountResponse
 
     [JsonPropertyName("accountType")]
     public string AccountType { get; set; }
+
+    [JsonPropertyName("customName")]
+    public string CustomName { get; set; }
+
+    [JsonPropertyName("created")]
+    public string Created { get; set; }
+
+    [JsonPropertyName("tokenSettings")]
+    public TokenSettingsResponse TokenSettings { get; set; }
+}
+
+public record TokenSettingsResponse
+{
+    [JsonConstructor]
+    public TokenSettingsResponse(AllowedTokensResponse[] allowedTokens)
+    {
+        AllowedTokens = allowedTokens;
+    }
+
+    [JsonPropertyName("allowedTokens")]
+    public AllowedTokensResponse[] AllowedTokens { get; set; }
+}
+
+public record AllowedTokensResponse
+{
+    [JsonConstructor]
+    public AllowedTokensResponse(string tokenCode, string status)
+    {
+        TokenCode = tokenCode;
+        Status = status;
+    }
+
+    [JsonPropertyName("tokenCode")]
+    public string TokenCode { get; set; }
+
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
 }
 
 public record UpdateTokenAccountResponse
