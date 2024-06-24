@@ -15,5 +15,6 @@ namespace Nexus.Sdk.Token
         public IOrdersFacade Orders { get; }
         public ITokenLimitsFacade TokenLimits { get; }
         public IComplianceFacade Compliance { get; }
+        public IPaymentMethodsFacade PaymentMethods { get; }
     }
 }
