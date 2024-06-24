@@ -801,5 +801,11 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecutePut<MailsResponse>();
         }
+
+        public async Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
+            return await builder.ExecuteGet<PaymentMethodsResponse>();
+        }
     }
 }
