@@ -303,5 +303,11 @@ namespace Nexus.Sdk.Token
         /// The current fiat spending limits expressed in token value.
         /// </returns>
         Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode);
+
+        /// <summary>
+        /// Get payment method data
+        /// </summary>
+        /// <param name="paymentMethodCode">Unique identifier of the payment method.</param>
+        Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
     }
 }

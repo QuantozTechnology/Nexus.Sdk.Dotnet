@@ -15,5 +15,6 @@ namespace Nexus.Sdk.Shared
         public Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null);
         public Task<DeleteCustomerResponse> DeleteCustomer(DeleteCustomerRequest request, string? customerIPAddress = null);
         public Task<MailsResponse> UpdateMailSent(string code);
+        public Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
     }
 }
