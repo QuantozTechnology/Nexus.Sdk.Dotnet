@@ -23,4 +23,4 @@ dotnet package install Quantoz.Nexus.Token.Sdk
 
 
 ## Release Notes
-An overview of changes to the SDK is found [here.](/releases)
+An overview of changes to the SDK is found [here.](https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/releases)
