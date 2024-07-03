@@ -8,10 +8,10 @@ Welcome to the Quantoz Nexus SDK repository. In here you will find all the tools
 
 This repository consists of the following projects:
 
-1. [Nexus Token SDK](./Nexus.Token.SDK) - This project contains functionalities required to interact with your Nexus Token environments.
+1. [Nexus Token SDK](./Nexus.Sdk.Token) - This project contains functionalities required to interact with your Nexus Token environments.
 2. Examples
-    - [Stellar](../Nexus.Token.Stellar.Examples) examples of this SDK in action on the Stellar blockchain.
-    - [Algorand](../Nexus.Token.Algorand.Examples) examples of this SDK in action on the Algorand blockchain.
+    - [Stellar](./Nexus.Token.Stellar.Examples) examples of this SDK in action on the Stellar blockchain.
+    - [Algorand](./Nexus.Token.Algorand.Examples) examples of this SDK in action on the Algorand blockchain.
 
 ## Installation using Nuget
 
@@ -24,4 +24,4 @@ dotnet package install Quantoz.Nexus.Token.Sdk
 
 
 ## Release Notes
-An overview of changes to the SDK is found [here.](./releases)
+An overview of changes to the SDK is found [here.](https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/releases)
