@@ -6,7 +6,7 @@ public record CustomerResponse
 {
     [JsonConstructor]
     public CustomerResponse(string customerCode,string? name, string firstName, string lastName, string dateOfBirth, string phone, string companyName, string trustLevel, 
-        string currencyCode, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string riskQualification, IDictionary<string, string> data)
+        string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string riskQualification, IDictionary<string, string> data)
     {
         CustomerCode = customerCode;
         Name = name;
@@ -17,6 +17,10 @@ public record CustomerResponse
         CompanyName = companyName;
         TrustLevel = trustLevel;
         CurrencyCode = currencyCode;
+        Address = address;
+        City = city;
+        ZipCode = zipCode;
+        State = state;
         CountryCode = countryCode;
         Email = email;
         Status = status;
@@ -52,6 +56,18 @@ public record CustomerResponse
 
     [JsonPropertyName("currencyCode")]
     public string CurrencyCode { get; set; }
+    
+    [JsonPropertyName("address")]
+    public string? Address { get; set; }
+
+    [JsonPropertyName("city")]
+    public string? City { get; set; }
+    
+    [JsonPropertyName("zipCode")]
+    public string? ZipCode { get; set; }
+    
+    [JsonPropertyName("state")]
+    public string? State { get; set; }
 
     [JsonPropertyName("countryCode")]
     public string CountryCode { get; set; }
