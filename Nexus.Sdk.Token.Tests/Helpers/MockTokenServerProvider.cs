@@ -60,6 +60,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 request.CompanyName!,
                 request.TrustLevel!,
                 request.CurrencyCode!,
+                request.Address,
+                request.City,
+                request.ZipCode,
+                request.State,
                 request.CountryCode!,
                 request.Email,
                 request.Status!,
@@ -264,6 +268,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse<CustomDataResponse>> GetCustomDataTemplates(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
         }

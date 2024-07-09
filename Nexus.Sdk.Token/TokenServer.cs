@@ -23,4 +23,5 @@ public class TokenServer : ITokenServer
     public ITokenLimitsFacade TokenLimits => new TokenLimitsFacade(_serverProvider);
     public IComplianceFacade Compliance => new ComplianceFacade(_serverProvider);
     public IPaymentMethodsFacade PaymentMethods => new PaymentMethodsFacade(_serverProvider);
+    public ILabelPartnerFacade LabelPartner => new LabelPartnerFacade(_serverProvider);
 }
