@@ -272,6 +272,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<PagedResponse<CustomDataResponse>> GetCustomDataTemplates(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
