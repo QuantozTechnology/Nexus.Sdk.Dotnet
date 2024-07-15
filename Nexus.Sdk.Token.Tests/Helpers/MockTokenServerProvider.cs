@@ -212,7 +212,8 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
+        /// <inheritdoc/>
+        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
@@ -313,6 +314,16 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EnvelopeResponse> GetEnvelope(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> WaitForCompletionAsync(string hash, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

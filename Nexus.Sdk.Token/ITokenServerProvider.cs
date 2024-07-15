@@ -206,11 +206,13 @@ namespace Nexus.Sdk.Token
         Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests);
 
         /// <summary>
-        ///
+        /// Submit a signature for a token operation specific to Algorand
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="requests">Collection of signatures to send</param>
+        /// <param name="awaitResult">If true, the method will await for the submit to be fully processed</param>
         /// <returns></returns>
-        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests);
+        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///
@@ -309,5 +311,19 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="paymentMethodCode">Unique identifier of the payment method.</param>
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
+
+        /// <summary>
+        /// Get envelope
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<EnvelopeResponse> GetEnvelope(string code);
+
+        /// <summary>
+        /// Check for completion of an envelope by periodically polling the server
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default);
     }
 }
