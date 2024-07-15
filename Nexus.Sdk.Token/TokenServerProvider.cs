@@ -818,6 +818,18 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<PagedResponse<TrustLevelsResponse>>();
         }
 
+        public async Task<PagedResponse<CustomDataResponse>> GetCustomDataTemplates(IDictionary<string, string>? queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("labelpartner", "datatemplates");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<CustomDataResponse>>();
+        }
+
         public async Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? queryParameters)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
@@ -835,6 +847,12 @@ namespace Nexus.Sdk.Token
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail", code, "sent");
 
             return await builder.ExecutePut<MailsResponse>();
+        }
+
+        public async Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
+            return await builder.ExecuteGet<PaymentMethodsResponse>();
         }
     }
 }

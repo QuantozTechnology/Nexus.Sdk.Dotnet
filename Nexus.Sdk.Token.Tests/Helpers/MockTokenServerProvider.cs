@@ -60,6 +60,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 request.CompanyName!,
                 request.TrustLevel!,
                 request.CurrencyCode!,
+                request.Address,
+                request.City,
+                request.ZipCode,
+                request.State,
                 request.CountryCode!,
                 request.Email,
                 request.Status!,
@@ -268,6 +272,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<PagedResponse<CustomDataResponse>> GetCustomDataTemplates(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
@@ -299,6 +308,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
         {
             throw new NotImplementedException();
         }

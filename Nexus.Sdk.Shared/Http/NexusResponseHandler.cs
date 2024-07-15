@@ -37,7 +37,7 @@ public class NexusResponseHandler : IResponseHandler
                 _logger?.LogWarning("Did you configure your authentication provider using ConnectTo");
             }
 
-            throw new NexusApiException((int)statusCode, responseObj.Message, responseObj.Errors);
+            throw new CustomErrorsException((int)statusCode, content, responseObj.Errors);
         }
 
         return responseObj.Values;
