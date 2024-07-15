@@ -17,4 +17,9 @@ public class SubmitFacade : TokenServerFacade, ISubmitFacade
     {
         await _provider.SubmitOnAlgorandAsync(requests);
     }
+
+    public async Task<bool> WaitForCompletionAsync(string code)
+    {
+        return await _provider.WaitForCompletionAsync(code);
+    }
 }

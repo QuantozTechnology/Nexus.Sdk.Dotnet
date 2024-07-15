@@ -7,4 +7,6 @@ public interface ISubmitFacade
     public Task OnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests);
 
     public Task OnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests);
+
+    public Task<bool> WaitForCompletionAsync(string code);
 }

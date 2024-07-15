@@ -2,6 +2,7 @@
 using Nexus.Sdk.Shared.Responses;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
+using System.Threading;
 
 namespace Nexus.Sdk.Token
 {
@@ -303,5 +304,19 @@ namespace Nexus.Sdk.Token
         /// The current fiat spending limits expressed in token value.
         /// </returns>
         Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode);
+
+        /// <summary>
+        /// Get envelope
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<EnvelopeResponse> GetEnvelope(string code);
+
+        /// <summary>
+        /// Check for completion of an envelope by periodically polling the server
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default);
     }
 }

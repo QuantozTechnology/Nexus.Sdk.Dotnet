@@ -54,6 +54,9 @@ public record AlgorandTokenSettings
 
     [JsonPropertyName("authorizationRevocable")]
     public bool AuthorizationRevocable { get; set; } = true;
+
+    [JsonPropertyName("authorizationRequired")]
+    public bool AuthorizationRequired { get; set; } = true;
 }
 
 public record StellarTokens

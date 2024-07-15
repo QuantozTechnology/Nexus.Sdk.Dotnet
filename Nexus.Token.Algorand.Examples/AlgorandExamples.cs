@@ -30,7 +30,7 @@ namespace Nexus.Token.Algorand.Examples
             var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR")
                 .Build();
 
-            string customerIPAddress = "127.1.0.0";
+            string customerIPAddress = null;
 
             var customer = await _tokenServer.Customers.Create(request, customerIPAddress);
 
@@ -51,7 +51,13 @@ namespace Nexus.Token.Algorand.Examples
         {
             var definition = AlgorandTokenDefinition.TokenizedAsset(tokenCode, tokenName, 1000, 0);
 
-            var response = await _tokenServer.Tokens.CreateOnAlgorand(definition);
+            var response = await _tokenServer.Tokens.CreateOnAlgorand(definition, new AlgorandTokenSettings
+            {
+                // TODO: forcing to get to fix an issue about having frozen assets
+                AuthorizationRequired = false,
+                AuthorizationRevocable = true,
+                ClawbackEnabled = true
+            });
             var token = response.Tokens.First();
 
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);
@@ -125,6 +131,21 @@ namespace Nexus.Token.Algorand.Examples
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(kp.GetAccountCode(), tokenCode);
                 var signedResponse = kp.Sign(signableResponse);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+
+                _logger.LogInformation("Successfully submitted the Account Connect request.");
+                _logger.LogInformation("Waiting for completion...");
+
+                // wait to be connected
+                var result = await _tokenServer.Submit.WaitForCompletionAsync(signableResponse.BlockchainResponse.Code);
+
+                if (result)
+                {
+                    _logger.LogInformation("Account successfully opted in");
+                }
+                else
+                {
+                    _logger.LogWarning("Account failed to opt in");
+                }
             }
 
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount);
@@ -170,6 +191,18 @@ namespace Nexus.Token.Algorand.Examples
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(receiver.GetAccountCode(), tokenCode);
                 var signedResponse = receiver.Sign(signableResponse);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+
+                // wait to be connected
+                var result = await _tokenServer.Submit.WaitForCompletionAsync(signableResponse.BlockchainResponse.Code);
+
+                if (result)
+                {
+                    _logger.LogInformation("Account successfully opted in");
+                }
+                else
+                {
+                    _logger.LogWarning("Account failed to opt in");
+                }
             }
 
             {

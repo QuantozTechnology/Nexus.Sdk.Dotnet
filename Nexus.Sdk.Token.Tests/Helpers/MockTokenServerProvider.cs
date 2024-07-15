@@ -302,5 +302,15 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<EnvelopeResponse> GetEnvelope(string code)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> WaitForCompletionAsync(string hash, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
