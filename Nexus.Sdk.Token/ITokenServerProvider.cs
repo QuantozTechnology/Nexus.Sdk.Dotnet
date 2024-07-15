@@ -2,7 +2,6 @@
 using Nexus.Sdk.Shared.Responses;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
-using System.Threading;
 
 namespace Nexus.Sdk.Token
 {
@@ -207,11 +206,13 @@ namespace Nexus.Sdk.Token
         Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests);
 
         /// <summary>
-        ///
+        /// Submit a signature for a token operation specific to Algorand
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="requests">Collection of signatures to send</param>
+        /// <param name="awaitResult">If true, the method will await for the submit to be fully processed</param>
         /// <returns></returns>
-        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests);
+        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///

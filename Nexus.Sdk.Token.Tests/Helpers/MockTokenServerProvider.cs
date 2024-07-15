@@ -212,7 +212,8 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
+        /// <inheritdoc/>
+        public Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool waitForCompletion = true, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

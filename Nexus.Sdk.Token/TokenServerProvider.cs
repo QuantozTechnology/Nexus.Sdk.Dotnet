@@ -708,18 +708,14 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<PagedResponse<TokenOperationResponse>>();
         }
 
-        /// <summary>
-        /// Submit a signature for a token operation specific to Algorand
-        /// </summary>
-        /// <param name="requests">Collection of signatures to send</param>
-        /// <param name="awaitResult">If true, the method will await for the submit to be fully processed</param>
-        /// <returns></returns>
-        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true)
+        /// <inheritdoc/>
+        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true,
+            CancellationToken cancellationToken = default)
         {
             foreach (var request in requests)
             {
                 var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
-                await builder.ExecutePost(request);
+                await builder.ExecutePost(request, cancellationToken);
 
             }
 
@@ -727,7 +723,7 @@ namespace Nexus.Sdk.Token
             {
                 await Task.WhenAll(requests.Select(async request =>
                 {
-                    await WaitForCompletionAsync(request.TransactionHash);
+                    await WaitForCompletionAsync(request.TransactionHash, cancellationToken);
                 }));
             }
         }

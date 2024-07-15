@@ -130,7 +130,7 @@ namespace Nexus.Token.Algorand.Examples
 
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(kp.GetAccountCode(), tokenCode);
                 var signedResponse = kp.Sign(signableResponse);
-                await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+                await _tokenServer.Submit.OnAlgorandAsync(signedResponse, false);
 
                 _logger.LogInformation("Successfully submitted the Account Connect request.");
                 _logger.LogInformation("Waiting for completion...");
