@@ -34,9 +34,6 @@ namespace Nexus.Token.Algorand.Examples
 
             var customer = await _tokenServer.Customers.Create(request, customerIPAddress);
 
-            //var customerCodeForIPTrace = "cb55aa80-b1b6-4f86-b019-9bb65f72d968";            
-            //var customerTrace = await _tokenServer.Customers.GetTrace(customerCodeForIPTrace);
-
             var senderKeyPair = AlgorandKeyPair.Generate();
 
             _logger.LogWarning("Generated new nexus account for {customerCode}: {accountCode} use this code for most future operations", customer.CustomerCode, senderKeyPair.GetAccountCode());
@@ -46,8 +43,6 @@ namespace Nexus.Token.Algorand.Examples
             await _tokenServer.Accounts.CreateOnAlgorandAsync(customer.CustomerCode, senderKeyPair.GetPublicKey());
 
             _logger.LogWarning("Customer and account successfully created");
-
-            var customerTrace = await _tokenServer.Customers.GetTrace(customerCode,null);
 
             return senderKeyPair.GetPrivateKey(_encrypter);
         }
