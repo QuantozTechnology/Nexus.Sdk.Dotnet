@@ -56,4 +56,13 @@ public interface ICustomersFacade
     /// Customer personal data
     /// </returns>
     public Task<CustomerDataResponse> GetData(string customerCode);
+
+    /// <summary>
+    /// Get customer trace based on the code
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <returns>
+    /// Customer trace
+    /// </returns>
+    public Task<CustomerTraceResponse> GetTrace(string customerCode);
 }

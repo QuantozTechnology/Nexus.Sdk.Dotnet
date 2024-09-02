@@ -611,6 +611,19 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
+        /// Get customer trace based on the code
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <returns>
+        /// Customer trace
+        /// </returns>
+        public async Task<CustomerTraceResponse> GetCustomerTrace(string customerCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "trace");
+            return await builder.ExecuteGet<CustomerTraceResponse>();
+        }
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="orderCode"></param>
