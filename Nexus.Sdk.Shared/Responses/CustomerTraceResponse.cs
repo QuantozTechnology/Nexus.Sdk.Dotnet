@@ -19,19 +19,19 @@ public record CustomerTraceResponse
         GeoLocation= geolocation;
     }
 
-    [JsonPropertyName("IP")]
+    [JsonPropertyName("ip")]
     public string IP { get; set; }
 
-    [JsonPropertyName("Created ")]
+    [JsonPropertyName("created")]
     public string Created { get; set; }
 
-    [JsonPropertyName("Action")]
+    [JsonPropertyName("action")]
     public string Action { get; set; }
 
-    [JsonPropertyName("EntityType ")]
+    [JsonPropertyName("entityType")]
     public string EntityType { get; set; }
 
-    [JsonPropertyName("GeoLocation")]
+    [JsonPropertyName("geoLocation")]
     public GeoLocationResponse GeoLocation { get; set; }
 
 }
@@ -45,12 +45,12 @@ public class GeoLocationResponse
         CountryName = countryName;
         ISP = isp;
     }
-    [JsonPropertyName("CountryCode")]
+    [JsonPropertyName("countryCode")]
     public string CountryCode { get; set; }
 
-    [JsonPropertyName("CountryName")]
+    [JsonPropertyName("countryName")]
     public string CountryName { get; set; }
 
-    [JsonPropertyName("ISP")]
+    [JsonPropertyName("isp")]
     public string ISP { get; set; }
 }
