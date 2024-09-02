@@ -47,7 +47,7 @@ namespace Nexus.Token.Algorand.Examples
 
             _logger.LogWarning("Customer and account successfully created");
 
-            var customerTrace = await _tokenServer.Customers.GetTrace(customerCode);
+            var customerTrace = await _tokenServer.Customers.GetTrace(customerCode,null);
 
             return senderKeyPair.GetPrivateKey(_encrypter);
         }

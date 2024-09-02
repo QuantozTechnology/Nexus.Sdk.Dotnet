@@ -617,10 +617,15 @@ namespace Nexus.Sdk.Token
         /// <returns>
         /// Customer trace
         /// </returns>
-        public async Task<CustomerTraceResponse> GetCustomerTrace(string customerCode)
+        public async Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "trace");
-            return await builder.ExecuteGet<CustomerTraceResponse>();
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+            return await builder.ExecuteGet<PagedResponse<CustomerTraceResponse>>();
         }
 
         /// <summary>

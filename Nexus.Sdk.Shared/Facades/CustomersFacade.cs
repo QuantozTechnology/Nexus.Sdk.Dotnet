@@ -74,8 +74,8 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     /// <returns>
     /// Customer trace
     /// </returns>
-    public async Task<CustomerTraceResponse> GetTrace(string customerCode)
+    public async Task<PagedResponse<CustomerTraceResponse>> GetTrace(string customerCode, IDictionary<string, string>? queryParameters)
     {
-        return await _provider.GetCustomerTrace(customerCode);
+        return await _provider.GetCustomerTrace(customerCode, queryParameters);
     }
 }

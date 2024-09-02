@@ -64,5 +64,5 @@ public interface ICustomersFacade
     /// <returns>
     /// Customer trace
     /// </returns>
-    public Task<CustomerTraceResponse> GetTrace(string customerCode);
+    public Task<PagedResponse<CustomerTraceResponse>> GetTrace(string customerCode, IDictionary<string, string>? queryParameters);
 }
