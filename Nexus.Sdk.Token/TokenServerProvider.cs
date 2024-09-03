@@ -611,7 +611,7 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
-        /// Get customer trace based on the code
+        /// List customer traces based on the code
         /// </summary>
         /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
         /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
