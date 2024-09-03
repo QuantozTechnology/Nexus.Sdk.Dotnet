@@ -614,8 +614,9 @@ namespace Nexus.Sdk.Token
         /// Get customer trace based on the code
         /// </summary>
         /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
         /// <returns>
-        /// Customer trace
+        /// Paged list of customer traces
         /// </returns>
         public async Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters)
         {
