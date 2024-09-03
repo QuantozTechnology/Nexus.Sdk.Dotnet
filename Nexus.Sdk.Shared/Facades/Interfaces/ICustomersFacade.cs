@@ -56,4 +56,14 @@ public interface ICustomersFacade
     /// Customer personal data
     /// </returns>
     public Task<CustomerDataResponse> GetData(string customerCode);
+
+    /// <summary>
+    /// List customer traces based on the code
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+    /// <returns>
+    /// Paged list of customer traces
+    /// </returns>
+    public Task<PagedResponse<CustomerTraceResponse>> GetTrace(string customerCode, IDictionary<string, string>? queryParameters);
 }
