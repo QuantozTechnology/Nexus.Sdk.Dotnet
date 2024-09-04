@@ -181,6 +181,12 @@
             return this;
         }
 
+        public UpdateCustomerRequestBuilder SetReasonCode(string reasonCode)
+        {
+            _request.ReasonCode = reasonCode;
+            return this;
+        }
+
         public UpdateCustomerRequestBuilder SetReason(string reason)
         {
             _request.Reason = reason;

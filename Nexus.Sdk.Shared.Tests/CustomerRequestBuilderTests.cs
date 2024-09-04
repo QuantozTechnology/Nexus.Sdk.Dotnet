@@ -443,6 +443,7 @@ namespace Nexus.Sdk.Shared.Tests
         {
             var request = new UpdateCustomerRequestBuilder("MOCK_CUSTOMER")
                 .SetTrustLevel("Trusted")
+                .SetReason("ReasonCode")
                 .SetReason("Reason")
                 .SetEmail("test@test.com")
                 .SetStatus(CustomerStatus.ACTIVE)

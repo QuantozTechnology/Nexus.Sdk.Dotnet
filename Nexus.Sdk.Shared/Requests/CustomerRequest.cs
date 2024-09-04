@@ -99,6 +99,10 @@ public class UpdateCustomerRequest : CustomerRequest
     [JsonPropertyName("trustLevelCode")]
     public string? TrustLevel { get; set; }
 
+    [JsonPropertyName("reasonCode")]
+    [StringLength(100)]
+    public string? ReasonCode { get; set; }
+
     [JsonPropertyName("reason")]
     [StringLength(1024)]
     public string? Reason { get; set; }
