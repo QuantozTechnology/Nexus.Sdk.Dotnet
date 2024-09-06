@@ -6,6 +6,7 @@ using Nexus.Sdk.Shared.Requests;
 using Nexus.Sdk.Shared.Responses;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
+using System.Security.AccessControl;
 
 namespace Nexus.Sdk.Token
 {
@@ -80,7 +81,7 @@ namespace Nexus.Sdk.Token
         /// <param name="publicKey"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null)
+        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
@@ -94,10 +95,15 @@ namespace Nexus.Sdk.Token
                 Address = publicKey
             };
 
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
             return await builder.ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
@@ -114,6 +120,11 @@ namespace Nexus.Sdk.Token
                     AllowedTokens = allowedTokens
                 }
             };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
 
             return await builder.ExecutePost<CreateAlgorandAccountRequest, SignableResponse>(request);
         }

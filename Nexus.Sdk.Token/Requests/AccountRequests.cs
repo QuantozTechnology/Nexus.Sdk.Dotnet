@@ -12,6 +12,9 @@ public record CreateTokenAccountRequest
 
     [JsonPropertyName("tokenSettings")]
     public CreateTokenAccountSettings? TokenSettings { get; set; }
+
+    [JsonPropertyName("customName")]
+    public string? CustomName { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest
