@@ -29,7 +29,7 @@ public interface IAccountsFacade
     /// <param name="publicKey">The public key the new Stellar account</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>The Nexus account that is created</returns>
-    public Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null);
+    public Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null);
 
 
     /// <summary>
@@ -40,7 +40,7 @@ public interface IAccountsFacade
     /// <param name="allowedTokens">A list of token codes the account will be connected to upon creation</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided public key</returns>
-    public Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null);
+    public Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null);
 
     /// <summary>
     /// Create a new account on the Algorand blockchain
