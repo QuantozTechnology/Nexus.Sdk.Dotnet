@@ -30,24 +30,24 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);
     }
 
-    public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null)
+    public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null)
     {
-        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, customerIPAddress);
+        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, customerIPAddress, customName);
     }
 
-    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
+    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
     {
-        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, allowedTokens, customerIPAddress);
+        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, allowedTokens, customerIPAddress, customName);
     }
 
-    public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null)
+    public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null)
     {
-        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, customerIPAddress);
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, customerIPAddress, customName);
     }
 
-    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null)
+    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
     {
-        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, allowedTokens, customerIPAddress);
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, allowedTokens, customerIPAddress, customName);
     }
 
     public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
