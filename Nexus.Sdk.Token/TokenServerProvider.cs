@@ -79,30 +79,10 @@ namespace Nexus.Sdk.Token
         /// <param name="customerCode"></param>
         /// <param name="publicKey"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
-        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null)
-        {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
-
-            var request = new CreateAlgorandAccountRequest
-            {
-                Address = publicKey
-            };
-
-            if (!string.IsNullOrWhiteSpace(customName))
-            {
-                request.CustomName = customName;
-            }
-
-            return await builder.ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
-        }
-
-        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
@@ -114,6 +94,30 @@ namespace Nexus.Sdk.Token
             var request = new CreateAlgorandAccountRequest
             {
                 Address = publicKey,
+                AccountType = accountType
+            };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
+            return await builder.ExecutePost<CreateAlgorandAccountRequest, AccountResponse>(request);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            var request = new CreateAlgorandAccountRequest
+            {
+                Address = publicKey,
+                AccountType = accountType,
                 TokenSettings = new CreateTokenAccountSettings
                 {
                     AllowedTokens = allowedTokens
@@ -135,29 +139,7 @@ namespace Nexus.Sdk.Token
         /// <param name="publicKey"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null)
-        {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
-
-            var request = new CreateStellarAccountRequest
-            {
-                Address = publicKey
-            };
-
-            if (!string.IsNullOrWhiteSpace(customName))
-            {
-                request.CustomName = customName;
-            }
-
-            return await builder.ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
-        }
-
-        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
@@ -169,6 +151,30 @@ namespace Nexus.Sdk.Token
             var request = new CreateStellarAccountRequest
             {
                 Address = publicKey,
+                AccountType = accountType
+            };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
+            return await builder.ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string ? accountType = "MANAGED")
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            var request = new CreateStellarAccountRequest
+            {
+                Address = publicKey,
+                AccountType = accountType,
                 TokenSettings = new CreateTokenAccountSettings
                 {
                     AllowedTokens = allowedTokens
