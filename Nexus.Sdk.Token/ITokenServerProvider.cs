@@ -23,8 +23,9 @@ namespace Nexus.Sdk.Token
         /// <param name="publicKey"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
-        Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null);
+        Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
         ///
@@ -34,8 +35,9 @@ namespace Nexus.Sdk.Token
         /// <param name="tokenCodes"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
-        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null);
+        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
         ///
@@ -44,8 +46,9 @@ namespace Nexus.Sdk.Token
         /// <param name="publicKey"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
-        Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null);
+        Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
         ///
@@ -55,8 +58,9 @@ namespace Nexus.Sdk.Token
         /// <param name="tokenCodes"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
-        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null);
+        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
         ///
