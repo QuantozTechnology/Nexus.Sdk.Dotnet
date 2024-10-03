@@ -70,6 +70,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 bankAccountNumber,
                 request.IsBusiness!,
                 request.RiskQualification!,
+                request.Created!,
+                request.PortFolioCode!,
+                request.ExternalCustomerCode!,
+                request.IsReviewRecommended,
+                request.IsPEP!,
                 request.Data!
             ));
         }
