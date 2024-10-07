@@ -5,13 +5,16 @@ namespace Nexus.Sdk.Token.Requests;
 public record CreateTokenAccountRequest
 {
     [JsonPropertyName("accountType")]
-    public string? AccountType { get; set; } = "Token";
+    public string? AccountType { get; set; } = "MANAGED";
 
     [JsonPropertyName("customerCryptoAddress")]
     public string? Address { get; set; }
 
     [JsonPropertyName("tokenSettings")]
     public CreateTokenAccountSettings? TokenSettings { get; set; }
+
+    [JsonPropertyName("customName")]
+    public string? CustomName { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest

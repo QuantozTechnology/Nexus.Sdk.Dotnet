@@ -5,8 +5,7 @@ namespace Nexus.Sdk.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode,string? name, string firstName, string lastName, string dateOfBirth, string phone, string companyName, string trustLevel, 
-        string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string riskQualification, IDictionary<string, string> data)
+    public CustomerResponse(string customerCode, string? name, string? firstName, string? lastName, string? dateOfBirth, string? phone, string? companyName, string trustLevel, string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string? riskQualification, string? created, string? portFolioCode, string? externalCustomerCode, bool? isReviewRecommended, bool? isPEP, IDictionary<string, string> data)
     {
         CustomerCode = customerCode;
         Name = name;
@@ -27,6 +26,11 @@ public record CustomerResponse
         BankAccount = bankAccount;
         IsBusiness = isBusiness;
         RiskQualification = riskQualification;
+        Created = created;
+        PortFolioCode = portFolioCode;
+        ExternalCustomerCode = externalCustomerCode;
+        IsReviewRecommended = isReviewRecommended;
+        IsPEP = isPEP;
         Data = data;
     }
 
@@ -56,16 +60,16 @@ public record CustomerResponse
 
     [JsonPropertyName("currencyCode")]
     public string CurrencyCode { get; set; }
-    
+
     [JsonPropertyName("address")]
     public string? Address { get; set; }
 
     [JsonPropertyName("city")]
     public string? City { get; set; }
-    
+
     [JsonPropertyName("zipCode")]
     public string? ZipCode { get; set; }
-    
+
     [JsonPropertyName("state")]
     public string? State { get; set; }
 
@@ -86,6 +90,21 @@ public record CustomerResponse
 
     [JsonPropertyName("riskQualification")]
     public string? RiskQualification { get; set; }
+
+    [JsonPropertyName(name: "created")]
+    public string? Created { get; set; }
+
+    [JsonPropertyName("portfolioCode")]
+    public string? PortFolioCode { get; set; }
+
+    [JsonPropertyName("externalCustomerCode")]
+    public string? ExternalCustomerCode { get; set; }
+
+    [JsonPropertyName("isReviewRecommended")]
+    public bool? IsReviewRecommended { get; set; }
+
+    [JsonPropertyName("isPEP")]
+    public bool? IsPEP { get; set; }
 
     [JsonPropertyName("data")]
     public IDictionary<string, string> Data { get; set; }

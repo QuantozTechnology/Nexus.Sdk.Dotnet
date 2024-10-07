@@ -66,4 +66,17 @@ public class CustomersFacade : ServerFacade, ICustomersFacade
     {
         return await _provider.DeleteCustomer(request, customerIPAddress);
     }
+
+    /// <summary>
+    /// List customer traces based on the code
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+    /// <returns>
+    /// Paged list of customer traces
+    /// </returns>
+    public async Task<PagedResponse<CustomerTraceResponse>> GetTrace(string customerCode, IDictionary<string, string>? queryParameters)
+    {
+        return await _provider.GetCustomerTrace(customerCode, queryParameters);
+    }
 }

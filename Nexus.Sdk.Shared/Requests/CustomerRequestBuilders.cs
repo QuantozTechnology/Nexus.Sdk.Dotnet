@@ -99,6 +99,24 @@
             return this;
         }
 
+        public CustomerRequestBuilder<T> SetPortfolioCode(string portfolioCode)
+        {
+            _request.PortFolioCode = portfolioCode;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetIsReviewed(bool isReviewed)
+        {
+            _request.IsReviewed = isReviewed;
+            return this;
+        }
+
+        public CustomerRequestBuilder<T> SetIsPEP(bool isPEP)
+        {
+            _request.IsPEP = isPEP;
+            return this;
+        }
+
         public CustomerRequestBuilder<T> SetCustomData(IDictionary<string, string> data)
         {
             _request.Data = data;
@@ -178,6 +196,12 @@
         public UpdateCustomerRequestBuilder SetTrustLevel(string trustLevel)
         {
             _request.TrustLevel = trustLevel;
+            return this;
+        }
+
+        public UpdateCustomerRequestBuilder SetReasonCode(string reasonCode)
+        {
+            _request.ReasonCode = reasonCode;
             return this;
         }
 

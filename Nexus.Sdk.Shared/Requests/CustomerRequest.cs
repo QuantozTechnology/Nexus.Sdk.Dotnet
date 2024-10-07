@@ -47,6 +47,9 @@ public class CustomerRequest
     [JsonPropertyName("riskQualification")]
     public string? RiskQualification { get; set; }
 
+    [JsonPropertyName("created")]
+    public string? Created { get; set; }
+
     [JsonPropertyName("address")]
     [StringLength(100)]
     public string? Address { get; set; }
@@ -65,6 +68,18 @@ public class CustomerRequest
 
     [JsonPropertyName("isReviewRecommended")]
     public bool IsReviewRecommended { get; set; } = false;
+
+    [JsonPropertyName("portfolioCode")]
+    public string? PortFolioCode { get; set; }
+
+    [JsonPropertyName("externalCustomerCode")]
+    public string? ExternalCustomerCode { get; set; }
+
+    [JsonPropertyName("IsReviewed")]
+    public bool? IsReviewed { get; set; }
+
+    [JsonPropertyName("isPEP")]
+    public bool? IsPEP { get; set; }
 
     public IDictionary<string, string>? Data { get; set; }
 }
@@ -98,6 +113,10 @@ public class UpdateCustomerRequest : CustomerRequest
 
     [JsonPropertyName("trustLevelCode")]
     public string? TrustLevel { get; set; }
+
+    [JsonPropertyName("reasonCode")]
+    [StringLength(100)]
+    public string? ReasonCode { get; set; }
 
     [JsonPropertyName("reason")]
     [StringLength(1024)]
