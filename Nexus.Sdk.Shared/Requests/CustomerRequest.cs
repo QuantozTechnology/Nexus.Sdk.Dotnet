@@ -76,10 +76,10 @@ public class CustomerRequest
     public string? ExternalCustomerCode { get; set; }
 
     [JsonPropertyName("IsReviewed")]
-    public bool? IsReviewed { get; set; }
+    public bool? IsReviewed { get; set; } = false;
 
     [JsonPropertyName("isPEP")]
-    public bool? IsPEP { get; set; }
+    public bool? IsPEP { get; set; } = false;
 
     public IDictionary<string, string>? Data { get; set; }
 }
