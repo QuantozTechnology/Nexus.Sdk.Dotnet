@@ -68,9 +68,9 @@ namespace Nexus.Sdk.Token.Responses
         public string PaymentReference { get; set; }
 
         [JsonPropertyName("fiatAmount")]
-        public decimal FiatAmount { get; private set; }
+        public decimal? FiatAmount { get; private set; }
 
         [JsonPropertyName("netFiatAmount")]
-        public decimal NetFiatAmount { get; private set; }
+        public decimal? NetFiatAmount { get; private set; }
     }
 }
