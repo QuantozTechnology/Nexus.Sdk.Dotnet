@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Token.Responses
     public record TokenOperationResponse
     {
         [JsonConstructor]
-        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference, decimal fiatAmount, decimal netFiatAmount)
+        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference, decimal? fiatAmount, decimal? netFiatAmount)
         {
             Code = code;
             Hash = hash;
