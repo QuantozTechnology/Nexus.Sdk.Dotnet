@@ -13,10 +13,10 @@ public class ResponseHandler : IResponseHandler
         _logger = logger;
     }
 
-    public async Task<T> HandleResponse<T>(HttpResponseMessage response) where T : class
+    public async Task<T> HandleResponse<T>(HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
     {
         var statusCode = response.StatusCode;
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
         _logger?.LogDebug("{statusCode} Response: {content}", statusCode, content);
 
@@ -47,7 +47,7 @@ public class ResponseHandler : IResponseHandler
         return responseObj;
     }
 
-    public async Task HandleResponse(HttpResponseMessage response)
+    public async Task HandleResponse(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
         var statusCode = response.StatusCode;
 
@@ -58,7 +58,7 @@ public class ResponseHandler : IResponseHandler
                 _logger?.LogWarning("Did you configure your authentication provider using ConnectTo?");
             }
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
             _logger?.LogError("Response: {content}", content);
 
             throw new ApiException((int)statusCode, "An error response was returned, please check the logs for details");
