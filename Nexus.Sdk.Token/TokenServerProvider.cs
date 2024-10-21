@@ -864,5 +864,11 @@ namespace Nexus.Sdk.Token
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
             return await builder.ExecuteGet<PaymentMethodsResponse>();
         }
+
+        public async Task<NexusResponse> DeleteAccount(string accountCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
+            return await builder.ExecuteDelete<NexusResponse>();
+        }
     }
 }

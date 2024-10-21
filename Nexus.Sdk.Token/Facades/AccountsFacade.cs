@@ -59,4 +59,9 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
     {
         return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodes, customerIPAddress);
     }
+
+    public async Task<NexusResponse> DeleteAccount(string accountCode)
+    {
+        return await _provider.DeleteAccount(accountCode);
+    }
 }

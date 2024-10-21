@@ -326,5 +326,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<NexusResponse> DeleteAccount(string accountCode)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

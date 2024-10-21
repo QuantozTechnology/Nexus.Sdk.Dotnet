@@ -317,5 +317,11 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="paymentMethodCode">Unique identifier of the payment method.</param>
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
+
+        /// <summary>
+        /// Delete an account
+        /// </summary>
+        /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
+        public Task<NexusResponse> DeleteAccount(string accountCode);
     }
 }
