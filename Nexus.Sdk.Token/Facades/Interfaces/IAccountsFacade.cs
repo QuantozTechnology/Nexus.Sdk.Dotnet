@@ -98,7 +98,8 @@ public interface IAccountsFacade
     public Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null);
 
     /// <summary>
-    /// Delete an account
+    /// Deletes an account.
+    /// Please note that all token balances needs to be 0 and all tokens disabled.
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     public Task<NexusResponse> DeleteAccount(string accountCode);
