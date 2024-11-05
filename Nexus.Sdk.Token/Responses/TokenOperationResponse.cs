@@ -77,13 +77,4 @@ namespace Nexus.Sdk.Token.Responses
         [JsonPropertyName("blockchainTransactionId")]
         public string BlockchainTransactionId { get; set; }
     }
-
-    public class UpdateOperationStatusRequest
-    {
-        [JsonPropertyName("status")]
-        public string Status { get; set; } = null!;
-
-        [JsonPropertyName("comment")]
-        public string? Comment { get; set; }
-    }
 }
