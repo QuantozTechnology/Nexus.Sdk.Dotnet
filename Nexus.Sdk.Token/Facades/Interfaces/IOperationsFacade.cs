@@ -101,4 +101,18 @@ public interface IOperationsFacade
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
     /// <returns>A simulated withdrawal that includes fees.</returns>
     public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null);
+
+    /// <summary>
+    /// Updates the status of a token operation.
+    /// </summary>
+    /// <param name="operationCode">Unique Nexus identifier of the operation.</param>
+    /// <param name="status">New status of the operation.</param>
+    /// <param name="comment">Optional comment explaining the reason for the update.</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+    /// <returns>The updated token operation response.</returns>
+    Task<TokenOperationResponse> UpdateOperationStatusAsync(
+        string operationCode,
+        string status,
+        string? comment = null,
+        string? customerIPAddress = null);
 }
