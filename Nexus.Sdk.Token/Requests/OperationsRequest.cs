@@ -122,7 +122,7 @@ public record PayoutOperationRequest
 public class UpdateOperationStatusRequest
 {
     [JsonPropertyName("status")]
-    public string Status { get; set; } = null!;
+    public string Status { get; set; }
 
     [JsonPropertyName("comment")]
     public string? Comment { get; set; }
