@@ -333,10 +333,6 @@ namespace Nexus.Sdk.Token
         /// <param name="comment">Optional comment explaining the reason for the update.</param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
         /// <returns>The updated token operation response.</returns>
-        Task<TokenOperationResponse> UpdateOperationStatusAsync(
-            string operationCode,
-            string status,
-            string? comment = null,
-            string? customerIPAddress = null);
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null);
     }
 }

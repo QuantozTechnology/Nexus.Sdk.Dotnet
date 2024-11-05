@@ -331,5 +331,9 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
