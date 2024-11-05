@@ -118,3 +118,12 @@ public record PayoutOperationRequest
     [JsonPropertyName("blockchainTransactionId")]
     public string? BlockchainTransactionId { get; set; }
 }
+
+public class UpdateOperationStatusRequest
+{
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
+
+    [JsonPropertyName("comment")]
+    public string? Comment { get; set; }
+}

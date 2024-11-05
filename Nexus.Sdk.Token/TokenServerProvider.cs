@@ -870,5 +870,18 @@ namespace Nexus.Sdk.Token
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
             return await builder.ExecuteDelete<NexusResponse>();
         }
+
+        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations", operationCode);
+            
+            var request = new UpdateOperationStatusRequest
+            {
+                Status = status,
+                Comment = comment
+            };
+
+            return await builder.ExecutePut<UpdateOperationStatusRequest, TokenOperationResponse>(request);
+        }
     }
 }

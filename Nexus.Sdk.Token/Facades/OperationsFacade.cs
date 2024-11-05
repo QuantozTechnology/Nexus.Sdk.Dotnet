@@ -48,4 +48,13 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     {
         return await _provider.SimulatePayoutAsync(accountCode, tokenCode, amount, pm, memo, paymentReference, blockchainTransactionId);
     }
+
+    public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null)
+    {
+        return await _provider.UpdateOperationStatusAsync(
+            operationCode,
+            status,
+            comment,
+            customerIPAddress);
+    }
 }
