@@ -30,6 +30,9 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("paymentCode")]
         public string? PaymentCode { get; set; }
+
+        [JsonPropertyName("status")]
+        public string? Status { get; set; }
     }
 
     public record ExecutedAmounts
