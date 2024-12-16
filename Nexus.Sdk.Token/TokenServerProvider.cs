@@ -859,6 +859,13 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePut<MailsResponse>();
         }
 
+        public async Task<MailsResponse> CreateMail(CreateMailRequest request)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
+
+            return await builder.ExecutePost<CreateMailRequest, MailsResponse>(request);
+        }
+
         public async Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
