@@ -8,17 +8,17 @@ public class CreateMailRequest
 {
     [JsonPropertyName("type")]
     [Required]
-    public string Type { get; set; }
+    public required string Type { get; set; }
 
     [JsonPropertyName("references")]
-    public MailEntityCodes References { get; set; }
+    public MailEntityCodes? References { get; set; }
 
     [JsonPropertyName("content")]
-    public MailContent Content { get; set; }
+    public MailContent? Content { get; set; }
 
     [JsonPropertyName("recipient")]
     [Required]
-    public PostMailRecipient Recipient { get; set; }
+    public required PostMailRecipient Recipient { get; set; }
 }
 
 public class PostMailRecipient
@@ -29,15 +29,15 @@ public class PostMailRecipient
     [EmailAddress(ErrorMessage = "InvalidEmailAddress")]
     [StringLength(80)]
     [Required]
-    public string Email { get; set; }
+    public required string Email { get; set; }
 
     [JsonPropertyName("cc")]
     [RegularExpression(commaSeperatedListOfEmailRegex, ErrorMessage = "InvalidCCEmailAddress")]
     [StringLength(80)]
-    public string CC { get; set; }
+    public string? CC { get; set; }
 
     [JsonPropertyName("bcc")]
     [RegularExpression(commaSeperatedListOfEmailRegex, ErrorMessage = "InvalidBCCEmailAddress")]
     [StringLength(80)]
-    public string BCC { get; set; }
+    public string? BCC { get; set; }
 }
