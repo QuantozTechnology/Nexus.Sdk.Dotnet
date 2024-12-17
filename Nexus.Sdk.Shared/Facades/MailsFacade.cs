@@ -1,4 +1,5 @@
-﻿using Nexus.Sdk.Shared.Responses;
+﻿using Nexus.Sdk.Shared.Requests;
+using Nexus.Sdk.Shared.Responses;
 
 namespace Nexus.Sdk.Shared.Facades;
 
@@ -18,6 +19,19 @@ public class MailsFacade : ServerFacade, IMailsFacade
     public async Task<PagedResponse<MailsResponse>> Get(IDictionary<string, string>? query)
     {
         return await _provider.GetMails(query);
+    }
+
+    /// <summary>
+    /// Create a new mail
+    /// </summary>
+    /// The minimum requirements are the type, 1 reference and the main recipient
+    /// </remarks>
+    /// <returns>
+    /// Created Mail details
+    /// </returns>
+    public async Task<MailsResponse> Create(CreateMailRequest request)
+    {
+        return await _provider.CreateMail(request);
     }
 
     /// <summary>
