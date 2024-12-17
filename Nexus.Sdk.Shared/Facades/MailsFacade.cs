@@ -22,11 +22,12 @@ public class MailsFacade : ServerFacade, IMailsFacade
     }
 
     /// <summary>
-    /// Update Mail status to Sent based on the code
+    /// Create a new mail
     /// </summary>
-    /// <param name="code">Mail code</param>
+    /// The minimum requirements are the type, 1 reference and the main recipient
+    /// </remarks>
     /// <returns>
-    /// Updated Mail record
+    /// Created Mail details
     /// </returns>
     public async Task<MailsResponse> Create(CreateMailRequest request)
     {
