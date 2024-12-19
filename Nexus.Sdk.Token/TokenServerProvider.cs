@@ -731,6 +731,17 @@ namespace Nexus.Sdk.Token
         /// <summary>
         ///
         /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals()
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "feepayeraccounts", "totals");
+            return await builder.ExecuteGet<List<TokenFeePayerResponse>>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="queryParameters"></param>
         /// <returns></returns>
         public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)

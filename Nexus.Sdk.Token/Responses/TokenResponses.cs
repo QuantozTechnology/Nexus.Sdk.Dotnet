@@ -66,6 +66,46 @@ public class TokenBalancesResponse
     }
 }
 
+public class TokenFeePayerResponse
+{
+    [JsonPropertyName("cryptoCode")]
+    public string CryptoCode { get; }
+
+    [JsonPropertyName("feePayerAccountsTotals")]
+    public FeePayerAccountsTotals FeePayerAccountsTotals { get; }
+
+    [JsonConstructor]
+    public TokenFeePayerResponse(string cryptoCode, FeePayerAccountsTotals feePayerAccountsTotals)
+    {
+        CryptoCode = cryptoCode;
+        FeePayerAccountsTotals = feePayerAccountsTotals;
+    }
+}
+
+public class FeePayerAccountsTotals
+{
+    [JsonPropertyName("total")]
+    public int Total { get; }
+
+    [JsonPropertyName("available")]
+    public int Available { get; }
+
+    [JsonPropertyName("locked")]
+    public int Locked { get; }
+
+    [JsonPropertyName("lowBalance")]
+    public int LowBalance { get; }
+
+    [JsonConstructor]
+    public FeePayerAccountsTotals(int total, int available, int locked, int lowBalance)
+    {
+        Total = total;
+        Available = available;
+        Locked = locked;
+        LowBalance = lowBalance;
+    }
+}
+
 public class TokenDetailsResponse
 {
     [JsonPropertyName("code")]
