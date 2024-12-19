@@ -34,6 +34,38 @@ public class TokenResponse
     }
 }
 
+public class TokenBalancesResponse
+{
+    [JsonPropertyName("tokenCode")]
+    public string TokenCode { get; }
+
+    [JsonPropertyName("issued")]
+    public double Issued { get; }
+
+    [JsonPropertyName("deleted")]
+    public double Deleted { get; }
+
+    [JsonPropertyName("available")]
+    public double Available { get; }
+
+    [JsonPropertyName("total")]
+    public double Total { get; }
+
+    [JsonPropertyName("updated")]
+    public string Updated { get; }
+
+    [JsonConstructor]
+    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated)
+    {
+        TokenCode = tokenCode;
+        Issued = issued;
+        Deleted = deleted;
+        Available = available;
+        Total = total;
+        Updated = updated;
+    }
+}
+
 public class TokenDetailsResponse
 {
     [JsonPropertyName("code")]

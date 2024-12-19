@@ -720,6 +720,17 @@ namespace Nexus.Sdk.Token
         /// <summary>
         ///
         /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
+        public async Task<TokenBalancesResponse> GetTokenBalances(string tokenCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode, "balance");
+            return await builder.ExecuteGet<TokenBalancesResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="queryParameters"></param>
         /// <returns></returns>
         public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)

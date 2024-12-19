@@ -13,6 +13,9 @@ namespace Nexus.Sdk.Token.Responses
         [JsonPropertyName("tokenCode")]
         public required string TokenCode { get; set; }
 
+        [JsonPropertyName("status")]
+        public required string Status { get; set; }
+
         [JsonPropertyName("paymentMethodName")]
         public required string PaymentMethodName { get; set; }
 
