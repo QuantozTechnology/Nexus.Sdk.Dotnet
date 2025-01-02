@@ -104,6 +104,19 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         Task<TokenDetailsResponse> GetToken(string tokenCode);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
+        Task<TokenBalancesResponse> GetTokenBalances(string tokenCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals();
 
         Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query);
 
