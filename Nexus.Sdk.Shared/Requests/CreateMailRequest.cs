@@ -11,7 +11,8 @@ public class CreateMailRequest
     public required string Type { get; set; }
 
     [JsonPropertyName("references")]
-    public MailEntityCodes? References { get; set; }
+    [Required]
+    public required MailEntityCodes References { get; set; }
 
     [JsonPropertyName("content")]
     public MailContent? Content { get; set; }
