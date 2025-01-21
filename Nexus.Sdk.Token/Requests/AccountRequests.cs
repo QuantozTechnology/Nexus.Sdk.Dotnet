@@ -33,6 +33,9 @@ public record UpdateTokenAccountRequest
 {
     [JsonPropertyName("tokenSettings")]
     public UpdateTokenAccountSettings? Settings { get; set; }
+
+    [JsonPropertyName("customName")]
+    public string? CustomName { get; set; }
 }
 
 public class UpdateTokenAccountSettings

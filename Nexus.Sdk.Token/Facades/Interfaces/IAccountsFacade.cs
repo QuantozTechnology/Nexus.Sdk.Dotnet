@@ -92,10 +92,11 @@ public interface IAccountsFacade
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     /// <param name="customerCode">Unique Nexus identifier of the customer</param>
+    /// <param name="customName">Optional parameter for updating the Custom name of an account</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="updateRequest"></param>
     /// <returns>A transaction that needs to be signed using the private key of the provided account</returns>
-    public Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null);
+    public Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest,string? customName, string? customerIPAddress = null);
 
     /// <summary>
     /// Deletes an account.

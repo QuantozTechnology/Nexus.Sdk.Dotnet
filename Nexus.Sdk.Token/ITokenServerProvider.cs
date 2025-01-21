@@ -93,9 +93,10 @@ namespace Nexus.Sdk.Token
         /// <param name="accountCode"></param>
         /// <param name="customerCode"></param>
         /// <param name="updateRequest"></param>
+        /// <param name="customName">Optional parameter for updating the Custom name of an account</param> 
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null);
+        Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customName = null, string? customerIPAddress = null);
 
         /// <summary>
         ///
