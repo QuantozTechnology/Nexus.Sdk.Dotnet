@@ -22,6 +22,7 @@ namespace Nexus.Token.Algorand.Examples
                 WriteToConsole("2 = Algorand Token Taxonomy Flow");
                 WriteToConsole("3 = Algorand Multiple Operations Flow");
                 WriteToConsole("4 = Algorand Token Limits Flow");
+                WriteToConsole("6 = Algorand Update Token Operation Status Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -50,6 +51,9 @@ namespace Nexus.Token.Algorand.Examples
                         case 4:
                             await AlgorandTokenLimitsFlow(algorandExample);
                             break;
+                        case 6:
+                            await AlgorandUpdateTokenOperationStatusFlow(algorandExample);
+                            break;    
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -219,6 +223,33 @@ namespace Nexus.Token.Algorand.Examples
             WriteToConsole("Total monthly payout limits =" + tokenPayoutLimitsResponse.Total.MonthlyLimit.ToString());
             WriteToConsole("Remaining daily payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
             WriteToConsole("Remaining monthly payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
+        }
+
+        public static async Task AlgorandUpdateTokenOperationStatusFlow(AlgorandExamples algorandExamples)
+        {
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await algorandExamples.CreateAccountAsync(bob);
+
+            WriteToConsole("Create a new token representing the Mona Lisa");
+            var tokenCode = Guid.NewGuid().ToString()[..8];
+            await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Now we Fund Bobs new account with 100 tokens");
+            await algorandExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
+
+            WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
+            var payoutResponse = await algorandExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
+
+            WriteToConsole("Now we update the funding operation status and payment reference");
+            if (!string.IsNullOrEmpty(payoutResponse.PaymentCode))
+            {
+                await algorandExamples.UpdateOperationStatusAsync(payoutResponse.PaymentCode, "PayoutConfirming", "Bank_reference_123");
+            }
+            else
+            {
+                WriteToConsole("Payment code is null or empty, cannot update operation status.", ConsoleColor.Red);
+            }
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)

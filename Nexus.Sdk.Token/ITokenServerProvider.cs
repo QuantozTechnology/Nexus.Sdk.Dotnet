@@ -343,9 +343,10 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="operationCode">Unique Nexus identifier of the operation.</param>
         /// <param name="status">New status of the operation.</param>
-        /// <param name="comment">Optional comment explaining the reason for the update.</param>
+        /// <param name="comment">Optional comment explaining the reason for the update. Default comment: Operation updated.</param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+        /// <param name="paymentReference">Optional reference to bank payment</param>
         /// <returns>The updated token operation response.</returns>
-        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null);
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
     }
 }

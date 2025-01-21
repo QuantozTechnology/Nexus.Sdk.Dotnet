@@ -182,7 +182,7 @@ namespace Nexus.Token.Algorand.Examples
 
         }
 
-        public async Task PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
+        public async Task<PayoutResponse> PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount, string? paymentReference = null)
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -190,11 +190,13 @@ namespace Nexus.Token.Algorand.Examples
 
             _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
 
-            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
+            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount, paymentReference: paymentReference);
             var signedResponse = kp.Sign(signableResponse);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
             _logger.LogWarning("Payout successful!");
+
+            return signableResponse.PayoutOperationResponse;
         }
 
         public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
@@ -211,6 +213,14 @@ namespace Nexus.Token.Algorand.Examples
 
             _logger.LogWarning("Returned token payout limits of the customer");
             return payoutLimitsResponse;
+        }
+
+        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? paymentReference = null)
+        {
+            var tokenOperationResponse = await _tokenServer.Operations.UpdateOperationStatusAsync(operationCode, status, paymentReference: paymentReference);
+
+            _logger.LogWarning("Operation update successful!");
+            return tokenOperationResponse;
         }
     }
 }

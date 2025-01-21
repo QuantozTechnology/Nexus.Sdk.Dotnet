@@ -342,5 +342,13 @@ namespace Nexus.Token.Stellar.Examples
             _logger.LogWarning("Returned token payout limits of the customer");
             return payoutLimitsResponse;
         }
+
+        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? paymentReference = null)
+        {
+            var tokenOperationResponse = await _tokenServer.Operations.UpdateOperationStatusAsync(operationCode, status, paymentReference: paymentReference);
+
+            _logger.LogWarning("Operation update successful!");
+            return tokenOperationResponse;
+        }
     }
 }

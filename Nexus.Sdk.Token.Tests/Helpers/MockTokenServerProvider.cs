@@ -347,9 +347,38 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
         
-        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null)
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
-            throw new NotImplementedException();
+            var tokenOperationResponse = new TokenOperationResponse
+            (  
+                code: "MockCode",
+                hash: "MockHash",
+                senderAccount: new OperationAccountResponses(
+                    "MockSenderCustomerCode",
+                    "MockSenderAccountCode",
+                    "MockSenderPublicKey"
+                ),
+                receiverAccount: new OperationAccountResponses(
+                    "MockSenderCustomerCode",
+                    "MockSenderAccountCode",
+                    "MockSenderPublicKey"
+                ),
+                amount: 100,
+                created: "MockCreated",
+                finished: "MockFinished",
+                status: status,
+                type: "MockType",
+                memo: "MockMemo",
+                message: "MockMessage",
+                cryptoCode: "MockCryptoCode",
+                tokenCode: "MockTokenCode",
+                paymentReference: paymentReference ?? "MockPaymentReference",
+                fiatAmount: 100,
+                netFiatAmount: 100,
+                blockchainTransactionId: "MockBlockchainTransactionId"
+            );
+
+            return Task.FromResult(tokenOperationResponse);
         }
     }
 }
