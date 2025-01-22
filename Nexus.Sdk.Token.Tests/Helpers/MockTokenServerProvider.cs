@@ -375,7 +375,19 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 paymentReference: paymentReference ?? "MockPaymentReference",
                 fiatAmount: 100,
                 netFiatAmount: 100,
-                blockchainTransactionId: "MockBlockchainTransactionId"
+                blockchainTransactionId: "MockBlockchainTransactionId",
+                fees: new OperationFees {
+                    BankFees = new OperationBankFees {
+                        TotalFiat = 100        
+                    },
+                    PartnerFees = new OperationPartnerFees {
+                        TotalFiat = 100
+                    },
+                    NetworkFees = new OperationNetworkFees {
+                        EstimatedFiat = 100,
+                        EstimatedCrypto = 100
+                    }
+                }
             );
 
             return Task.FromResult(tokenOperationResponse);

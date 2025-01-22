@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Algorand.Algod.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Nexus.Sdk.Token.Extensions;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Tests.Helpers;
@@ -95,6 +96,11 @@ namespace Nexus.Sdk.Token.Tests
                 Assert.That(tokenOperationResponse.FiatAmount, Is.EqualTo(100));
                 Assert.That(tokenOperationResponse.NetFiatAmount, Is.EqualTo(100));
                 Assert.That(tokenOperationResponse.BlockchainTransactionId, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Fees, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Fees?.BankFees?.TotalFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.PartnerFees?.TotalFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.NetworkFees?.EstimatedFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.NetworkFees?.EstimatedCrypto, Is.EqualTo(100));
             });
         }
     }
