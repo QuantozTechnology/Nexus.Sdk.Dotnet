@@ -22,7 +22,7 @@ namespace Nexus.Token.Algorand.Examples
                 WriteToConsole("2 = Algorand Token Taxonomy Flow");
                 WriteToConsole("3 = Algorand Multiple Operations Flow");
                 WriteToConsole("4 = Algorand Token Limits Flow");
-                WriteToConsole("6 = Algorand Update Token Operation Status Flow");
+                WriteToConsole("5 = Algorand Update Token Operation Status Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -51,7 +51,7 @@ namespace Nexus.Token.Algorand.Examples
                         case 4:
                             await AlgorandTokenLimitsFlow(algorandExample);
                             break;
-                        case 6:
+                        case 5:
                             await AlgorandUpdateTokenOperationStatusFlow(algorandExample);
                             break;    
                         default:
@@ -241,10 +241,10 @@ namespace Nexus.Token.Algorand.Examples
             WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
             var payoutResponse = await algorandExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
 
-            WriteToConsole("Now we update the funding operation status and payment reference");
+            WriteToConsole("Now we update Bob's payout operation status and payment reference");
             if (!string.IsNullOrEmpty(payoutResponse.PaymentCode))
             {
-                await algorandExamples.UpdateOperationStatusAsync(payoutResponse.PaymentCode, "PayoutConfirming", "Bank_reference_123");
+                await algorandExamples.UpdateOperationStatusAsync(payoutResponse.PaymentCode, "PayoutConfirming", "Algorand_SDK_Example_Bank_Reference_123");
             }
             else
             {

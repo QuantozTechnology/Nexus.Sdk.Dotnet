@@ -236,7 +236,7 @@ namespace Nexus.Token.Stellar.Examples
             }
         }
 
-        public async Task PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
+        public async Task<PayoutResponse> PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
         {
             var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -248,6 +248,8 @@ namespace Nexus.Token.Stellar.Examples
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
 
             _logger.LogWarning("Payout successful!");
+
+            return signableResponse.PayoutOperationResponse;
         }
 
         public async Task<OrderResponse> CreateBuyOrder(string encryptedPrivateKey, (string tokenCode, decimal amount) buying, (string tokenCode, decimal amount) selling)
@@ -345,6 +347,7 @@ namespace Nexus.Token.Stellar.Examples
 
         public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? paymentReference = null)
         {
+            _logger.LogWarning("Updating operation with status: {status} and payment reference: {paymentReference}", status, paymentReference);
             var tokenOperationResponse = await _tokenServer.Operations.UpdateOperationStatusAsync(operationCode, status, paymentReference: paymentReference);
 
             _logger.LogWarning("Operation update successful!");

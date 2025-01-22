@@ -182,7 +182,7 @@ namespace Nexus.Token.Algorand.Examples
 
         }
 
-        public async Task<PayoutResponse> PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount, string? paymentReference = null)
+        public async Task<PayoutResponse> PayoutAsync(string encryptedPrivateKey, string tokenCode, decimal amount)
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
@@ -190,7 +190,7 @@ namespace Nexus.Token.Algorand.Examples
 
             _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
 
-            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount, paymentReference: paymentReference);
+            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
             var signedResponse = kp.Sign(signableResponse);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
@@ -217,6 +217,7 @@ namespace Nexus.Token.Algorand.Examples
 
         public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? paymentReference = null)
         {
+            _logger.LogWarning("Updating operation with status: {status} and payment reference: {paymentReference}", status, paymentReference);            
             var tokenOperationResponse = await _tokenServer.Operations.UpdateOperationStatusAsync(operationCode, status, paymentReference: paymentReference);
 
             _logger.LogWarning("Operation update successful!");
