@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0" />
-	<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="9.0.0" />
+	<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="8.0.2" />
   </ItemGroup>
 
 </Project>
