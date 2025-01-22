@@ -125,5 +125,8 @@ public class UpdateOperationStatusRequest
     public string Status { get; set; }
 
     [JsonPropertyName("comment")]
-    public string? Comment { get; set; }
+    public string? Comment { get; set; } = "Operation updated";
+
+    [JsonPropertyName("paymentReference")]
+    public string? PaymentReference { get; set; } 
 }
