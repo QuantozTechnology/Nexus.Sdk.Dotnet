@@ -16,7 +16,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Algorand" Version="0.2.2-beta18" />
+		<PackageReference Include="Algorand" Version="0.2.1" />
 		<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="8.0.2" />
 		<PackageReference Include="stellar-dotnet-sdk" Version="9.1.3" />
 	</ItemGroup>
