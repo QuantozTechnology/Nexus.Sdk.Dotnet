@@ -27,6 +27,7 @@ namespace Nexus.Token.Stellar.Examples
                 WriteToConsole("4 = Stellar Stablecoin Flow");
                 WriteToConsole("5 = Stellar Multiple Operations Flow");
                 WriteToConsole("6 = Stellar Token Limits Flow");
+                WriteToConsole("7 = Stellar Update Token Operation Status Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
@@ -61,6 +62,9 @@ namespace Nexus.Token.Stellar.Examples
                         case 6:
                             await StellarTokenLimitsFlow(stellarExamples);
                             break;
+                        case 7:
+                            await StellarUpdateTokenOperationStatusFlow(stellarExamples);
+                            break;    
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -125,17 +129,17 @@ namespace Nexus.Token.Stellar.Examples
 
         public static async Task StellarPaymentFlow(StellarExamples stellarExamples)
         {
-            WriteToConsole("Create a new account for Bob");
-            var bob = Guid.NewGuid().ToString();
-            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob);
-
-            WriteToConsole("Create a new account for Alice");
-            var alice = Guid.NewGuid().ToString();
-            var alicesPrivateKey = await stellarExamples.CreateAccountAsync(alice);
-
             WriteToConsole("Create a new token representing the Mona Lisa");
             var tokenCode = Guid.NewGuid().ToString().Substring(0, 8);
             await stellarExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob, [tokenCode]);
+
+            WriteToConsole("Create a new account for Alice");
+            var alice = Guid.NewGuid().ToString();
+            var alicesPrivateKey = await stellarExamples.CreateAccountAsync(alice, [tokenCode]);
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
             await stellarExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
@@ -146,13 +150,13 @@ namespace Nexus.Token.Stellar.Examples
 
         public static async Task StellarPayoutFlow(StellarExamples stellarExamples)
         {
-            WriteToConsole("Create a new account for Bob");
-            var bob = Guid.NewGuid().ToString();
-            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob);
-
             WriteToConsole("Create a new token representing the Mona Lisa");
             var tokenCode = Guid.NewGuid().ToString()[..8];
             await stellarExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob, [tokenCode]);
 
             WriteToConsole("Now we Fund Bobs new account with 100 tokens");
             await stellarExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
@@ -305,6 +309,33 @@ namespace Nexus.Token.Stellar.Examples
             WriteToConsole("Remaining daily payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
             WriteToConsole("Remaining monthly payout limits = " + tokenPayoutLimitsResponse.Remaining.DailyLimit.ToString());
         }
+
+        public static async Task StellarUpdateTokenOperationStatusFlow(StellarExamples stellarExamples)
+        {
+            WriteToConsole("Create a new token representing the Mona Lisa");
+            var tokenCode = Guid.NewGuid().ToString()[..8];
+            await stellarExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new account for Bob");
+            var bob = Guid.NewGuid().ToString();
+            var bobsPrivateKey = await stellarExamples.CreateAccountAsync(bob, [tokenCode]);
+
+            WriteToConsole("Now we Fund Bobs new account with 100 tokens");
+            await stellarExamples.FundAccountAsync(bobsPrivateKey, tokenCode, 100);
+
+            WriteToConsole("Bob waited for the tokens to increase in value and would like to get paid out now");
+            var payoutResponse = await stellarExamples.PayoutAsync(bobsPrivateKey, tokenCode, 10);
+
+            WriteToConsole("Now we update Bob's payout operation status and payment reference");
+            if (!string.IsNullOrEmpty(payoutResponse.PaymentCode))
+            {
+                await stellarExamples.UpdateOperationStatusAsync(payoutResponse.PaymentCode, "PayoutConfirming", "Stellar_SDK_Example_Bank_Reference_123");
+            }
+            else
+            {
+                WriteToConsole("Payment code is null or empty, cannot update operation status.", ConsoleColor.Red);
+            }
+        }        
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)
         {
