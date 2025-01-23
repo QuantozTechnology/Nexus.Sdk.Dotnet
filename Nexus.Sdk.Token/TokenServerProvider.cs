@@ -900,13 +900,19 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteDelete<NexusResponse>();
         }
 
-        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null)
+        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations", operationCode);
-            
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
             var request = new UpdateOperationStatusRequest
             {
                 Status = status,
+                PaymentReference = paymentReference,
                 Comment = comment
             };
 
