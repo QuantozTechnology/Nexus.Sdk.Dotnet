@@ -25,9 +25,9 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.GetAccountBalanceAsync(accountCode);
     }
 
-    public async Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customName = null, string? customerIPAddress = null)
+    public async Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
     {
-        return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customName, customerIPAddress);
+        return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);
     }
 
     public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")

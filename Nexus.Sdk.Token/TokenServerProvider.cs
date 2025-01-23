@@ -194,22 +194,16 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="customerCode"></param>
         /// <param name="accountCode"></param>
-        /// <param name="updateRequest"></param>
-        /// <param name="customName">Optional parameter for updating the Custom name of an account</param> 
+        /// <param name="updateRequest"></param> 
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
-        public async Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customName = null, string? customerIPAddress = null)
+        public async Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest,  string? customerIPAddress = null)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts", accountCode);
 
             if (customerIPAddress != null)
             {
                 builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
-
-            if (!string.IsNullOrWhiteSpace(customName))
-            {
-                updateRequest.CustomName = customName;
             }
 
             return await builder.ExecutePut<UpdateTokenAccountRequest, SignableResponse>(updateRequest);
