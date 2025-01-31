@@ -912,9 +912,13 @@ namespace Nexus.Sdk.Token
             var request = new UpdateOperationStatusRequest
             {
                 Status = status,
-                PaymentReference = paymentReference,
-                Comment = comment
+                PaymentReference = paymentReference
             };
+
+            if (comment != null)
+            {
+                request.Comment = comment;
+            }
 
             return await builder.ExecutePut<UpdateOperationStatusRequest, TokenOperationResponse>(request);
         }
