@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '8.0.x'
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -39,5 +39,5 @@ jobs:
         VERSION="${{ steps.version.outputs.version }}"
         VERSION=${VERSION#"v"}
         dotnet pack -p:PackageVersion=$VERSION -c Release
-        dotnet nuget push "./Nexus.Sdk.Shared/bin/Release/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json    
+        dotnet nuget push "./Nexus.Sdk.Shared/bin/Release/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push "./Nexus.Sdk.Token/bin/Release/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
