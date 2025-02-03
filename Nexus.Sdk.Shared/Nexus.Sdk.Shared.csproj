@@ -1,27 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Shared</PackageProjectUrl>
-		<PackageReadmeFile></PackageReadmeFile>
-		<RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
-		<RepositoryType>github</RepositoryType>
-		<Description>Shared files used by sdk's for interacting with the Quantoz Nexus environment.</Description>
-		<Version>$(PackageVersion)</Version>
-		<Authors>Quantoz</Authors>
-		<Company>Quantoz Blockchain Technology</Company>
-		<Title>Quantoz Nexus Shared Sdk</Title>
-		<PackageId>Quantoz.Nexus.Sdk.Shared</PackageId>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageProjectUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/Nexus.Sdk.Shared</PackageProjectUrl>
+    <PackageReadmeFile></PackageReadmeFile>
+    <RepositoryUrl>https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
+    <Description>Shared files used by sdk's for interacting with the Quantoz Nexus environment.</Description>
+    <Version>$(PackageVersion)</Version>
+    <Authors>Quantoz</Authors>
+    <Company>Quantoz Blockchain Technology</Company>
+    <Title>Quantoz Nexus Shared Sdk</Title>
+    <PackageId>Quantoz.Nexus.Sdk.Shared</PackageId>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0" />
-	<PackageReference Include="ReHackt.Extensions.Options.Validation" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+    <PackageReference Include="ReHackt.Extensions.Options.Validation" Version="8.0.3" />
   </ItemGroup>
 
 </Project>
