@@ -783,10 +783,9 @@ namespace Nexus.Sdk.Token
             {
                 var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
                 await builder.ExecutePost(request, cancellationToken);
-
             }
 
-            if (awaitResult)
+            if (awaitResult && requests.Any(r => r.BackgroundSubmit))
             {
                 await Task.WhenAll(requests.Select(async request =>
                 {
