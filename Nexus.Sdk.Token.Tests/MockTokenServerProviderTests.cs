@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Algorand.Algod.Model;
+using Microsoft.Extensions.DependencyInjection;
 using Nexus.Sdk.Token.Extensions;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Tests.Helpers;
@@ -51,6 +52,55 @@ namespace Nexus.Sdk.Token.Tests
                 Assert.That(fundingResponses.TransactionEnvelope?.SigningNeeded, Is.False);
                 Assert.That(fundingResponses.TransactionEnvelope?.Memo, Is.Null.Or.Empty);
                 Assert.That(fundingResponses.TransactionEnvelope?.Status, Is.Not.Null.Or.Empty);
+            });
+        }
+
+
+        [Test]
+        public async Task MockTokenServerProviderTests_UpdateOperationStatusAsync()
+        {
+            _services = new ServiceCollection();
+
+            var mock = new MockTokenServerProvider();
+
+            _services.AddTokenServer(mock);
+
+            var provider = _services.BuildServiceProvider();
+
+            var tokenServerProvider = provider.GetRequiredService<ITokenServerProvider>();
+
+            var newStatus = "test status";
+            var newPaymentReference = "test payment reference";
+            var tokenOperationResponse = await tokenServerProvider.UpdateOperationStatusAsync("operationCode", newStatus, paymentReference: newPaymentReference);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(tokenServerProvider, Is.Not.Null);
+                Assert.That(tokenOperationResponse, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Code, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.Hash, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.SenderAccount, Is.Not.Null);
+                Assert.That(tokenOperationResponse.ReceiverAccount, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Amount, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Created, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.Finished, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.Status, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.Status, Is.EqualTo(newStatus));
+                Assert.That(tokenOperationResponse.Type, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.Memo, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Message, Is.Not.Null);
+                Assert.That(tokenOperationResponse.CryptoCode, Is.Not.Null);
+                Assert.That(tokenOperationResponse.TokenCode, Is.Not.Null.Or.Empty);
+                Assert.That(tokenOperationResponse.PaymentReference, Is.Not.Null);
+                Assert.That(tokenOperationResponse.PaymentReference, Is.EqualTo(newPaymentReference));                
+                Assert.That(tokenOperationResponse.FiatAmount, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.NetFiatAmount, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.BlockchainTransactionId, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Fees, Is.Not.Null);
+                Assert.That(tokenOperationResponse.Fees?.BankFees?.TotalFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.PartnerFees?.TotalFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.NetworkFees?.EstimatedFiat, Is.EqualTo(100));
+                Assert.That(tokenOperationResponse.Fees?.NetworkFees?.EstimatedCrypto, Is.EqualTo(100));
             });
         }
     }

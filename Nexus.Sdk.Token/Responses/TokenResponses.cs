@@ -34,6 +34,78 @@ public class TokenResponse
     }
 }
 
+public class TokenBalancesResponse
+{
+    [JsonPropertyName("tokenCode")]
+    public string TokenCode { get; }
+
+    [JsonPropertyName("issued")]
+    public double Issued { get; }
+
+    [JsonPropertyName("deleted")]
+    public double Deleted { get; }
+
+    [JsonPropertyName("available")]
+    public double Available { get; }
+
+    [JsonPropertyName("total")]
+    public double Total { get; }
+
+    [JsonPropertyName("updated")]
+    public string Updated { get; }
+
+    [JsonConstructor]
+    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated)
+    {
+        TokenCode = tokenCode;
+        Issued = issued;
+        Deleted = deleted;
+        Available = available;
+        Total = total;
+        Updated = updated;
+    }
+}
+
+public class TokenFeePayerResponse
+{
+    [JsonPropertyName("cryptoCode")]
+    public string CryptoCode { get; }
+
+    [JsonPropertyName("feePayerAccountsTotals")]
+    public FeePayerAccountsTotals FeePayerAccountsTotals { get; }
+
+    [JsonConstructor]
+    public TokenFeePayerResponse(string cryptoCode, FeePayerAccountsTotals feePayerAccountsTotals)
+    {
+        CryptoCode = cryptoCode;
+        FeePayerAccountsTotals = feePayerAccountsTotals;
+    }
+}
+
+public class FeePayerAccountsTotals
+{
+    [JsonPropertyName("total")]
+    public int Total { get; }
+
+    [JsonPropertyName("available")]
+    public int Available { get; }
+
+    [JsonPropertyName("locked")]
+    public int Locked { get; }
+
+    [JsonPropertyName("lowBalance")]
+    public int LowBalance { get; }
+
+    [JsonConstructor]
+    public FeePayerAccountsTotals(int total, int available, int locked, int lowBalance)
+    {
+        Total = total;
+        Available = available;
+        Locked = locked;
+        LowBalance = lowBalance;
+    }
+}
+
 public class TokenDetailsResponse
 {
     [JsonPropertyName("code")]

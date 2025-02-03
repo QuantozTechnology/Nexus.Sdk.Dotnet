@@ -14,6 +14,15 @@ public class TokensFacade : TokenServerFacade, ITokensFacade
     {
         return await _provider.GetToken(tokenCode);
     }
+    public async Task<TokenBalancesResponse> GetTokenBalances(string tokenCode)
+    {
+        return await _provider.GetTokenBalances(tokenCode);
+    }
+
+    public async Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals()
+    {
+        return await _provider.GetTokenFeePayerTotals();
+    }
 
     public async Task<PagedResponse<TokenResponse>> Get(IDictionary<string, string> query)
     {

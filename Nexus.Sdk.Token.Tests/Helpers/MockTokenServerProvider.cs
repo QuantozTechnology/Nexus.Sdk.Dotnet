@@ -212,6 +212,16 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<TokenBalancesResponse> GetTokenBalances(string tokenCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query)
         {
             throw new NotImplementedException();
@@ -313,6 +323,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<MailsResponse> CreateMail(CreateMailRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
@@ -326,6 +341,57 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         public Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<NexusResponse> DeleteAccount(string accountCode)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
+        {
+            var tokenOperationResponse = new TokenOperationResponse
+            (  
+                code: "MockCode",
+                hash: "MockHash",
+                senderAccount: new OperationAccountResponses(
+                    "MockSenderCustomerCode",
+                    "MockSenderAccountCode",
+                    "MockSenderPublicKey"
+                ),
+                receiverAccount: new OperationAccountResponses(
+                    "MockSenderCustomerCode",
+                    "MockSenderAccountCode",
+                    "MockSenderPublicKey"
+                ),
+                amount: 100,
+                created: "MockCreated",
+                finished: "MockFinished",
+                status: status,
+                type: "MockType",
+                memo: "MockMemo",
+                message: "MockMessage",
+                cryptoCode: "MockCryptoCode",
+                tokenCode: "MockTokenCode",
+                paymentReference: paymentReference ?? "MockPaymentReference",
+                fiatAmount: 100,
+                netFiatAmount: 100,
+                blockchainTransactionId: "MockBlockchainTransactionId",
+                fees: new OperationFees {
+                    BankFees = new OperationBankFees {
+                        TotalFiat = 100        
+                    },
+                    PartnerFees = new OperationPartnerFees {
+                        TotalFiat = 100
+                    },
+                    NetworkFees = new OperationNetworkFees {
+                        EstimatedFiat = 100,
+                        EstimatedCrypto = 100
+                    }
+                }
+            );
+
+            return Task.FromResult(tokenOperationResponse);
         }
 
         public Task<EnvelopeResponse> GetEnvelope(string code)

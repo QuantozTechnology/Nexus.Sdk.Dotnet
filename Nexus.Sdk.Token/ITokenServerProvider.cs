@@ -104,6 +104,19 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         Task<TokenDetailsResponse> GetToken(string tokenCode);
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
+        Task<TokenBalancesResponse> GetTokenBalances(string tokenCode);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals();
 
         Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query);
 
@@ -319,6 +332,24 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="paymentMethodCode">Unique identifier of the payment method.</param>
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
+
+        /// <summary>
+        /// Delete an account.
+        /// Please note that all token balances needs to be 0 and all tokens disabled.
+        /// </summary>
+        /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
+        public Task<NexusResponse> DeleteAccount(string accountCode);
+
+        /// <summary>
+        /// Updates the status of a token operation.
+        /// </summary>
+        /// <param name="operationCode">Unique Nexus identifier of the operation.</param>
+        /// <param name="status">New status of the operation.</param>
+        /// <param name="comment">Optional comment explaining the reason for the update. Default comment: Operation updated.</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+        /// <param name="paymentReference">Optional reference to bank payment</param>
+        /// <returns>The updated token operation response.</returns>
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
 
         /// <summary>
         /// Get envelope

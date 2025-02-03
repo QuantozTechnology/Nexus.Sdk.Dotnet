@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Token.Responses
     public record TokenOperationResponse
     {
         [JsonConstructor]
-        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference)
+        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference, decimal? fiatAmount, decimal? netFiatAmount, string blockchainTransactionId, OperationFees? fees)
         {
             Code = code;
             Hash = hash;
@@ -21,6 +21,10 @@ namespace Nexus.Sdk.Token.Responses
             CryptoCode = cryptoCode;
             TokenCode = tokenCode;
             PaymentReference = paymentReference;
+            FiatAmount = fiatAmount;
+            NetFiatAmount = netFiatAmount;
+            BlockchainTransactionId = blockchainTransactionId;
+            Fees = fees;
         }
 
         [JsonPropertyName("code")]
@@ -64,5 +68,50 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("paymentReference")]
         public string PaymentReference { get; set; }
+
+        [JsonPropertyName("fiatAmount")]
+        public decimal? FiatAmount { get; private set; }
+
+        [JsonPropertyName("netFiatAmount")]
+        public decimal? NetFiatAmount { get; private set; }
+
+        [JsonPropertyName("blockchainTransactionId")]
+        public string BlockchainTransactionId { get; set; }
+
+        [JsonPropertyName("fees")]
+        public OperationFees? Fees { get; set; }
+    }
+
+    public class OperationFees
+    {
+        [JsonPropertyName("bankFees")]
+        public OperationBankFees? BankFees { get; set; }
+
+        [JsonPropertyName("partnerFees")]
+        public OperationPartnerFees? PartnerFees { get; set; }
+
+        [JsonPropertyName("networkFees")]
+        public OperationNetworkFees? NetworkFees { get; set; }
+    }
+
+    public class OperationPartnerFees
+    {
+        [JsonPropertyName("totalFiat")]
+        public decimal? TotalFiat { get; set; }
+    }
+
+    public class OperationNetworkFees
+    {
+        [JsonPropertyName("estimatedFiat")]
+        public decimal? EstimatedFiat { get; set; }
+
+        [JsonPropertyName("estimatedCrypto")]
+        public decimal? EstimatedCrypto { get; set; }
+    }
+
+    public class OperationBankFees
+    {
+        [JsonPropertyName("totalFiat")]
+        public decimal? TotalFiat { get; set; }
     }
 }

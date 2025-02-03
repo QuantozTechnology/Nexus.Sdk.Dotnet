@@ -720,6 +720,28 @@ namespace Nexus.Sdk.Token
         /// <summary>
         ///
         /// </summary>
+        /// <param name="tokenCode"></param>
+        /// <returns></returns>
+        public async Task<TokenBalancesResponse> GetTokenBalances(string tokenCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode, "balance");
+            return await builder.ExecuteGet<TokenBalancesResponse>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals()
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "feepayeraccounts", "totals");
+            return await builder.ExecuteGet<List<TokenFeePayerResponse>>();
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
         /// <param name="queryParameters"></param>
         /// <returns></returns>
         public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)
@@ -905,10 +927,46 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePut<MailsResponse>();
         }
 
+        public async Task<MailsResponse> CreateMail(CreateMailRequest request)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
+
+            return await builder.ExecutePost<CreateMailRequest, MailsResponse>(request);
+        }
+
         public async Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
             return await builder.ExecuteGet<PaymentMethodsResponse>();
+        }
+
+        public async Task<NexusResponse> DeleteAccount(string accountCode)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
+            return await builder.ExecuteDelete<NexusResponse>();
+        }
+
+        public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations", operationCode);
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            var request = new UpdateOperationStatusRequest
+            {
+                Status = status,
+                PaymentReference = paymentReference
+            };
+
+            if (comment != null)
+            {
+                request.Comment = comment;
+            }
+
+            return await builder.ExecutePut<UpdateOperationStatusRequest, TokenOperationResponse>(request);
         }
     }
 }
