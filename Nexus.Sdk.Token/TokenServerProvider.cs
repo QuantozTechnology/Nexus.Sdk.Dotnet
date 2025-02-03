@@ -826,6 +826,8 @@ namespace Nexus.Sdk.Token
 
                 if (env != null)
                 {
+                    _logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.status);
+
                     if (env.status == "Completed")
                     {
                         return true;
@@ -838,7 +840,7 @@ namespace Nexus.Sdk.Token
                 }
 
                 // else delay
-                await Task.Delay(1000, cancellationToken);
+                await Task.Delay(3000, cancellationToken);
             }
         }
 

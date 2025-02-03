@@ -129,7 +129,7 @@ namespace Nexus.Token.Algorand.Examples
                 _logger.LogWarning("Account is not connected to the token, so we need to connect it first");
 
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(kp.GetAccountCode(), tokenCode);
-                var signedResponse = kp.Sign(signableResponse);
+                var signedResponse = kp.Sign(signableResponse, true);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse, false);
 
                 _logger.LogInformation("Successfully submitted the Account Connect request.");
@@ -158,7 +158,7 @@ namespace Nexus.Token.Algorand.Examples
 
             var tokenCodes = fundings.Select(kv => kv.Key);
             var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokenCodes);
-            var signedResponse = kp.Sign(signableResponse);
+            var signedResponse = kp.Sign(signableResponse, true);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
             var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null));
@@ -172,7 +172,7 @@ namespace Nexus.Token.Algorand.Examples
             var keypair = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
             var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(keypair.GetAccountCode(), tokenCodes);
-            var signedResponse = keypair.Sign(signableResponse);
+            var signedResponse = keypair.Sign(signableResponse, true);
 
             _ = _tokenServer.Submit.OnAlgorandAsync(signedResponse);
         }
@@ -189,7 +189,7 @@ namespace Nexus.Token.Algorand.Examples
                 _logger.LogWarning("Receiver account is not connected to the token, so we need to connect it first");
 
                 var signableResponse = await _tokenServer.Accounts.ConnectToTokenAsync(receiver.GetAccountCode(), tokenCode);
-                var signedResponse = receiver.Sign(signableResponse);
+                var signedResponse = receiver.Sign(signableResponse, true);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
                 // wait to be connected
@@ -207,7 +207,7 @@ namespace Nexus.Token.Algorand.Examples
 
             {
                 var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(sender.GetPublicKey(), receiver.GetPublicKey(), tokenCode, amount, "memo", "message", "ALGO");
-                var signedResponse = sender.Sign(signableResponse);
+                var signedResponse = sender.Sign(signableResponse, true);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
             }
 
@@ -224,7 +224,7 @@ namespace Nexus.Token.Algorand.Examples
             _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
 
             var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
-            var signedResponse = kp.Sign(signableResponse);
+            var signedResponse = kp.Sign(signableResponse, true);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
             _logger.LogWarning("Payout successful!");
@@ -250,7 +250,7 @@ namespace Nexus.Token.Algorand.Examples
 
         public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? paymentReference = null)
         {
-            _logger.LogWarning("Updating operation with status: {status} and payment reference: {paymentReference}", status, paymentReference);            
+            _logger.LogWarning("Updating operation with status: {status} and payment reference: {paymentReference}", status, paymentReference);
             var tokenOperationResponse = await _tokenServer.Operations.UpdateOperationStatusAsync(operationCode, status, paymentReference: paymentReference);
 
             _logger.LogWarning("Operation update successful!");

@@ -71,7 +71,7 @@ public class AlgorandKeyPair
     /// <param name="callbackUrl">The optional callbackUrl to be used for background submitting notifications</param>
     /// <returns>A list of Algorand transactions signed by this keypair</returns>
     /// <exception cref="InvalidOperationException">Thrown when there are no Algorand transactions to sign</exception>
-    public IEnumerable<AlgorandSubmitSignatureRequest> Sign(SignableResponse response, string? callbackUrl = null)
+    public IEnumerable<AlgorandSubmitSignatureRequest> Sign(SignableResponse response, bool backgroundSubmit = false)
     {
         if (response.BlockchainResponse.RequiredSignatures == null)
         {
@@ -88,7 +88,7 @@ public class AlgorandKeyPair
 
             var encodedSignedTransaction = Sign(encodedUnsignedTransaction);
 
-            return new AlgorandSubmitSignatureRequest(hash, GetPublicKey(), encodedSignedTransaction, callbackUrl);
+            return new AlgorandSubmitSignatureRequest(hash, GetPublicKey(), encodedSignedTransaction, backgroundSubmit);
         });
 
         return submitRequests;

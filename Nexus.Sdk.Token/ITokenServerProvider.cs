@@ -338,7 +338,7 @@ namespace Nexus.Sdk.Token
         /// Please note that all token balances needs to be 0 and all tokens disabled.
         /// </summary>
         /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
-        public Task<NexusResponse> DeleteAccount(string accountCode);
+        Task<NexusResponse> DeleteAccount(string accountCode);
 
         /// <summary>
         /// Updates the status of a token operation.
@@ -349,7 +349,7 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
         /// <param name="paymentReference">Optional reference to bank payment</param>
         /// <returns>The updated token operation response.</returns>
-        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
+        Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
 
         /// <summary>
         /// Get envelope
