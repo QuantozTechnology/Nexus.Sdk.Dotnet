@@ -825,14 +825,14 @@ namespace Nexus.Sdk.Token
 
                 if (env != null)
                 {
-                    _logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.status);
+                    _logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.Status);
 
-                    if (env.status == "Completed")
+                    if (env.Status == "Completed")
                     {
                         return true;
                     }
 
-                    if (env.status is "Failed" or "Cancelled")
+                    if (env.Status is "Failed" or "Cancelled")
                     {
                         return false;
                     }

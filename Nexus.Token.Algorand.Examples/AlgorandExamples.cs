@@ -51,13 +51,7 @@ namespace Nexus.Token.Algorand.Examples
         {
             var definition = AlgorandTokenDefinition.TokenizedAsset(tokenCode, tokenName, 1000, 0);
 
-            var response = await _tokenServer.Tokens.CreateOnAlgorand(definition, new AlgorandTokenSettings
-            {
-                // TODO: forcing to get to fix an issue about having frozen assets
-                AuthorizationRequired = false,
-                AuthorizationRevocable = true,
-                ClawbackEnabled = true
-            });
+            var response = await _tokenServer.Tokens.CreateOnAlgorand(definition);
             var token = response.Tokens.First();
 
             _logger.LogWarning("A new token was generated with the following issuer address: {issuerAddress}", token.IssuerAddress);

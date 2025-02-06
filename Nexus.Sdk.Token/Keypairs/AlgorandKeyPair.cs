@@ -68,7 +68,7 @@ public class AlgorandKeyPair
     /// Sign Algorand transactions using this keypair
     /// </summary>
     /// <param name="response">The response containing the Algorand transactions to sign</param>
-    /// <param name="callbackUrl">The optional callbackUrl to be used for background submitting notifications</param>
+    /// <param name="backgroundSubmit">Do not wait for the transactions to be fully processed</param>
     /// <returns>A list of Algorand transactions signed by this keypair</returns>
     /// <exception cref="InvalidOperationException">Thrown when there are no Algorand transactions to sign</exception>
     public IEnumerable<AlgorandSubmitSignatureRequest> Sign(SignableResponse response, bool backgroundSubmit = false)
@@ -91,6 +91,6 @@ public class AlgorandKeyPair
             return new AlgorandSubmitSignatureRequest(hash, GetPublicKey(), encodedSignedTransaction, backgroundSubmit);
         });
 
-        return submitRequests;
+        return submitRequests.ToList();
     }
 }

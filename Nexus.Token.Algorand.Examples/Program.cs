@@ -53,7 +53,7 @@ namespace Nexus.Token.Algorand.Examples
                             break;
                         case 5:
                             await AlgorandUpdateTokenOperationStatusFlow(algorandExample);
-                            break;    
+                            break;
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -96,7 +96,6 @@ namespace Nexus.Token.Algorand.Examples
                 .Build();
 
             var logger = new LoggerConfiguration()
-                 .MinimumLevel.Warning()
                  .WriteTo.Console()
                  .CreateLogger();
 
