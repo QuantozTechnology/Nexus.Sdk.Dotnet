@@ -48,7 +48,7 @@ public class RequestBuilder
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
-    public async Task ExecutePost<TRequest>(TRequest request) where TRequest : class
+    public async Task ExecutePost<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
@@ -59,11 +59,11 @@ public class RequestBuilder
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
-        var response = await _httpClient.SendAsync(postRequest);
+        var response = await _httpClient.SendAsync(postRequest, cancellationToken);
 
         ResetHeaders(); // reset headers
 
-        await _responseHandler.HandleResponse(response);
+        await _responseHandler.HandleResponse(response, cancellationToken);
     }
 
     public async Task<TResponse> ExecutePost<TRequest, TResponse>(TRequest request) where TRequest : class where TResponse : class

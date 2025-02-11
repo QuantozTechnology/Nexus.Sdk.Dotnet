@@ -16,17 +16,17 @@ public record AlgorandSubmitSignatureRequest
     [JsonPropertyName("signedTransaction")]
     public string SignedTransaction { get; set; }
 
-    [JsonPropertyName("callbackUrl")]
-    public string? CallBackUrl { get; set; }
+    [JsonPropertyName("backgroundSubmit")]
+    public bool BackgroundSubmit { get; set; }
 
     public AlgorandSubmitSignatureRequest(string transactionHash, string signerPublicKey, string signedTransaction,
-        string? callbackUrl = null)
+        bool backgroundSubmit = false)
     {
         CryptoCode = "ALGO";
         TransactionHash = transactionHash;
         SignerPublicKey = signerPublicKey;
         SignedTransaction = signedTransaction;
-        CallBackUrl = callbackUrl;
+        BackgroundSubmit = backgroundSubmit;
     }
 }
 
@@ -44,9 +44,6 @@ public record StellarSubmitSignatureRequest
     [JsonPropertyName("signedTransaction")]
     public string SignedTransaction { get; set; }
 
-    [JsonPropertyName("callbackUrl")]
-    public string? CallBackUrl { get; set; }
-
     public StellarSubmitSignatureRequest(string transactionHash, string signerPublicKey, string signedTransaction,
         string? callbackUrl = null)
     {
@@ -54,6 +51,5 @@ public record StellarSubmitSignatureRequest
         TransactionHash = transactionHash;
         SignerPublicKey = signerPublicKey;
         SignedTransaction = signedTransaction;
-        CallBackUrl = callbackUrl;
     }
 }

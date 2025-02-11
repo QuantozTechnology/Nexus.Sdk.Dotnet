@@ -227,11 +227,13 @@ namespace Nexus.Sdk.Token
         Task SubmitOnStellarAsync(IEnumerable<StellarSubmitSignatureRequest> requests);
 
         /// <summary>
-        ///
+        /// Submit a signature for a token operation specific to Algorand
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="requests">Collection of signatures to send</param>
+        /// <param name="awaitResult">If true, the method will await for the submit to be fully processed</param>
         /// <returns></returns>
-        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests);
+        Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         ///
@@ -336,7 +338,7 @@ namespace Nexus.Sdk.Token
         /// Please note that all token balances needs to be 0 and all tokens disabled.
         /// </summary>
         /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
-        public Task<NexusResponse> DeleteAccount(string accountCode);
+        Task<NexusResponse> DeleteAccount(string accountCode);
 
         /// <summary>
         /// Updates the status of a token operation.
@@ -347,6 +349,20 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
         /// <param name="paymentReference">Optional reference to bank payment</param>
         /// <returns>The updated token operation response.</returns>
-        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
+        Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
+
+        /// <summary>
+        /// Get envelope
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<EnvelopeResponse> GetEnvelope(string code);
+
+        /// <summary>
+        /// Check for completion of an envelope by periodically polling the server
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default);
     }
 }

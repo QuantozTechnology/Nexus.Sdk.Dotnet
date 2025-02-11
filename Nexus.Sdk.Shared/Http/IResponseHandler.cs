@@ -2,8 +2,8 @@
 {
     public interface IResponseHandler
     {
-        public Task<T> HandleResponse<T>(HttpResponseMessage response) where T : class;
+        public Task<T> HandleResponse<T>(HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class;
 
-        public Task HandleResponse(HttpResponseMessage response);
+        public Task HandleResponse(HttpResponseMessage response, CancellationToken cancellationToken = default);
     }
 }

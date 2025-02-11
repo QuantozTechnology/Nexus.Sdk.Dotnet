@@ -40,7 +40,7 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
         {
-            return await ConnectAccountToTokensAsync(accountCode, new string[] { tokenCode }, customerIPAddress);
+            return await ConnectAccountToTokensAsync(accountCode, [tokenCode], customerIPAddress);
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<CreateTokenResponse> CreateTokenOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
-            return await CreateTokensOnAlgorand(new AlgorandTokenDefinition[] { definition }, settings, customerIPAddress);
+            return await CreateTokensOnAlgorand([definition], settings, customerIPAddress);
         }
 
         public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
@@ -775,17 +775,22 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<PagedResponse<TokenOperationResponse>>();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests)
+        /// <inheritdoc/>
+        public async Task SubmitOnAlgorandAsync(IEnumerable<AlgorandSubmitSignatureRequest> requests, bool awaitResult = true,
+            CancellationToken cancellationToken = default)
         {
             foreach (var request in requests)
             {
                 var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
-                await builder.ExecutePost(request);
+                await builder.ExecutePost(request, cancellationToken);
+            }
+
+            if (awaitResult && requests.Any(r => r.BackgroundSubmit))
+            {
+                await Task.WhenAll(requests.Select(async request =>
+                {
+                    await WaitForCompletionAsync(request.TransactionHash, cancellationToken);
+                }));
             }
         }
 
@@ -801,6 +806,48 @@ namespace Nexus.Sdk.Token
                 var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
                 await builder.ExecutePost(request);
             }
+        }
+
+        /// <summary>
+        /// Wait for the completion of a token operation.
+        /// It must be fully processed and either Completed, Failed or Cancelled before returning.
+        /// </summary>
+        /// <param name="code">Unique Nexus identifier of the token operation or transaction hash</param>
+        public async Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default)
+        {
+            while (true)
+            {
+                // get the status of the envelope
+                var envelope = await GetEnvelope(code);
+
+                // if the status is completed, break
+                var env = envelope;
+
+                if (env != null)
+                {
+                    _logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.Status);
+
+                    if (env.Status == "Completed")
+                    {
+                        return true;
+                    }
+
+                    if (env.Status is "Failed" or "Cancelled")
+                    {
+                        return false;
+                    }
+                }
+
+                // else delay
+                await Task.Delay(3000, cancellationToken);
+            }
+        }
+
+        public async Task<EnvelopeResponse> GetEnvelope(string code)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("token", "envelope", code);
+            return await builder.ExecuteGet<EnvelopeResponse>();
         }
 
         /// <summary>

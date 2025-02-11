@@ -14,10 +14,10 @@ public class NexusResponseHandler : IResponseHandler
         _logger = logger;
     }
 
-    public async Task<T> HandleResponse<T>(HttpResponseMessage response) where T : class
+    public async Task<T> HandleResponse<T>(HttpResponseMessage response, CancellationToken cancellationToken = default) where T : class
     {
         var statusCode = response.StatusCode;
-        var content = await response.Content.ReadAsStringAsync();
+        var content = await response.Content.ReadAsStringAsync(cancellationToken);
 
         _logger?.LogDebug("{statusCode} Response: {content}", statusCode, content);
 
@@ -43,7 +43,7 @@ public class NexusResponseHandler : IResponseHandler
         return responseObj.Values;
     }
 
-    public async Task HandleResponse(HttpResponseMessage response)
+    public async Task HandleResponse(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
         var statusCode = response.StatusCode;
 
@@ -54,7 +54,7 @@ public class NexusResponseHandler : IResponseHandler
                 _logger?.LogWarning("Did you configure your authentication provider using ConnectTo?");
             }
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync(cancellationToken);
             _logger?.LogError("Response: {content}", content);
 
             var responseObj = JsonSingleton.GetInstance<NexusResponse>(content);
