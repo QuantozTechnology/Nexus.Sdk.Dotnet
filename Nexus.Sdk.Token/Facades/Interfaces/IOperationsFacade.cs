@@ -51,8 +51,9 @@ public interface IOperationsFacade
     /// <param name="cryptoCode">Optional code of the crypto currency that is used for the payment</param>
     /// <param name="callbackUrl">Optional URL that will be called when the payment is confirmed</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts

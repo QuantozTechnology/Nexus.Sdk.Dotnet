@@ -29,9 +29,9 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
 
     public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey,
                                                            string tokenCode, decimal amount, string? memo = null,
-                                                           string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
+                                                           string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null)
     {
-        return await _provider.CreatePaymentAsync(senderPublicKey, receiverPublicKey, tokenCode, amount, memo, message, cryptoCode, callbackUrl, customerIPAddress);
+        return await _provider.CreatePaymentAsync(senderPublicKey, receiverPublicKey, tokenCode, amount, memo, message, cryptoCode, callbackUrl, customerIPAddress, blockchainTransactionId);
     }
 
     public async Task<SignablePaymentResponse> CreatePaymentsAsync(PaymentDefinition[] definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
