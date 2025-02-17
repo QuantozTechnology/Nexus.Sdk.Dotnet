@@ -16,6 +16,7 @@ This project contains examples on how to use the Nexus Token Sdk.
 | 4 	| Stellar Stablecoin Flow     	| A flow between a customer and a client. Two tokens are created, one asset and one stablecoin. The customer  is funded with stablecoin in exchange for fiat. The customer can then use their stablecoin to purchase assets from the client. This purchase happens using two atomic payments.                                                                                                     	|
 | 5 	| Stellar Multiple Operations Flow     	| Submitting to the blockchain on Stellar can take up to ~5 seconds. If a customer would like to be funded with multiple tokens this could take a while if funded individually. To speed this up, Nexus supports funding multiple tokens at the same time. This flow demonstrates this and some of the other functionalities that can be executed at the same time.                         |
 | 6 	| Stellar Token Limits Flow     | This flow demonstrates the limits functionality during various payments operations. It lists the total and remaining funding and payout limits for a customer.                                                                                               	                                                                                                                                    |
+| 7 	| Stellar Update Token Operation Status Flow | A flow demonstrating how to update the status of a token operation and provide an optional payment reference. |
 
 ## *Signing Process*
 Some operations in Nexus require an account(s) to authorize them. This process is know as `signing`. The operations that require this authorization return a `SignableResponse`. This response needs to be signed using the key pairs `.Sign(...)` method. Upon successful signing, a `SubmitRequest` is returned that must be submitted to Nexus.
@@ -113,3 +114,4 @@ To run this sample code you need to connect it to your test environment using th
   }
 }
 ```
+The `NetworkPassphrase` is the Stellar network passphrase for the network you are connecting to. This is required for the SDK to function correctly. The passphrases for Stellar networks can be found [here](https://developers.stellar.org/docs/glossary/network-passphrase/).

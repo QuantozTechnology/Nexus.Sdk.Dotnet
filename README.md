@@ -22,6 +22,8 @@ Or execute the following dotnet command:
 dotnet package install Quantoz.Nexus.Token.Sdk
 ```
 
+## .NET Version Support Policy
+This repository follows the [.NET Long-Term Support (LTS) lifecycle](https://dotnet.microsoft.com/en-us/platform/support/policy). We will only upgrade the Nexus SDK to LTS versions of .NET, ensuring stability and long-term compatibility. Non-LTS versions of .NET will not be supported.
 
 ## Release Notes
 An overview of changes to the SDK is found [here.](https://github.com/QuantozTechnology/Nexus.Sdk.Dotnet/releases)

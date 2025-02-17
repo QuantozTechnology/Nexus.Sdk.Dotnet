@@ -15,6 +15,7 @@ This project contains examples on how to use the Nexus Token Sdk.
 | 2 	| Algorand Token Taxonomy Flow 	| A flow to show how to add taxonomy to a token.                                                                                                                                            	|
 | 3 	| Algorand Multiple Operations Flow     	| Submitting to the blockchain on Algorand can take up to ~8 seconds. If a customer would like to be funded with multiple tokens this could take a while if funded individually. To speed this up, Nexus supports funding multiple tokens at the same time. This flow demonstrates this and some of the other functionalities that can be executed at the same time.             |
 | 4 	| Algorand Token Limits Flow     | This flow demonstrates the limits functionality during various payments operations. It lists the total and remaining funding and payout limits for a customer.                               |
+| 5 	| Algorand Update Token Operation Status Flow | A flow demonstrating how to update the status of a token operation and provide an optional payment reference. 
 
 ## *Signing Process*
 Some operations in Nexus require an account(s) to authorize them. This process is know as `signing`. The operations that require this authorization return a `SignableResponse`. This response needs to be signed using the key pairs `.Sign(...)` method. Upon successful signing, a `SubmitRequest` is returned that must be submitted to Nexus.
