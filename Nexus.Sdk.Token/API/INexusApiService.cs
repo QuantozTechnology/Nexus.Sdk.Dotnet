@@ -5,7 +5,9 @@ namespace Nexus.Sdk.Token.API;
 
 public interface INexusApiService
 {
-    Task<CustomResultHolder> CreateDocumentStore(Dictionary<string, string> queryParams);
-
+    Task<CustomResultHolder> CreateDocumentStore(DocumentStoreSettings documentStoreSettings);
     Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore();
+    Task<CustomResultHolder> DeleteDocumentStore();
+    Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams);
+    Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData documentFileUploadData);
 }

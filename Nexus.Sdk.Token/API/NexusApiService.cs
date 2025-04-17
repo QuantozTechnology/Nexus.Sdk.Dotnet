@@ -54,17 +54,21 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
         var httpResponse = await client.PostAsJsonAsync(endPoint, postObject);
 
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<TResponse>(httpResponse);
-        }
+        return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
+    }
+    private async Task<TResponse> PostContentAsync<TResponse>(string endPoint, HttpContent content, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.PostAsync(endPoint, content);
 
         return (await httpResponse.Content.ReadFromJsonAsync<TResponse>(options: _serializerOptions))!;
     }
 
-    private async Task<T2> PostAsync<T2>(string endPoint, string apiVersion)
+
+    private async Task<T> PostAsync<T>(string endPoint, string apiVersion)
     {
-        return await PostAsync<object, T2>(endPoint, null, apiVersion);
+        return await PostAsync<object, T>(endPoint, null, apiVersion);
     }
 
     private async Task<T> GetAsync<T>(string endPoint, string apiVersion)
@@ -73,10 +77,14 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
         var httpResponse = await client.GetAsync(endPoint);
 
-        if (!httpResponse.IsSuccessStatusCode)
-        {
-            await HandleErrorResponse<T>(httpResponse);
-        }
+        return (await httpResponse.Content.ReadFromJsonAsync<T>(options: _serializerOptions))!;
+    }
+
+    private async Task<T> DeleteAsync<T>(string endPoint, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.DeleteAsync(endPoint);
 
         return (await httpResponse.Content.ReadFromJsonAsync<T>(options: _serializerOptions))!;
     }
@@ -108,13 +116,49 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return query;
     }
 
-    public async Task<CustomResultHolder> CreateDocumentStore(Dictionary<string, string> queryParams)
+    public async Task<CustomResultHolder> CreateDocumentStore(DocumentStoreSettings documentStoreSettings)
     {
-        return await PostAsync<CustomResultHolder>($"/integrations/documentstore{CreateUriQuery(queryParams)}", "1.2");
+        return await PostAsync<DocumentStoreSettings, CustomResultHolder>($"/integrations/documentstore", documentStoreSettings, "1.2");
     }
 
     public async Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore()
     {
         return await GetAsync<CustomResultHolder<DocumentStoreSettingsResponse>>("/integrations/documentstore", "1.2");
+    }
+
+    public async Task<CustomResultHolder> DeleteDocumentStore()
+    {
+        return await DeleteAsync<CustomResultHolder>("/integrations/documentstore", "1.2");
+    }
+
+    public async Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams)
+    {
+        return await GetAsync<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>>($"integrations/documentstore/list{CreateUriQuery(queryParams)}", "1.2");
+    }
+
+    public async Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData fileData)
+    {
+        using var formContent = new MultipartFormDataContent();
+
+        // Add file content
+        using var fileStream = fileData.File.OpenReadStream();
+        using var fileContent = new StreamContent(fileStream);
+        formContent.Add(fileContent, "file", fileData.File.FileName);
+
+        formContent.Add(new StringContent(fileData.FilePath), "filePath");
+
+        if (!string.IsNullOrEmpty(fileData.Alias))
+            formContent.Add(new StringContent(fileData.Alias), "alias");
+
+        if (!string.IsNullOrEmpty(fileData.Description))
+            formContent.Add(new StringContent(fileData.Description), "description");
+
+        if (!string.IsNullOrEmpty(fileData.CustomerCode))
+            formContent.Add(new StringContent(fileData.CustomerCode), "customerCode");
+
+        if (!string.IsNullOrEmpty(fileData.ItemReference))
+            formContent.Add(new StringContent(fileData.ItemReference), "itemReference");
+
+        return await PostContentAsync<CustomResultHolder>($"/integrations/documentstore/file", formContent, "1.2");
     }
 }
