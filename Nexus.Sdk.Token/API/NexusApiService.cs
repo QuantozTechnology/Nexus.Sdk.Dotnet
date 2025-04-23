@@ -80,6 +80,15 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
         return (await httpResponse.Content.ReadFromJsonAsync<T>(options: _serializerOptions))!;
     }
 
+    private async Task<Stream> GetStreamAsync(string endPoint, string apiVersion)
+    {
+        var client = await GetApiClient(apiVersion);
+
+        var httpResponse = await client.GetAsync(endPoint);
+
+        return await httpResponse.Content.ReadAsStreamAsync();
+    }
+
     private async Task<T> DeleteAsync<T>(string endPoint, string apiVersion)
     {
         var client = await GetApiClient(apiVersion);
@@ -160,5 +169,15 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
             formContent.Add(new StringContent(fileData.ItemReference), "itemReference");
 
         return await PostContentAsync<CustomResultHolder>($"/integrations/documentstore/file", formContent, "1.2");
+    }
+
+    public async Task<Stream> GetDocumentFromStore(string filePath)
+    {
+        return await GetStreamAsync($"/integrations/documentstore/file?filePath={filePath}", "1.2");
+    }
+
+    public async Task<CustomResultHolder> DeleteDocumentFromStore(string filePath)
+    {
+        return await DeleteAsync<CustomResultHolder>($"/integrations/documentstore/file?filePath={filePath}", "1.2");
     }
 }
