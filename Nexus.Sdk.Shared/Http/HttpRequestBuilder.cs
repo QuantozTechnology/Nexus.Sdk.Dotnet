@@ -43,6 +43,12 @@
             .BuildRequest();
     }
 
+    public static HttpRequestMessage BuildDeleteRequest(Uri path, HttpContent content, IDictionary<string, string> headers)
+    {
+        return new HttpRequestBuilder(path, content, headers, HttpMethod.Delete)
+            .BuildRequest();
+    }
+
     private HttpRequestMessage BuildRequest()
     {
         var request = new HttpRequestMessage

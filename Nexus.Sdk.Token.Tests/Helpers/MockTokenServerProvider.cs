@@ -403,5 +403,25 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<BankAccountResponse>> GetBankAccounts(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BankAccountResponse> CreateBankAccount(CreateBankAccountRequest request, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<BankAccountResponse> UpdateBankAccount(UpdateBankAccountRequest updateRequest, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteBankAccount(DeleteBankAccountRequest request)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

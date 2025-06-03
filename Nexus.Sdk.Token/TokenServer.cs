@@ -1,6 +1,7 @@
 ﻿using Nexus.Sdk.Shared.Facades;
 using Nexus.Sdk.Shared.Facades.Interfaces;
 using Nexus.Sdk.Token.Facades;
+using Nexus.Sdk.Token.Facades.Interfaces;
 
 namespace Nexus.Sdk.Token;
 
@@ -24,4 +25,5 @@ public class TokenServer : ITokenServer
     public IComplianceFacade Compliance => new ComplianceFacade(_serverProvider);
     public IPaymentMethodsFacade PaymentMethods => new PaymentMethodsFacade(_serverProvider);
     public ILabelPartnerFacade LabelPartner => new LabelPartnerFacade(_serverProvider);
+    public IBankAccountsFacade BankAccounts => new BankAccountsFacade(_serverProvider);
 }
