@@ -132,6 +132,24 @@ public class RequestBuilder
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
+    public async Task ExecuteDelete<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
+    {
+        var json = JsonSerializer.Serialize(request);
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+
+        _logger?.LogDebug("DELETE to {path}: {json}", path, json);
+
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        
+        var deleteRequest = HttpRequestBuilder.BuildDeleteRequest(requestUri, content, _headers);
+        var response = await _httpClient.SendAsync(deleteRequest, cancellationToken);
+
+        ResetHeaders();
+
+        await _responseHandler.HandleResponse(response, cancellationToken);
+    }
+
     public RequestBuilder SetSegments(params string[] segments)
     {
         if (_segmentsAdded)

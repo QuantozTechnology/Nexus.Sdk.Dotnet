@@ -365,5 +365,37 @@ namespace Nexus.Sdk.Token
         /// <param name="code"></param>
         /// <returns></returns>
         Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List bank accounts based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of bank accounts
+        /// </returns>
+        Task<PagedResponse<BankAccountResponse>> GetBankAccounts(IDictionary<string, string>? query);
+
+        /// <summary>
+        /// Create bank account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<BankAccountResponse> CreateBankAccount(CreateBankAccountRequest request, string? customerIPAddress = null);
+
+        /// <summary>
+        /// Update bank account
+        /// </summary>
+        /// <param name="updateRequest"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<BankAccountResponse> UpdateBankAccount(UpdateBankAccountRequest updateRequest, string? customerIPAddress = null);
+
+        /// <summary>
+        /// Delete bank account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        Task DeleteBankAccount(DeleteBankAccountRequest request);
     }
 }

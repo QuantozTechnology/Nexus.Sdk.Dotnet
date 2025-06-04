@@ -1,6 +1,7 @@
 ﻿using Nexus.Sdk.Shared.Facades;
 using Nexus.Sdk.Shared.Facades.Interfaces;
 using Nexus.Sdk.Token.Facades;
+using Nexus.Sdk.Token.Facades.Interfaces;
 
 namespace Nexus.Sdk.Token
 {
@@ -17,5 +18,6 @@ namespace Nexus.Sdk.Token
         public IComplianceFacade Compliance { get; }
         public IPaymentMethodsFacade PaymentMethods { get; }
         public ILabelPartnerFacade LabelPartner { get; }
+        public IBankAccountsFacade BankAccounts { get; }
     }
 }

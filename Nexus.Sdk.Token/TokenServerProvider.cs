@@ -162,7 +162,7 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string ? accountType = "MANAGED")
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 
@@ -969,6 +969,74 @@ namespace Nexus.Sdk.Token
             }
 
             return await builder.ExecutePut<UpdateOperationStatusRequest, TokenOperationResponse>(request);
+        }
+
+        /// <summary>
+        /// List bank accounts based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of bank accounts
+        /// </returns>
+        public async Task<PagedResponse<BankAccountResponse>> GetBankAccounts(IDictionary<string, string>? queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankaccounts");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<BankAccountResponse>>();
+        }
+
+        /// <summary>
+        /// Create bank account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        public async Task<BankAccountResponse> CreateBankAccount(CreateBankAccountRequest request, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankAccounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            return await builder.ExecutePost<CreateBankAccountRequest, BankAccountResponse>(request);
+        }
+
+        /// <summary>
+        /// Update bank account
+        /// </summary>
+        /// <param name="updateRequest"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        public async Task<BankAccountResponse> UpdateBankAccount(UpdateBankAccountRequest updateRequest, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankAccounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            return await builder.ExecutePut<UpdateBankAccountRequest, BankAccountResponse>(updateRequest);
+        }
+
+        /// <summary>
+        /// Delete bank account
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task DeleteBankAccount(DeleteBankAccountRequest request)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("customer", "bankAccounts");
+
+            await builder.ExecuteDelete(request);
         }
     }
 }
