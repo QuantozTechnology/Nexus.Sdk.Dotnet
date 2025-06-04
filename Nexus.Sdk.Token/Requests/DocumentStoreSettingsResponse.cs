@@ -1,4 +1,4 @@
-namespace Nexus.Sdk.Token.API.Models;
+namespace Nexus.Sdk.Token.Requests;
 
 /// <summary>
 /// Response object for Document Store settings that only exposes specific properties

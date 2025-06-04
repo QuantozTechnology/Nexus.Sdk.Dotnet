@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations;
 
-namespace Nexus.Sdk.Token.API.Models;
+namespace Nexus.Sdk.Token.Requests;
 public class DocumentFileUploadData
 {
     /// <summary>

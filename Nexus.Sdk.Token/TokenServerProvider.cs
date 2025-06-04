@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.Logging;
 using Nexus.Sdk.Shared.ErrorHandling;
 using Nexus.Sdk.Shared.Http;
 using Nexus.Sdk.Shared.Options;
 using Nexus.Sdk.Shared.Requests;
 using Nexus.Sdk.Shared.Responses;
+using Nexus.Sdk.Token.NexusAPI;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
 
@@ -15,6 +18,12 @@ namespace Nexus.Sdk.Token
         private readonly HttpClient _client;
         private readonly NexusResponseHandler _handler;
         private readonly ILogger<TokenServerProvider> _logger;
+        private readonly Dictionary<string, string> _headers = [];
+        private readonly JsonSerializerOptions _serializerOptions = new()
+        {
+            Converters = { new JsonStringEnumConverter() },
+            PropertyNameCaseInsensitive = true
+        };
 
         public TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger<TokenServerProvider> logger)
         {
@@ -22,6 +31,19 @@ namespace Nexus.Sdk.Token
             _handler = new NexusResponseHandler(logger);
             _options = options;
             _logger = logger;
+        }
+
+        public TokenServerProvider(INexusApiClientFactory nexusApiClientFactory, NexusOptions options, ILogger<TokenServerProvider> logger)
+        {
+            _client = nexusApiClientFactory.GetClient(apiVersion);
+            _handler = new NexusResponseHandler(logger);
+            _options = options;
+            _logger = logger;
+
+            foreach (var header in _headers)
+            {
+                client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            }
         }
 
         public async Task<SignableResponse> CancelOrder(string orderCode)
@@ -162,7 +184,7 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePost<CreateStellarAccountRequest, AccountResponse>(request);
         }
 
-        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string ? accountType = "MANAGED")
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
 

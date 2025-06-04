@@ -1,4 +1,4 @@
-namespace Nexus.Sdk.Token.API.Models.Response;
+namespace Nexus.Sdk.Token.Responses;
 public class CustomResultHolder<T>
 {
     public string? Message { get; set; }

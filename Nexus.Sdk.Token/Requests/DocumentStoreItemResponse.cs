@@ -1,4 +1,4 @@
-namespace Nexus.Sdk.Token.API.Models;
+namespace Nexus.Sdk.Token.Requests;
 
 public class DocumentStoreItemResponse
 {

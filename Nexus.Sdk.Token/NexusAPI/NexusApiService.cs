@@ -1,10 +1,10 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Nexus.Sdk.Token.API.Models;
-using Nexus.Sdk.Token.API.Models.Response;
+using Nexus.Sdk.Token.Requests;
+using Nexus.Sdk.Token.Responses;
 
-namespace Nexus.Sdk.Token.API;
+namespace Nexus.Sdk.Token.NexusAPI;
 
 public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
     : INexusApiService
@@ -34,10 +34,15 @@ public class NexusAPIService(INexusApiClientFactory nexusApiClientFactory)
 
         var exception = content?.Errors is { Length: > 0 }
             ? new NexusApiException($"Request failed: {content.Errors.Aggregate((a, b) => a + ", " + b)}")
-            : new NexusApiException($"Request failed: {response.ReasonPhrase} ({(int)response.StatusCode})");
+            {
+                ResponseContent = await response.Content.ReadAsStringAsync();
+            }
+            : new NexusApiException($"Request failed: {response.ReasonPhrase} ({(int)response.StatusCode})")
+            {
+                ResponseContent = await response.Content.ReadAsStringAsync();
+            };
 
         exception.StatusCode = response.StatusCode;
-        exception.ResponseContent = await response.Content.ReadAsStringAsync();
 
         throw exception;
     }

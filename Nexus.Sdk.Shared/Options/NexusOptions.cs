@@ -11,5 +11,7 @@ namespace Nexus.Sdk.Shared.Options
         public required AuthProviderOptions AuthProviderOptions { get; set; }
 
         public required PaymentMethodOptions PaymentMethodOptions { get; init; }
+
+        public bool ThrowOnMissingAccessToken { get; set; } = true;
     }
 }

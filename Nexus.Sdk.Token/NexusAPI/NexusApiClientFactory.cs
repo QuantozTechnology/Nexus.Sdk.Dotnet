@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Options;
 
-namespace Nexus.Sdk.Token.API;
+namespace Nexus.Sdk.Token.NexusAPI;
 public class NexusApiClientFactory(
     IHttpClientFactory httpClientFactory,
     INexusApiGetAccessToken getAccessTokenFunc,

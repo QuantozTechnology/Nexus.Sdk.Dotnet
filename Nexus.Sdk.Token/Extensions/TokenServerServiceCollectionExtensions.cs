@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Nexus.Sdk.Shared.Options;
+using Nexus.Sdk.Token.NexusAPI;
 using Nexus.Sdk.Token.Security;
 
 namespace Nexus.Sdk.Token.Extensions
@@ -48,6 +49,19 @@ namespace Nexus.Sdk.Token.Extensions
             serviceCollection.AddScoped<ITokenServer, TokenServer>();
             serviceCollection.AddScoped<ITokenServerProvider, TokenServerProvider>();
             return serviceCollection;
+        }
+
+        public static void AddNexusTokenSdk(this IServiceCollection services, Action<NexusApiOptions> configureOptions)
+        {
+            services.Configure(configureOptions);
+            services.AddHttpClient();
+            services.AddScoped<INexusApiClientFactory, NexusApiClientFactory>();
+            services.AddScoped<NexusAPIService>();
+        }
+
+        public static void AddNexusTokenSdk(this IServiceCollection services)
+        {
+            services.AddNexusTokenSdk(_ => { });
         }
 
     }

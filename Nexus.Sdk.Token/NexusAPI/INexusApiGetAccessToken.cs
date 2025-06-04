@@ -1,4 +1,4 @@
-namespace Nexus.Sdk.Token.API;
+namespace Nexus.Sdk.Token.NexusAPI;
 public interface INexusApiGetAccessToken
 {
     /// <summary>

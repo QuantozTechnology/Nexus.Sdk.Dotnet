@@ -1,7 +1,7 @@
-using Nexus.Sdk.Token.API.Models;
-using Nexus.Sdk.Token.API.Models.Response;
+using Nexus.Sdk.Token.Requests;
+using Nexus.Sdk.Token.Responses;
 
-namespace Nexus.Sdk.Token.API;
+namespace Nexus.Sdk.Token.NexusAPI;
 
 public interface INexusApiService
 {

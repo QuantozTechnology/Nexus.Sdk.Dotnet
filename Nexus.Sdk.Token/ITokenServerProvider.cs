@@ -365,5 +365,13 @@ namespace Nexus.Sdk.Token
         /// <param name="code"></param>
         /// <returns></returns>
         Task<bool> WaitForCompletionAsync(string code, CancellationToken cancellationToken = default);
+
+        Task<CustomResultHolder> CreateDocumentStore(DocumentStoreSettings documentStoreSettings);
+        Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore();
+        Task<CustomResultHolder> DeleteDocumentStore();
+        Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams);
+        Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData documentFileUploadData);
+        Task<Stream> GetDocumentFromStore(string filePath);
+        Task<CustomResultHolder> DeleteDocumentFromStore(string filePath);
     }
 }

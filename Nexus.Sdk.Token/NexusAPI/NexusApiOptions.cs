@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Nexus.Sdk.Token.API;
+namespace Nexus.Sdk.Token.NexusAPI;
 public class NexusApiOptions
 {
     /// <summary>
