@@ -347,11 +347,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
-        
+
         public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
             var tokenOperationResponse = new TokenOperationResponse
-            (  
+            (
                 code: "MockCode",
                 hash: "MockHash",
                 senderAccount: new OperationAccountResponses(
@@ -377,14 +377,18 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 fiatAmount: 100,
                 netFiatAmount: 100,
                 blockchainTransactionId: "MockBlockchainTransactionId",
-                fees: new OperationFees {
-                    BankFees = new OperationBankFees {
-                        TotalFiat = 100        
-                    },
-                    PartnerFees = new OperationPartnerFees {
+                fees: new OperationFees
+                {
+                    BankFees = new OperationBankFees
+                    {
                         TotalFiat = 100
                     },
-                    NetworkFees = new OperationNetworkFees {
+                    PartnerFees = new OperationPartnerFees
+                    {
+                        TotalFiat = 100
+                    },
+                    NetworkFees = new OperationNetworkFees
+                    {
                         EstimatedFiat = 100,
                         EstimatedCrypto = 100
                     }
@@ -420,6 +424,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task DeleteBankAccount(DeleteBankAccountRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress)
         {
             throw new NotImplementedException();
         }

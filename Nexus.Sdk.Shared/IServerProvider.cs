@@ -19,6 +19,14 @@ namespace Nexus.Sdk.Shared
         Task<MailsResponse> CreateMail(CreateMailRequest request);
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
-
+        Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress);
+        /*
+        Task<CustomResultHolder> CreateDocumentStore(DocumentStoreSettings documentStoreSettings);
+        Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore();
+        Task<CustomResultHolder> DeleteDocumentStore();
+        Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams);
+        Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData documentFileUploadData);
+        Task<Stream> GetDocumentFromStore(string filePath);
+        Task<CustomResultHolder> DeleteDocumentFromStore(string filePath);*/
     }
 }

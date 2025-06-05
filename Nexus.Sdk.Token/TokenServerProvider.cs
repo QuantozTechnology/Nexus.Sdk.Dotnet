@@ -1038,5 +1038,15 @@ namespace Nexus.Sdk.Token
 
             await builder.ExecuteDelete(request);
         }
+
+        public async Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            return await builder.ExecuteGet<DocumentStoreSettingsResponse>();
+        }
     }
 }
