@@ -432,5 +432,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

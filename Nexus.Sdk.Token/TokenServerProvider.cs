@@ -1048,5 +1048,13 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecuteGet<DocumentStoreSettingsResponse>();
         }
+
+        public async Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore");
+
+            return await builder.ExecutePost<DocumentStoreSettingsRequest, NexusResponse>(documentStoreSettings);
+        }
     }
 }

@@ -20,8 +20,9 @@ namespace Nexus.Sdk.Shared
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
         Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress);
+        Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings);
         /*
-        Task<CustomResultHolder> CreateDocumentStore(DocumentStoreSettings documentStoreSettings);
+        
         Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore();
         Task<CustomResultHolder> DeleteDocumentStore();
         Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams);
