@@ -1049,10 +1049,12 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<DocumentStoreSettingsResponse>();
         }
 
-        public async Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings)
+        public async Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
                 .SetSegments("integrations", "documentstore");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePost<DocumentStoreSettingsRequest, NexusResponse>(documentStoreSettings);
         }
