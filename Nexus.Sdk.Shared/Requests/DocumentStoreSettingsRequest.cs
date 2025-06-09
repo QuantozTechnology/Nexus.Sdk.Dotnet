@@ -25,8 +25,7 @@ public class DocumentStoreSettingsRequest
     /// <remarks>
     /// Currently only Azure Files is supported.
     /// </remarks>
-    //[JsonConverter(typeof(JsonStringEnumConverter))]
-    [JsonPropertyName("DocumentStoreType")]
+    [JsonPropertyName("documentStoreType")]
     [Required]
     public required string DocumentStoreType { get; set; }
 

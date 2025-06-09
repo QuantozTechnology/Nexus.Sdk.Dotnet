@@ -1084,5 +1084,50 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecuteDelete<NexusResponse>();
         }
+
+        public async Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore", "list");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            return await builder.ExecuteGet<PagedResponse<DocumentStoreItemResponse>>();
+        }
+
+        public async Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore", "file");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            using var formContent = new MultipartFormDataContent();
+
+            // Add file content
+            using var fileStream = fileUploadRequest.File.OpenReadStream();
+            using var fileContent = new StreamContent(fileStream);
+            formContent.Add(fileContent, "file", fileUploadRequest.File.FileName);
+
+            formContent.Add(new StringContent(fileUploadRequest.FilePath), "filePath");
+            formContent.Add(new StringContent(fileUploadRequest.CustomerCode), "customerCode");
+            formContent.Add(new StringContent(fileUploadRequest.DocumentTypeCode), "documentTypeCode");
+
+            if (!string.IsNullOrEmpty(fileUploadRequest.Alias))
+                formContent.Add(new StringContent(fileUploadRequest.Alias), "alias");
+
+            if (!string.IsNullOrEmpty(fileUploadRequest.Description))
+                formContent.Add(new StringContent(fileUploadRequest.Description), "description");
+
+            if (!string.IsNullOrEmpty(fileUploadRequest.ItemReference))
+                formContent.Add(new StringContent(fileUploadRequest.ItemReference), "itemReference");
+
+            return await builder.ExecutePost<NexusResponse>(formContent);
+        }
     }
 }

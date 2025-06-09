@@ -442,5 +442,15 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
