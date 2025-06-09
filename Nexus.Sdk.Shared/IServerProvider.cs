@@ -21,10 +21,11 @@ namespace Nexus.Sdk.Shared
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
         Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress);
         Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
+        Task<NexusResponse> DeleteDocumentStore(string customerIPAddress);
         /*
         
-        Task<CustomResultHolder<DocumentStoreSettingsResponse>> GetDocumentStore();
-        Task<CustomResultHolder> DeleteDocumentStore();
+
+
         Task<CustomResultHolder<PagedResult<DocumentStoreItemResponse>>> GetDocumentStoreList(Dictionary<string, string> queryParams);
         Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData documentFileUploadData);
         Task<Stream> GetDocumentFromStore(string filePath);
