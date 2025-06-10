@@ -48,6 +48,22 @@ public class RequestBuilder
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
+    public async Task<Stream> ExecuteGetStream()
+    {
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+
+        _logger?.LogDebug("GET {uri}", path);
+
+        var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
+
+        var response = await _httpClient.SendAsync(getRequest);
+
+        ResetHeaders(); // reset headers
+
+        return await _responseHandler.HandleResponseStream(response);
+    }
+
     public async Task ExecutePost<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
     {
         var json = JsonSerializer.Serialize(request);

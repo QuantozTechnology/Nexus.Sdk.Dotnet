@@ -452,5 +452,14 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

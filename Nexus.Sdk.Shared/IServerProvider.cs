@@ -24,9 +24,7 @@ namespace Nexus.Sdk.Shared
         Task<NexusResponse> DeleteDocumentStore(string customerIPAddress);
         Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress);
         Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress);
-        /*
-        Task<CustomResultHolder> AddDocumentToStore(DocumentFileUploadData documentFileUploadData);
-        Task<Stream> GetDocumentFromStore(string filePath);
-        Task<CustomResultHolder> DeleteDocumentFromStore(string filePath);*/
+        Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
+        Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
     }
 }

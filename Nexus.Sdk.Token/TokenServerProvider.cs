@@ -1129,5 +1129,35 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecutePost<NexusResponse>(formContent);
         }
+
+        public async Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore", "file");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            builder.SetQueryParameters(new Dictionary<string, string>
+            {
+                { "filePath", documentRequest.FilePath }
+            });
+
+            return await builder.ExecuteGetStream();
+        }
+
+        public async Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore", "file");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            builder.SetQueryParameters(new Dictionary<string, string>
+            {
+                { "filePath", documentRequest.FilePath }
+            });
+
+            return await builder.ExecuteDelete<NexusResponse>();
+        }
     }
 }
