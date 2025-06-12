@@ -1085,6 +1085,12 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteDelete<NexusResponse>();
         }
 
+        /// <summary>
+        /// Retrieve a list of files in the Document Store based on the provided query parameters.
+        /// </summary>
+        /// <param name="queryParameters"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
         public async Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
@@ -1100,6 +1106,12 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<PagedResponse<DocumentStoreItemResponse>>();
         }
 
+        /// <summary>
+        /// Upload a document to the Document Store.
+        /// </summary>
+        /// <param name="fileUploadRequest"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
         public async Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
@@ -1130,6 +1142,12 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePost<NexusResponse>(formContent);
         }
 
+        /// <summary>
+        /// Retrieve a document from the Document Store based on the provided file path.
+        /// </summary>
+        /// <param name="documentRequest"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
         public async Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
@@ -1145,6 +1163,12 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGetStream();
         }
 
+        /// <summary>
+        /// Delete a document from the Document Store based on the provided file path.
+        /// </summary>
+        /// <param name="documentRequest"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
         public async Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
