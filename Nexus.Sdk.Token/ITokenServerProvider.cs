@@ -17,6 +17,16 @@ namespace Nexus.Sdk.Token
         Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? query);
 
         /// <summary>
+        /// Create a virtual account
+        /// </summary>
+        /// <param name="customerCode"></param>
+        /// <param name="generateReceiveAddress">Generate a receive address for the virtual account to receive from blockchain accounts.</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="customName">Optional custom name for account</param>
+        /// <returns></returns>
+        Task<AccountResponse> CreateVirtualAccount(string customerCode, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null);
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="customerCode"></param>
