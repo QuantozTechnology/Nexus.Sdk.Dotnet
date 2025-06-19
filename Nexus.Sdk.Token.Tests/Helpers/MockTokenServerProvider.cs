@@ -424,7 +424,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<AccountResponse> CreateVirtualAccount(string customerCode, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
         {
             throw new NotImplementedException();
         }
