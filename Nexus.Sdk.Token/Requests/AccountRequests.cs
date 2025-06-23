@@ -23,6 +23,15 @@ public record CreateStellarAccountRequest : CreateTokenAccountRequest
     public string CryptoCode { get; set; } = "XLM";
 }
 
+public record CreateVirtualAccountRequest : CreateTokenAccountRequest
+{
+    [JsonPropertyName("cryptoCode")]
+    public string CryptoCode { get; set; }
+
+    [JsonPropertyName("generateReceiveAddress")]
+    public bool GenerateReceiveAddress { get; set; }
+}
+
 public record CreateAlgorandAccountRequest : CreateTokenAccountRequest
 {
     [JsonPropertyName("cryptoCode")]

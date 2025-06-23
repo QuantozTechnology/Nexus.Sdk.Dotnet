@@ -72,6 +72,39 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecutePut<UpdateTokenAccountRequest, SignableResponse>(request);
         }
+        public async Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        {
+            if (!string.IsNullOrWhiteSpace(address) && generateReceiveAddress)
+            {
+                throw new InvalidOperationException("Supplying an address and requesting one to be generated is unsupported.");
+            }
+
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
+
+            if (customerIPAddress != null)
+            {
+                builder.AddHeader("customer_ip_address", customerIPAddress);
+            }
+
+            var request = new CreateVirtualAccountRequest
+            {
+                GenerateReceiveAddress = generateReceiveAddress,
+                Address = address,
+                AccountType = "VIRTUAL",
+                CryptoCode = cryptoCode,
+                TokenSettings = new CreateTokenAccountSettings
+                {
+                    AllowedTokens = allowedTokens
+                }
+            };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
+            return await builder.ExecutePost<CreateVirtualAccountRequest, AccountResponse>(request);
+        }
 
         /// <summary>
         ///

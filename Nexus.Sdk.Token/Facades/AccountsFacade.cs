@@ -30,6 +30,11 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);
     }
 
+    public async Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+    {
+        return await _provider.CreateVirtualAccount(customerCode, address, generateReceiveAddress, cryptoCode, allowedTokens, customerIPAddress, customName);
+    }
+
     public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
     {
         return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, customerIPAddress, customName, accountType);
