@@ -11,7 +11,6 @@ public class DocumentStoreItemResponse
     public string? FilePath { get; set; }
 
     [JsonPropertyName("documentTypeCode")]
-
     public string? DocumentTypeCode { get; set; }
 
     [JsonPropertyName("documentTypeName")]
