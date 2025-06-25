@@ -438,12 +438,12 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
+        public Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
         {
             throw new NotImplementedException();
         }
 
-        public Task<NexusResponse> DeleteDocumentStore(string customerIPAddress)
+        public Task DeleteDocumentStore(string customerIPAddress)
         {
             throw new NotImplementedException();
         }
@@ -453,7 +453,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
+        public Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
         {
             throw new NotImplementedException();
         }
@@ -462,7 +462,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
-        public Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        public Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
             throw new NotImplementedException();
         }

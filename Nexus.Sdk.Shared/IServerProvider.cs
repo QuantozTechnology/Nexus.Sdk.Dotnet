@@ -20,11 +20,11 @@ namespace Nexus.Sdk.Shared
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
         Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress);
-        Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
-        Task<NexusResponse> DeleteDocumentStore(string customerIPAddress);
+        Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
+        Task DeleteDocumentStore(string customerIPAddress);
         Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress);
-        Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress);
+        Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress);
         Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
-        Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
+        Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
     }
 }

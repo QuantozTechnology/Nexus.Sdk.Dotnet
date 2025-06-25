@@ -1093,14 +1093,14 @@ namespace Nexus.Sdk.Token
         /// <param name="documentStoreSettings"></param>
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
-        public async Task<NexusResponse> CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
+        public async Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
                 .SetSegments("integrations", "documentstore");
 
             builder.AddHeader("customer_ip_address", customerIPAddress);
 
-            return await builder.ExecutePost<DocumentStoreSettingsRequest, NexusResponse>(documentStoreSettings);
+            await builder.ExecutePost<DocumentStoreSettingsRequest>(documentStoreSettings);
         }
 
         /// <summary>
@@ -1108,14 +1108,14 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
-        public async Task<NexusResponse> DeleteDocumentStore(string customerIPAddress)
+        public async Task DeleteDocumentStore(string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
                 .SetSegments("integrations", "documentstore");
 
             builder.AddHeader("customer_ip_address", customerIPAddress);
 
-            return await builder.ExecuteDelete<NexusResponse>();
+            await builder.ExecuteDelete<NexusResponse>();
         }
 
         /// <summary>
@@ -1145,7 +1145,7 @@ namespace Nexus.Sdk.Token
         /// <param name="fileUploadRequest"></param>
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
-        public async Task<NexusResponse> AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
+        public async Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
                 .SetSegments("integrations", "documentstore", "file");
@@ -1172,7 +1172,7 @@ namespace Nexus.Sdk.Token
             if (!string.IsNullOrEmpty(fileUploadRequest.ItemReference))
                 formContent.Add(new StringContent(fileUploadRequest.ItemReference), "itemReference");
 
-            return await builder.ExecutePost<NexusResponse>(formContent);
+            await builder.ExecutePost<NexusResponse>(formContent);
         }
 
         /// <summary>
@@ -1202,7 +1202,7 @@ namespace Nexus.Sdk.Token
         /// <param name="documentRequest"></param>
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
-        public async Task<NexusResponse> DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        public async Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
             var builder = new RequestBuilder(_client, _handler, _logger)
                 .SetSegments("integrations", "documentstore", "file");
@@ -1214,7 +1214,7 @@ namespace Nexus.Sdk.Token
                 { "filePath", documentRequest.FilePath }
             });
 
-            return await builder.ExecuteDelete<NexusResponse>();
+            await builder.ExecuteDelete<NexusResponse>();
         }
     }
 }
