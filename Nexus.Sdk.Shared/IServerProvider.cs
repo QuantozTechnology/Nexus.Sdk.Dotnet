@@ -19,6 +19,5 @@ namespace Nexus.Sdk.Shared
         Task<MailsResponse> CreateMail(CreateMailRequest request);
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
-
     }
 }

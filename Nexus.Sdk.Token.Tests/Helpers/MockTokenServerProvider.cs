@@ -377,14 +377,18 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 fiatAmount: 100,
                 netFiatAmount: 100,
                 blockchainTransactionId: "MockBlockchainTransactionId",
-                fees: new OperationFees {
-                    BankFees = new OperationBankFees {
+                fees: new OperationFees
+                {
+                    BankFees = new OperationBankFees
+                    {
                         TotalFiat = 100
                     },
-                    PartnerFees = new OperationPartnerFees {
+                    PartnerFees = new OperationPartnerFees
+                    {
                         TotalFiat = 100
                     },
-                    NetworkFees = new OperationNetworkFees {
+                    NetworkFees = new OperationNetworkFees
+                    {
                         EstimatedFiat = 100,
                         EstimatedCrypto = 100
                     }
@@ -425,6 +429,40 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteDocumentStore(string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+        public Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
             throw new NotImplementedException();
         }

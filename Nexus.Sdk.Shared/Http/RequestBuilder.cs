@@ -48,6 +48,22 @@ public class RequestBuilder
         return await _responseHandler.HandleResponse<TResponse>(response);
     }
 
+    public async Task<Stream> ExecuteGetStream()
+    {
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+
+        _logger?.LogDebug("GET {uri}", path);
+
+        var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
+
+        var response = await _httpClient.SendAsync(getRequest);
+
+        ResetHeaders(); // reset headers
+
+        return await _responseHandler.HandleResponseStream(response);
+    }
+
     public async Task ExecutePost<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
     {
         var json = JsonSerializer.Serialize(request);
@@ -77,6 +93,22 @@ public class RequestBuilder
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
+        var response = await _httpClient.SendAsync(postRequest);
+
+        ResetHeaders(); // reset headers
+
+        return await _responseHandler.HandleResponse<TResponse>(response);
+    }
+
+    public async Task<TResponse> ExecutePost<TResponse>(MultipartFormDataContent request) where TResponse : class
+    {
+        var json = JsonSerializer.Serialize(request);
+        var path = BuildPath();
+        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+
+        _logger?.LogDebug("POST to {path}: {json}", path, json);
+
+        var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, request, _headers);
         var response = await _httpClient.SendAsync(postRequest);
 
         ResetHeaders(); // reset headers
@@ -141,7 +173,7 @@ public class RequestBuilder
         _logger?.LogDebug("DELETE to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-        
+
         var deleteRequest = HttpRequestBuilder.BuildDeleteRequest(requestUri, content, _headers);
         var response = await _httpClient.SendAsync(deleteRequest, cancellationToken);
 

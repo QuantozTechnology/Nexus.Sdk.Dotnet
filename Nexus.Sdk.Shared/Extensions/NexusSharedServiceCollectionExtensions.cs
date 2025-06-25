@@ -38,6 +38,24 @@ namespace Nexus.Sdk.Token.Extensions
             return services.AddNexusApi();
         }
 
+        public static IServiceCollection AddNexusApi<TAuthProvider>(this IServiceCollection services, string apiUrl)
+            where TAuthProvider : class, IAuthProvider
+        {
+            var builder = new NexusOptionsBuilder();
+            services.AddSingleton(builder.GetOptions());
+
+            services.AddScoped<IAuthProvider, TAuthProvider>();
+            services.AddScoped<NexusIdentityHandler>();
+            services.AddHttpClient("NexusApi", (provider, client) =>
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Add("api_version", "1.2");
+            })
+            .AddHttpMessageHandler<NexusIdentityHandler>();
+
+            return services;
+        }
+
         private static IServiceCollection AddNexusApi(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IAuthProvider, AuthProvider>();

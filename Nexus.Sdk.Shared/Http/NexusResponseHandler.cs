@@ -43,6 +43,33 @@ public class NexusResponseHandler : IResponseHandler
         return responseObj.Values;
     }
 
+    public async Task<Stream> HandleResponseStream(HttpResponseMessage response, CancellationToken cancellationToken = default)
+    {
+        var statusCode = response.StatusCode;
+        var responseObj = await response.Content.ReadAsStreamAsync(cancellationToken);
+
+        _logger?.LogDebug("Response stream {statusCode}", statusCode);
+
+        if (responseObj == null)
+        {
+            throw new NexusApiException((int)statusCode, "Response stream is null", null);
+        }
+
+        if ((int)statusCode >= 300)
+        {
+            _logger?.LogError("Response stream error: {statusCode}", statusCode);
+
+            if (statusCode == HttpStatusCode.Unauthorized)
+            {
+                _logger?.LogWarning("Did you configure your authentication provider using ConnectTo");
+            }
+
+            throw new CustomErrorsException((int)statusCode, String.Empty, null);
+        }
+
+        return responseObj;
+    }
+
     public async Task HandleResponse(HttpResponseMessage response, CancellationToken cancellationToken = default)
     {
         var statusCode = response.StatusCode;

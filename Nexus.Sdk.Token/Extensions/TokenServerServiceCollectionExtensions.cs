@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Nexus.Sdk.Shared.Authentication;
 using Nexus.Sdk.Shared.Options;
 using Nexus.Sdk.Token.Security;
 
@@ -41,6 +42,14 @@ namespace Nexus.Sdk.Token.Extensions
             serviceCollection.AddScoped<IDecrypter>(_ => aes);
 
             return serviceCollection;
+        }
+
+        public static IServiceCollection AddNexusTokenSdk<TAuthProvider>(this IServiceCollection services, string apiUrl)
+            where TAuthProvider : class, IAuthProvider
+        {
+            services.AddNexusApi<TAuthProvider>(apiUrl);
+
+            return services.AddTokenServer();
         }
 
         private static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection)
