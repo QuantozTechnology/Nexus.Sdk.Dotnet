@@ -19,12 +19,5 @@ namespace Nexus.Sdk.Shared
         Task<MailsResponse> CreateMail(CreateMailRequest request);
         Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode);
         Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters);
-        Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress);
-        Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
-        Task DeleteDocumentStore(string customerIPAddress);
-        Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress);
-        Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress);
-        Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
-        Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
     }
 }
