@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Nexus.Sdk.Shared.Responses;
+namespace Nexus.Sdk.Token.Responses;
 
 public record DocumentStoreSettingsResponse
 {
