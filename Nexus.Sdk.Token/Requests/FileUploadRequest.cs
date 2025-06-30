@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http;
 
-namespace Nexus.Sdk.Shared.Requests;
+namespace Nexus.Sdk.Token.Requests;
 
 public class FileUploadRequest
 {

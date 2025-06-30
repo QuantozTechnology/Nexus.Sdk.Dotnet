@@ -1,5 +1,4 @@
 ﻿using Nexus.Sdk.Shared;
-using Nexus.Sdk.Shared.Requests;
 using Nexus.Sdk.Shared.Responses;
 using Nexus.Sdk.Token.Requests;
 using Nexus.Sdk.Token.Responses;
