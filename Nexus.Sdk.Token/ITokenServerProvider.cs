@@ -464,5 +464,13 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
         Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress);
+
+        /// <summary>
+        /// Update document metadata in the Document Store
+        /// </summary>
+        /// <param name="fileUpdateRequest"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
+        Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress);
     }
 }

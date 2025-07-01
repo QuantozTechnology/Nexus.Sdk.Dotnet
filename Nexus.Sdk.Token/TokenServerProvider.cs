@@ -1216,5 +1216,22 @@ namespace Nexus.Sdk.Token
 
             await builder.ExecuteDelete<NexusResponse>();
         }
+
+        /// <summary>
+        /// Update document metadata in the Document Store.
+        /// </summary>
+        /// <param name="fileUpdateRequest"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
+        public async Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore", "file");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+
+            await builder.ExecutePut<FileUpdateRequest, NexusResponse>(fileUpdateRequest);
+        }
     }
 }
