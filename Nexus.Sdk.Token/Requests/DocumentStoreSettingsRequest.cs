@@ -25,7 +25,8 @@ public class DocumentStoreSettingsRequest
     /// <remarks>
     /// Currently only Azure Files is supported.
     /// </remarks>
-    [JsonPropertyName("documentStoreType")]
+    // This JSON property name is case-sensitive. Todo: fix this issue in Nexus 
+    [JsonPropertyName("DocumentStoreType")]
     [Required]
     public required string DocumentStoreType { get; set; }
 

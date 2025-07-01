@@ -466,5 +466,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
