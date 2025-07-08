@@ -427,6 +427,14 @@ namespace Nexus.Sdk.Token
         Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
 
         /// <summary>
+        /// Update the existing Document Store settings
+        /// </summary>
+        /// <param name="documentStoreSettings"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
+        Task UpdateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress);
+
+        /// <summary>
         /// Delete the existing Document Store settings
         /// </summary>
         /// <param name="customerIPAddress"></param>

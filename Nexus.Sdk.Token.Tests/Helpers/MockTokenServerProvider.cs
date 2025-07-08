@@ -443,6 +443,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task UpdateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task DeleteDocumentStore(string customerIPAddress)
         {
             throw new NotImplementedException();

@@ -1104,6 +1104,22 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
+        /// Update the existing Document Store settings
+        /// </summary>
+        /// <param name="documentStoreSettings"></param>
+        /// <param name="customerIPAddress"></param>
+        /// <returns></returns>
+        public async Task UpdateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger)
+                .SetSegments("integrations", "documentstore");
+
+            builder.AddHeader("customer_ip_address", customerIPAddress);
+
+            await builder.ExecutePut<DocumentStoreSettingsRequest, NexusResponse>(documentStoreSettings);
+        }
+
+        /// <summary>
         /// Delete the existing Document Store settings
         /// </summary>
         /// <param name="customerIPAddress"></param>

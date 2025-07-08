@@ -10,6 +10,8 @@ public record DocumentStoreSettingsResponse
     public string? Description { get; set; }
     [JsonPropertyName("documentStoreType")]
     public string? DocumentStoreType { get; set; }
+    [JsonPropertyName("shareName")]
+    public string? ShareName { get; set; }
     [JsonPropertyName("maxFileSizeInMB")]
     public int MaxFileSizeInMB { get; set; }
     [JsonPropertyName("maxFileCount")]
