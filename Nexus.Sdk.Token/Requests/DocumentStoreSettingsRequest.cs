@@ -37,6 +37,7 @@ public class DocumentStoreSettingsRequest
     /// Azure Files Parameters:
     /// - "account": "string",
     /// - "key": "string"
+    /// - "shareName": "string"
     /// </example>
     [JsonPropertyName("parameters")]
     [Required]
