@@ -33,6 +33,12 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("status")]
         public string? Status { get; set; }
+
+        [JsonPropertyName("bankAccountNumber")]
+        public string? BankAccountNumber { get; set; }
+
+        [JsonPropertyName("nonce")]
+        public string? Nonce { get; set; }
     }
 
     public record ExecutedAmounts

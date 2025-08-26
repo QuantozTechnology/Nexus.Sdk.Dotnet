@@ -92,6 +92,40 @@ Callback Example:
 }
 ```
 
+## Specifying a nonce value to avoid 'TransactionEnvelopeAlreadyExists' error
+
+In scenarios where multiple transactions with the same Amount value for the same token needs to be created, a `TransactionEnvelopeAlreadyExists` error may be encountered when the transactions are submitted simultaneously or in quick succession. In such cases, a unique nonce value can be specified for each transaction. 
+
+The `nonce` parameter:
+- Must be a unique string value for each transaction
+  - Recommended generation methods: GUID, UUID, or similar unique identification methods
+- Cannot exceed 50 characters in length
+
+The `nonce` parameter can be specified on the following Token operations:
+- `CreateFundingAsync`
+- `CreatePaymentAsync`
+- `CreatePayoutAsync`
+- `SimulatePayoutAsync`
+
+Algorand Example calling `CreatePaymentAsync`:
+```csharp
+await _tokenServer.Operations.CreatePaymentAsync(sender.GetPublicKey(), receiver.GetPublicKey(), "Gold", 5, nonce: Guid.NewGuid().ToString());
+
+await _tokenServer.Operations.CreatePaymentAsync(sender.GetPublicKey(), receiver.GetPublicKey(), "Gold", 5, nonce: Guid.NewGuid().ToString());
+```
+
+
+Algorand Example calling `CreatePaymentAsync` with multiple `PaymentDefinition`:
+```csharp
+var payments = new List<PaymentDefinition>();
+
+payments.Add(new PaymentDefinition(sender.GetPublicKey(), receiver.GetPublicKey(), "Gold", 5, nonce: Guid.NewGuid().ToString()));
+
+payments.Add(new PaymentDefinition(receiver.GetPublicKey(), sender.GetPublicKey(), "Gold", 5, nonce: Guid.NewGuid().ToString()));
+
+await _tokenServer.Operations.CreatePaymentAsync(payments);
+```
+
 ## Setup
 
 To run this sample code you need to connect it to your test environment using the `ClientId`, `ClientSecret` and `PaymentMethod` configured in the `appsettings.json`

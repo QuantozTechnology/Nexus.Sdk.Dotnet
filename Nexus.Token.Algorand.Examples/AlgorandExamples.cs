@@ -142,7 +142,8 @@ namespace Nexus.Token.Algorand.Examples
                 }
             }
 
-            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount);
+            await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), tokenCode, amount, nonce: Guid.NewGuid().ToString());
+
             _logger.LogWarning("Funding successful!");
         }
 
@@ -155,7 +156,7 @@ namespace Nexus.Token.Algorand.Examples
             var signedResponse = kp.Sign(signableResponse, true);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 
-            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null));
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null, Guid.NewGuid().ToString()));
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
 
             _logger.LogWarning("Funding multiple successful!");
@@ -200,7 +201,7 @@ namespace Nexus.Token.Algorand.Examples
             }
 
             {
-                var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(sender.GetPublicKey(), receiver.GetPublicKey(), tokenCode, amount, "memo", "message", "ALGO");
+                var signableResponse = await _tokenServer.Operations.CreatePaymentAsync(sender.GetPublicKey(), receiver.GetPublicKey(), tokenCode, amount, "memo", "message", "ALGO", nonce: Guid.NewGuid().ToString());
                 var signedResponse = sender.Sign(signableResponse, true);
                 await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
             }
@@ -213,11 +214,10 @@ namespace Nexus.Token.Algorand.Examples
         {
             var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
 
-            var payoutResponse = await _tokenServer.Operations.SimulatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
-
+            var payoutResponse = await _tokenServer.Operations.SimulatePayoutAsync(kp.GetAccountCode(), tokenCode, amount, nonce: Guid.NewGuid().ToString());
             _logger.LogWarning("Payout will be execute with the following amount: {amount}!", payoutResponse.Payout.ExecutedAmounts.TokenAmount);
 
-            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount);
+            var signableResponse = await _tokenServer.Operations.CreatePayoutAsync(kp.GetAccountCode(), tokenCode, amount, nonce: Guid.NewGuid().ToString());
             var signedResponse = kp.Sign(signableResponse, true);
             await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
 

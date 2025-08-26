@@ -34,11 +34,15 @@ public record FundingDefinition
     [JsonPropertyName("paymentReference")]
     public string? PaymentReference { get; set; }
 
-    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference)
+    [JsonPropertyName("nonce")]
+    public string? Nonce { get; set; }
+
+    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference, string? nonce)
     {
         TokenCode = tokenCode;
         Amount = amount;
         PaymentReference = paymentReference;
+        Nonce = nonce;
     }
 }
 
@@ -86,13 +90,17 @@ public record PaymentDefinition
     [JsonPropertyName("blockchainTransactionId")]
     public string? BlockchainTransactionId { get; set; }
 
-    public PaymentDefinition(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? blockchainTransactionId = null)
+    [JsonPropertyName("nonce")]
+    public string? Nonce { get; set; }
+
+    public PaymentDefinition(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? blockchainTransactionId = null, string? nonce = null)
     {
         SenderPublicKey = senderPublicKey;
         ReceiverPublicKey = receiverPublicKey;
         TokenCode = tokenCode;
         Amount = amount;
         BlockchainTransactionId = blockchainTransactionId;
+        Nonce = nonce;
     }
 }
 
@@ -121,6 +129,9 @@ public record PayoutOperationRequest
 
     [JsonPropertyName("blockchainTransactionId")]
     public string? BlockchainTransactionId { get; set; }
+
+    [JsonPropertyName("nonce")]
+    public string? Nonce { get; set; }
 }
 
 public class UpdateOperationStatusRequest
@@ -132,5 +143,5 @@ public class UpdateOperationStatusRequest
     public string? Comment { get; set; } = "Operation updated";
 
     [JsonPropertyName("paymentReference")]
-    public string? PaymentReference { get; set; } 
+    public string? PaymentReference { get; set; }
 }

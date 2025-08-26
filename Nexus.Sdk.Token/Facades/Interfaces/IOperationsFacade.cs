@@ -26,7 +26,8 @@ public interface IOperationsFacade
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
+    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
+    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -52,8 +53,9 @@ public interface IOperationsFacade
     /// <param name="callbackUrl">Optional URL that will be called when the payment is confirmed</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
+    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided senderPublicKey</returns>
-    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
+    public Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null);
 
     /// <summary>
     /// Pay multiple tokens between different accounts
@@ -83,8 +85,9 @@ public interface IOperationsFacade
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
+    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
@@ -100,8 +103,9 @@ public interface IOperationsFacade
     /// <param name="memo">An optional message that is added to the transaction and would be visible on the blockchain</param>
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
+    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
     /// <returns>A simulated withdrawal that includes fees.</returns>
-    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null);
+    public Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null, string? nonce = null);
 
     /// <summary>
     /// Updates the status of a token operation.

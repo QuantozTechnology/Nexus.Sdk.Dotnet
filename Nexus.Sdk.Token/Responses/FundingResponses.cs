@@ -42,6 +42,15 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("paymentReference")]
         public string? PaymentReference { get; set; }
+
+        [JsonPropertyName("bankAccountNumber")]
+        public string? BankAccountNumber { get; set; }
+
+        [JsonPropertyName("nonce")]
+        public string? Nonce { get; set; }
+
+        [JsonPropertyName("blockchainTransactionId")]
+        public string? BlockchainTransactionId { get; set; }
     }
 
     public class TxEnvelopeResponse
