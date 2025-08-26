@@ -40,7 +40,7 @@ namespace Nexus.Token.Stellar.Examples
                 new ()
                 {
                     IdentifiedBankAccountName = "BankAccountName",
-                    BankAccountNumber = "BankAccountNumber",
+                    BankAccountNumber = Guid.NewGuid().ToString(),
                     Bank = new BankRequest
                     {
                         BankBicCode = "BankBicCode",
@@ -165,7 +165,7 @@ namespace Nexus.Token.Stellar.Examples
             var signedResponse = kp.Sign(signableResponse, _network);
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
 
-            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null));
+            var definitions = fundings.Select(kv => new FundingDefinition(kv.Key, kv.Value, null, null));
             await _tokenServer.Operations.CreateFundingAsync(kp.GetAccountCode(), definitions);
 
             _logger.LogWarning("Funding multiple successful!");
@@ -211,7 +211,7 @@ namespace Nexus.Token.Stellar.Examples
                         var sender = StellarKeyPair.FromPrivateKey(p.SenderPrivateKey, _decrypter);
                         var receiver = StellarKeyPair.FromPrivateKey(p.ReceiverPrivateKey, _decrypter);
 
-                        return new PaymentDefinition(sender.GetPublicKey(), receiver.GetPublicKey(), p.TokenCode, p.Amount);
+                        return new PaymentDefinition(sender.GetPublicKey(), receiver.GetPublicKey(), p.TokenCode, p.Amount, nonce: Guid.NewGuid().ToString());
                     })
                 .ToArray();
 

@@ -64,7 +64,7 @@ namespace Nexus.Token.Stellar.Examples
                             break;
                         case 7:
                             await StellarUpdateTokenOperationStatusFlow(stellarExamples);
-                            break;    
+                            break;
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -335,7 +335,7 @@ namespace Nexus.Token.Stellar.Examples
             {
                 WriteToConsole("Payment code is null or empty, cannot update operation status.", ConsoleColor.Red);
             }
-        }        
+        }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)
         {

@@ -173,8 +173,9 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <returns></returns>
-        Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null);
+        Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null);
 
         /// <summary>
         ///
@@ -201,8 +202,9 @@ namespace Nexus.Sdk.Token
         /// <param name="callbackUrl"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
+        /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param> 
         /// <returns></returns>
-        Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
+        Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null);
 
         /// <summary>
         ///
@@ -228,10 +230,23 @@ namespace Nexus.Sdk.Token
         /// <param name="paymentReference"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
+        /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <returns></returns>
-        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null);
+        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null);
 
-        Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null);
+        /// <summary>
+        /// Simulate a payout operation without actually executing it
+        /// </summary>
+        /// <param name="accountCode"></param>
+        /// <param name="tokenCode"></param>
+        /// <param name="amount"></param>
+        /// <param name="pm"></param>
+        /// <param name="memo"></param>
+        /// <param name="paymentReference"></param>
+        /// <param name="blockchainTransactionId"></param>
+        /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
+        /// <returns></returns>
+        Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null, string? nonce = null);
 
         /// <summary>
         ///
