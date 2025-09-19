@@ -926,15 +926,31 @@ namespace Nexus.Sdk.Token
             return await builder.ExecutePut<UpdateTaxonomySchemaRequest, TaxonomySchemaResponse>(request);
         }
 
-        public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger);
+            if (!string.IsNullOrWhiteSpace(blockchainCode))
+            {
+                builder.SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode, "blockchain", blockchainCode);
+            }
+            else
+            {
+                builder.SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode);
+            }
             return await builder.ExecuteGet<TokenLimitsResponse>();
         }
 
-        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, _logger);
+            if (!string.IsNullOrWhiteSpace(blockchainCode))
+            {
+                builder.SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode, "blockchain", blockchainCode);
+            }
+            else
+            {
+                builder.SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
+            }
             return await builder.ExecuteGet<TokenLimitsResponse>();
         }
 

@@ -228,7 +228,7 @@ namespace Nexus.Token.Algorand.Examples
 
         public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
         {
-            var fundingLimitsResponse = await _tokenServer.TokenLimits.GetFundingLimits(customerCode, tokenCode);
+            var fundingLimitsResponse = await _tokenServer.TokenLimits.GetFundingLimits(customerCode, tokenCode, "ALGO");
 
             _logger.LogWarning("Returned token funding limits of the customer");
             return fundingLimitsResponse;
@@ -236,7 +236,7 @@ namespace Nexus.Token.Algorand.Examples
 
         public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
-            var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode);
+            var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode, "ALGO");
 
             _logger.LogWarning("Returned token payout limits of the customer");
             return payoutLimitsResponse;

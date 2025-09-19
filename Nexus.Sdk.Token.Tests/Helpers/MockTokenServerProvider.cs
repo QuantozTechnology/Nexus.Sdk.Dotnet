@@ -273,12 +273,12 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode)
+        public Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        public Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
             throw new NotImplementedException();
         }
