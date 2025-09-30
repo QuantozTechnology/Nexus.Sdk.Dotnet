@@ -129,6 +129,7 @@ namespace Nexus.Sdk.Token
         /// </summary>
         /// <param></param>
         /// <returns></returns>
+        [Obsolete("Deprecated. Use GetTokenFeePayerDetails instead")]
         Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals();
 
         Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? query);
@@ -497,5 +498,13 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress"></param>
         /// <returns></returns>
         Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress);
+
+
+        /// <summary>
+        /// List fee payers based on query parameters.
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters</param>
+        /// <returns>List of fee payers based on the query parameters.</returns>
+        Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters);
     }
 }

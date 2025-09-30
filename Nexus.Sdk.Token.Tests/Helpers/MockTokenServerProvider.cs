@@ -478,5 +478,10 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

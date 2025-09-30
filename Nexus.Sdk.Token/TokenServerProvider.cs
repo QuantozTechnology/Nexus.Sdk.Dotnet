@@ -1284,5 +1284,22 @@ namespace Nexus.Sdk.Token
 
             await builder.ExecutePut<FileUpdateRequest, NexusResponse>(fileUpdateRequest);
         }
+
+        /// <summary>
+        /// List fee payers based on query parameters.
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters</param>
+        /// <returns>List of fee payers based on the query parameters.</returns>
+        public async Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "feePayers");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<FeePayerDetailsResponse>>();
+        }
     }
 }

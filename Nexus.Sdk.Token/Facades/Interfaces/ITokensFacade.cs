@@ -12,7 +12,10 @@ public interface ITokensFacade
 
     public Task<TokenBalancesResponse> GetTokenBalances(string tokenCode);
 
+    [Obsolete("This endpoint is deprecated and will be removed in future versions. Please use GetTokenFeePayerDetails instead.")]
     public Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals();
+    
+    public Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters);
 
     public Task<CreateTokenResponse> CreateOnAlgorand(AlgorandTokenDefinition definition, AlgorandTokenSettings? settings = null, string? customerIPAddress = null);
 
