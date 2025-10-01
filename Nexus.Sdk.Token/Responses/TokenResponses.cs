@@ -47,6 +47,9 @@ public class TokenBalancesResponse
 
     [JsonPropertyName("available")]
     public double Available { get; }
+    
+    [JsonPropertyName("virtual")]
+    public double? VirtualBalance { get; }
 
     [JsonPropertyName("total")]
     public double Total { get; }
@@ -55,7 +58,7 @@ public class TokenBalancesResponse
     public string Updated { get; }
 
     [JsonConstructor]
-    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated)
+    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated, double? virtualBalance = null)
     {
         TokenCode = tokenCode;
         Issued = issued;
@@ -63,6 +66,7 @@ public class TokenBalancesResponse
         Available = available;
         Total = total;
         Updated = updated;
+        VirtualBalance = virtualBalance;
     }
 }
 
@@ -182,3 +186,23 @@ public class CreateTokenResponse
     }
 
 }
+
+public class FeePayerDetailsResponse
+{
+    [JsonPropertyName("address")]
+    public required string Address { get; set; }
+    
+    [JsonPropertyName("cryptoCode")]
+    public required string CryptoCode { get; set; }
+    
+    [JsonPropertyName("status")]
+    public required string Status { get; set; }
+    
+    [JsonPropertyName("balance")]
+    public required decimal Balance { get; set; } = 0;
+    
+    [JsonPropertyName("updated")]
+    public string? Updated { get; set; }
+}
+
+
