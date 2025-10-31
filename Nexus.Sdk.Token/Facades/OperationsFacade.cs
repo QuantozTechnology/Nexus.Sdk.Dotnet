@@ -16,9 +16,9 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     }
 
     public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null,
-                                         string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null)
+                                         string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null)
     {
-        return await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, message, paymentReference, customerIPAddress, nonce); ;
+        return await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, message, paymentReference, customerIPAddress, nonce, bankAccountNumber);
     }
 
     public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
