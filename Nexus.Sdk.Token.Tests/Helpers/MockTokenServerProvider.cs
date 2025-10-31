@@ -79,7 +79,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             ));
         }
 
-        public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null)
+        public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null)
         {
             throw new NotImplementedException();
         }

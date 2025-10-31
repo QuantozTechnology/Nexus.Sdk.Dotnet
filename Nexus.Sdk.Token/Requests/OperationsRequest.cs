@@ -36,13 +36,17 @@ public record FundingDefinition
 
     [JsonPropertyName("nonce")]
     public string? Nonce { get; set; }
+    
+    [JsonPropertyName("bankAccountNumber")]
+    public string? BankAccountNumber { get; set; }
 
-    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference, string? nonce)
+    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference, string? nonce, string? bankAccountNumber = null)
     {
         TokenCode = tokenCode;
         Amount = amount;
         PaymentReference = paymentReference;
         Nonce = nonce;
+        BankAccountNumber = bankAccountNumber;
     }
 }
 

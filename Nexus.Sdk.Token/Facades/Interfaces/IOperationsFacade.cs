@@ -27,7 +27,8 @@ public interface IOperationsFacade
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
-    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null);
+    /// <param name="bankAccountNumber">Bank account number of customer to be linked to this funding.</param>
+    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null);
 
     /// <summary>
     /// Fund an account with tokens

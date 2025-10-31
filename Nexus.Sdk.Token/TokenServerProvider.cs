@@ -307,10 +307,11 @@ namespace Nexus.Sdk.Token
         /// <param name="message"></param>
         /// <param name="paymentReference"></param>
         /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
+        /// <param name="bankAccountNumber">Bank account number of customer to be linked to this funding.</param>
         /// <returns></returns>
-        public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null)
+        public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null)
         {
-            var definition = new FundingDefinition(tokenCode, amount, paymentReference, nonce);
+            var definition = new FundingDefinition(tokenCode, amount, paymentReference, nonce, bankAccountNumber);
             return await CreateFundingAsync(accountCode, [definition], pm, memo, message, customerIPAddress);
         }
 
