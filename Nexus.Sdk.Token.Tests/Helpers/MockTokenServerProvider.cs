@@ -7,6 +7,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
 {
     public class MockTokenServerProvider : ITokenServerProvider
     {
+        public void AddHeader(string key, string value)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> CancelOrder(string orderCode)
         {
             throw new NotImplementedException();
