@@ -16,11 +16,11 @@ namespace Nexus.Sdk.Token
         private readonly Dictionary<string, string> _headers = [];
 
         /// <summary>
-        /// Add a header to the request
+        /// Add a header to the request. Overwrite in cases that header currently exists.
         /// </summary>
         public void AddHeader(string key, string value)
         {
-            _headers.Add(key, value);
+            _headers[key] = value;
         }
 
         public async Task<SignableResponse> CancelOrder(string orderCode)
