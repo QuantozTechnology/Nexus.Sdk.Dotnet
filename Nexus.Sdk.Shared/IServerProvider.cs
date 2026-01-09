@@ -5,6 +5,10 @@ namespace Nexus.Sdk.Shared
 {
     public interface IServerProvider
     {
+        /// <summary>
+        /// Add a header to the request. Overwrite in cases that header currently exists.
+        /// </summary>
+        void AddHeader(string key, string value);
         Task<CustomerResponse> GetCustomer(string customerCode);
         Task<PagedResponse<CustomerResponse>> GetCustomers(IDictionary<string, string>? queryParameters);
         Task<CustomerDataResponse> GetCustomerData(string customerCode);

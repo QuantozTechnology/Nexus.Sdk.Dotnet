@@ -341,4 +341,6 @@ ASALocalRun/
 .ionide
 
 profile.arm.json
-.vscode/launch.json
+
+# VS-code specific settings
+**/.vscode

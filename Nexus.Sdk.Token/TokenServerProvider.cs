@@ -9,24 +9,24 @@ using Nexus.Sdk.Token.Responses;
 
 namespace Nexus.Sdk.Token
 {
-    public class TokenServerProvider : ITokenServerProvider
+    public class TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger<TokenServerProvider> logger) : ITokenServerProvider
     {
-        private readonly NexusOptions _options;
-        private readonly HttpClient _client;
-        private readonly NexusResponseHandler _handler;
-        private readonly ILogger<TokenServerProvider> _logger;
+        private readonly HttpClient _client = factory.CreateClient("NexusApi");
+        private readonly NexusResponseHandler _handler = new(logger);
+        private readonly Dictionary<string, string> _headers = [];
 
-        public TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger<TokenServerProvider> logger)
+        /// <summary>
+        /// Add a header to the request. Overwrite in cases that header currently exists.
+        /// </summary>
+        public void AddHeader(string key, string value)
         {
-            _client = factory.CreateClient("NexusApi");
-            _handler = new NexusResponseHandler(logger);
-            _options = options;
-            _logger = logger;
+            _headers[key] = value;
         }
 
         public async Task<SignableResponse> CancelOrder(string orderCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders", "cancel");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "orders", "cancel");
             var request = new CancelOrderRequest(orderCode);
             return await builder.ExecutePut<CancelOrderRequest, SignableResponse>(request);
         }
@@ -52,12 +52,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts", accountCode)
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new UpdateTokenAccountRequest
             {
@@ -79,12 +76,9 @@ namespace Nexus.Sdk.Token
                 throw new InvalidOperationException("Supplying an address and requesting one to be generated is unsupported.");
             }
 
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new CreateVirtualAccountRequest
             {
@@ -117,12 +111,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -140,12 +131,9 @@ namespace Nexus.Sdk.Token
 
         public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new CreateAlgorandAccountRequest
             {
@@ -174,12 +162,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<AccountResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new CreateStellarAccountRequest
             {
@@ -197,12 +182,9 @@ namespace Nexus.Sdk.Token
 
         public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new CreateStellarAccountRequest
             {
@@ -232,12 +214,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<SignableResponse> UpdateAccount(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "accounts", accountCode);
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts", accountCode)
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePut<UpdateTokenAccountRequest, SignableResponse>(updateRequest);
         }
@@ -252,12 +231,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<CustomerResponse> CreateCustomer(CreateCustomerRequest request, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePost<CreateCustomerRequest, CustomerResponse>(request);
         }
@@ -270,12 +246,9 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<CustomerResponse> UpdateCustomer(UpdateCustomerRequest request, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode!);
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", request.CustomerCode!)
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePut<UpdateCustomerRequest, CustomerResponse>(request);
         }
@@ -285,12 +258,9 @@ namespace Nexus.Sdk.Token
         /// </summary>
         public async Task<DeleteCustomerResponse> DeleteCustomer(DeleteCustomerRequest request, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", request.CustomerCode!);
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", request.CustomerCode!)
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecuteDelete<DeleteCustomerResponse>();
         }
@@ -327,17 +297,14 @@ namespace Nexus.Sdk.Token
         /// <exception cref="InvalidOperationException"></exception>
         public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
         {
-            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Funding))
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(options.PaymentMethodOptions.Funding))
             {
                 throw new InvalidOperationException("Funding payment method is required to fund an account with tokens");
             }
 
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "fund");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "fund")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var account = await GetAccount(accountCode);
 
@@ -348,7 +315,7 @@ namespace Nexus.Sdk.Token
                 Definitions = definitions,
                 Memo = memo,
                 Message = message,
-                PaymentMethodCode = (pm ?? _options.PaymentMethodOptions.Funding)!
+                PaymentMethodCode = (pm ?? options.PaymentMethodOptions.Funding)!
             };
 
             return await builder.ExecutePost<FundingOperationRequest, FundingResponses>(request);
@@ -356,12 +323,9 @@ namespace Nexus.Sdk.Token
 
         public async Task<CreateOrderResponse> CreateOrder(OrderRequest orderRequest, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "orders")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePost<OrderRequest, CreateOrderResponse>(orderRequest);
         }
@@ -395,12 +359,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<SignablePaymentResponse> CreatePaymentsAsync(IEnumerable<PaymentDefinition> definitions, string? memo = null, string? message = null, string? cryptoCode = null, string? callbackUrl = null, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payments");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "payments")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new PaymentOperationRequest(definitions, memo, message, cryptoCode, callbackUrl);
 
@@ -423,22 +384,19 @@ namespace Nexus.Sdk.Token
         /// <exception cref="InvalidOperationException"></exception>
         public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null)
         {
-            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(options.PaymentMethodOptions.Payout))
             {
                 throw new InvalidOperationException("Payout payment method is required for an account to payout a token");
             }
 
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payouts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "payouts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new PayoutOperationRequest
             {
                 AccountCode = accountCode,
-                PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Payout,
+                PaymentMethodCode = pm ?? options.PaymentMethodOptions.Payout,
                 Amount = amount,
                 TokenCode = tokenCode,
                 PaymentReference = paymentReference,
@@ -466,17 +424,18 @@ namespace Nexus.Sdk.Token
         /// <exception cref="InvalidOperationException"></exception>
         public async Task<PayoutOperationResponse> SimulatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? paymentReference = null, string? blockchainTransactionId = null, string? nonce = null)
         {
-            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(_options.PaymentMethodOptions.Payout))
+            if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(options.PaymentMethodOptions.Payout))
             {
                 throw new InvalidOperationException("Payout payment method is required for an account to payout a token");
             }
 
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "payouts", "simulate");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "payouts", "simulate");
 
             var request = new PayoutOperationRequest
             {
                 AccountCode = accountCode,
-                PaymentMethodCode = pm ?? _options.PaymentMethodOptions.Payout,
+                PaymentMethodCode = pm ?? options.PaymentMethodOptions.Payout,
                 Amount = amount,
                 TokenCode = tokenCode,
                 PaymentReference = paymentReference,
@@ -499,7 +458,8 @@ namespace Nexus.Sdk.Token
         /// <exception cref="NotImplementedException"></exception>
         public async Task<TaxonomySchemaResponse> CreateTaxonomySchema(string code, string schema, string? name = null, string? description = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("taxonomy", "schema");
 
             var request = new CreateTaxonomySchemaRequest(code, schema)
             {
@@ -524,12 +484,9 @@ namespace Nexus.Sdk.Token
 
         public async Task<CreateTokenResponse> CreateTokensOnAlgorand(IEnumerable<AlgorandTokenDefinition> definitions, AlgorandTokenSettings? settings = null, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "tokens")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new AlgorandTokenRequest
             {
@@ -552,12 +509,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<CreateTokenResponse> CreateTokensOnStellarAsync(IEnumerable<StellarTokenDefinition> definitions, StellarTokenSettings? settings = null, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "tokens")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new StellarTokenRequest
             {
@@ -613,7 +567,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<AccountResponse> GetAccount(string accountCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts", accountCode);
             return await builder.ExecuteGet<AccountResponse>();
         }
 
@@ -626,7 +581,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts");
 
             if (queryParameters != null)
             {
@@ -643,7 +599,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode, "tokenBalance");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts", accountCode, "tokenBalance");
             return await builder.ExecuteGet<AccountBalancesResponse>();
         }
 
@@ -654,7 +611,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<CustomerResponse> GetCustomer(string customerCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode);
             return await builder.ExecuteGet<CustomerResponse>();
         }
 
@@ -667,7 +625,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<CustomerResponse>> GetCustomers(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer");
 
             if (queryParameters != null)
             {
@@ -686,7 +645,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<CustomerDataResponse> GetCustomerData(string customerCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "personalData");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "personalData");
             return await builder.ExecuteGet<CustomerDataResponse>();
         }
 
@@ -700,7 +660,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<CustomerTraceResponse>> GetCustomerTrace(string customerCode, IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", customerCode, "trace");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "trace");
 
             if (queryParameters != null)
             {
@@ -716,7 +677,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<OrderResponse> GetOrder(string orderCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders", orderCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "orders", orderCode);
             return await builder.ExecuteGet<OrderResponse>();
         }
 
@@ -727,7 +689,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<PagedResponse<OrderResponse>> GetOrders(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "orders");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "orders");
 
             if (queryParameters != null)
             {
@@ -745,7 +708,8 @@ namespace Nexus.Sdk.Token
         /// <exception cref="NotImplementedException"></exception>
         public async Task<TaxonomyResponse> GetTaxonomy(string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "token", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("taxonomy", "token", tokenCode);
             return await builder.ExecuteGet<TaxonomyResponse>();
         }
 
@@ -756,7 +720,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<TaxonomySchemaResponse> GetTaxonomySchema(string taxonomySchemaCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("taxonomy", "schema", taxonomySchemaCode);
             return await builder.ExecuteGet<TaxonomySchemaResponse>();
         }
 
@@ -767,7 +732,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<TokenDetailsResponse> GetToken(string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "tokens", tokenCode);
             return await builder.ExecuteGet<TokenDetailsResponse>();
         }
 
@@ -778,7 +744,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<TokenBalancesResponse> GetTokenBalances(string tokenCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens", tokenCode, "balance");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "tokens", tokenCode, "balance");
             return await builder.ExecuteGet<TokenBalancesResponse>();
         }
 
@@ -789,7 +756,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<IEnumerable<TokenFeePayerResponse>> GetTokenFeePayerTotals()
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "feepayeraccounts", "totals");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "feepayeraccounts", "totals");
             return await builder.ExecuteGet<List<TokenFeePayerResponse>>();
         }
 
@@ -800,7 +768,8 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<PagedResponse<TokenResponse>> GetTokens(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "tokens");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "tokens");
 
             if (queryParameters != null)
             {
@@ -819,7 +788,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<TokenOperationResponse>> GetTokenPayments(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "operations");
 
             if (queryParameters != null)
             {
@@ -835,7 +805,8 @@ namespace Nexus.Sdk.Token
         {
             foreach (var request in requests)
             {
-                var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
+                var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                    .SetSegments("token", "envelope", "signature", "submit");
                 await builder.ExecutePost(request, cancellationToken);
             }
 
@@ -857,7 +828,8 @@ namespace Nexus.Sdk.Token
         {
             foreach (var request in requests)
             {
-                var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "envelope", "signature", "submit");
+                var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                    .SetSegments("token", "envelope", "signature", "submit");
                 await builder.ExecutePost(request);
             }
         }
@@ -879,7 +851,7 @@ namespace Nexus.Sdk.Token
 
                 if (env != null)
                 {
-                    _logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.Status);
+                    logger.LogDebug("Waiting for result of envelope {code} with current status: {status}", code, env.Status);
 
                     if (env.Status == "Completed")
                     {
@@ -899,7 +871,7 @@ namespace Nexus.Sdk.Token
 
         public async Task<EnvelopeResponse> GetEnvelope(string code)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
                 .SetSegments("token", "envelope", code);
             return await builder.ExecuteGet<EnvelopeResponse>();
         }
@@ -915,7 +887,8 @@ namespace Nexus.Sdk.Token
         public async Task<TaxonomySchemaResponse> UpdateTaxonomySchema(string taxonomySchemaCode, string? name = null,
             string? description = null, string? schema = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("taxonomy", "schema", taxonomySchemaCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("taxonomy", "schema", taxonomySchemaCode);
 
             var request = new UpdateTaxonomySchemaRequest
             {
@@ -929,7 +902,7 @@ namespace Nexus.Sdk.Token
 
         public async Task<TokenLimitsResponse> GetTokenFundingLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers);
             if (!string.IsNullOrWhiteSpace(blockchainCode))
             {
                 builder.SetSegments("customer", customerCode, "limits", "tokenfunding", "token", tokenCode, "blockchain", blockchainCode);
@@ -943,7 +916,7 @@ namespace Nexus.Sdk.Token
 
         public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers);
             if (!string.IsNullOrWhiteSpace(blockchainCode))
             {
                 builder.SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode, "blockchain", blockchainCode);
@@ -957,7 +930,8 @@ namespace Nexus.Sdk.Token
 
         public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("labelpartner", "trustlevels");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("labelpartner", "trustlevels");
 
             if (queryParameters != null)
             {
@@ -969,7 +943,8 @@ namespace Nexus.Sdk.Token
 
         public async Task<PagedResponse<CustomDataResponse>> GetCustomDataTemplates(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("labelpartner", "datatemplates");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("labelpartner", "datatemplates");
 
             if (queryParameters != null)
             {
@@ -981,7 +956,8 @@ namespace Nexus.Sdk.Token
 
         public async Task<PagedResponse<MailsResponse>> GetMails(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("mail");
 
             if (queryParameters != null)
             {
@@ -993,38 +969,39 @@ namespace Nexus.Sdk.Token
 
         public async Task<MailsResponse> UpdateMailSent(string code)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail", code, "sent");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("mail", code, "sent");
 
             return await builder.ExecutePut<MailsResponse>();
         }
 
         public async Task<MailsResponse> CreateMail(CreateMailRequest request)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("mail");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("mail");
 
             return await builder.ExecutePost<CreateMailRequest, MailsResponse>(request);
         }
 
         public async Task<PaymentMethodsResponse> GetPaymentMethod(string paymentMethodCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("paymentmethod", paymentMethodCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("paymentmethod", paymentMethodCode);
             return await builder.ExecuteGet<PaymentMethodsResponse>();
         }
 
         public async Task<NexusResponse> DeleteAccount(string accountCode)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("accounts", accountCode);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts", accountCode);
             return await builder.ExecuteDelete<NexusResponse>();
         }
 
         public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "operations", operationCode);
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "operations", operationCode)
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             var request = new UpdateOperationStatusRequest
             {
@@ -1049,7 +1026,8 @@ namespace Nexus.Sdk.Token
         /// </returns>
         public async Task<PagedResponse<BankAccountResponse>> GetBankAccounts(IDictionary<string, string>? queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankaccounts");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", "bankaccounts");
 
             if (queryParameters != null)
             {
@@ -1067,12 +1045,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<BankAccountResponse> CreateBankAccount(CreateBankAccountRequest request, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankAccounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", "bankAccounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePost<CreateBankAccountRequest, BankAccountResponse>(request);
         }
@@ -1085,12 +1060,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<BankAccountResponse> UpdateBankAccount(UpdateBankAccountRequest updateRequest, string? customerIPAddress = null)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("customer", "bankAccounts");
-
-            if (customerIPAddress != null)
-            {
-                builder.AddHeader("customer_ip_address", customerIPAddress);
-            }
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", "bankAccounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecutePut<UpdateBankAccountRequest, BankAccountResponse>(updateRequest);
         }
@@ -1102,7 +1074,7 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task DeleteBankAccount(DeleteBankAccountRequest request)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
                 .SetSegments("customer", "bankAccounts");
 
             await builder.ExecuteDelete(request);
@@ -1115,10 +1087,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<DocumentStoreSettingsResponse> GetDocumentStore(string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecuteGet<DocumentStoreSettingsResponse>();
         }
@@ -1131,10 +1102,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task CreateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             await builder.ExecutePost<DocumentStoreSettingsRequest>(documentStoreSettings);
         }
@@ -1147,10 +1117,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task UpdateDocumentStore(DocumentStoreSettingsRequest documentStoreSettings, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             await builder.ExecutePut<DocumentStoreSettingsRequest, NexusResponse>(documentStoreSettings);
         }
@@ -1162,10 +1131,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task DeleteDocumentStore(string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             await builder.ExecuteDelete<NexusResponse>();
         }
@@ -1178,15 +1146,14 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<PagedResponse<DocumentStoreItemResponse>> GetDocumentStoreFileList(IDictionary<string, string>? queryParameters, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore", "list");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore", "list")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             if (queryParameters != null)
             {
                 builder.SetQueryParameters(queryParameters);
             }
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
 
             return await builder.ExecuteGet<PagedResponse<DocumentStoreItemResponse>>();
         }
@@ -1199,10 +1166,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task AddDocumentToStore(FileUploadRequest fileUploadRequest, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore", "file");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore", "file")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             using var formContent = new MultipartFormDataContent();
 
@@ -1235,10 +1201,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<Stream> GetDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore", "file");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore", "file")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             builder.SetQueryParameters(new Dictionary<string, string>
             {
@@ -1256,10 +1221,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task DeleteDocumentFromStore(DocumentRequest documentRequest, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore", "file");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore", "file")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             builder.SetQueryParameters(new Dictionary<string, string>
             {
@@ -1277,11 +1241,9 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger)
-                .SetSegments("integrations", "documentstore", "file");
-
-            builder.AddHeader("customer_ip_address", customerIPAddress);
-
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("integrations", "documentstore", "file")
+                .AddHeader("customer_ip_address", customerIPAddress);
 
             await builder.ExecutePut<FileUpdateRequest, NexusResponse>(fileUpdateRequest);
         }
@@ -1293,7 +1255,8 @@ namespace Nexus.Sdk.Token
         /// <returns>List of fee payers based on the query parameters.</returns>
         public async Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters)
         {
-            var builder = new RequestBuilder(_client, _handler, _logger).SetSegments("token", "feePayers");
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("token", "feePayers");
 
             if (queryParameters != null)
             {

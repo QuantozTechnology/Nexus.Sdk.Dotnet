@@ -4,193 +4,179 @@ using System.Text.Json;
 
 namespace Nexus.Sdk.Shared.Http;
 
-public class RequestBuilder
+public class RequestBuilder(HttpClient httpClient, IResponseHandler responseHandler, ILogger? logger, IDictionary<string, string>? initialHeaders = null)
 {
-    private readonly HttpClient _httpClient;
-    private readonly IResponseHandler _responseHandler;
-    private readonly ILogger? _logger;
+    private bool _segmentsAdded = false;
+    private bool _queryParametersAdded = false;
+    private bool _headersAdded = false;
 
-    private bool _segmentsAdded;
-    private bool _queryParametersAdded;
-    private bool _headersAdded;
-
-    private readonly List<string> _segments;
-    private IDictionary<string, string> _queryParameters;
-    private IDictionary<string, string> _headers;
-
-    public RequestBuilder(HttpClient httpClient, IResponseHandler responseHandler, ILogger? logger)
-    {
-        _httpClient = httpClient;
-        _responseHandler = responseHandler;
-        _logger = logger;
-
-        _segments = new List<string>();
-        _queryParameters = new Dictionary<string, string>();
-        _headers = new Dictionary<string, string>();
-        _segmentsAdded = false; //Allow overwriting segments
-        _queryParametersAdded = false;
-        _headersAdded = false;
-    }
+    private readonly List<string> _segments = [];
+    private IDictionary<string, string> _queryParameters = new Dictionary<string, string>();
+    private IDictionary<string, string> _headers = initialHeaders != null ? new Dictionary<string, string>(initialHeaders) : [];
 
     public async Task<TResponse> ExecuteGet<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("GET {uri}", path);
+        logger?.LogDebug("GET {uri}", path);
 
         var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
 
-        var response = await _httpClient.SendAsync(getRequest);
+        var response = await httpClient.SendAsync(getRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task<Stream> ExecuteGetStream()
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("GET {uri}", path);
+        logger?.LogDebug("GET {uri}", path);
 
         var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
 
-        var response = await _httpClient.SendAsync(getRequest);
+        var response = await httpClient.SendAsync(getRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponseStream(response);
+        return await responseHandler.HandleResponseStream(response);
     }
 
     public async Task ExecutePost<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("POST to {path}: {json}", path, json);
+        logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
-        var response = await _httpClient.SendAsync(postRequest, cancellationToken);
+        var response = await httpClient.SendAsync(postRequest, cancellationToken);
 
         ResetHeaders(); // reset headers
 
-        await _responseHandler.HandleResponse(response, cancellationToken);
+        await responseHandler.HandleResponse(response, cancellationToken);
     }
 
     public async Task<TResponse> ExecutePost<TRequest, TResponse>(TRequest request) where TRequest : class where TResponse : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("POST to {path}: {json}", path, json);
+        logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, content, _headers);
-        var response = await _httpClient.SendAsync(postRequest);
+        var response = await httpClient.SendAsync(postRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task<TResponse> ExecutePost<TResponse>(MultipartFormDataContent request) where TResponse : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("POST to {path}: {json}", path, json);
+        logger?.LogDebug("POST to {path}: {json}", path, json);
 
         var postRequest = HttpRequestBuilder.BuildPostRequest(requestUri, request, _headers);
-        var response = await _httpClient.SendAsync(postRequest);
+        var response = await httpClient.SendAsync(postRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task<TResponse> ExecutePut<TRequest, TResponse>(TRequest request) where TRequest : class where TResponse : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("PUT to {path}: {json}", path, json);
+        logger?.LogDebug("PUT to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var postRequest = HttpRequestBuilder.BuildPutRequest(requestUri, content, _headers);
-        var response = await _httpClient.SendAsync(postRequest);
+        var response = await httpClient.SendAsync(postRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task<TResponse> ExecutePut<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("PUT to {path}", path);
+        logger?.LogDebug("PUT to {path}", path);
 
         var putRequest = HttpRequestBuilder.BuildPutRequest(requestUri, _headers);
-        var response = await _httpClient.SendAsync(putRequest);
+        var response = await httpClient.SendAsync(putRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task<TResponse> ExecuteDelete<TResponse>() where TResponse : class
     {
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("DELETE {uri}", path);
+        logger?.LogDebug("DELETE {uri}", path);
 
         var deleteRequest = HttpRequestBuilder.BuildDeleteRequest(requestUri, _headers);
-        var response = await _httpClient.SendAsync(deleteRequest);
+        var response = await httpClient.SendAsync(deleteRequest);
 
         ResetHeaders(); // reset headers
 
-        return await _responseHandler.HandleResponse<TResponse>(response);
+        return await responseHandler.HandleResponse<TResponse>(response);
     }
 
     public async Task ExecuteDelete<TRequest>(TRequest request, CancellationToken cancellationToken = default) where TRequest : class
     {
         var json = JsonSerializer.Serialize(request);
         var path = BuildPath();
-        Uri requestUri = new Uri(_httpClient.BaseAddress!, path);
+        Uri requestUri = new(httpClient.BaseAddress!, path);
 
-        _logger?.LogDebug("DELETE to {path}: {json}", path, json);
+        logger?.LogDebug("DELETE to {path}: {json}", path, json);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         var deleteRequest = HttpRequestBuilder.BuildDeleteRequest(requestUri, content, _headers);
-        var response = await _httpClient.SendAsync(deleteRequest, cancellationToken);
+        var response = await httpClient.SendAsync(deleteRequest, cancellationToken);
 
         ResetHeaders();
 
-        await _responseHandler.HandleResponse(response, cancellationToken);
+        await responseHandler.HandleResponse(response, cancellationToken);
     }
 
     public RequestBuilder SetSegments(params string[] segments)
     {
         if (_segmentsAdded)
+        {
             throw new Exception("URL segments have already been added.");
+        }
 
         _segmentsAdded = true;
 
         foreach (var segment in segments)
+        {
             _segments.Add(segment);
+        }
 
         return this;
     }
@@ -198,7 +184,9 @@ public class RequestBuilder
     public RequestBuilder SetQueryParameters(IDictionary<string, string> queryParameters)
     {
         if (_queryParametersAdded)
+        {
             throw new Exception("Query parameters have already been set.");
+        }
 
         _queryParametersAdded = true;
         _queryParameters = queryParameters;
@@ -217,7 +205,9 @@ public class RequestBuilder
     public RequestBuilder SetHeaders(IDictionary<string, string> headers)
     {
         if (_headersAdded)
+        {
             throw new Exception("Headers have already been set.");
+        }
 
         _headersAdded = true;
         _headers = headers;
@@ -225,11 +215,19 @@ public class RequestBuilder
         return this;
     }
 
-    public RequestBuilder AddHeader(string key, string value)
+    /// <summary>
+    /// Adds a header to the request if the value is not null or whitespace.
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
+    public RequestBuilder AddHeader(string key, string? value)
     {
-        _headersAdded = true;
-        _headers.Add(key, value);
-
+        if (!string.IsNullOrWhiteSpace(value))
+        {
+            _headersAdded = true;
+            _headers.Add(key, value);
+        }
         return this;
     }
 
@@ -264,7 +262,7 @@ public class RequestBuilder
     {
         var builder = new StringBuilder();
 
-        if (_segments.Any())
+        if (_segments.Count != 0)
         {
             foreach (var segment in _segments)
             {
@@ -291,9 +289,9 @@ public class RequestBuilder
         throw new NotSupportedException("No segments defined.");
     }
 
-    private string BuildQuerystring(IDictionary<string, string> querystringParams)
+    private static string BuildQuerystring(IDictionary<string, string> querystringParams)
     {
-        List<string> paramList = new List<string>();
+        List<string> paramList = [];
 
         foreach (var parameter in querystringParams)
         {
