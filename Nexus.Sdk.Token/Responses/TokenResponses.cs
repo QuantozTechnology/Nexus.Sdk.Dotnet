@@ -21,9 +21,24 @@ public class TokenResponse
 
     [JsonPropertyName("blockchainId")]
     public string BlockchainId { get; }
+    
+    [JsonPropertyName("blockchainCode")]
+    public string BlockchainCode { get; }
+    
+    [JsonPropertyName("tokenType")]
+    public string TokenType { get; }
+    
+    [JsonPropertyName("assetType")]
+    public string AssetType { get; }
+    
+    [JsonPropertyName("peggedBy")]
+    public PeggedByResponse PeggedBy { get; }
+    
+    [JsonPropertyName("settings")]
+    public TokenDetailSettingsResponse Settings { get; }
 
     [JsonConstructor]
-    public TokenResponse(string code, string name, string issuerAddress, string status, string created, string blockchainId)
+    public TokenResponse(string code, string name, string issuerAddress, string status, string created, string blockchainId, string blockchainCode, string tokenType, string assetType, PeggedByResponse peggedBy, TokenDetailSettingsResponse settings)
     {
         Code = code;
         Name = name;
@@ -31,6 +46,59 @@ public class TokenResponse
         Status = status;
         Created = created;
         BlockchainId = blockchainId;
+        BlockchainCode = blockchainCode;
+        TokenType = tokenType;
+        AssetType = assetType;
+        PeggedBy = peggedBy;
+        Settings = settings;
+    }
+}
+
+public class PeggedByResponse
+{
+    [JsonPropertyName("type")]
+    public string Type { get; }
+
+    [JsonPropertyName("code")]
+    public string Code { get; }
+    
+    [JsonPropertyName("rate")]
+    public decimal Rate { get; }
+
+    [JsonConstructor]
+    public PeggedByResponse(string type, string code, decimal rate)
+    {
+        Type = type;
+        Code = code;
+        Rate = rate;
+    }
+}
+
+public class TokenDetailSettingsResponse
+{
+    [JsonPropertyName("accountLimit")]
+    public decimal AccountLimit { get; }
+
+    [JsonPropertyName("overallLimit")]
+    public decimal OverallLimit { get; }
+    
+    [JsonPropertyName("returnable")]
+    public bool Returnable { get; }
+    
+    [JsonPropertyName("freezeAfterFund")]
+    public bool FreezeAfterFund { get; }
+
+    [JsonPropertyName("decimals")]
+    public int Decimals { get; }
+
+    [JsonConstructor]
+    public TokenDetailSettingsResponse(decimal accountLimit, decimal overallLimit, bool returnable, bool freezeAfterFund, int decimals)
+    {
+        AccountLimit = accountLimit;
+        OverallLimit = overallLimit;
+        Returnable = returnable;
+        FreezeAfterFund = freezeAfterFund;
+        Decimals = decimals;
     }
 }
 
