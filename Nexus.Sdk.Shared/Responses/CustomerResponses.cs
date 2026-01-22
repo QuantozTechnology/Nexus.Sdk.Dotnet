@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string? name, string? firstName, string? lastName, string? dateOfBirth, string? phone, string? companyName, string trustLevel, string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string? riskQualification, string? created, string? portFolioCode, string? externalCustomerCode, bool? isReviewRecommended, bool? isPEP, IDictionary<string, string> data)
+    public CustomerResponse(string customerCode, string? name, string? firstName, string? lastName, string? dateOfBirth, string? phone, string? companyName, string trustLevel, string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string? riskQualification, string? created, string? portFolioCode, string? externalCustomerCode, bool? isReviewRecommended, bool? isPEP, IDictionary<string, string> data, PrimaryInternalAccountResponse? primaryInternalAccount = null)
     {
         CustomerCode = customerCode;
         Name = name;
@@ -31,6 +31,7 @@ public record CustomerResponse
         ExternalCustomerCode = externalCustomerCode;
         IsReviewRecommended = isReviewRecommended;
         IsPEP = isPEP;
+        PrimaryInternalAccount = primaryInternalAccount;
         Data = data;
     }
 
@@ -105,9 +106,24 @@ public record CustomerResponse
 
     [JsonPropertyName("isPEP")]
     public bool? IsPEP { get; set; }
-
+    
+    [JsonPropertyName("primaryInternalAccount")]
+    public PrimaryInternalAccountResponse? PrimaryInternalAccount { get; set; }
+    
     [JsonPropertyName("data")]
     public IDictionary<string, string> Data { get; set; }
+}
+
+public class PrimaryInternalAccountResponse
+{
+    [JsonConstructor]
+    public PrimaryInternalAccountResponse(string accountCode)
+    {
+        AccountCode = accountCode;
+    }
+
+    [JsonPropertyName("accountCode")]
+    public string AccountCode { get; set; }
 }
 
 public class DeleteCustomerResponse
