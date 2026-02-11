@@ -140,6 +140,12 @@
             return this;
         }
 
+        public CustomerRequestBuilder<T> SetReason(string reason)
+        {
+            _request.Reason = reason;
+            return this;
+        }
+
         public T Build()
         {
             return _request;
@@ -202,12 +208,6 @@
         public UpdateCustomerRequestBuilder SetReasonCode(string reasonCode)
         {
             _request.ReasonCode = reasonCode;
-            return this;
-        }
-
-        public UpdateCustomerRequestBuilder SetReason(string reason)
-        {
-            _request.Reason = reason;
             return this;
         }
 
