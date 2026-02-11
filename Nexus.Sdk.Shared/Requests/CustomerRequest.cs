@@ -81,6 +81,10 @@ public class CustomerRequest
     [JsonPropertyName("isPEP")]
     public bool? IsPEP { get; set; } = false;
 
+    [JsonPropertyName("reason")]
+    [StringLength(1024)]
+    public string? Reason { get; set; }
+
     public IDictionary<string, string>? Data { get; set; }
 }
 
@@ -117,10 +121,6 @@ public class UpdateCustomerRequest : CustomerRequest
     [JsonPropertyName("reasonCode")]
     [StringLength(100)]
     public string? ReasonCode { get; set; }
-
-    [JsonPropertyName("reason")]
-    [StringLength(1024)]
-    public string? Reason { get; set; }
 
     [JsonPropertyName("bankAccounts")]
     public UpdateCustomerBankAccountRequest[]? BankAccounts { get; set; }
