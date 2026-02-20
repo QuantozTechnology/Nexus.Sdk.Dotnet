@@ -22,7 +22,17 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignableResponse> ConnectAccountToTokenAsync(string accountCode, TokenCodeWithData tokenCodeWithData, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +47,17 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             throw new NotImplementedException();
         }
@@ -436,6 +456,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> allowedTokens, string? customerIPAddress = null, string? customName = null)
         {
             throw new NotImplementedException();
         }

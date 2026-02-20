@@ -35,6 +35,11 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.CreateVirtualAccount(customerCode, address, generateReceiveAddress, cryptoCode, allowedTokens, customerIPAddress, customName);
     }
 
+    public async Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> allowedTokens, string? customerIPAddress = null, string? customName = null)
+    {
+        return await _provider.CreateVirtualAccount(customerCode, address, generateReceiveAddress, cryptoCode, allowedTokens, customerIPAddress, customName);
+    }
+
     public async Task<AccountResponse> CreateOnStellarAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
     {
         return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, customerIPAddress, customName, accountType);
@@ -43,6 +48,11 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
     public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
     {
         return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, allowedTokens, customerIPAddress, customName, accountType);
+    }
+
+    public async Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+    {
+        return await _provider.CreateAccountOnStellarAsync(customerCode, publicKey, tokenCodesWithData, customerIPAddress, customName, accountType);
     }
 
     public async Task<AccountResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
@@ -55,14 +65,29 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, allowedTokens, customerIPAddress, customName, accountType);
     }
 
+    public async Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+    {
+        return await _provider.CreateAccountOnAlgorandAsync(customerCode, publicKey, tokenCodesWithData, customerIPAddress, customName, accountType);
+    }
+
     public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null)
     {
         return await _provider.ConnectAccountToTokenAsync(accountCode, tokenCode, customerIPAddress);
     }
 
+    public async Task<SignableResponse> ConnectToTokenAsync(string accountCode, TokenCodeWithData tokenCodeWithData, string? customerIPAddress = null)
+    {
+        return await _provider.ConnectAccountToTokenAsync(accountCode, tokenCodeWithData, customerIPAddress);
+    }
+
     public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
     {
         return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodes, customerIPAddress);
+    }
+
+    public async Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null)
+    {
+        return await _provider.ConnectAccountToTokensAsync(accountCode, tokenCodesWithData, customerIPAddress);
     }
 
     public async Task<NexusResponse> DeleteAccount(string accountCode)

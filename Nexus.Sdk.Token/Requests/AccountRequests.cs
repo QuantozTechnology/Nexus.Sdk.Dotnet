@@ -56,7 +56,8 @@ public class UpdateTokenAccountSettings
 public class AllowedTokens
 {
     [JsonPropertyName("addTokens")]
-    public IEnumerable<string>? AddTokens { get; set; }
+    [JsonConverter(typeof(AddTokensUnionJsonConverter))]
+    public AddTokensUnion? AddTokens { get; set; }
 
     [JsonPropertyName("removeTokens")]
     public string[]? RemoveTokens { get; set; }
@@ -68,8 +69,33 @@ public class AllowedTokens
     public string[]? DisableTokens { get; set; }
 }
 
+/// <summary>
+/// Union type for the <c>addTokens</c> field — holds either plain token code strings
+/// or <see cref="TokenCodeWithData"/> objects. Serialized to the same JSON array shape
+/// accepted by the Nexus API.
+/// </summary>
+[JsonConverter(typeof(AddTokensUnionJsonConverter))]
+public class AddTokensUnion
+{
+    public IEnumerable<string>? TokenCodes { get; init; }
+    public IEnumerable<TokenCodeWithData>? TokenCodesWithData { get; init; }
+
+    public static AddTokensUnion FromTokenCodes(IEnumerable<string> tokenCodes) => new() { TokenCodes = tokenCodes };
+    public static AddTokensUnion FromTokenCodesWithData(IEnumerable<TokenCodeWithData> tokenCodesWithData) => new() { TokenCodesWithData = tokenCodesWithData };
+}
+
 public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
-    public IEnumerable<string>? AllowedTokens { get; set; }
+    [JsonConverter(typeof(AddTokensUnionJsonConverter))]
+    public AddTokensUnion? AllowedTokens { get; set; }
+}
+
+public record TokenCodeWithData
+{
+    [JsonPropertyName("tokenCode")]
+    public required string TokenCode { get; init; }
+
+    [JsonPropertyName("data")]
+    public required IDictionary<string, string> Data { get; init; }
 }

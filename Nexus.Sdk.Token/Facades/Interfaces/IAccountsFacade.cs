@@ -36,6 +36,19 @@ public interface IAccountsFacade
     Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null);
 
     /// <summary>
+    /// Create a virtual account with token-specific data
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="address">Optionally supply a receive address for the virtual account to receive from blockchain accounts.</param>
+    /// <param name="generateReceiveAddress">Generate a receive address for the virtual account to receive from blockchain accounts.</param>
+    /// <param name="cryptoCode">Blockchain to connect this account to.</param>
+    /// <param name="allowedTokens">A list of token codes with associated data the account will be connected to upon creation</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <param name="customName">Optional custom name for account</param>
+    /// <returns></returns>
+    Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> allowedTokens, string? customerIPAddress = null, string? customName = null);
+
+    /// <summary>
     /// Create a new account on the Stellar blockchain
     /// </summary>
     /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
@@ -57,6 +70,18 @@ public interface IAccountsFacade
     /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided public key</returns>
     public Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
+
+    /// <summary>
+    /// Create a new account on the Stellar blockchain and connect it with tokens and data
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="publicKey">The public key of the new Stellar account</param>
+    /// <param name="tokenCodesWithData">Token codes with associated property data</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <param name="customName">Optional custom name for account</param>
+    /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
+    /// <returns>A transaction that needs to be signed using the private key that matches the provided public key</returns>
+    public Task<SignableResponse> CreateOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
     /// <summary>
     /// Create a new account on the Algorand blockchain
@@ -82,6 +107,18 @@ public interface IAccountsFacade
     public Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
     /// <summary>
+    /// Create a new account on the Algorand blockchain and connect it with tokens and data
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="publicKey">The public key of the new Algorand account</param>
+    /// <param name="tokenCodesWithData">Token codes with associated property data</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <param name="customName">Optional custom name for account</param>
+    /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
+    /// <returns>A transaction that needs to be signed using the private key that matches the provided public key</returns>
+    public Task<SignableResponse> CreateOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
+
+    /// <summary>
     /// Connect a token to an account
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
@@ -91,6 +128,15 @@ public interface IAccountsFacade
     public Task<SignableResponse> ConnectToTokenAsync(string accountCode, string tokenCode, string? customerIPAddress = null);
 
     /// <summary>
+    /// Connect a token with data to an account
+    /// </summary>
+    /// <param name="accountCode">{crypto}-{publickey} combination of the account.</param>
+    /// <param name="tokenCodeWithData">Token code with associated property data</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <returns>A transaction that needs to be signed using the private key of the provided account</returns>
+    public Task<SignableResponse> ConnectToTokenAsync(string accountCode, TokenCodeWithData tokenCodeWithData, string? customerIPAddress = null);
+
+    /// <summary>
     /// Connect tokens to an account
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
@@ -98,6 +144,15 @@ public interface IAccountsFacade
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <returns>A transaction that needs to be signed using the private key of the provided account</returns>
     public Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null);
+
+    /// <summary>
+    /// Connect tokens with data to an account
+    /// </summary>
+    /// <param name="accountCode">{crypto}-{publickey} combination of the account.</param>
+    /// <param name="tokenCodesWithData">Token codes with associated property data</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+    /// <returns>A transaction that needs to be signed using the private key of the provided account</returns>
+    public Task<SignableResponse> ConnectToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokenCodesWithData, string? customerIPAddress = null);
 
     /// <summary>
     /// Updates account properties
