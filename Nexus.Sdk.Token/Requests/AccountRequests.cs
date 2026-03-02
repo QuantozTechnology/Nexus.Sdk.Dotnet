@@ -2,6 +2,15 @@
 
 namespace Nexus.Sdk.Token.Requests;
 
+public record TokenCodeWithData
+{
+    [JsonPropertyName("tokenCode")]
+    public required string TokenCode { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
+}
+
 public record CreateTokenAccountRequest
 {
     [JsonPropertyName("accountType")]
@@ -58,6 +67,9 @@ public class AllowedTokens
     [JsonPropertyName("addTokens")]
     public IEnumerable<string>? AddTokens { get; set; }
 
+    [JsonPropertyName("addTokensWithData")]
+    public IEnumerable<TokenCodeWithData>? AddTokensWithData { get; set; }
+
     [JsonPropertyName("removeTokens")]
     public string[]? RemoveTokens { get; set; }
 
@@ -72,4 +84,28 @@ public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
     public IEnumerable<string>? AllowedTokens { get; set; }
+
+    [JsonPropertyName("allowedTokensWithData")]
+    public IEnumerable<TokenCodeWithData>? AllowedTokensWithData { get; set; }
+}
+
+public record GetAccountTokensRequest
+{
+    [JsonPropertyName("accountCode")]
+    public string? AccountCode { get; set; }
+
+    [JsonPropertyName("tokenCode")]
+    public string? TokenCode { get; set; }
+
+    [JsonPropertyName("propertyName")]
+    public string? PropertyName { get; set; }
+
+    [JsonPropertyName("propertyValue")]
+    public string? PropertyValue { get; set; }
+
+    [JsonPropertyName("page")]
+    public int Page { get; set; } = 1;
+
+    [JsonPropertyName("limit")]
+    public int Limit { get; set; } = 50;
 }

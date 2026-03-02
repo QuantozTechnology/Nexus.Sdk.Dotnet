@@ -374,6 +374,14 @@ namespace Nexus.Sdk.Token
         Task<NexusResponse> DeleteAccount(string accountCode);
 
         /// <summary>
+        /// Search account tokens based on filter criteria.
+        /// At least one of AccountCode, TokenCode, or PropertyName (with PropertyValue) must be provided.
+        /// </summary>
+        /// <param name="query">Query parameters to filter on (AccountCode, TokenCode, PropertyName, PropertyValue, Page, Limit).</param>
+        /// <returns>A paged list of account tokens matching the search criteria.</returns>
+        Task<PagedResponse<GetAccountTokensResponse>> GetAccountTokens(IDictionary<string, string>? query);
+
+        /// <summary>
         /// Updates the status of a token operation.
         /// </summary>
         /// <param name="operationCode">Unique Nexus identifier of the operation.</param>

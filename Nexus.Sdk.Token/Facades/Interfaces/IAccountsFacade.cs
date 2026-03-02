@@ -115,4 +115,12 @@ public interface IAccountsFacade
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
     public Task<NexusResponse> DeleteAccount(string accountCode);
+
+    /// <summary>
+    /// Search account tokens based on filter criteria.
+    /// At least one of AccountCode, TokenCode, or PropertyName (with PropertyValue) must be provided.
+    /// </summary>
+    /// <param name="query">Query parameters to filter on (AccountCode, TokenCode, PropertyName, PropertyValue, Page, Limit).</param>
+    /// <returns>A paged list of account tokens matching the search criteria.</returns>
+    public Task<PagedResponse<GetAccountTokensResponse>> GetAccountTokens(IDictionary<string, string>? query);
 }

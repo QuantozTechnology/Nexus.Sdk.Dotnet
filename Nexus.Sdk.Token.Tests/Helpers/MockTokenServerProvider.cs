@@ -353,6 +353,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<PagedResponse<GetAccountTokensResponse>> GetAccountTokens(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
             var tokenOperationResponse = new TokenOperationResponse

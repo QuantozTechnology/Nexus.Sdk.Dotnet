@@ -69,4 +69,9 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
     {
         return await _provider.DeleteAccount(accountCode);
     }
+
+    public async Task<PagedResponse<GetAccountTokensResponse>> GetAccountTokens(IDictionary<string, string>? query)
+    {
+        return await _provider.GetAccountTokens(query);
+    }
 }

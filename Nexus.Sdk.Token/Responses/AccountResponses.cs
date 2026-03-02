@@ -61,10 +61,11 @@ public record TokenSettingsResponse
 public record AllowedTokensResponse
 {
     [JsonConstructor]
-    public AllowedTokensResponse(string tokenCode, string status)
+    public AllowedTokensResponse(string tokenCode, string status, IDictionary<string, string>? data = null)
     {
         TokenCode = tokenCode;
         Status = status;
+        Data = data;
     }
 
     [JsonPropertyName("tokenCode")]
@@ -72,6 +73,9 @@ public record AllowedTokensResponse
 
     [JsonPropertyName("status")]
     public string Status { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
 }
 
 public record UpdateTokenAccountResponse
@@ -121,4 +125,28 @@ public record AccountBalance
     [JsonConstructor]
     public AccountBalance(string tokenCode, decimal amount, bool enabled)
         => (TokenCode, Amount, Enabled) = (tokenCode, amount, enabled);
+}
+
+public record GetAccountTokensResponse
+{
+    [JsonConstructor]
+    public GetAccountTokensResponse(string accountCode, string tokenCode, string status, IDictionary<string, string>? data = null)
+    {
+        AccountCode = accountCode;
+        TokenCode = tokenCode;
+        Status = status;
+        Data = data ?? new Dictionary<string, string>();
+    }
+
+    [JsonPropertyName("accountCode")]
+    public string AccountCode { get; set; }
+
+    [JsonPropertyName("tokenCode")]
+    public string TokenCode { get; set; }
+
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string> Data { get; set; }
 }

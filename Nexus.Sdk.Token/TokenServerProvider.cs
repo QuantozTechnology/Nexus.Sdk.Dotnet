@@ -997,6 +997,19 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteDelete<NexusResponse>();
         }
 
+        public async Task<PagedResponse<GetAccountTokensResponse>> GetAccountTokens(IDictionary<string, string>? query)
+        {
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("accounts", "tokens");
+
+            if (query != null)
+            {
+                builder.SetQueryParameters(query);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<GetAccountTokensResponse>>();
+        }
+
         public async Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
         {
             var builder = new RequestBuilder(_client, _handler, logger, _headers)
