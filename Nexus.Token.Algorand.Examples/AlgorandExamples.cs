@@ -172,6 +172,47 @@ namespace Nexus.Token.Algorand.Examples
             _ = _tokenServer.Submit.OnAlgorandAsync(signedResponse);
         }
 
+        public async Task CreateAccountWithTokenDataAsync(string customerCode, string tokenCode, IDictionary<string, string> data)
+        {
+            var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
+            var customer = await _tokenServer.Customers.Create(request);
+
+            var kp = AlgorandKeyPair.Generate();
+
+            _logger.LogWarning("Generated new Algorand account for {customerCode}: {accountCode}", customer.CustomerCode, kp.GetAccountCode());
+
+            var tokensWithData = new[] { new TokenCodeWithData { TokenCode = tokenCode, Data = data } };
+            var signableResponse = await _tokenServer.Accounts.CreateOnAlgorandAsync(customer.CustomerCode, kp.GetPublicKey(), tokensWithData);
+            var signedResponse = kp.Sign(signableResponse, true);
+            await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+
+            _logger.LogWarning("Account created and connected to {tokenCode} with metadata", tokenCode);
+
+            var account = await _tokenServer.Accounts.Get(kp.GetAccountCode());
+            foreach (var token in account.TokenSettings?.AllowedTokens ?? [])
+            {
+                _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
+            }
+        }
+
+        public async Task ConnectTokenWithDataAsync(string encryptedPrivateKey, string tokenCode, IDictionary<string, string> data)
+        {
+            var kp = AlgorandKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
+            var tokensWithData = new[] { new TokenCodeWithData { TokenCode = tokenCode, Data = data } };
+            var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokensWithData);
+            var signedResponse = kp.Sign(signableResponse, true);
+            await _tokenServer.Submit.OnAlgorandAsync(signedResponse);
+
+            _logger.LogWarning("Connected token {tokenCode} with metadata to account {accountCode}", tokenCode, kp.GetAccountCode());
+
+            var account = await _tokenServer.Accounts.Get(kp.GetAccountCode());
+            foreach (var token in account.TokenSettings?.AllowedTokens ?? [])
+            {
+                _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
+            }
+        }
+
         public async Task PaymentAsync(string encryptedSenderPrivateKey, string encryptedReceiverPrivateKey, string tokenCode, decimal amount)
         {
             var sender = AlgorandKeyPair.FromPrivateKey(encryptedSenderPrivateKey, _decrypter);

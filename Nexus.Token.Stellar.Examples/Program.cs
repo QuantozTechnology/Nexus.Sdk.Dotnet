@@ -28,6 +28,7 @@ namespace Nexus.Token.Stellar.Examples
                 WriteToConsole("5 = Stellar Multiple Operations Flow");
                 WriteToConsole("6 = Stellar Token Limits Flow");
                 WriteToConsole("7 = Stellar Update Token Operation Status Flow");
+                WriteToConsole("8 = Stellar Token Data Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();
