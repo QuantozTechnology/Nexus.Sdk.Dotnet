@@ -52,6 +52,13 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null)
         {
+            return await ConnectAccountToTokensAsync(accountCode,
+                tokenCodes.Select(tc => new TokenCodeWithData { TokenCode = tc }),
+                customerIPAddress);
+        }
+
+        public async Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null)
+        {
             var builder = new RequestBuilder(_client, _handler, logger, _headers)
                 .SetSegments("accounts", accountCode)
                 .AddHeader("customer_ip_address", customerIPAddress);
@@ -62,7 +69,7 @@ namespace Nexus.Sdk.Token
                 {
                     AllowedTokens = new AllowedTokens
                     {
-                        AddTokens = tokenCodes
+                        AddTokens = tokensWithData
                     }
                 }
             };
@@ -88,7 +95,38 @@ namespace Nexus.Sdk.Token
                 CryptoCode = cryptoCode,
                 TokenSettings = new CreateTokenAccountSettings
                 {
-                    AllowedTokens = allowedTokens
+                    AllowedTokens = allowedTokens.Select(tc => new TokenCodeWithData { TokenCode = tc })
+                }
+            };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
+            return await builder.ExecutePost<CreateVirtualAccountRequest, AccountResponse>(request);
+        }
+
+        public async Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null)
+        {
+            if (!string.IsNullOrWhiteSpace(address) && generateReceiveAddress)
+            {
+                throw new InvalidOperationException("Supplying an address and requesting one to be generated is unsupported.");
+            }
+
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
+
+            var request = new CreateVirtualAccountRequest
+            {
+                GenerateReceiveAddress = generateReceiveAddress,
+                Address = address,
+                AccountType = "VIRTUAL",
+                CryptoCode = cryptoCode,
+                TokenSettings = new CreateTokenAccountSettings
+                {
+                    AllowedTokens = tokensWithData
                 }
             };
 
@@ -131,6 +169,13 @@ namespace Nexus.Sdk.Token
 
         public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
+            return await CreateAccountOnAlgorandAsync(customerCode, publicKey,
+                allowedTokens.Select(tc => new TokenCodeWithData { TokenCode = tc }),
+                customerIPAddress, customName, accountType);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
             var builder = new RequestBuilder(_client, _handler, logger, _headers)
                 .SetSegments("customer", customerCode, "accounts")
                 .AddHeader("customer_ip_address", customerIPAddress);
@@ -141,7 +186,7 @@ namespace Nexus.Sdk.Token
                 AccountType = accountType,
                 TokenSettings = new CreateTokenAccountSettings
                 {
-                    AllowedTokens = allowedTokens
+                    AllowedTokens = tokensWithData
                 }
             };
 
@@ -182,6 +227,13 @@ namespace Nexus.Sdk.Token
 
         public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
+            return await CreateAccountOnStellarAsync(customerCode, publicKey,
+                allowedTokens.Select(tc => new TokenCodeWithData { TokenCode = tc }),
+                customerIPAddress, customName, accountType);
+        }
+
+        public async Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
             var builder = new RequestBuilder(_client, _handler, logger, _headers)
                 .SetSegments("customer", customerCode, "accounts")
                 .AddHeader("customer_ip_address", customerIPAddress);
@@ -192,7 +244,7 @@ namespace Nexus.Sdk.Token
                 AccountType = accountType,
                 TokenSettings = new CreateTokenAccountSettings
                 {
-                    AllowedTokens = allowedTokens
+                    AllowedTokens = tokensWithData
                 }
             };
 

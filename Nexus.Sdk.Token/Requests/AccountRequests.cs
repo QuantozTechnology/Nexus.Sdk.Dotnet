@@ -53,10 +53,19 @@ public class UpdateTokenAccountSettings
     public AllowedTokens? AllowedTokens { get; set; }
 }
 
+public class TokenCodeWithData
+{
+    [JsonPropertyName("tokenCode")]
+    public required string TokenCode { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
+}
+
 public class AllowedTokens
 {
     [JsonPropertyName("addTokens")]
-    public IEnumerable<string>? AddTokens { get; set; }
+    public IEnumerable<TokenCodeWithData>? AddTokens { get; set; }
 
     [JsonPropertyName("removeTokens")]
     public string[]? RemoveTokens { get; set; }
@@ -71,5 +80,5 @@ public class AllowedTokens
 public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
-    public IEnumerable<string>? AllowedTokens { get; set; }
+    public IEnumerable<TokenCodeWithData>? AllowedTokens { get; set; }
 }

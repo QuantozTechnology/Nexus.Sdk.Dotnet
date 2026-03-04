@@ -61,10 +61,11 @@ public record TokenSettingsResponse
 public record AllowedTokensResponse
 {
     [JsonConstructor]
-    public AllowedTokensResponse(string tokenCode, string status)
+    public AllowedTokensResponse(string tokenCode, string status, IDictionary<string, string>? data = null)
     {
         TokenCode = tokenCode;
         Status = status;
+        Data = data;
     }
 
     [JsonPropertyName("tokenCode")]
@@ -72,6 +73,9 @@ public record AllowedTokensResponse
 
     [JsonPropertyName("status")]
     public string Status { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
 }
 
 public record UpdateTokenAccountResponse
