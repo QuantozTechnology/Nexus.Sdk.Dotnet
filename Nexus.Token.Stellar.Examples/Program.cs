@@ -66,6 +66,9 @@ namespace Nexus.Token.Stellar.Examples
                         case 7:
                             await StellarUpdateTokenOperationStatusFlow(stellarExamples);
                             break;
+                        case 8:
+                            await StellarTokenDataFlow(stellarExamples);
+                            break;
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -336,6 +339,26 @@ namespace Nexus.Token.Stellar.Examples
             {
                 WriteToConsole("Payment code is null or empty, cannot update operation status.", ConsoleColor.Red);
             }
+        }
+
+        public static async Task StellarTokenDataFlow(StellarExamples stellarExamples)
+        {
+            WriteToConsole("Create a new token representing the Mona Lisa");
+            var tokenCode = Guid.NewGuid().ToString()[..8];
+            await stellarExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new token representing the Nachtwacht");
+            var tokenCode2 = Guid.NewGuid().ToString()[..8];
+            await stellarExamples.CreateAssetTokenAsync(tokenCode2, "Nachtwacht");
+
+            WriteToConsole("Create an account for Bob, connecting him to the Mona Lisa token with an IBAN number");
+            var bob = Guid.NewGuid().ToString();
+            var data = new Dictionary<string, string> { { "VIBANNUMBER", "NL67INGB8855988913" } };
+            var bobsPrivateKey = await stellarExamples.CreateAccountWithTokenDataAsync(bob, tokenCode, data);
+
+            WriteToConsole("Now connect Bob to the Nachtwacht token with a different IBAN");
+            var data2 = new Dictionary<string, string> { { "VIBANNUMBER", "NL67INGB8855988914" } };
+            await stellarExamples.ConnectTokenWithDataAsync(bobsPrivateKey, tokenCode2, data2);
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)

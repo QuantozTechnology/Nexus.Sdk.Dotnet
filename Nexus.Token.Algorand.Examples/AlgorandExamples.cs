@@ -172,7 +172,7 @@ namespace Nexus.Token.Algorand.Examples
             _ = _tokenServer.Submit.OnAlgorandAsync(signedResponse);
         }
 
-        public async Task CreateAccountWithTokenDataAsync(string customerCode, string tokenCode, IDictionary<string, string> data)
+        public async Task<string> CreateAccountWithTokenDataAsync(string customerCode, string tokenCode, IDictionary<string, string> data)
         {
             var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
             var customer = await _tokenServer.Customers.Create(request);
@@ -193,6 +193,8 @@ namespace Nexus.Token.Algorand.Examples
             {
                 _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
             }
+
+            return kp.GetPrivateKey(_encrypter);
         }
 
         public async Task ConnectTokenWithDataAsync(string encryptedPrivateKey, string tokenCode, IDictionary<string, string> data)

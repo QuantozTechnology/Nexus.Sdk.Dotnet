@@ -55,6 +55,9 @@ namespace Nexus.Token.Algorand.Examples
                         case 5:
                             await AlgorandUpdateTokenOperationStatusFlow(algorandExample);
                             break;
+                        case 6:
+                            await AlgorandTokenDataFlow(algorandExample);
+                            break;
                         default:
                             WriteToConsole("Flow not supported");
                             break;
@@ -250,6 +253,26 @@ namespace Nexus.Token.Algorand.Examples
             {
                 WriteToConsole("Payment code is null or empty, cannot update operation status.", ConsoleColor.Red);
             }
+        }
+
+        public static async Task AlgorandTokenDataFlow(AlgorandExamples algorandExamples)
+        {
+            WriteToConsole("Create a new token representing the Mona Lisa");
+            var tokenCode = Guid.NewGuid().ToString()[..8];
+            await algorandExamples.CreateAssetTokenAsync(tokenCode, "Mona Lisa");
+
+            WriteToConsole("Create a new token representing the Nachtwacht");
+            var tokenCode2 = Guid.NewGuid().ToString()[..8];
+            await algorandExamples.CreateAssetTokenAsync(tokenCode2, "Nachtwacht");
+
+            WriteToConsole("Create an account for Bob, connecting him to the Mona Lisa token with an IBAN number");
+            var bob = Guid.NewGuid().ToString();
+            var data = new Dictionary<string, string> { { "VIBANNUMBER", "NL67INGB8855988913" } };
+            var bobsPrivateKey = await algorandExamples.CreateAccountWithTokenDataAsync(bob, tokenCode, data);
+
+            WriteToConsole("Now connect Bob to the Nachtwacht token with a different IBAN");
+            var data2 = new Dictionary<string, string> { { "VIBANNUMBER", "NL67INGB8855988914" } };
+            await algorandExamples.ConnectTokenWithDataAsync(bobsPrivateKey, tokenCode2, data2);
         }
 
         private static void WriteToConsole(string message, ConsoleColor textColor = ConsoleColor.Green)
