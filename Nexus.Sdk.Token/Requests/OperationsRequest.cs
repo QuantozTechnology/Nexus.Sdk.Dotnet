@@ -136,6 +136,9 @@ public record PayoutOperationRequest
 
     [JsonPropertyName("nonce")]
     public string? Nonce { get; set; }
+    
+    [JsonPropertyName("bankAccountNumber")]
+    public string? BankAccountNumber { get; set; }
 }
 
 public class UpdateOperationStatusRequest
