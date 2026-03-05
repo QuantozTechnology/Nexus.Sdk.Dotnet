@@ -126,3 +126,27 @@ public record AccountBalance
     public AccountBalance(string tokenCode, decimal amount, bool enabled)
         => (TokenCode, Amount, Enabled) = (tokenCode, amount, enabled);
 }
+
+public record AccountTokenResponse
+{
+    [JsonConstructor]
+    public AccountTokenResponse(string accountCode, string tokenCode, string status, IDictionary<string, string>? data = null)
+    {
+        AccountCode = accountCode;
+        TokenCode = tokenCode;
+        Status = status;
+        Data = data;
+    }
+
+    [JsonPropertyName("accountCode")]
+    public string AccountCode { get; set; }
+
+    [JsonPropertyName("tokenCode")]
+    public string TokenCode { get; set; }
+
+    [JsonPropertyName("status")]
+    public string Status { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
+}

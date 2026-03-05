@@ -23,6 +23,18 @@ public interface IAccountsFacade
     public Task<AccountBalancesResponse> GetBalances(string accountCode);
 
     /// <summary>
+    /// Get a paginated list of account tokens matching the provided search criteria.
+    /// At least one of accountCode, tokenCode, or dataFilters must be provided.
+    /// </summary>
+    /// <param name="accountCode">Optional account code to filter on.</param>
+    /// <param name="tokenCode">Optional token code to filter on.</param>
+    /// <param name="dataFilters">Optional data property filters (key=property_name, value=property_value). Keys will be prefixed with data_ when sent to the API.</param>
+    /// <param name="page">Page number (default 1).</param>
+    /// <param name="limit">Page size (default 50).</param>
+    /// <returns>A paged list of account tokens.</returns>
+    public Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(string? accountCode = null, string? tokenCode = null, IDictionary<string, string>? dataFilters = null, int page = 1, int limit = 50);
+
+    /// <summary>
     /// Create a virtual account
     /// </summary>
     /// <param name="customerCode">Unique Nexus identifier of the customer.</param>

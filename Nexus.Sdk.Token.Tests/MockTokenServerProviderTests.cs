@@ -103,5 +103,40 @@ namespace Nexus.Sdk.Token.Tests
                 Assert.That(tokenOperationResponse.Fees?.NetworkFees?.EstimatedCrypto, Is.EqualTo(100));
             });
         }
+
+        [Test]
+        public async Task MockTokenServerProviderTests_GetAccountTokensAsync()
+        {
+            _services = new ServiceCollection();
+
+            var mock = new MockTokenServerProvider();
+
+            _services.AddTokenServer(mock);
+
+            var provider = _services.BuildServiceProvider();
+
+            var tokenServerProvider = provider.GetRequiredService<ITokenServerProvider>();
+
+            var queryParameters = new Dictionary<string, string> { { "data_VIBANNUMBER", "NL91ABNA0417164300" } };
+            var pagedResponse = await tokenServerProvider.GetAccountTokensAsync(queryParameters);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(tokenServerProvider, Is.Not.Null);
+                Assert.That(pagedResponse, Is.Not.Null);
+                Assert.That(pagedResponse.Records, Is.Not.Null);
+                Assert.That(pagedResponse.Page, Is.EqualTo(1));
+                Assert.That(pagedResponse.Total, Is.EqualTo(1));
+                Assert.That(pagedResponse.TotalPages, Is.EqualTo(1));
+
+                var firstRecord = pagedResponse.Records.FirstOrDefault();
+                Assert.That(firstRecord, Is.Not.Null);
+                Assert.That(firstRecord!.AccountCode, Is.Not.Null.Or.Empty);
+                Assert.That(firstRecord.TokenCode, Is.Not.Null.Or.Empty);
+                Assert.That(firstRecord.Status, Is.Not.Null.Or.Empty);
+                Assert.That(firstRecord.Data, Is.Not.Null);
+                Assert.That(firstRecord.Data!["VIBANNUMBER"], Is.EqualTo("NL91ABNA0417164300"));
+            });
+        }
     }
 }

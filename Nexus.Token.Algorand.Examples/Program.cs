@@ -23,7 +23,7 @@ namespace Nexus.Token.Algorand.Examples
                 WriteToConsole("3 = Algorand Multiple Operations Flow");
                 WriteToConsole("4 = Algorand Token Limits Flow");
                 WriteToConsole("5 = Algorand Update Token Operation Status Flow");
-                WriteToConsole("6 = Algorand Token Data Flow");
+                WriteToConsole("6 = Algorand Account Token Data Flow");
 
                 Console.Write("Please type in a number: ");
                 var command = Console.ReadLine();

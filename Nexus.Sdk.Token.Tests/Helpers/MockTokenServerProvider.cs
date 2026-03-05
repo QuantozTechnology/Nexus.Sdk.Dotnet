@@ -197,6 +197,13 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(IDictionary<string, string>? queryParameters)
+        {
+            var accountToken = new AccountTokenResponse("ACC001", "TOKEN001", "ACTIVE", new Dictionary<string, string> { { "VIBANNUMBER", "NL91ABNA0417164300" } });
+            var pagedResponse = new PagedResponse<AccountTokenResponse>(1, 1, 1, new Dictionary<string, string>(), new[] { accountToken });
+            return Task.FromResult(pagedResponse);
+        }
+
         public Task<CustomerResponse> GetCustomer(string customerCode)
         {
             throw new NotImplementedException();

@@ -120,6 +120,13 @@ namespace Nexus.Sdk.Token
         Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode);
 
         /// <summary>
+        /// Lists account tokens based on query parameters.
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on (accountCode, tokenCode, page, limit, data_* filters).</param>
+        /// <returns>A paged list of account tokens matching the search criteria.</returns>
+        Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(IDictionary<string, string>? queryParameters);
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>

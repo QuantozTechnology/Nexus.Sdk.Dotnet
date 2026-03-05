@@ -25,6 +25,33 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.GetAccountBalanceAsync(accountCode);
     }
 
+    public async Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(string? accountCode = null, string? tokenCode = null, IDictionary<string, string>? dataFilters = null, int page = 1, int limit = 50)
+    {
+        var query = new Dictionary<string, string>
+        {
+            { "page", page.ToString() },
+            { "limit", limit.ToString() }
+        };
+
+        if (!string.IsNullOrWhiteSpace(accountCode))
+        {
+            query["accountCode"] = accountCode;
+        }
+
+        if (!string.IsNullOrWhiteSpace(tokenCode))
+        {
+            query["tokenCode"] = tokenCode;
+        }
+        
+        if (dataFilters != null)
+        {
+            foreach (var (key, value) in dataFilters)
+                query[$"data_{key}"] = value;
+        }
+
+        return await _provider.GetAccountTokensAsync(query);
+    }
+
     public async Task<SignableResponse> Update(string customerCode, string accountCode, UpdateTokenAccountRequest updateRequest, string? customerIPAddress = null)
     {
         return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);

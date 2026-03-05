@@ -222,6 +222,16 @@ namespace Nexus.Token.Stellar.Examples
             {
                 _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
             }
+
+            // Query account tokens by data property filter
+            _logger.LogWarning("Querying account tokens by data property filters");
+            var accountTokensResult = await _tokenServer.Accounts.GetAccountTokensAsync(dataFilters: data);
+            _logger.LogWarning("Found {total} account token(s) matching data filters:", accountTokensResult.Total);
+            foreach (var accountToken in accountTokensResult.Records)
+            {
+                _logger.LogWarning("  AccountCode={accountCode} TokenCode={tokenCode} Status={status} Data={tokenData}",
+                    accountToken.AccountCode, accountToken.TokenCode, accountToken.Status, accountToken.Data);
+            }
         }
 
         public async Task PaymentAsync(string encryptedSenderPrivateKey, string encryptedReceiverPrivateKey, string tokenCode, decimal amount)
