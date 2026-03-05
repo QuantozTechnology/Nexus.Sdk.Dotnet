@@ -87,8 +87,9 @@ public interface IOperationsFacade
     /// <param name="paymentReference">Optional reference to bank payment</param>
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
     /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
+    /// <param name="bankAccountNumber">Optional bank account number of customer to be linked to this payout</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null);
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.

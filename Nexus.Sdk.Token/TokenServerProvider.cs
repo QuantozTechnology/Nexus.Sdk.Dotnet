@@ -382,7 +382,7 @@ namespace Nexus.Sdk.Token
         /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null)
+        public async Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(options.PaymentMethodOptions.Payout))
             {
@@ -403,7 +403,8 @@ namespace Nexus.Sdk.Token
                 Memo = memo,
                 Message = message,
                 BlockchainTransactionId = blockchainTransactionId,
-                Nonce = nonce
+                Nonce = nonce,
+                BankAccountNumber = bankAccountNumber
             };
 
             return await builder.ExecutePost<PayoutOperationRequest, SignablePayoutResponse>(request);
