@@ -30,6 +30,19 @@ namespace Nexus.Sdk.Token
         Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null);
 
         /// <summary>
+        /// Create a virtual account with optional per-token metadata
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="address">Optionally supply a receive address to receive from blockchain accounts.</param>
+        /// <param name="generateReceiveAddress">Generate a receive address for the virtual account to receive from blockchain accounts.</param>
+        /// <param name="cryptoCode">Blockchain to connect this account to.</param>
+        /// <param name="tokensWithData">A list of token codes with optional metadata the account will be connected to upon creation</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="customName">Optional custom name for account</param>
+        /// <returns></returns>
+        Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null);
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="customerCode"></param>
@@ -51,6 +64,18 @@ namespace Nexus.Sdk.Token
         /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
         /// <returns></returns>
         Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
+
+        /// <summary>
+        /// Create a new account on the Stellar blockchain, connecting it with tokens and optional per-token metadata
+        /// </summary>
+        /// <param name="customerCode"></param>
+        /// <param name="publicKey"></param>
+        /// <param name="tokensWithData">Token codes with optional metadata</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
+        /// <returns></returns>
+        Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
         ///
@@ -76,11 +101,30 @@ namespace Nexus.Sdk.Token
         Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
 
         /// <summary>
+        /// Create a new account on the Algorand blockchain, connecting it with tokens and optional per-token metadata
+        /// </summary>
+        /// <param name="customerCode"></param>
+        /// <param name="publicKey"></param>
+        /// <param name="tokensWithData">Token codes with optional metadata</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="customName">Optional custom name for account</param>
+        /// <param name="accountType">Optional type for account (Defaults to a managed account)</param>
+        /// <returns></returns>
+        Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED");
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>
         /// <returns></returns>
         Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode);
+
+        /// <summary>
+        /// Lists account tokens based on query parameters.
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on (accountCode, tokenCode, page, limit, data_* filters).</param>
+        /// <returns>A paged list of account tokens matching the search criteria.</returns>
+        Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(IDictionary<string, string>? queryParameters);
 
         /// <summary>
         ///
@@ -99,6 +143,15 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <returns></returns>
         Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<string> tokenCodes, string? customerIPAddress = null);
+
+        /// <summary>
+        /// Connect tokens with optional per-token metadata to an account
+        /// </summary>
+        /// <param name="accountCode"></param>
+        /// <param name="tokensWithData">Token codes with optional metadata</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null);
 
         /// <summary>
         /// Updates account properties based on the code

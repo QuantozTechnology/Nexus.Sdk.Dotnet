@@ -27,6 +27,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignableResponse> ConnectAccountToTokensAsync(string accountCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<AccountResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             throw new NotImplementedException();
@@ -37,7 +42,17 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<SignableResponse> CreateAccountOnAlgorandAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<string> tokenCodes, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<SignableResponse> CreateAccountOnStellarAsync(string customerCode, string publicKey, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED")
         {
             throw new NotImplementedException();
         }
@@ -180,6 +195,13 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         public Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode)
         {
             throw new NotImplementedException();
+        }
+
+        public Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(IDictionary<string, string>? queryParameters)
+        {
+            var accountToken = new AccountTokenResponse("ACC001", "TOKEN001", "ACTIVE", new Dictionary<string, string> { { "VIBANNUMBER", "NL91ABNA0417164300" } });
+            var pagedResponse = new PagedResponse<AccountTokenResponse>(1, 1, 1, new Dictionary<string, string>(), new[] { accountToken });
+            return Task.FromResult(pagedResponse);
         }
 
         public Task<CustomerResponse> GetCustomer(string customerCode)
@@ -436,6 +458,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         }
 
         public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<TokenCodeWithData> tokensWithData, string? customerIPAddress = null, string? customName = null)
         {
             throw new NotImplementedException();
         }

@@ -181,6 +181,59 @@ namespace Nexus.Token.Stellar.Examples
             await _tokenServer.Submit.OnStellarAsync(signedResponse);
         }
 
+        public async Task<string> CreateAccountWithTokenDataAsync(string customerCode, string tokenCode, IDictionary<string, string> data)
+        {
+            var request = new CreateCustomerRequestBuilder(customerCode, "Trusted", "EUR").Build();
+            var customer = await _tokenServer.Customers.Create(request);
+
+            var kp = StellarKeyPair.Generate();
+
+            _logger.LogWarning("Generated new Stellar account for {customerCode}: {accountCode}", customer.CustomerCode, kp.GetAccountCode());
+
+            var tokensWithData = new[] { new TokenCodeWithData { TokenCode = tokenCode, Data = data } };
+            var signableResponse = await _tokenServer.Accounts.CreateOnStellarAsync(customer.CustomerCode, kp.GetPublicKey(), tokensWithData);
+            var signedResponse = kp.Sign(signableResponse, _network);
+            await _tokenServer.Submit.OnStellarAsync(signedResponse);
+
+            _logger.LogWarning("Account created and connected to {tokenCode} with metadata", tokenCode);
+
+            var account = await _tokenServer.Accounts.Get(kp.GetAccountCode());
+            foreach (var token in account.TokenSettings?.AllowedTokens ?? [])
+            {
+                _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
+            }
+
+            return kp.GetPrivateKey(_encrypter);
+        }
+
+        public async Task ConnectTokenWithDataAsync(string encryptedPrivateKey, string tokenCode, IDictionary<string, string> data)
+        {
+            var kp = StellarKeyPair.FromPrivateKey(encryptedPrivateKey, _decrypter);
+
+            var tokensWithData = new[] { new TokenCodeWithData { TokenCode = tokenCode, Data = data } };
+            var signableResponse = await _tokenServer.Accounts.ConnectToTokensAsync(kp.GetAccountCode(), tokensWithData);
+            var signedResponse = kp.Sign(signableResponse, _network);
+            await _tokenServer.Submit.OnStellarAsync(signedResponse);
+
+            _logger.LogWarning("Connected token {tokenCode} with metadata to account {accountCode}", tokenCode, kp.GetAccountCode());
+
+            var account = await _tokenServer.Accounts.Get(kp.GetAccountCode());
+            foreach (var token in account.TokenSettings?.AllowedTokens ?? [])
+            {
+                _logger.LogWarning("Token {tokenCode} status={status} data={data}", token.TokenCode, token.Status, token.Data);
+            }
+
+            // Query account tokens by data property filter
+            _logger.LogWarning("Querying account tokens by data property filters");
+            var accountTokensResult = await _tokenServer.Accounts.GetAccountTokensAsync(dataFilters: data);
+            _logger.LogWarning("Found {total} account token(s) matching data filters:", accountTokensResult.Total);
+            foreach (var accountToken in accountTokensResult.Records)
+            {
+                _logger.LogWarning("  AccountCode={accountCode} TokenCode={tokenCode} Status={status} Data={tokenData}",
+                    accountToken.AccountCode, accountToken.TokenCode, accountToken.Status, accountToken.Data);
+            }
+        }
+
         public async Task PaymentAsync(string encryptedSenderPrivateKey, string encryptedReceiverPrivateKey, string tokenCode, decimal amount)
         {
             var sender = StellarKeyPair.FromPrivateKey(encryptedSenderPrivateKey, _decrypter);

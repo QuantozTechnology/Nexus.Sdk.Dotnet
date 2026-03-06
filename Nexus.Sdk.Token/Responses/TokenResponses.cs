@@ -63,10 +63,10 @@ public class PeggedByResponse
     public string Code { get; }
     
     [JsonPropertyName("rate")]
-    public decimal Rate { get; }
+    public decimal? Rate { get; }
 
     [JsonConstructor]
-    public PeggedByResponse(string type, string code, decimal rate)
+    public PeggedByResponse(string type, string code, decimal? rate)
     {
         Type = type;
         Code = code;
@@ -77,10 +77,10 @@ public class PeggedByResponse
 public class TokenDetailSettingsResponse
 {
     [JsonPropertyName("accountLimit")]
-    public decimal AccountLimit { get; }
+    public decimal? AccountLimit { get; }
 
     [JsonPropertyName("overallLimit")]
-    public decimal OverallLimit { get; }
+    public decimal? OverallLimit { get; }
     
     [JsonPropertyName("returnable")]
     public bool Returnable { get; }
@@ -92,7 +92,7 @@ public class TokenDetailSettingsResponse
     public int Decimals { get; }
 
     [JsonConstructor]
-    public TokenDetailSettingsResponse(decimal accountLimit, decimal overallLimit, bool returnable, bool freezeAfterFund, int decimals)
+    public TokenDetailSettingsResponse(decimal? accountLimit, decimal? overallLimit, bool returnable, bool freezeAfterFund, int decimals)
     {
         AccountLimit = accountLimit;
         OverallLimit = overallLimit;
