@@ -24,6 +24,6 @@ namespace Nexus.Sdk.Token.Facades
         /// <returns>
         /// The current fiat spending limits expressed in token value.
         /// </returns>
-        public Task<TokenLimitsResponse> GetPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null);
+        public Task<TokenPayoutLimitsResponse> GetPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null);
     }
 }

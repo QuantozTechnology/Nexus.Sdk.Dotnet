@@ -985,7 +985,7 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<TokenLimitsResponse>();
         }
 
-        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
+        public async Task<TokenPayoutLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
             var builder = new RequestBuilder(_client, _handler, logger, _headers);
             if (!string.IsNullOrWhiteSpace(blockchainCode))
@@ -996,7 +996,7 @@ namespace Nexus.Sdk.Token
             {
                 builder.SetSegments("customer", customerCode, "limits", "tokenpayout", "token", tokenCode);
             }
-            return await builder.ExecuteGet<TokenLimitsResponse>();
+            return await builder.ExecuteGet<TokenPayoutLimitsResponse>();
         }
 
         public async Task<PagedResponse<TrustLevelsResponse>> GetTrustLevels(IDictionary<string, string>? queryParameters)
