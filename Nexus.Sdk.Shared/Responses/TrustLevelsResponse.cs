@@ -5,14 +5,17 @@ namespace Nexus.Sdk.Shared.Responses
     public record TrustLevelsResponse
     {
         [JsonConstructor]
-        public TrustLevelsResponse(string name, string? description, bool isActive, Limits? buyLimits, Limits? sellLimits, OverallLimits? overallLimits)
+        public TrustLevelsResponse(string name, string? description, bool isActive, bool requireExecutedSellDoesNotExceedLifetimeBuy, decimal? monthlyExemptionAmount, Limits? buyLimits, Limits? sellLimits, OverallLimits? overallLimits, Dictionary<string, bool> flags)
         {
             Name = name;
             Description = description;
             IsActive = isActive;
+            RequireExecutedSellDoesNotExceedLifetimeBuy = requireExecutedSellDoesNotExceedLifetimeBuy;
+            MonthlyExemptionAmount = monthlyExemptionAmount;
             BuyLimits = buyLimits;
             SellLimits = sellLimits;
             OverallLimits = overallLimits;
+            Flags = flags;
         }
 
         [JsonPropertyName("name")]
@@ -24,6 +27,12 @@ namespace Nexus.Sdk.Shared.Responses
         [JsonPropertyName("isActive")]
         public bool IsActive { get; set; }
 
+        [JsonPropertyName("requireExecutedSellDoesNotExceedLifetimeBuy")]
+        public bool RequireExecutedSellDoesNotExceedLifetimeBuy { get; set; }
+
+        [JsonPropertyName("monthlyExemptionAmount")]
+        public decimal? MonthlyExemptionAmount { get; set; }
+
         [JsonPropertyName("buyLimits")]
         public Limits? BuyLimits { get; set; }
 
@@ -32,6 +41,9 @@ namespace Nexus.Sdk.Shared.Responses
 
         [JsonPropertyName("overallLimits")]
         public OverallLimits? OverallLimits { get; set; }
+
+        [JsonPropertyName("flags")]
+        public Dictionary<string, bool> Flags { get; set; }
     }
 
     public class Limits
@@ -60,14 +72,10 @@ namespace Nexus.Sdk.Shared.Responses
 
     public class OverallLimits
     {
-        public OverallLimits(double? custodianLimit, decimal? tokenBalanceLimit)
+        public OverallLimits(decimal? tokenBalanceLimit)
         {
-            CustodianLimit = custodianLimit;
             TokenBalanceLimit = tokenBalanceLimit;
         }
-
-        [JsonPropertyName("custodianLimit")]
-        public double? CustodianLimit { get; set; }
 
         [JsonPropertyName("tokenBalanceLimit")]
         public decimal? TokenBalanceLimit { get; set; }

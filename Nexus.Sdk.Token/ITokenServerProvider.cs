@@ -412,7 +412,7 @@ namespace Nexus.Sdk.Token
         /// <returns>
         /// The current fiat spending limits expressed in token value.
         /// </returns>
-        Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null);
+        Task<TokenPayoutLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null);
 
         /// <summary>
         /// Get payment method data
