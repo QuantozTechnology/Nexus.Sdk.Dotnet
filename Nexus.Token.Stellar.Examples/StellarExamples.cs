@@ -390,7 +390,7 @@ namespace Nexus.Token.Stellar.Examples
             return fundingLimitsResponse;
         }
 
-        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        public async Task<TokenPayoutLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
             var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode, "XLM");
 

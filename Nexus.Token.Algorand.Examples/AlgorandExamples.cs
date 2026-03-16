@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Nexus.Sdk.Shared.Requests;
+using Nexus.Sdk.Shared.Responses;
 using Nexus.Sdk.Token;
 using Nexus.Sdk.Token.KeyPairs;
 using Nexus.Sdk.Token.Requests;
@@ -287,7 +288,7 @@ namespace Nexus.Token.Algorand.Examples
             return fundingLimitsResponse;
         }
 
-        public async Task<TokenLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
+        public async Task<TokenPayoutLimitsResponse> GetTokenPayoutLimits(string customerCode, string tokenCode)
         {
             var payoutLimitsResponse = await _tokenServer.TokenLimits.GetPayoutLimits(customerCode, tokenCode, "ALGO");
 

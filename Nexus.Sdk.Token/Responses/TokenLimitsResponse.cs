@@ -30,6 +30,23 @@ public record TokenLimitsResponse
     public TrustlevelLimit Total { get;  set; }
 }
 
+public record TokenPayoutLimitsResponse : TokenLimitsResponse
+{
+    [JsonConstructor]
+    public TokenPayoutLimitsResponse(string tokenCode, decimal limit, string[] limitReasons, TrustlevelLimit remaining, TrustlevelLimit total, bool requireExecutedSellDoesNotExceedLifetimeBuy, decimal? monthlyExemptionAmount)
+        : base(tokenCode, limit, limitReasons, remaining, total)
+    {
+        RequireExecutedSellDoesNotExceedLifetimeBuy = requireExecutedSellDoesNotExceedLifetimeBuy;
+        MonthlyExemptionAmount = monthlyExemptionAmount;
+    }
+
+    [JsonPropertyName("requireExecutedSellDoesNotExceedLifetimeBuy")]
+    public bool RequireExecutedSellDoesNotExceedLifetimeBuy { get; set; }
+
+    [JsonPropertyName("monthlyExemptionAmount")]
+    public decimal? MonthlyExemptionAmount { get; set; }
+}
+
 public record TrustlevelLimit
 {
     [JsonConstructor]

@@ -13,7 +13,7 @@ namespace Nexus.Sdk.Token.Facades
             return await _provider.GetTokenFundingLimits(customerCode, tokenCode, blockchainCode);
         }
 
-        public async Task<TokenLimitsResponse> GetPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
+        public async Task<TokenPayoutLimitsResponse> GetPayoutLimits(string customerCode, string tokenCode, string? blockchainCode = null)
         {
             return await _provider.GetTokenPayoutLimits(customerCode, tokenCode, blockchainCode);
         }
