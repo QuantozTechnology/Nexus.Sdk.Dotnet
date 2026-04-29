@@ -26,4 +26,5 @@ public class TokenServer : ITokenServer
     public IPaymentMethodsFacade PaymentMethods => new PaymentMethodsFacade(_serverProvider);
     public ILabelPartnerFacade LabelPartner => new LabelPartnerFacade(_serverProvider);
     public IBankAccountsFacade BankAccounts => new BankAccountsFacade(_serverProvider);
+    public IDocumentStoreFacade DocumentStore => new DocumentStoreFacade(_serverProvider);
 }
