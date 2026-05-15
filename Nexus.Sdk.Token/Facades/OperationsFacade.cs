@@ -16,15 +16,15 @@ public class OperationsFacade : TokenServerFacade, IOperationsFacade
     }
 
     public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null,
-                                         string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null)
+                                         string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null, int? expireSeconds = null)
     {
-        return await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, message, paymentReference, customerIPAddress, nonce, bankAccountNumber);
+        return await _provider.CreateFundingAsync(accountCode, tokenCode, amount, pm, memo, message, paymentReference, customerIPAddress, nonce, bankAccountNumber, expireSeconds);
     }
 
     public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null,
-                                         string? memo = null, string? message = null, string? customerIPAddress = null)
+                                         string? memo = null, string? message = null, string? customerIPAddress = null, int? expireSeconds = null)
     {
-        return await _provider.CreateFundingAsync(accountCode, definitions, pm, memo, message, customerIPAddress);
+        return await _provider.CreateFundingAsync(accountCode, definitions, pm, memo, message, customerIPAddress, expireSeconds);
     }
 
     public async Task<SignablePaymentResponse> CreatePaymentAsync(string senderPublicKey, string receiverPublicKey,

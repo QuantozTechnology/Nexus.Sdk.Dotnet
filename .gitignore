@@ -344,3 +344,6 @@ profile.arm.json
 
 # VS-code specific settings
 **/.vscode
+
+# Ignore MacOS generated folders
+.DS_Store
