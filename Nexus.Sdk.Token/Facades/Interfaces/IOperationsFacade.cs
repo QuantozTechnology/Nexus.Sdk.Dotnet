@@ -28,7 +28,8 @@ public interface IOperationsFacade
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
     /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
     /// <param name="bankAccountNumber">Bank account number of customer to be linked to this funding.</param>
-    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null);
+    /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
+    public Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null, int? expireSeconds = null);
 
     /// <summary>
     /// Fund an account with tokens
@@ -39,7 +40,8 @@ public interface IOperationsFacade
     /// <param name="memo">An optional memo that is added to the transaction and will be visible on the blockchain</param>
     /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    public Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
+    /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
+    public Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null, int? expireSeconds = null);
 
     /// <summary>
     /// Pay a token from one account to another account

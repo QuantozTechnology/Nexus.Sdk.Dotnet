@@ -229,8 +229,9 @@ namespace Nexus.Sdk.Token
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
         /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <param name="bankAccountNumber">Bank account number of customer to be linked to this funding.</param>
+        /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
         /// <returns></returns>
-        Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null);
+        Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null, int? expireSeconds = null);
 
         /// <summary>
         ///
@@ -241,8 +242,9 @@ namespace Nexus.Sdk.Token
         /// <param name="memo"></param>
         /// <param name="message"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
         /// <returns></returns>
-        Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null);
+        Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null, int? expireSeconds = null);
 
         /// <summary>
         ///

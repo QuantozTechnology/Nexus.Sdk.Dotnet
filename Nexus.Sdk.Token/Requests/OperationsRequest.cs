@@ -21,6 +21,9 @@ public record FundingOperationRequest
 
     [JsonPropertyName("tokenFundings")]
     public required IEnumerable<FundingDefinition> Definitions { get; set; }
+    
+    [JsonPropertyName("expireSeconds")]
+    public int? ExpireSeconds { get; set; }
 }
 
 public record FundingDefinition

@@ -330,11 +330,12 @@ namespace Nexus.Sdk.Token
         /// <param name="paymentReference"></param>
         /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <param name="bankAccountNumber">Bank account number of customer to be linked to this funding.</param>
+        /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
         /// <returns></returns>
-        public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null)
+        public async Task<FundingResponses> CreateFundingAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? nonce = null, string? bankAccountNumber = null, int? expireSeconds = null)
         {
             var definition = new FundingDefinition(tokenCode, amount, paymentReference, nonce, bankAccountNumber);
-            return await CreateFundingAsync(accountCode, [definition], pm, memo, message, customerIPAddress);
+            return await CreateFundingAsync(accountCode, [definition], pm, memo, message, customerIPAddress, expireSeconds);
         }
 
         /// <summary>
@@ -345,9 +346,10 @@ namespace Nexus.Sdk.Token
         /// <param name="pm"></param>
         /// <param name="memo"></param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <param name="expireSeconds">Optional expiration time of the resulting transaction envelope.</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null)
+        public async Task<FundingResponses> CreateFundingAsync(string accountCode, IEnumerable<FundingDefinition> definitions, string? pm = null, string? memo = null, string? message = null, string? customerIPAddress = null, int? expireSeconds = null)
         {
             if (string.IsNullOrWhiteSpace(pm) && string.IsNullOrWhiteSpace(options.PaymentMethodOptions.Funding))
             {
@@ -367,7 +369,8 @@ namespace Nexus.Sdk.Token
                 Definitions = definitions,
                 Memo = memo,
                 Message = message,
-                PaymentMethodCode = (pm ?? options.PaymentMethodOptions.Funding)!
+                PaymentMethodCode = (pm ?? options.PaymentMethodOptions.Funding)!,
+                ExpireSeconds = expireSeconds
             };
 
             return await builder.ExecutePost<FundingOperationRequest, FundingResponses>(request);
