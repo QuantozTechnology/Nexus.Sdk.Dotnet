@@ -96,7 +96,6 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 request.IsReviewRecommended,
                 request.IsPEP!,
                 request.Data!,
-                labelPartnerCode: "MOCK_LP",
                 customerTag: "MOCK_TAG"
             ));
         }

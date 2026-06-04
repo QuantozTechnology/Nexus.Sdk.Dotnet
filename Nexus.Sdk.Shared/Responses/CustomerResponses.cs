@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Shared.Responses;
 public record CustomerResponse
 {
     [JsonConstructor]
-    public CustomerResponse(string customerCode, string? name, string? firstName, string? lastName, string? dateOfBirth, string? phone, string? companyName, string trustLevel, string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string? riskQualification, string? created, string? portFolioCode, string? externalCustomerCode, bool? isReviewRecommended, bool? isPEP, IDictionary<string, string> data, PrimaryInternalAccountResponse? primaryInternalAccount = null, string? labelPartnerCode = null, string? customerTag = null)
+    public CustomerResponse(string customerCode, string? name, string? firstName, string? lastName, string? dateOfBirth, string? phone, string? companyName, string trustLevel, string currencyCode, string? address, string? city, string? zipCode, string? state, string countryCode, string? email, string status, string bankAccount, bool isBusiness, string? riskQualification, string? created, string? portFolioCode, string? externalCustomerCode, bool? isReviewRecommended, bool? isPEP, IDictionary<string, string> data, PrimaryInternalAccountResponse? primaryInternalAccount = null, string? customerTag = null)
     {
         CustomerCode = customerCode;
         Name = name;
@@ -32,7 +32,6 @@ public record CustomerResponse
         IsReviewRecommended = isReviewRecommended;
         IsPEP = isPEP;
         PrimaryInternalAccount = primaryInternalAccount;
-        LabelPartnerCode = labelPartnerCode;
         CustomerTag = customerTag;
         Data = data;
     }
@@ -111,9 +110,6 @@ public record CustomerResponse
     
     [JsonPropertyName("primaryInternalAccount")]
     public PrimaryInternalAccountResponse? PrimaryInternalAccount { get; set; }
-
-    [JsonPropertyName("labelPartnerCode")]
-    public string? LabelPartnerCode { get; set; }
 
     [JsonPropertyName("customerTag")]
     public string? CustomerTag { get; set; }
