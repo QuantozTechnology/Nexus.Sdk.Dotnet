@@ -295,7 +295,7 @@ public class RequestBuilder(HttpClient httpClient, IResponseHandler responseHand
 
         foreach (var parameter in querystringParams)
         {
-            paramList.Add(parameter.Key + "=" + parameter.Value);
+            paramList.Add(Uri.EscapeDataString(parameter.Key) + "=" + Uri.EscapeDataString(parameter.Value));
         }
 
         return string.Join("&", paramList);

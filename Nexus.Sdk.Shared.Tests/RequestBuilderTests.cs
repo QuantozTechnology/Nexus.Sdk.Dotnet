@@ -67,6 +67,17 @@ namespace Nexus.Sdk.Shared.Tests
 
                 yield return new object[]
                 {
+                    new Dictionary<string, string>
+                    {
+                        { "email", "test+104@quantoz.com" },
+                        { "name", "John Smith" },
+                        { "raw", "50% & more" }
+                    },
+                    "https://mockrequestbuilder.com/birds?email=test%2B104%40quantoz.com&name=John%20Smith&raw=50%25%20%26%20more"
+                };
+
+                yield return new object[]
+                {
                     new Dictionary<string, string>(),
                     "https://mockrequestbuilder.com/birds"
                 };

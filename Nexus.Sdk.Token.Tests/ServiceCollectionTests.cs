@@ -146,6 +146,7 @@ namespace Nexus.Sdk.Token.Tests
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(response.CustomerTag, Is.EqualTo("MOCK_TAG"));
             });
 
             var tokenServer = provider.GetRequiredService<ITokenServer>();
@@ -157,6 +158,7 @@ namespace Nexus.Sdk.Token.Tests
             {
                 Assert.That(response.CustomerCode, Is.EqualTo("MOCK_CUSTOMER"));
                 Assert.That(response.TrustLevel, Is.EqualTo("Trusted"));
+                Assert.That(response.CustomerTag, Is.EqualTo("MOCK_TAG"));
             });
         }
     }

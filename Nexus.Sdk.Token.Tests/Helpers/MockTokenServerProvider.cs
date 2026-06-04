@@ -95,7 +95,8 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                 request.ExternalCustomerCode!,
                 request.IsReviewRecommended,
                 request.IsPEP!,
-                request.Data!
+                request.Data!,
+                customerTag: "MOCK_TAG"
             ));
         }
 
