@@ -556,12 +556,28 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress);
 
-
         /// <summary>
         /// List fee payers based on query parameters.
         /// </summary>
         /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters</param>
         /// <returns>List of fee payers based on the query parameters.</returns>
         Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters);
+
+        /// <summary>
+        /// List events based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of events
+        /// </returns>
+        Task<PagedResponse<EventResponse>> GetEvents(IDictionary<string, string>? query);
+
+        /// <summary>
+        /// Create event
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<EventResponse> CreateEvent(CreateEventRequest request, string? customerIPAddress = null);
     }
 }

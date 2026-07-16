@@ -516,5 +516,15 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<PagedResponse<EventResponse>> GetEvents(IDictionary<string, string>? query)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<EventResponse> CreateEvent(CreateEventRequest request, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

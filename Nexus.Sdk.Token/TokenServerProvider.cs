@@ -1339,5 +1339,40 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecuteGet<PagedResponse<FeePayerDetailsResponse>>();
         }
+
+        /// <summary>
+        /// List events based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of events
+        /// </returns>
+        public async Task<PagedResponse<EventResponse>> GetEvents(IDictionary<string, string>? queryParameters)
+        {
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", "events");
+
+            if (queryParameters != null)
+            {
+                builder.SetQueryParameters(queryParameters);
+            }
+
+            return await builder.ExecuteGet<PagedResponse<EventResponse>>();
+        }
+
+        /// <summary>
+        /// Create event
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        public async Task<EventResponse> CreateEvent(CreateEventRequest request, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", "events")
+                .AddHeader("customer_ip_address", customerIPAddress);
+
+            return await builder.ExecutePost<CreateEventRequest, EventResponse>(request);
+        }
     }
 }

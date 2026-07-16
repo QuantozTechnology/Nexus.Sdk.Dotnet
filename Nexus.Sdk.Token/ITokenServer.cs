@@ -20,5 +20,6 @@ namespace Nexus.Sdk.Token
         public ILabelPartnerFacade LabelPartner { get; }
         public IBankAccountsFacade BankAccounts { get; }
         public IDocumentStoreFacade DocumentStore { get; }
+        public IEventsFacade Events { get; }
     }
 }
