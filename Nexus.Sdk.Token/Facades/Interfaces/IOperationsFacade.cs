@@ -80,18 +80,19 @@ public interface IOperationsFacade
     /// Note that this can only be done for unmanaged accounts and that providing the memo, message and expireSeconds will no longer have any affect due to no onchain transaction having to be created.
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>
-    /// <param name="tokenCode">Unique Nexus identifier of the token that will be withdrawn from this account</param>
-    /// <param name="amount">The amount of tokens that will be withdrawn from this account</param>
-    /// <param name="pm">An optional payment method that is used to calculate fees</param>
-    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
-    /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain</param>
-    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain</param>
-    /// <param name="paymentReference">Optional reference to bank payment</param>
+    /// <param name="tokenCode">Unique Nexus identifier of the token that will be withdrawn from this account.</param>
+    /// <param name="amount">The amount of tokens that will be withdrawn from this account.</param>
+    /// <param name="pm">An optional payment method that is used to calculate fees.</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+    /// <param name="memo">An optional message that is added to the transaction and will be visible on the blockchain.</param>
+    /// <param name="message">This value will be put in the Message field of a funding transaction and will not be stored on the blockchain.</param>
+    /// <param name="paymentReference">Optional reference to bank payment.</param>
     /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
-    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
-    /// <param name="bankAccountNumber">Optional bank account number of customer to be linked to this payout</param>
-    /// <returns>A transaction that needs to be signed using the private key that matches the provided account</returns>
-    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null);
+    /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions.</param>
+    /// <param name="bankAccountNumber">Optional bank account number of customer to be linked to this payout.</param>
+    /// <param name="data">Optional key-value metadata to associate with this payout. When provided, existing keys will be updated and new keys will be added.</param>
+    /// <returns>A transaction that needs to be signed using the private key that matches the provided accoun.t</returns>
+    public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null, IDictionary<string, string>? data = null);
 
     /// <summary>
     /// Simulate the withdrawal of token from an account.
@@ -118,7 +119,8 @@ public interface IOperationsFacade
     /// <param name="status">New status of the operation.</param>
     /// <param name="comment">Optional comment explaining the reason for the update. Default comment: Operation updated.</param>
     /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
-    /// <param name="paymentReference">Optional reference to bank payment</param>
+    /// <param name="paymentReference">Optional reference to bank payment.</param>
+    /// <param name="data">Optional key-value metadata to associate with this operation. When provided, existing keys will be updated and new keys will be added.</param>
     /// <returns>The updated token operation response.</returns>
-    Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
+    Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null, IDictionary<string, string>? data = null);
 }

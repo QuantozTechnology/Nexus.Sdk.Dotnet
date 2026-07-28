@@ -5,7 +5,7 @@ namespace Nexus.Sdk.Token.Responses
     public record TokenOperationResponse
     {
         [JsonConstructor]
-        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference, decimal? fiatAmount, decimal? netFiatAmount, string blockchainTransactionId, OperationFees? fees, string? bankAccountNumber, string? nonce)
+        public TokenOperationResponse(string code, string hash, OperationAccountResponses senderAccount, OperationAccountResponses receiverAccount, decimal amount, string created, string? finished, string status, string type, string? memo, string? message, string cryptoCode, string tokenCode, string paymentReference, decimal? fiatAmount, decimal? netFiatAmount, string blockchainTransactionId, OperationFees? fees, string? bankAccountNumber, string? nonce, IDictionary<string, string> data)
         {
             Code = code;
             Hash = hash;
@@ -27,6 +27,7 @@ namespace Nexus.Sdk.Token.Responses
             Fees = fees;
             BankAccountNumber = bankAccountNumber;
             Nonce = nonce;
+            Data = data;
         }
 
         [JsonPropertyName("code")]
@@ -88,7 +89,10 @@ namespace Nexus.Sdk.Token.Responses
 
         [JsonPropertyName("nonce")]
         public string? Nonce { get; set; }
-    }
+
+        [JsonPropertyName("data")]
+        public IDictionary<string, string> Data { get; set; }
+}
 
     public class OperationFees
     {
