@@ -5,8 +5,9 @@ namespace Nexus.Sdk.Token.Responses;
 public record BankAccountResponse
 {
     [JsonConstructor]
-    public BankAccountResponse(string number, string name, string customerCode, string currencyCode, bool isPrimary, string created, string createdBy, string updated, string updatedby, BankResponse bank)
+    public BankAccountResponse(string id, string number, string name, string customerCode, string currencyCode, bool isPrimary, string created, string createdBy, string updated, string updatedby, BankResponse bank)
     {
+        Id = id;
         Number = number;
         Name = name;
         CustomerCode = customerCode;
@@ -18,6 +19,9 @@ public record BankAccountResponse
         Updatedby = updatedby;
         Bank = bank;
     }
+
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
 
     [JsonPropertyName("number")]
     public string Number { get; }
