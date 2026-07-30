@@ -153,7 +153,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null)
+        public Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null, IDictionary<string, string>? data = null)
         {
             throw new NotImplementedException();
         }
@@ -376,7 +376,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null)
+        public Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null, IDictionary<string, string>? data = null)
         {
             var tokenOperationResponse = new TokenOperationResponse
             (
@@ -422,7 +422,8 @@ namespace Nexus.Sdk.Token.Tests.Helpers
                     }
                 },
                 bankAccountNumber: "MockBankAccountNumber",
-                nonce: "MockNonce"
+                nonce: "MockNonce",
+                data: null
             );
 
             return Task.FromResult(tokenOperationResponse);

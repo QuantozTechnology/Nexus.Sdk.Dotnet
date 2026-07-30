@@ -43,13 +43,17 @@ public record FundingDefinition
     [JsonPropertyName("bankAccountNumber")]
     public string? BankAccountNumber { get; set; }
 
-    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference, string? nonce, string? bankAccountNumber = null)
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
+
+    public FundingDefinition(string tokenCode, decimal amount, string? paymentReference, string? nonce, string? bankAccountNumber = null, IDictionary<string, string>? data = null)
     {
         TokenCode = tokenCode;
         Amount = amount;
         PaymentReference = paymentReference;
         Nonce = nonce;
         BankAccountNumber = bankAccountNumber;
+        Data = data;
     }
 }
 
@@ -100,7 +104,10 @@ public record PaymentDefinition
     [JsonPropertyName("nonce")]
     public string? Nonce { get; set; }
 
-    public PaymentDefinition(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? blockchainTransactionId = null, string? nonce = null)
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
+
+    public PaymentDefinition(string senderPublicKey, string receiverPublicKey, string tokenCode, decimal amount, string? blockchainTransactionId = null, string? nonce = null, IDictionary<string, string>? data = null)
     {
         SenderPublicKey = senderPublicKey;
         ReceiverPublicKey = receiverPublicKey;
@@ -108,6 +115,7 @@ public record PaymentDefinition
         Amount = amount;
         BlockchainTransactionId = blockchainTransactionId;
         Nonce = nonce;
+        Data = data;
     }
 }
 
@@ -142,6 +150,9 @@ public record PayoutOperationRequest
     
     [JsonPropertyName("bankAccountNumber")]
     public string? BankAccountNumber { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
 }
 
 public class UpdateOperationStatusRequest
@@ -154,4 +165,7 @@ public class UpdateOperationStatusRequest
 
     [JsonPropertyName("paymentReference")]
     public string? PaymentReference { get; set; }
+
+    [JsonPropertyName("data")]
+    public IDictionary<string, string>? Data { get; set; }
 }

@@ -96,7 +96,7 @@ public record CustomerResponse
     [JsonPropertyName(name: "created")]
     public string? Created { get; set; }
 
-    [JsonPropertyName("portfolioCode")]
+    [JsonPropertyName("portFolioCode")]
     public string? PortFolioCode { get; set; }
 
     [JsonPropertyName("externalCustomerCode")]
