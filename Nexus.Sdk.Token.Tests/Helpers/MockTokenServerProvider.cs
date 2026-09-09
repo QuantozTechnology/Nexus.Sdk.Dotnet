@@ -12,6 +12,26 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
+        public Task<TResponse> SendGetRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TResponse> SendPostRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TResponse> SendPutRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<TResponse> SendDeleteRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<SignableResponse> CancelOrder(string orderCode)
         {
             throw new NotImplementedException();
