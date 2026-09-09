@@ -27,6 +27,7 @@ public class TokenServer : ITokenServer
     public ILabelPartnerFacade LabelPartner => new LabelPartnerFacade(_serverProvider);
     public IBankAccountsFacade BankAccounts => new BankAccountsFacade(_serverProvider);
     public IDocumentStoreFacade DocumentStore => new DocumentStoreFacade(_serverProvider);
+    public IEventsFacade Events => new EventsFacade(_serverProvider);
 
     /// <summary>
     /// Execute a GET request against a custom API path.

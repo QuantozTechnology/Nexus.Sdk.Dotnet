@@ -323,8 +323,9 @@ namespace Nexus.Sdk.Token
         /// <param name="blockchainTransactionId">Only provide the blockchain transaction ID if available and no onchain transaction should be created.</param>
         /// <param name="nonce">Optional nonce value to prevent accidental duplicate transactions</param>
         /// <param name="bankAccountNumber">Optional bank account number of customer to be linked to this payout</param>
+        /// <param name="data">Optional key-value metadata to associate with this payout. When provided, existing keys will be updated and new keys will be added.</param>
         /// <returns></returns>
-        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null);
+        Task<SignablePayoutResponse> CreatePayoutAsync(string accountCode, string tokenCode, decimal amount, string? pm = null, string? memo = null, string? message = null, string? paymentReference = null, string? customerIPAddress = null, string? blockchainTransactionId = null, string? nonce = null, string? bankAccountNumber = null, IDictionary<string, string>? data = null);
 
         /// <summary>
         /// Simulate a payout operation without actually executing it
@@ -471,8 +472,9 @@ namespace Nexus.Sdk.Token
         /// <param name="comment">Optional comment explaining the reason for the update. Default comment: Operation updated.</param>
         /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
         /// <param name="paymentReference">Optional reference to bank payment</param>
+        /// <param name="data">Optional key-value metadata to associate with this operation. When provided, existing keys will be updated and new keys will be added.</param>
         /// <returns>The updated token operation response.</returns>
-        Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null);
+        Task<TokenOperationResponse> UpdateOperationStatusAsync(string operationCode, string status, string? comment = null, string? customerIPAddress = null, string? paymentReference = null, IDictionary<string, string>? data = null);
 
         /// <summary>
         /// Get envelope
@@ -590,12 +592,28 @@ namespace Nexus.Sdk.Token
         /// <returns></returns>
         Task UpdateDocumentInStore(FileUpdateRequest fileUpdateRequest, string customerIPAddress);
 
-
         /// <summary>
         /// List fee payers based on query parameters.
         /// </summary>
         /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters</param>
         /// <returns>List of fee payers based on the query parameters.</returns>
         Task<PagedResponse<FeePayerDetailsResponse>> GetTokenFeePayerDetails(IDictionary<string, string> queryParameters);
+
+        /// <summary>
+        /// List events based on the query parameters
+        /// </summary>
+        /// <param name="queryParameters">Query parameters to filter on. Check the Nexus API documentation for possible filtering parameters.</param>
+        /// <returns>
+        /// Return a paged list of events
+        /// </returns>
+        Task<PagedResponse<EventResponse>> GetEvents(IDictionary<string, string>? query);
+
+        /// <summary>
+        /// Create event
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions</param>
+        /// <returns></returns>
+        Task<EventResponse> CreateEvent(CreateEventRequest request, string? customerIPAddress = null);
     }
 }
