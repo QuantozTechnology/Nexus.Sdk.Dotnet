@@ -1240,20 +1240,25 @@ namespace Nexus.Sdk.Token
                 throw new ArgumentException("A path is required.", nameof(path));
             }
 
-            var builder = new RequestBuilder(_client, _handler, logger, _headers)
-                .SetSegments(segments);
-
-            if (queryParameters != null && queryParameters.Count > 0)
-            {
-                builder.SetQueryParameters(new Dictionary<string, string>(queryParameters));
-            }
+            var requestHeaders = new Dictionary<string, string>(_headers);
 
             if (headers != null)
             {
                 foreach (var header in headers)
                 {
-                    builder.AddHeader(header.Key, header.Value);
+                    if (!string.IsNullOrWhiteSpace(header.Value))
+                    {
+                        requestHeaders[header.Key] = header.Value;
+                    }
                 }
+            }
+
+            var builder = new RequestBuilder(_client, _handler, logger, requestHeaders)
+                .SetSegments(segments);
+
+            if (queryParameters != null && queryParameters.Count > 0)
+            {
+                builder.SetQueryParameters(new Dictionary<string, string>(queryParameters));
             }
 
             return builder;
