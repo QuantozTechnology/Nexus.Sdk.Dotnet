@@ -28,4 +28,34 @@ public class TokenServer : ITokenServer
     public IBankAccountsFacade BankAccounts => new BankAccountsFacade(_serverProvider);
     public IDocumentStoreFacade DocumentStore => new DocumentStoreFacade(_serverProvider);
     public IEventsFacade Events => new EventsFacade(_serverProvider);
+
+    /// <summary>
+    /// Execute a GET request against a custom API path.
+    /// </summary>
+    public Task<TResponse> Get<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+        where TResponse : class
+        => _serverProvider.SendGetRequest<TResponse>(path, queryParameters, headers);
+
+    /// <summary>
+    /// Execute a POST request against a custom API path.
+    /// </summary>
+    public Task<TResponse> Post<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+        where TRequest : class
+        where TResponse : class
+        => _serverProvider.SendPostRequest<TRequest, TResponse>(path, request, queryParameters, headers);
+
+    /// <summary>
+    /// Execute a PUT request against a custom API path.
+    /// </summary>
+    public Task<TResponse> Put<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+        where TRequest : class
+        where TResponse : class
+        => _serverProvider.SendPutRequest<TRequest, TResponse>(path, request, queryParameters, headers);
+
+    /// <summary>
+    /// Execute a DELETE request against a custom API path.
+    /// </summary>
+    public Task<TResponse> Delete<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+        where TResponse : class
+        => _serverProvider.SendDeleteRequest<TResponse>(path, queryParameters, headers);
 }

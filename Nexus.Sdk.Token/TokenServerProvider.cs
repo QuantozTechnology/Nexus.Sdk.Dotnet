@@ -1171,6 +1171,100 @@ namespace Nexus.Sdk.Token
         }
 
         /// <summary>
+        /// Execute a GET request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/accounts/ACC-123".</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        public async Task<TResponse> SendGetRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+            where TResponse : class
+        {
+            var builder = CreateCustomRequestBuilder(path, queryParameters, headers);
+            return await builder.ExecuteGet<TResponse>();
+        }
+
+        /// <summary>
+        /// Execute a POST request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/payments".</param>
+        /// <param name="request">Request body that will be serialized to JSON.</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        public async Task<TResponse> SendPostRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+            where TRequest : class
+            where TResponse : class
+        {
+            var builder = CreateCustomRequestBuilder(path, queryParameters, headers);
+            return await builder.ExecutePost<TRequest, TResponse>(request);
+        }
+
+        /// <summary>
+        /// Execute a PUT request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/orders/cancel".</param>
+        /// <param name="request">Request body that will be serialized to JSON.</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        public async Task<TResponse> SendPutRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+            where TRequest : class
+            where TResponse : class
+        {
+            var builder = CreateCustomRequestBuilder(path, queryParameters, headers);
+            return await builder.ExecutePut<TRequest, TResponse>(request);
+        }
+
+        /// <summary>
+        /// Execute a DELETE request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "customer/bankAccounts/BA-123".</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        public async Task<TResponse> SendDeleteRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null)
+            where TResponse : class
+        {
+            var builder = CreateCustomRequestBuilder(path, queryParameters, headers);
+            return await builder.ExecuteDelete<TResponse>();
+        }
+
+        private RequestBuilder CreateCustomRequestBuilder(string path, IDictionary<string, string>? queryParameters, IDictionary<string, string>? headers)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw new ArgumentException("A path is required.", nameof(path));
+            }
+
+            var segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+            if (segments.Length == 0)
+            {
+                throw new ArgumentException("A path is required.", nameof(path));
+            }
+
+            var requestHeaders = new Dictionary<string, string>(_headers);
+
+            if (headers != null)
+            {
+                foreach (var header in headers)
+                {
+                    if (!string.IsNullOrWhiteSpace(header.Value))
+                    {
+                        requestHeaders[header.Key] = header.Value;
+                    }
+                }
+            }
+
+            var builder = new RequestBuilder(_client, _handler, logger, requestHeaders)
+                .SetSegments(segments);
+
+            if (queryParameters != null && queryParameters.Count > 0)
+            {
+                builder.SetQueryParameters(new Dictionary<string, string>(queryParameters));
+            }
+
+            return builder;
+        }
+
+        /// <summary>
         /// Create a new Document Store with the provided settings
         /// </summary>
         /// <param name="documentStoreSettings"></param>

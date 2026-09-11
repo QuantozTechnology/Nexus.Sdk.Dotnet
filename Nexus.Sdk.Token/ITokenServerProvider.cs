@@ -8,6 +8,40 @@ namespace Nexus.Sdk.Token
     public interface ITokenServerProvider : IServerProvider
     {
         /// <summary>
+        /// Execute a GET request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/accounts/ACC-123".</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        Task<TResponse> SendGetRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class;
+
+        /// <summary>
+        /// Execute a POST request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/payments".</param>
+        /// <param name="request">Request body that will be serialized to JSON.</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        Task<TResponse> SendPostRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class;
+
+        /// <summary>
+        /// Execute a PUT request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "token/orders/cancel".</param>
+        /// <param name="request">Request body that will be serialized to JSON.</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        Task<TResponse> SendPutRequest<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class;
+
+        /// <summary>
+        /// Execute a DELETE request against a custom API path.
+        /// </summary>
+        /// <param name="path">Relative API path, for example "customer/bankAccounts/BA-123".</param>
+        /// <param name="queryParameters">Optional query string parameters.</param>
+        /// <param name="headers">Optional additional request headers.</param>
+        Task<TResponse> SendDeleteRequest<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class;
+
+        /// <summary>
         ///
         /// </summary>
         /// <param name="accountCode"></param>

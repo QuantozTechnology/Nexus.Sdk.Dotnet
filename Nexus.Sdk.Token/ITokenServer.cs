@@ -21,5 +21,25 @@ namespace Nexus.Sdk.Token
         public IBankAccountsFacade BankAccounts { get; }
         public IDocumentStoreFacade DocumentStore { get; }
         public IEventsFacade Events { get; }
+
+        /// <summary>
+        /// Execute a GET request against a custom API path.
+        /// </summary>
+        Task<TResponse> Get<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class;
+
+        /// <summary>
+        /// Execute a POST request against a custom API path.
+        /// </summary>
+        Task<TResponse> Post<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class;
+
+        /// <summary>
+        /// Execute a PUT request against a custom API path.
+        /// </summary>
+        Task<TResponse> Put<TRequest, TResponse>(string path, TRequest request, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TRequest : class where TResponse : class;
+
+        /// <summary>
+        /// Execute a DELETE request against a custom API path.
+        /// </summary>
+        Task<TResponse> Delete<TResponse>(string path, IDictionary<string, string>? queryParameters = null, IDictionary<string, string>? headers = null) where TResponse : class;
     }
 }

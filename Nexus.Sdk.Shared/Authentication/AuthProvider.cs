@@ -18,18 +18,31 @@ public class AuthProvider : IAuthProvider
     private DateTime? _expiresOn;
     private string? _accessToken;
 
+    private readonly bool _usePersonalAccessToken;
+
     public AuthProvider(HttpClient client, NexusOptions options, ILogger? logger = null)
     {
-        _tokenEndpoint = new Uri(options.AuthProviderOptions.IdentityUrl + "/connect/token").OriginalString;
-        _clientId = options.AuthProviderOptions.ClientId;
-        _clientSecret = options.AuthProviderOptions.ClientSecret;
-        _scopes = options.AuthProviderOptions.Scopes;
+        var authOptions = options.AuthProviderOptions;
+
+        if (!authOptions.HasAccessToken && !authOptions.HasClientCredentials)
+        {
+            throw new AuthProviderException(AuthProviderOptions.MissingCredentialsMessage);
+        }
+
+        _usePersonalAccessToken = authOptions.HasAccessToken;
+
+        _tokenEndpoint = _usePersonalAccessToken
+            ? string.Empty
+            : new Uri(authOptions.IdentityUrl + "/connect/token").OriginalString;
+        _clientId = authOptions.ClientId;
+        _clientSecret = authOptions.ClientSecret;
+        _scopes = authOptions.Scopes;
 
         _logger = logger;
         _client = client;
 
         _expiresOn = null;
-        _accessToken = null;
+        _accessToken = authOptions.AccessToken;
     }
 
     private static DateTime Now()
@@ -54,6 +67,11 @@ public class AuthProvider : IAuthProvider
 
     public async Task<string> GetAccessTokenAsync()
     {
+        if (_usePersonalAccessToken)
+        {
+            return _accessToken!;
+        }
+
         if (TokenIsValid())
         {
             return _accessToken!;
