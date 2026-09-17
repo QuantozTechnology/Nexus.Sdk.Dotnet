@@ -35,6 +35,21 @@ public interface IAccountsFacade
     public Task<PagedResponse<AccountTokenResponse>> GetAccountTokensAsync(string? accountCode = null, string? tokenCode = null, IDictionary<string, string>? dataFilters = null, int page = 1, int limit = 50);
 
     /// <summary>
+    /// Create a new account on a specified blockchain, connecting it with tokens and optional per-token metadata.
+    /// </summary>
+    /// <param name="customerCode">The code of the customer this account is created for.</param>
+    /// <param name="cryptoCode">Blockchain to connect this account to.</param>
+    /// <param name="publicKey">The public key of the new account - if applicable. </param>
+    /// <param name="tokensWithData">Token codes with optional metadata the account will be connected to upon creation.</param>
+    /// <param name="provider">Represents the wallet service provider information for an account, including the provider type and provider name.</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+    /// <param name="customName">Optional custom name for account.</param>
+    /// <param name="accountType">Optional type for account (Defaults to a managed account).</param>
+    /// <param name="accountStatus">Optional status for account (Defaults to an active account).</param>
+    /// <returns>A transaction that needs to be signed using the private key that matches the provided public key - if applicable.</returns>
+    public Task<SignableResponse> Create(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE");
+
+    /// <summary>
     /// Create a virtual account
     /// </summary>
     /// <param name="customerCode">Unique Nexus identifier of the customer.</param>

@@ -76,6 +76,34 @@ namespace Nexus.Sdk.Token
 
             return await builder.ExecutePut<UpdateTokenAccountRequest, SignableResponse>(request);
         }
+
+        public async Task<SignableResponse> CreateAccountAsync(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider? provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE")
+        {
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts")
+                .AddHeader("customer_ip_address", customerIPAddress);
+
+            var request = new CreateAccountRequest
+            {
+                CryptoCode = cryptoCode,
+                Address = publicKey,
+                AccountType = accountType,
+                AccountStatus = accountStatus,
+                TokenSettings = new CreateTokenAccountSettings
+                {
+                    AllowedTokens = tokensWithData
+                },
+                Provider = provider
+            };
+
+            if (!string.IsNullOrWhiteSpace(customName))
+            {
+                request.CustomName = customName;
+            }
+
+            return await builder.ExecutePost<CreateAccountRequest, SignableResponse>(request);
+        }
+
         public async Task<AccountResponse> CreateVirtualAccount(string customerCode, string address, bool generateReceiveAddress, string cryptoCode, IEnumerable<string> allowedTokens, string? customerIPAddress = null, string? customName = null)
         {
             if (!string.IsNullOrWhiteSpace(address) && generateReceiveAddress)

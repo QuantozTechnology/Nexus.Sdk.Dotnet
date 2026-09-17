@@ -7,6 +7,9 @@ public record CreateTokenAccountRequest
     [JsonPropertyName("accountType")]
     public string? AccountType { get; set; } = "MANAGED";
 
+    [JsonPropertyName("accountStatus")]
+    public string? AccountStatus { get; set; } = "ACTIVE";
+
     [JsonPropertyName("customerCryptoAddress")]
     public string? Address { get; set; }
 
@@ -15,6 +18,15 @@ public record CreateTokenAccountRequest
 
     [JsonPropertyName("customName")]
     public string? CustomName { get; set; }
+
+    [JsonPropertyName("provider")]
+    public Provider? Provider { get; set; }
+}
+
+public record CreateAccountRequest : CreateTokenAccountRequest
+{
+    [JsonPropertyName("cryptoCode")]
+    public string CryptoCode { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest
@@ -81,4 +93,13 @@ public class CreateTokenAccountSettings
 {
     [JsonPropertyName("allowedTokens")]
     public IEnumerable<TokenCodeWithData>? AllowedTokens { get; set; }
+}
+
+public class Provider
+{
+    [JsonPropertyName("type")]
+    public string? Type { get; set; } = "Undefined";
+
+    [JsonPropertyName("name")]
+    public string? Name { get; set; }
 }
