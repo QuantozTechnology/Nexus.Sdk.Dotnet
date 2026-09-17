@@ -57,7 +57,7 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.UpdateAccount(customerCode, accountCode, updateRequest, customerIPAddress);
     }
 
-    public async Task<SignableResponse> Create(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE")
+    public async Task<CreateAccountResponse> CreateAccount(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE")
     {
         return await _provider.CreateAccountAsync(customerCode, cryptoCode, publicKey, tokensWithData, provider, customerIPAddress, customName, accountType, accountStatus);
     }

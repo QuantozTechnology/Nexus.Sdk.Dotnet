@@ -18,15 +18,15 @@ public record CreateTokenAccountRequest
 
     [JsonPropertyName("customName")]
     public string? CustomName { get; set; }
-
-    [JsonPropertyName("provider")]
-    public Provider? Provider { get; set; }
 }
 
 public record CreateAccountRequest : CreateTokenAccountRequest
 {
     [JsonPropertyName("cryptoCode")]
     public string CryptoCode { get; set; }
+
+    [JsonPropertyName("provider")]
+    public Provider? Provider { get; set; }
 }
 
 public record CreateStellarAccountRequest : CreateTokenAccountRequest

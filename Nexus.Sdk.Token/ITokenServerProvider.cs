@@ -63,7 +63,7 @@ namespace Nexus.Sdk.Token
         /// <param name="accountType">Optional type for account (Defaults to a managed account).</param>
         /// <param name="accountStatus">Optional status for account (Defaults to an active account).</param>
         /// <returns></returns>
-        Task<SignableResponse> CreateAccountAsync(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE");
+        Task<CreateAccountResponse> CreateAccountAsync(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE");
 
         /// <summary>
         /// Create a virtual account
