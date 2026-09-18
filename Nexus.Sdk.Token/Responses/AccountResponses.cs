@@ -2,6 +2,54 @@
 
 namespace Nexus.Sdk.Token.Responses;
 
+public record CreateAccountResponse
+{
+    [JsonConstructor]
+    public CreateAccountResponse(string customerCode, string accountCode, string cryptoCode, string publicKey, string status, string accountType, string customName, string created, TokenSettingsResponse tokenSettings, BlockchainResponse transactionEnvelope)
+    {
+        CustomerCode = customerCode;
+        AccountCode = accountCode;
+        CryptoCode = cryptoCode;
+        PublicKey = publicKey;
+        Status = status;
+        AccountType = accountType;
+        CustomName = customName;
+        Created = created;
+        TokenSettings = tokenSettings;
+        TransactionEnvelope = transactionEnvelope;
+    }
+
+    [JsonPropertyName("customerCode")]
+    public string CustomerCode { get; }
+
+    [JsonPropertyName("accountCode")]
+    public string AccountCode { get; }
+
+    [JsonPropertyName("dcCode")]
+    public string CryptoCode { get; }
+
+    [JsonPropertyName("customerCryptoAddress")]
+    public string PublicKey { get; set; }
+
+    [JsonPropertyName("accountStatus")]
+    public string Status { get; set; }
+
+    [JsonPropertyName("accountType")]
+    public string AccountType { get; set; }
+
+    [JsonPropertyName("customName")]
+    public string CustomName { get; set; }
+
+    [JsonPropertyName("created")]
+    public string Created { get; set; }
+
+    [JsonPropertyName("tokenSettings")]
+    public TokenSettingsResponse TokenSettings { get; set; }
+
+    [JsonPropertyName("transactionEnvelope")]
+    public BlockchainResponse TransactionEnvelope { get; set; }
+}
+
 public record AccountResponse
 {
     [JsonConstructor]
