@@ -52,7 +52,7 @@ namespace Nexus.Sdk.Token.Tests.Helpers
             throw new NotImplementedException();
         }
 
-        public Task<CreateAccountResponse> CreateAccountAsync(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE")
+        public Task<CreateAccountResponse> CreateAccountAsync(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider? provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE")
         {
             throw new NotImplementedException();
         }

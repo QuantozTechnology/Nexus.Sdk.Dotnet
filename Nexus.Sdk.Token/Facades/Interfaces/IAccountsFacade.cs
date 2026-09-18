@@ -47,7 +47,7 @@ public interface IAccountsFacade
     /// <param name="accountType">Optional type for account (Defaults to a managed account).</param>
     /// <param name="accountStatus">Optional status for account (Defaults to an active account).</param>
     /// <returns>A transaction that needs to be signed using the private key that matches the provided public key - if applicable.</returns>
-    public Task<CreateAccountResponse> CreateAccount(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE");
+    public Task<CreateAccountResponse> CreateAccount(string customerCode, string cryptoCode, string? publicKey, IEnumerable<TokenCodeWithData> tokensWithData, Provider? provider, string? customerIPAddress = null, string? customName = null, string? accountType = "MANAGED", string? accountStatus = "ACTIVE");
 
     /// <summary>
     /// Create a virtual account
