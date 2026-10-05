@@ -601,6 +601,16 @@ namespace Nexus.Sdk.Shared.Tests
         }
 
         [Test]
+        public void CustomerRequestBuilderTests_Build_UpdateCustomerRequest_WithFieldsToClear()
+        {
+            var request = new UpdateCustomerRequestBuilder("MOCK_CUSTOMER")
+                .SetFieldsToClear(["Email", "PrimaryInternalAccountCode"])
+                .Build();
+
+            Assert.That(request.FieldsToClear, Is.EqualTo(new[] { "Email", "PrimaryInternalAccountCode" }));
+        }
+
+        [Test]
         public void CustomerRequestBuilderTests_Build_UpdateCustomerRequest_WithBankAccount()
         {
             var request = new UpdateCustomerRequestBuilder("MOCK_CUSTOMER")
