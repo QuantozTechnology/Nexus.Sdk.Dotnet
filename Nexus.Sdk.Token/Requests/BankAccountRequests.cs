@@ -67,6 +67,9 @@ public record UpdateBankAccountRequest
 
     [JsonPropertyName("isPrimary")]
     public bool IsPrimary { get; set; }
+
+    [JsonPropertyName("fieldsToClear")]
+    public IEnumerable<string>? FieldsToClear { get; set; }
 }
 
 public record DeleteBankAccountRequest

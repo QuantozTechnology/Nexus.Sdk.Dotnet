@@ -57,6 +57,9 @@ public record UpdateTokenAccountRequest
 
     [JsonPropertyName("customName")]
     public string? CustomName { get; set; }
+
+    [JsonPropertyName("fieldsToClear")]
+    public IEnumerable<string>? FieldsToClear { get; set; }
 }
 
 public class UpdateTokenAccountSettings
