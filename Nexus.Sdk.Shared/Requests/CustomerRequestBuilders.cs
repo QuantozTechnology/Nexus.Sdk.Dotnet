@@ -216,5 +216,11 @@
             _request.BankAccounts = bankAccounts;
             return this;
         }
+
+        public UpdateCustomerRequestBuilder SetFieldsToClear(IEnumerable<string> fieldsToClear)
+        {
+            _request.FieldsToClear = fieldsToClear;
+            return this;
+        }
     }
 }

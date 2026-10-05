@@ -124,6 +124,9 @@ public class UpdateCustomerRequest : CustomerRequest
 
     [JsonPropertyName("bankAccounts")]
     public UpdateCustomerBankAccountRequest[]? BankAccounts { get; set; }
+
+    [JsonPropertyName("fieldsToClear")]
+    public IEnumerable<string>? FieldsToClear { get; set; }
 }
 
 public class CustomerBankAccountRequest
