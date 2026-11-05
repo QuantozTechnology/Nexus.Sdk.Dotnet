@@ -38,6 +38,8 @@ namespace Nexus.Sdk.Token.Extensions
             return services.AddNexusApi();
         }
 
+        public const string NexusApiClientName = "NexusApi";
+
         public static IServiceCollection AddNexusApi<TAuthProvider>(this IServiceCollection services, string apiUrl)
             where TAuthProvider : class, IAuthProvider
         {
@@ -46,11 +48,12 @@ namespace Nexus.Sdk.Token.Extensions
 
             services.AddScoped<IAuthProvider, TAuthProvider>();
             services.AddScoped<NexusIdentityHandler>();
-            services.AddHttpClient("NexusApi", (provider, client) =>
+            services.AddHttpClient(NexusApiClientName, (provider, client) =>
             {
                 client.BaseAddress = new Uri(apiUrl);
                 client.DefaultRequestHeaders.Add("api_version", "1.2");
             })
+            .AddApplicationScopeHandler()
             .AddHttpMessageHandler<NexusIdentityHandler>();
 
             return services;
@@ -61,12 +64,13 @@ namespace Nexus.Sdk.Token.Extensions
             serviceCollection.AddScoped<IAuthProvider, AuthProvider>();
             serviceCollection.AddHttpClient<AuthProvider>();
             serviceCollection.AddScoped<NexusIdentityHandler>();
-            serviceCollection.AddHttpClient("NexusApi", (provider, client) =>
+            serviceCollection.AddHttpClient(NexusApiClientName, (provider, client) =>
             {
                 var options = provider.GetRequiredService<NexusOptions>();
                 client.BaseAddress = new Uri(options.ApiUrl);
                 client.DefaultRequestHeaders.Add("api_version", "1.2");
             })
+            .AddApplicationScopeHandler()
             .AddHttpMessageHandler<NexusIdentityHandler>();
 
             return serviceCollection;

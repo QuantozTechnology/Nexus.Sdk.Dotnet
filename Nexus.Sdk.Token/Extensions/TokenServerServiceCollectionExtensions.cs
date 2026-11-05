@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Nexus.Sdk.Shared.Authentication;
 using Nexus.Sdk.Shared.Options;
 using Nexus.Sdk.Token.Security;
@@ -55,7 +56,12 @@ namespace Nexus.Sdk.Token.Extensions
         private static IServiceCollection AddTokenServer(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<ITokenServer, TokenServer>();
-            serviceCollection.AddScoped<ITokenServerProvider, TokenServerProvider>();
+            serviceCollection.AddScoped<ITokenServerProvider>(serviceProvider =>
+                new TokenServerProvider(
+                    serviceProvider.GetRequiredKeyedService<HttpClient>(
+                        NexusSharedServiceCollectionExtensions.NexusApiClientName),
+                    serviceProvider.GetRequiredService<NexusOptions>(),
+                    serviceProvider.GetRequiredService<ILogger<TokenServerProvider>>()));
             return serviceCollection;
         }
 

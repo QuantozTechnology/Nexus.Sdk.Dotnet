@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿﻿using Microsoft.Extensions.Logging;
+using Nexus.Sdk.Token.Extensions;
 using Nexus.Sdk.Shared.ErrorHandling;
 using Nexus.Sdk.Shared.Http;
 using Nexus.Sdk.Shared.Options;
@@ -9,11 +10,32 @@ using Nexus.Sdk.Token.Responses;
 
 namespace Nexus.Sdk.Token
 {
-    public class TokenServerProvider(IHttpClientFactory factory, NexusOptions options, ILogger<TokenServerProvider> logger) : ITokenServerProvider
+    public class TokenServerProvider : ITokenServerProvider
     {
-        private readonly HttpClient _client = factory.CreateClient("NexusApi");
-        private readonly NexusResponseHandler _handler = new(logger);
+        private readonly HttpClient _client;
+        private readonly NexusOptions options;
+        private readonly ILogger<TokenServerProvider> logger;
+        private readonly NexusResponseHandler _handler;
         private readonly Dictionary<string, string> _headers = [];
+
+        public TokenServerProvider(
+            IHttpClientFactory factory,
+            NexusOptions options,
+            ILogger<TokenServerProvider> logger)
+            : this(factory.CreateClient(NexusSharedServiceCollectionExtensions.NexusApiClientName), options, logger)
+        {
+        }
+
+        internal TokenServerProvider(
+            HttpClient client,
+            NexusOptions options,
+            ILogger<TokenServerProvider> logger)
+        {
+            _client = client;
+            this.options = options;
+            this.logger = logger;
+            _handler = new NexusResponseHandler(logger);
+        }
 
         /// <summary>
         /// Add a header to the request. Overwrite in cases that header currently exists.

@@ -1,5 +1,7 @@
-﻿using System.Net.Http.Headers;
+﻿﻿using System.Net.Http.Headers;
+using Microsoft.Extensions.DependencyInjection;
 using Nexus.Sdk.Shared.Authentication;
+using Nexus.Sdk.Token.Extensions;
 
 namespace Nexus.Sdk.Shared.Http
 {
@@ -14,7 +16,12 @@ namespace Nexus.Sdk.Shared.Http
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var accessToken = await _provider.GetAccessTokenAsync();
+            var provider = request.Options.TryGetValue(
+                ApplicationScopeHttpClientExtensions.ScopeKey,
+                out var serviceProvider)
+                ? serviceProvider.GetRequiredService<IAuthProvider>()
+                : _provider;
+            var accessToken = await provider.GetAccessTokenAsync();
 
             if (!string.IsNullOrWhiteSpace(accessToken))
             {
