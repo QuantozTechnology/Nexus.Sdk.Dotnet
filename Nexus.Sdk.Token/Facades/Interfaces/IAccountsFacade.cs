@@ -16,6 +16,15 @@ public interface IAccountsFacade
     public Task<PagedResponse<AccountResponse>> Get(IDictionary<string, string> query);
 
     /// <summary>
+    /// Activates or reactivates an account for a customer.
+    /// </summary>
+    /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+    /// <param name="accountCode">Unique Nexus identifier of the account.</param>
+    /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+    public Task ActivateAccount(string customerCode, string accountCode, string? customerIPAddress = null);
+
+
+    /// <summary>
     /// Get all token balances of an account
     /// </summary>
     /// <param name="accountCode">{crypto}-{publickey} combination of the account. E.g. XLM-GAW6GBLA5U4KCXV4E5SZTVERBF3AUASEPNTN4ZXSXLCROOTJ7KQQW4S7</param>

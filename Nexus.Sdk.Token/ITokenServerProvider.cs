@@ -51,6 +51,15 @@ namespace Nexus.Sdk.Token
         Task<PagedResponse<AccountResponse>> GetAccounts(IDictionary<string, string>? query);
 
         /// <summary>
+        /// Activates or reactivates an account for a customer.
+        /// </summary>
+        /// <param name="customerCode">Unique Nexus identifier of the customer.</param>
+        /// <param name="accountCode">Unique Nexus identifier of the account.</param>
+        /// <param name="customerIPAddress">Optional IP address of the customer used for tracing their actions.</param>
+        Task ActivateAccount(string customerCode, string accountCode, string? customerIPAddress = null);
+
+
+        /// <summary>
         /// Create a new account on a specified blockchain, connecting it with tokens and optional per-token metadata.
         /// </summary>
         /// <param name="customerCode">The code of the customer this account is created for.</param>
