@@ -126,7 +126,14 @@ public class TokenBalancesResponse
     public string Updated { get; }
 
     [JsonConstructor]
-    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated, double? virtualBalance = null)
+    public TokenBalancesResponse(
+        string tokenCode,
+        double? issued,
+        double? deleted,
+        double? available,
+        double? total,
+        string updated,
+        double? virtualBalance = null)
     {
         TokenCode = tokenCode;
         Issued = issued;
