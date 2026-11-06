@@ -108,19 +108,19 @@ public class TokenBalancesResponse
     public string TokenCode { get; }
 
     [JsonPropertyName("issued")]
-    public double Issued { get; }
+    public double? Issued { get; }
 
     [JsonPropertyName("deleted")]
-    public double Deleted { get; }
+    public double? Deleted { get; }
 
     [JsonPropertyName("available")]
-    public double Available { get; }
+    public double? Available { get; }
     
     [JsonPropertyName("virtual")]
     public double? VirtualBalance { get; }
 
     [JsonPropertyName("total")]
-    public double Total { get; }
+    public double? Total { get; }
 
     [JsonPropertyName("updated")]
     public string Updated { get; }
