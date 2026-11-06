@@ -108,25 +108,32 @@ public class TokenBalancesResponse
     public string TokenCode { get; }
 
     [JsonPropertyName("issued")]
-    public double Issued { get; }
+    public double? Issued { get; }
 
     [JsonPropertyName("deleted")]
-    public double Deleted { get; }
+    public double? Deleted { get; }
 
     [JsonPropertyName("available")]
-    public double Available { get; }
+    public double? Available { get; }
     
     [JsonPropertyName("virtual")]
     public double? VirtualBalance { get; }
 
     [JsonPropertyName("total")]
-    public double Total { get; }
+    public double? Total { get; }
 
     [JsonPropertyName("updated")]
     public string Updated { get; }
 
     [JsonConstructor]
-    public TokenBalancesResponse(string tokenCode, double issued, double deleted, double available, double total, string updated, double? virtualBalance = null)
+    public TokenBalancesResponse(
+        string tokenCode,
+        double? issued,
+        double? deleted,
+        double? available,
+        double? total,
+        string updated,
+        double? virtualBalance = null)
     {
         TokenCode = tokenCode;
         Issued = issued;
