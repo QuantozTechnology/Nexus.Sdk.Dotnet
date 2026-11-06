@@ -677,6 +677,16 @@ namespace Nexus.Sdk.Token
             return await builder.ExecuteGet<PagedResponse<AccountResponse>>();
         }
 
+        public async Task ActivateAccount(string customerCode, string accountCode, string? customerIPAddress = null)
+        {
+            var builder = new RequestBuilder(_client, _handler, logger, _headers)
+                .SetSegments("customer", customerCode, "accounts", "activate", accountCode)
+                .AddHeader("customer_ip_address", customerIPAddress);
+
+            await builder.ExecuteGet();
+        }
+
+
         /// <summary>
         ///
         /// </summary>

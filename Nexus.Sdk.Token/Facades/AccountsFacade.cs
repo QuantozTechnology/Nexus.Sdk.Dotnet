@@ -20,6 +20,12 @@ public class AccountsFacade : TokenServerFacade, IAccountsFacade
         return await _provider.GetAccounts(query);
     }
 
+    public async Task ActivateAccount(string customerCode, string accountCode, string? customerIPAddress = null)
+    {
+        await _provider.ActivateAccount(customerCode, accountCode, customerIPAddress);
+    }
+
+
     public async Task<AccountBalancesResponse> GetBalances(string accountCode)
     {
         return await _provider.GetAccountBalanceAsync(accountCode);

@@ -30,6 +30,22 @@ public class RequestBuilder(HttpClient httpClient, IResponseHandler responseHand
         return await responseHandler.HandleResponse<TResponse>(response);
     }
 
+    public async Task ExecuteGet(CancellationToken cancellationToken = default)
+    {
+        var path = BuildPath();
+        Uri requestUri = new(httpClient.BaseAddress!, path);
+
+        logger?.LogDebug("GET {uri}", path);
+
+        var getRequest = HttpRequestBuilder.BuildGetRequest(requestUri, _headers);
+        var response = await httpClient.SendAsync(getRequest, cancellationToken);
+
+        ResetHeaders(); // reset headers
+
+        await responseHandler.HandleResponse(response, cancellationToken);
+    }
+
+
     public async Task<Stream> ExecuteGetStream()
     {
         var path = BuildPath();

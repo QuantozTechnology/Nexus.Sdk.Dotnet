@@ -217,6 +217,11 @@ namespace Nexus.Sdk.Token.Tests.Helpers
         {
             throw new NotImplementedException();
         }
+        public Task ActivateAccount(string customerCode, string accountCode, string? customerIPAddress = null)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public Task<AccountBalancesResponse> GetAccountBalanceAsync(string accountCode)
         {
