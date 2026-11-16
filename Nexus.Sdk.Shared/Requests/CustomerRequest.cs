@@ -127,6 +127,9 @@ public class UpdateCustomerRequest : CustomerRequest
 
     [JsonPropertyName("fieldsToClear")]
     public IEnumerable<string>? FieldsToClear { get; set; }
+    
+    [JsonPropertyName("primaryInternalAccountCode")]
+    public string? PrimaryInternalAccountCode { get; set; }
 }
 
 public class CustomerBankAccountRequest
