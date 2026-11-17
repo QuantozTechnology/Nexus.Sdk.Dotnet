@@ -210,6 +210,12 @@
             _request.ReasonCode = reasonCode;
             return this;
         }
+        
+        public UpdateCustomerRequestBuilder SetPrimaryInternalAccountCode(string primaryInternalAccountCode)
+        {
+            _request.PrimaryInternalAccountCode = primaryInternalAccountCode;
+            return this;
+        }
 
         public UpdateCustomerRequestBuilder SetBankAccounts(UpdateCustomerBankAccountRequest[] bankAccounts)
         {

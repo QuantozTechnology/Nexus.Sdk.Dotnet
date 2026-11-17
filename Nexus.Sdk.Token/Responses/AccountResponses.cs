@@ -84,6 +84,9 @@ public record AccountResponse
     [JsonPropertyName("accountType")]
     public string AccountType { get; set; }
 
+    
+    [JsonPropertyName("isPrimary")]
+    public bool? IsPrimary { get; set; }
     [JsonPropertyName("customName")]
     public string CustomName { get; set; }
 
